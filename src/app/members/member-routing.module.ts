@@ -5,7 +5,9 @@ We’ve created this additional file with the Angular CLI and inside we only nee
 reference the Dashboard
 */
 const routes: Routes = [
-  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' }
+  { path: 'details', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'details/:id', loadChildren: './details/details.module#DetailsPageModule' },
+  { path: 'add-inspeccion', loadChildren: './add-inspeccion/add-inspeccion.module#AddInspeccionPageModule' }
 ];
 /*
 Notice that this is a child routing and therefore the routes are added to the router 

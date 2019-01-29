@@ -37,7 +37,7 @@ the login.
 
       this.authenticationService.authenticationState.subscribe(state => {
         if (state) {
-          this.router.navigate(['members', 'dashboard']);
+          this.router.navigate(['members', 'details']);
         } else {
           this.router.navigate(['login']);
         }

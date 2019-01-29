@@ -5,5 +5,19 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-button (click)="login()" expand="block">Login</ion-button>
+    <form [formGroup]="loginForm" (submit)="login()">
+        <ion-item>
+          <ion-input type="mail" formControlName="username" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="password" formControlName="pwd" required></ion-input>
+        </ion-item>
+        <ion-button type="submit" [disabled]="!loginForm.valid">Submit</ion-button>
+    </form>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>
