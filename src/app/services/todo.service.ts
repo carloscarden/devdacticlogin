@@ -1,4 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Inspeccion } from '../inspeccion';
+import { INSPECCIONES } from '../mock-inspeccion';
+
+
+
 
 export interface Todo {
   id: string;
@@ -20,16 +26,12 @@ export class TodoService {
   ];
   constructor() { }
 
-  getTodos() {
-    return this.todosCollection;
+  getTodos(): Observable<Inspeccion[]> {
+    return of(INSPECCIONES);
   }
  
-  getTodo(id:string) {
-    for (var i = 0; i < this.todosCollection.length; i++) {
-      if(this.todosCollection[i].id==id){
-          return this.todosCollection[i];
-      }
-    }
+  getTodo(id:number): Observable<Inspeccion> {
+    return of(INSPECCIONES.find(inspeccion => inspeccion.id === id));
   }
  
   updateTodo(todo: Todo, id: string) {

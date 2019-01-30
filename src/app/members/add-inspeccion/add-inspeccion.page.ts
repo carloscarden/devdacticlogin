@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-inspeccion.page.scss'],
 })
 export class AddInspeccionPage implements OnInit {
-
+  todo = {}
   constructor() { }
 
   ngOnInit() {
   }
+
+  
+  logForm() {
+    console.log(this.todo);
+  }
+
+  uploadFile() {
+   console.log("uploadFile");
+  }
+  
 
 }

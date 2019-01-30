@@ -5,5 +5,9 @@
 </ion-header>
 
 <ion-content padding>
-
+    <div *ngIf="inspeccion">
+        <h2>{{inspeccion.task | uppercase}} Details</h2>
+        <ion-label><span>id: </span>{{inspeccion.id}}</ion-label>
+        <button (click)="goBack()">go back</button>
+    </div>
 </ion-content>

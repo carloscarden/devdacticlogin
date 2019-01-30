@@ -39,16 +39,8 @@
 
   <ion-list>
  
-    <ng-container *ngIf="!todos || todos.length == 0">
-      <div *ngFor="let n of [0,1,2]" padding>
-        <ion-skeleton-text></ion-skeleton-text>
-        <p>
-          <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
-        </p>
-      </div>
-    </ng-container>
  
-    <ion-item-sliding *ngFor="let item of todos">
+    <ion-item-sliding *ngFor="let item of inspecciones">
       <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
         <ion-label>
           {{ item.task }}
@@ -68,7 +60,7 @@
   </ion-list>
  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/details" routerDirection="forward">
+    <ion-fab-button routerLink="/members/addInspeccion" routerDirection="forward">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
