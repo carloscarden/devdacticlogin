@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from './../../services/todo.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-inspeccion',
@@ -6,19 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-inspeccion.page.scss'],
 })
 export class AddInspeccionPage implements OnInit {
-  todo = {}
-  constructor() { }
+  inspeccion = {}
+  constructor(private route: ActivatedRoute,private location: Location,private todoService: TodoService) { }
 
   ngOnInit() {
   }
 
   
   logForm() {
-    console.log(this.todo);
+    console.log(this.inspeccion);
   }
 
   uploadFile() {
    console.log("uploadFile");
+  }
+
+  goBack(): void {
+    this.location.back();
   }
   
 

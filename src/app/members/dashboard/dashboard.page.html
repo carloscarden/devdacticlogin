@@ -12,23 +12,14 @@
 
 <ion-content padding>
 
-   <ion-tabs>
+   <ion-tabs >
       <ion-tab-bar slot="top">
         <ion-tab-button tab="schedule">
           <ion-icon name="calendar"></ion-icon>
           <ion-label>Schedule</ion-label>
           <ion-badge>6</ion-badge>
         </ion-tab-button>
-    
-        <ion-tab-button tab="speakers">
-          <ion-icon name="contacts"></ion-icon>
-          <ion-label>Speakers</ion-label>
-        </ion-tab-button>
-    
-        <ion-tab-button tab="map">
-          <ion-icon name="map"></ion-icon>
-          <ion-label>Map</ion-label>
-        </ion-tab-button>
+  
     
         <ion-tab-button tab="about">
           <ion-icon name="information-circle"></ion-icon>
@@ -37,9 +28,7 @@
       </ion-tab-bar>
   </ion-tabs>
 
-  <ion-list>
- 
- 
+  <ion-list margin-top>
     <ion-item-sliding *ngFor="let item of inspecciones">
       <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
         <ion-label>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Inspeccion } from '../inspeccion';
 import { INSPECCIONES } from '../mock-inspeccion';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -24,10 +25,10 @@ export class TodoService {
     { id: "d", task: 'task4', priority: 4, createdAt: 5 },
     { id: "e", task: 'task5', priority: 5, createdAt: 6 }
   ];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getTodos(): Observable<Inspeccion[]> {
-    return of(INSPECCIONES);
+  getInspecciones(): Observable<Inspeccion[]> {
+    return this.http.get<Inspeccion[]>(`http://localhost:8100/members/inspecciones`);
   }
  
   getTodo(id:number): Observable<Inspeccion> {
@@ -43,8 +44,8 @@ export class TodoService {
     return this.todosCollection;
   }
  
-  addTodo(todo: Todo) {
-    return this.todosCollection.push(todo);
+  addInspeccion(inspeccion: Inspeccion) {
+    return this.http.post<any>(`localhost:8100/users/authenticate`, { inspeccion });
   }
  
   removeTodo(id:string) {

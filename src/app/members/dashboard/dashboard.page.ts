@@ -16,7 +16,7 @@ export class DashboardPage implements OnInit {
   constructor(private authService: AuthenticationService,private todoService: TodoService) { }
 
   ngOnInit() {
-    this.todoService.getTodos()
+    this.todoService.getInspecciones()
       .subscribe(inspecciones => this.inspecciones = inspecciones);
   }
 

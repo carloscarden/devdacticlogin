@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { User } from '../_models/User';
+import { map } from 'rxjs/operators';
+
 
 const TOKEN_KEY='auth_token';
 /*
 
 ADDING AUTHENTICATION PROVIDER AND GUARD
 
-This service will handle the login/logout and in our case perform just dummy operations.
+The JWT authentication service is used to login and logout of the application, to login it posts the users 
+credentials to the api and checks the response for a JWT token, if there is one it means authentication
+was successful so the user details are added to local storage with the token. The token is used by the 
+JWT interceptor above to set the authorization header of http requests made to secure api endpoints.
 
-Normally you would send the credentials to your server and then get something like a token 
-Back. In our case we skip that part and directly store a token inside the Ionic Storage. 
-Then we use our BehaviorSubject to tell everyone that the user is now authenticated.
+The logged in user details are stored in local storage so the user will stay logged in if they refresh the 
+browser and also between browser sessions until they logout. If you don't want the user to stay logged in 
+between refreshes or sessions the behaviour could easily be changed by storing user details somewhere less
+persistent such as session storage which would persist between refreshes but not browser sessions, or in a
+private variable in the authentication service which would be cleared when the browser is refreshed.
 
-Other pages can subscribe to this authenticationState or check if the user is authenticated
-using the current value of the Subject.
-
-Although we don’t have any real Server attached, the logic and flow is nearly the same 
-so you could use this as a base for your own authentication class.
+There are two properties exposed by the authentication service for accessing the currently logged in user.
+ The currentUser observable can be used when you want a component to reactively update when a user logs 
+ in or out, for example in the app.component.ts so it can show/hide the main nav bar when the user logs 
+ in/out. The currentUserValue property can be used when you just want to get the current value of the 
+ logged in user but don't need to reactively update when it changes, for example in the auth.guard.ts 
+ which restricts access to routes by checking if the user is currently logged in.
 
 
 */
@@ -26,6 +36,8 @@ so you could use this as a base for your own authentication class.
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
   authenticationState = new BehaviorSubject(false);
   /*
@@ -34,24 +46,36 @@ export class AuthenticationService {
    By doing this, we can automatically change the authentication state if the user was 
   previously logged in. In a real scenario you could add an expired check here.
   */
-  constructor(private storage:Storage, private platform:Platform) { 
-    this.platform.ready().then(() => {
-      this.checkToken();
-    });
+  constructor(private storage:Storage, private platform:Platform, private http: HttpClient) { 
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
 
   }
 
-  login(){
-    return this.storage.set(TOKEN_KEY, 'Bearer 1234567').then(() => {
-      this.authenticationState.next(true);
-    });
+  login(username: string, password: string){
+   
+    return this.http.post<any>(`http://localhost:8100/users/authenticate`, { username, password })
+            .pipe(map(user => {
+                // login successful if there's a jwt token in the response
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                }
+
+                return user;
+            }));
   }
 
   logout(){
-    return this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false);
-    });
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
 
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
   isAuthenticated(){
