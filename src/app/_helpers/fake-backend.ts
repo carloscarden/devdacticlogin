@@ -3,7 +3,9 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { User } from '../_models/User';
-import { Inspeccion } from '../inspeccion';
+import { Role } from '../_models/role';
+import { Inspeccion } from '../_models/inspeccion';
+import { Establecimiento } from '../_models/establecimiento';
 import { AuthenticationService } from '../services/authentication.service';
 
 /*
@@ -20,30 +22,239 @@ certain requests based on their URL and provides a fake response instead of goin
 @Injectable()
 export class FakeBackend implements HttpInterceptor{
     private inspeccionCollection:Inspeccion[] = [
-        { id: 1, task: 'task1', priority: 1, createdAt: 1 },
-        { id: 2, task: 'task2', priority: 2, createdAt: 3 },
-        { id: 3, task: 'task3', priority: 3, createdAt: 4 },
-        { id: 4, task: 'task4', priority: 4, createdAt: 5 },
-        { id: 5, task: 'task5', priority: 5, createdAt: 6 }
+        { id: 1,
+          task: 'task1', 
+          priority: 1,
+          createdAt: 1 , 
+          usuario:{
+            id: 1,
+            username: "Ad",
+            role: "distrital"
+          },
+          establecimiento:{
+            cue:"1",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          } 
+        },
+
+
+        { id: 2, 
+          task: 'task2',
+          priority: 2,
+          createdAt: 3 ,
+          usuario:{
+            id: 1,
+            username: "Ad",
+            role: "distrital"
+          },
+          establecimiento:{
+            cue:"2",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          } 
+        },
+
+
+        { id: 3, 
+          task: 'task3',
+          priority: 3, 
+          createdAt: 4 ,
+          usuario:{
+            id: 2,
+            username: "Ar",
+            role: "regional"
+          },
+          establecimiento:{
+            cue:"3",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          } 
+        },
+
+
+        { id: 4, 
+          task: 'task4', 
+          priority: 4,
+          createdAt: 5,
+          usuario:{
+            id: 2,
+            username: "Bd",
+            role: "distrital"
+          },
+          establecimiento:{
+            cue:"4",
+            distrito: 2,
+            descripcionDistrito:"BRANDSEN",
+            region: "I"
+          } 
+        },
+
+
+        { id: 5, 
+          task: 'task5', 
+          priority: 5,
+          createdAt: 6,
+          usuario:{
+            id: 1,
+            username: "Br",
+            role: "regional"
+          },
+          establecimiento:{
+            cue:"5",
+            distrito: 1,
+            descripcionDistrito:"BRANDSEN",
+            region: "I"
+          } 
+        }
+      ];
+      
+      private establecimientosCollection:Establecimiento[] =[
+        {
+            cue:"1",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          } ,
+        {
+            cue:"2",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          } ,
+        {
+            cue:"3",
+            distrito: 1,
+            descripcionDistrito:"BERAZATEGUI",
+            region: "I"
+          },
+        {
+            cue:"4",
+            distrito: 2,
+            descripcionDistrito:"BRANDSEN",
+            region: "I"
+          } ,
+        {
+            cue:"5",
+            distrito: 1,
+            descripcionDistrito:"BRANDSEN",
+            region: "I"
+          } ,
+        {  cue: "6",
+           distrito: 3,
+           descripcionDistrito: "F VARELA",
+           region: "string"
+        },
+        {  cue: "7",
+           distrito: 4,
+           descripcionDistrito: "MONTE",
+           region: "string"
+        },
+        {  cue: "8",
+           distrito: 1,
+           descripcionDistrito: "SAN VICENTE",
+           region: "string"
+        },
+        {  cue: "9",
+           distrito: 1,
+           descripcionDistrito: "A BROWN",
+           region: "string"
+        },
+        {  cue: "10",
+           distrito: 1,
+           descripcionDistrito: "LANUS",
+           region: "string"
+        },
+
+
       ];
 
     constructor(private authenticationService: AuthenticationService) { } 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log("Entra al fakeBackend");
         const users: User[] = [
-            { id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }
+            { id: 1, 
+              username: 'Ad',
+              password: 'Ad',
+              firstName: 'Ad', 
+              lastName: 'Ad', 
+              role: Role.UserDistrital,
+              influencia:{
+                  distrito:1,
+                  region:"0"
+              }
+              
+            },
+
+
+            { id: 2,
+             username: 'Bd',
+             password: 'Bd', 
+             firstName: 'Bd', 
+             lastName: 'Bd',
+              role: Role.UserDistrital,
+              influencia:{
+                  distrito:2,
+                  region:"0"
+              }
+            
+            },
+
+
+            { id: 3,
+              username: 'Ar',
+              password: 'Ar', 
+              firstName: 'Ar',
+              lastName: 'Ar',
+              role: Role.UserRegional,
+              influencia:{
+                  distrito:1,
+                  region:"I"
+              }
+            
+            },
+
+            { id: 4,
+                username: 'Br',
+                password: 'Br', 
+                firstName: 'Br',
+                lastName: 'Br',
+                role: Role.UserRegional,
+                influencia:{
+                    distrito:1,
+                    region:"II"
+                }
+              
+              },
+
+            { id: 5,
+                username: 'G',
+                password: 'G', 
+                firstName: 'G',
+                lastName: 'G',
+                role: Role.UserGeneral,
+                influencia:{
+                    distrito:1,
+                    region:"II"
+                }
+              
+              },
         ];
 
         const authHeader = request.headers.get('Authorization');
         const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+        const roleString = isLoggedIn && authHeader.split('.')[1];
+        const role = roleString ? Role[roleString] : null;
+
 
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
 
             // authenticate - public
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST') {
-                console.log("El usuario es");
                 const user = users.find(x => x.username === request.body.username && x.password === request.body.password);
                 if (!user) return error('Username or password is incorrect');
                 return ok({
@@ -51,10 +262,21 @@ export class FakeBackend implements HttpInterceptor{
                     username: user.username,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    role: user.role,
+                    influencia: user.influencia,
                     token: `fake-jwt-token`
                 });
             }
+            // get ALL establecimientos
+            if(request.url.endsWith('/members/establecimientos') && request.method === 'GET'){
+                if (!isLoggedIn) return unauthorised();
+                return ok(this.establecimientosCollection);
+            }
 
+            /* ***************************************************************************** */
+            /* ***************************************************************************** */
+                                    /* INSPECCIONES */
+            
             // get ALL Inspecciones
             if (request.url.endsWith('/members/inspecciones') && request.method === 'GET') {
                 if (!isLoggedIn) return unauthorised();
@@ -62,7 +284,7 @@ export class FakeBackend implements HttpInterceptor{
             }
 
             // add Inspecciones
-            if (request.url.endsWith('/members/inspecciones') && request.method === 'POST') {
+            if (request.url.endsWith('/members/addInspeccion') && request.method === 'POST') {
                 const inspeccionNueva = request.body.inspeccion;
                 if (!isLoggedIn) return unauthorised();
                 this.inspeccionCollection.push(inspeccionNueva);
@@ -73,7 +295,7 @@ export class FakeBackend implements HttpInterceptor{
             if (request.url.endsWith('/members/inspecciones/delete') && request.method === 'POST') {
                 if (!isLoggedIn) return unauthorised();
                 const inspeccionIndex = this.inspeccionCollection.findIndex(x => x.id === request.body.id);
-                if (inspeccionIndex==-1) return error('Username or password is incorrect');
+                if (inspeccionIndex==-1) return error('No encontrado');
                 this.inspeccionCollection.splice(inspeccionIndex,1);
                 return ok("La inspeccion se elimino");
             }
@@ -85,8 +307,8 @@ export class FakeBackend implements HttpInterceptor{
                 if (!inspeccion) return error('Username or password is incorrect');
                 return ok(inspeccion);
             }
-
-            
+            /* ***************************************************************************** */
+            /* ***************************************************************************** */
 
             // pass through any requests not handled above
             return next.handle(request);

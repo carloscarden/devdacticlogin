@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Inspeccion } from './../../inspeccion';
+import { Inspeccion } from './../../_models/inspeccion';
 import { TodoService } from './../../services/todo.service';
 
 

@@ -60,6 +60,8 @@ export class LoginPage implements OnInit {
     this.authService.login(this.f.username.value, this.f.password.value).pipe(first())
     .subscribe(
         data => {
+           this.loading=false;
+           this.error='';
            this.router.navigate(['/members/details']);
         },
         error => {

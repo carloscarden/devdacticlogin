@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Inspeccion } from '../inspeccion';
-import { INSPECCIONES } from '../mock-inspeccion';
+import { Inspeccion } from '../_models/inspeccion';
+import { Establecimiento } from '../_models/establecimiento';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -27,12 +27,25 @@ export class TodoService {
   ];
   constructor(private http: HttpClient) { }
 
+
+  /********************************************************************** */
+                    /* INSPECCIONES*/
   getInspecciones(): Observable<Inspeccion[]> {
     return this.http.get<Inspeccion[]>(`http://localhost:8100/members/inspecciones`);
   }
+
+  addInspeccion(inspeccion: Inspeccion) {
+    return this.http.post<any>(`http://localhost:8100/members/addInspeccion`, { inspeccion });
+  }
+
+  /********************************************************************** */
+
+  getEscuelas(): Observable<Establecimiento[]> {
+    return this.http.get<Establecimiento[]>(`http://localhost:8100/members/establecimientos`);
+  }
  
   getTodo(id:number): Observable<Inspeccion> {
-    return of(INSPECCIONES.find(inspeccion => inspeccion.id === id));
+    return null;
   }
  
   updateTodo(todo: Todo, id: string) {
@@ -44,9 +57,7 @@ export class TodoService {
     return this.todosCollection;
   }
  
-  addInspeccion(inspeccion: Inspeccion) {
-    return this.http.post<any>(`localhost:8100/users/authenticate`, { inspeccion });
-  }
+  
  
   removeTodo(id:string) {
     return this.todosCollection;
