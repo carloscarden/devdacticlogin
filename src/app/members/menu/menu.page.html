@@ -10,12 +10,19 @@
     <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false">
+            <ion-button (click)="logout()">
+                  <ion-icon slot="icon-only" name="log-out"> </ion-icon>
+                  Logout
+            </ion-button>
             <ion-item (click)="open('principal')" >
-                First
+                CARGAR ACTIVIDAD
             </ion-item>
             <ion-item (click)="open('second')" >
-              Second
+                 VER AGENDA
             </ion-item>
+            <ion-item (click)="open('second')" >
+                VER INFORMES
+           </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>

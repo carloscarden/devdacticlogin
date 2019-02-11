@@ -5,5 +5,37 @@
 </ion-header>
 
 <ion-content padding>
+    <form (ngSubmit)="logForm()">
+        <ion-item>
+          <ion-label>Todo</ion-label>
+          <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Motivo</ion-label>
+            <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="brown">Brown</ion-select-option>
+              <ion-select-option value="blonde">Blonde</ion-select-option>
+              <ion-select-option value="black">Black</ion-select-option>
+              <ion-select-option value="red">Red</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-textarea [(ngModel)]="todo.description" name="description"></ion-textarea>
+        </ion-item>
+
+        
+        <ion-item>
+            <button ion-button (click)="uploadFile()">Upload</button>
+        </ion-item>
+
+       
+
+        <button ion-button type="submit" block>Add Todo</button>
+      </form>
+      <button (click)="goBack()">go back</button>
 
 </ion-content>

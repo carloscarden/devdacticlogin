@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import { AuthenticationService } from './../../services/authentication.service';
+
 
 
 @Component({
@@ -10,7 +12,9 @@ import { Router, RouterEvent } from '@angular/router';
 export class MenuPage implements OnInit {
 
   selectedPath='';
-  constructor(private router:Router) { 
+  constructor(
+    private authService: AuthenticationService,
+    private router:Router) { 
     this.router.events.subscribe((event:RouterEvent)=>{
       this.selectedPath=event.url;
     })
@@ -21,6 +25,11 @@ export class MenuPage implements OnInit {
 
   open(page: string) {
     this.router.navigateByUrl('/menu/' + page);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
 }
