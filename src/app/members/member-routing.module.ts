@@ -7,7 +7,9 @@ reference the Dashboard
 const routes: Routes = [
   { path: 'details', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'details/:id', loadChildren: './details/details.module#DetailsPageModule' },
-  { path: 'addInspeccion', loadChildren: './add-inspeccion/add-inspeccion.module#AddInspeccionPageModule' }
+  { path: 'addInspeccion', loadChildren: './add-inspeccion/add-inspeccion.module#AddInspeccionPageModule' },
+  { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
+  { path: 'agenda', loadChildren: './agenda/agenda.module#AgendaPageModule' },
 ];
 /*
 Notice that this is a child routing and therefore the routes are added to the router 

@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
         data => {
            this.loading=false;
            this.error='';
-           this.router.navigate(['/members/details']);
+           this.router.navigate(['/members/menu/principal']);
         },
         error => {
             this.error = error;
