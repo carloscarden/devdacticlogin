@@ -14,7 +14,8 @@ const routes: Routes = [
     children:[
       { path: 'principal', loadChildren: '../principal/principal.module#PrincipalPageModule' },
       { path: 'agenda', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
-      { path: 'informes', loadChildren: '../informes/informes.module#InformesPageModule' }
+      { path: 'informes', loadChildren: '../informes/informes.module#InformesPageModule' },
+      { path: 'actividad', loadChildren: '../actividades/actividades-routing.module#ActividadesRoutingModule' }
     ]
   },
 

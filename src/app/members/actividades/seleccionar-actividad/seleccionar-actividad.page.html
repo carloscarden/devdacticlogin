@@ -1,12 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>seleccionarActividad</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>SELECCIONAR ACTIVIDAD</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-button expand="full" routerLink="">VISITA ESCUELA</ion-button>
-    <ion-button expand="full" routerLink="">TRABAJO ADMINISTRATIVO</ion-button>
-    <ion-button expand="full" routerLink="">CONVOCATORIA</ion-button>
-    <ion-button expand="full" routerLink="">LICENCIA</ion-button>
-  </ion-content>
+    <ion-button expand="full" routerLink="/members/menu/actividad/cargarVisita">VISITA ESCUELA</ion-button>
+    <ion-button expand="full" routerLink="/members/menu/actividad/cargarTrabajoAdmin">TRABAJO ADMINISTRATIVO</ion-button>
+    <ion-button expand="full" routerLink="/members/menu/actividad/cargarConvocatoria">CONVOCATORIA</ion-button>
+    <ion-button expand="full" routerLink="/members/menu/actividad/seleccionarActividad">LICENCIA</ion-button>
+</ion-content>

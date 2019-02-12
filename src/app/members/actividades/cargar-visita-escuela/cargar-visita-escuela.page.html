@@ -1,18 +1,38 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cargarVisitaEscuela</ion-title>
+    <ion-title>CARGA VISITA ESCUELA</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <form (ngSubmit)="logForm()">
         <ion-item>
-          <ion-label>Todo</ion-label>
-          <ion-input type="text" [(ngModel)]="todo.title" name="title"></ion-input>
+          <ion-label>FECHA</ion-label>
+          <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
         </ion-item>
 
         <ion-item>
-            <ion-label>Motivo</ion-label>
+          <ion-label>HORA INICIO</ion-label>
+          <ion-datetime displayFormat="HH:mm"></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>HORA FIN</ion-label>
+          <ion-datetime displayFormat="HH:mm"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+           <ion-label>SERVICIO VISITADO</ion-label>
+           <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="brown">Brown</ion-select-option>
+              <ion-select-option value="blonde">Blonde</ion-select-option>
+              <ion-select-option value="black">Black</ion-select-option>
+              <ion-select-option value="red">Red</ion-select-option>
+           </ion-select>
+         </ion-item>
+
+        <ion-item>
+            <ion-label>MOTIVO</ion-label>
             <ion-select value="brown" okText="Okay" cancelText="Dismiss">
               <ion-select-option value="brown">Brown</ion-select-option>
               <ion-select-option value="blonde">Blonde</ion-select-option>
@@ -21,20 +41,54 @@
             </ion-select>
         </ion-item>
 
+        <ion-item>
+          <ion-label>OBSERVACIONES</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
 
         <ion-item>
-          <ion-label>Description</ion-label>
-          <ion-textarea [(ngModel)]="todo.description" name="description"></ion-textarea>
+          <ion-label>INSPECTOR VISITANTE</ion-label>
+          <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select>
+      </ion-item>
+        
+        
+
+
+        <ion-item>
+           <h4 *ngIf="images.length == 0" text-center>SELECCIONE IMAGENES!</h4>
+           <ion-list>
+               <ion-item *ngFor="let img of images; index as pos" text-wrap>
+                  <ion-thumbnail slot="start">
+                    <ion-img [src]="img.path"></ion-img>
+                  </ion-thumbnail>
+                  <ion-label>
+                     {{ img.name }}
+                  </ion-label>
+                  <ion-button slot="end" fill="clear" (click)="startUpload(img)">
+                    <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+               </ion-item>
+          </ion-list>
         </ion-item>
 
         
-        <ion-item>
-            <button ion-button (click)="uploadFile()">Upload</button>
-        </ion-item>
+         <ion-item>
+           <ion-button fill="clear" expand="full"  (click)="selectImage()">
+              <ion-icon slot="start" name="camera"></ion-icon> Select Image
+           </ion-button>
+         </ion-item>
 
        
 
-        <button ion-button type="submit" block>Add Todo</button>
+         <button ion-button type="submit" block>Add Todo</button>
       </form>
       <button (click)="goBack()">go back</button>
 

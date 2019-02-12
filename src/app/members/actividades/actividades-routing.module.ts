@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+
+
+const routes: Routes = [
+      { path: 'cargarConvocatoria', loadChildren: './cargar-convocatoria/cargar-convocatoria.module#CargarConvocatoriaPageModule' },
+      { path: 'cargarTrabajoAdmin', loadChildren: './cargar-trabajo-administrativo/cargar-trabajo-administrativo.module#CargarTrabajoAdministrativoPageModule' },
+      { path: 'cargarVisita', loadChildren: './cargar-visita-escuela/cargar-visita-escuela.module#CargarVisitaEscuelaPageModule' },
+      { path: 'seleccionarActividad', loadChildren: './seleccionar-actividad/seleccionar-actividad.module#SeleccionarActividadPageModule' }
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class ActividadesRoutingModule { }
