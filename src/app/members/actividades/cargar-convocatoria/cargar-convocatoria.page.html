@@ -5,5 +5,53 @@
 </ion-header>
 
 <ion-content padding>
+    <form (ngSubmit)="logForm()">
+        <ion-item>
+            <ion-label>INICIO CONVOCATORIA</ion-label>
+            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+        </ion-item>
 
+        <ion-item>
+            <ion-label>FIN CONVOCATORIA</ion-label>
+            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>CONVOCATORIA</ion-label>
+            <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+               <ion-select-option value="brown">Brown</ion-select-option>
+               <ion-select-option value="blonde">Blonde</ion-select-option>
+               <ion-select-option value="black">Black</ion-select-option>
+               <ion-select-option value="red">Red</ion-select-option>
+            </ion-select>
+         </ion-item>
+
+         <ion-item>
+            <h4 *ngIf="images.length == 0" text-center>CARGA CERTIFICADO!</h4>
+            <ion-list>
+                <ion-item *ngFor="let img of images; index as pos" text-wrap>
+                   <ion-thumbnail slot="start">
+                     <ion-img [src]="img.path"></ion-img>
+                   </ion-thumbnail>
+                   <ion-label>
+                      {{ img.name }}
+                   </ion-label>
+                   <ion-button slot="end" fill="clear" (click)="startUpload(img)">
+                     <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+                   </ion-button>
+                   <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+                     <ion-icon slot="icon-only" name="trash"></ion-icon>
+                   </ion-button>
+                </ion-item>
+           </ion-list>
+         </ion-item>
+ 
+         
+          <ion-item>
+            <ion-button fill="clear" expand="full"  (click)="selectImage()">
+               <ion-icon slot="start" name="camera"></ion-icon> Select Image
+            </ion-button>
+          </ion-item>
+ 
+    </form>
 </ion-content>

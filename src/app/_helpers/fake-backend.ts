@@ -6,7 +6,8 @@ import { User } from '../_models/user';
 import { Role } from '../_models/role';
 import { Inspeccion } from '../_models/inspeccion';
 import { Establecimiento } from '../_models/establecimiento';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../_services/authentication.service';
+import { Licencia } from '../_models/licencia';
 
 /*
 The fake backend provider enables the example to run without a backend / backendless,
@@ -111,8 +112,8 @@ export class FakeBackend implements HttpInterceptor{
           } 
         }
       ];
-      
-      private establecimientosCollection:Establecimiento[] =[
+    private licenciaCollection: Licencia[] =[];  
+    private establecimientosCollection:Establecimiento[] =[
         {
             cue:"1",
             distrito: 1,
@@ -307,6 +308,14 @@ export class FakeBackend implements HttpInterceptor{
                 if (!inspeccion) return error('Username or password is incorrect');
                 return ok(inspeccion);
             }
+             /********************************************************************************* */
+            // add a licencia
+            if (request.url.endsWith('/members/licencias/addLicencia') && request.method === 'POST') {
+              const licenciaNueva = request.body.licencia;
+              if (!isLoggedIn) return unauthorised();
+              this.licenciaCollection.push(licenciaNueva);
+              return ok("Nueva Licencia Agregada");
+          }
             /* ***************************************************************************** */
             /* ***************************************************************************** */
 

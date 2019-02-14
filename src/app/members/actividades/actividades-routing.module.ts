@@ -7,7 +7,7 @@ const routes: Routes = [
       { path: 'cargarTrabajoAdmin', loadChildren: './cargar-trabajo-administrativo/cargar-trabajo-administrativo.module#CargarTrabajoAdministrativoPageModule' },
       { path: 'cargarVisita', loadChildren: './cargar-visita-escuela/cargar-visita-escuela.module#CargarVisitaEscuelaPageModule' },
       { path: 'seleccionarActividad', loadChildren: './seleccionar-actividad/seleccionar-actividad.module#SeleccionarActividadPageModule' },
-     { path: 'cargar-licencia', loadChildren: './cargar-licencia/cargar-licencia.module#CargarLicenciaPageModule' }
+      { path: 'cargarLicencia', loadChildren: './cargar-licencia/cargar-licencia.module#CargarLicenciaPageModule' }
 
 ];
 
