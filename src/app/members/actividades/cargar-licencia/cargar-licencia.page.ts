@@ -5,12 +5,14 @@ import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-cargar-licencia',
   templateUrl: './cargar-licencia.page.html',
   styleUrls: ['./cargar-licencia.page.scss'],
 })
 export class CargarLicenciaPage implements OnInit {
+  
   licencia = new Licencia();
   cargaCorrecta = false;
   loading = false;

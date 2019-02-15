@@ -8,6 +8,8 @@ import { Inspeccion } from '../_models/inspeccion';
 import { Establecimiento } from '../_models/establecimiento';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Licencia } from '../_models/licencia';
+import { Convocatoria } from '../_models/convocatoria';
+
 
 /*
 The fake backend provider enables the example to run without a backend / backendless,
@@ -112,7 +114,8 @@ export class FakeBackend implements HttpInterceptor{
           } 
         }
       ];
-    private licenciaCollection: Licencia[] =[];  
+    private licenciaCollection: Licencia[] =[]; 
+    private convocatoriaCollection: Convocatoria[] =[]; 
     private establecimientosCollection:Establecimiento[] =[
         {
             cue:"1",
@@ -317,6 +320,13 @@ export class FakeBackend implements HttpInterceptor{
               return ok("Nueva Licencia Agregada");
           }
             /* ***************************************************************************** */
+            if (request.url.endsWith('/members/convocatorias/addConvocatoria') && request.method === 'POST') {
+              const convocatoriaNueva = request.body.convocatoria;
+              if (!isLoggedIn) return unauthorised();
+              this.convocatoriaCollection.push(convocatoriaNueva);
+              return ok("Nueva Licencia Agregada");
+            }
+
             /* ***************************************************************************** */
 
             // pass through any requests not handled above

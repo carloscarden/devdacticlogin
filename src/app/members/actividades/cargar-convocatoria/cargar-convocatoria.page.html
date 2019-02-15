@@ -5,24 +5,27 @@
 </ion-header>
 
 <ion-content padding>
-    <form (ngSubmit)="logForm()">
+    <form  #convocatoriaForm="ngForm" (ngSubmit)="logForm()">
         <ion-item>
             <ion-label>INICIO CONVOCATORIA</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
-        </ion-item>
+            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="convocatoria.fechaInicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+            <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
+              La fecha de inicio es requerida
+           </div>
+          </ion-item>
 
         <ion-item>
             <ion-label>FIN CONVOCATORIA</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="convocatoria.fechaFin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+            <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
+              La fecha de fin es requerida
+           </div>
         </ion-item>
 
         <ion-item>
             <ion-label>CONVOCATORIA</ion-label>
-            <ion-select value="brown" okText="Okay" cancelText="Dismiss">
-               <ion-select-option value="brown">Brown</ion-select-option>
-               <ion-select-option value="blonde">Blonde</ion-select-option>
-               <ion-select-option value="black">Black</ion-select-option>
-               <ion-select-option value="red">Red</ion-select-option>
+            <ion-select value="brown" okText="Okay" cancelText="Dismiss" [(ngModel)]="convocatoria.tipo" name="tipoConvocatoria" #tipoConvocatoria="ngModel" required>
+               <ion-select-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</ion-select-option>
             </ion-select>
          </ion-item>
 
@@ -52,6 +55,11 @@
                <ion-icon slot="start" name="camera"></ion-icon> Select Image
             </ion-button>
           </ion-item>
+
+          <div class="form-group">
+            <ion-button type="submit" [disabled]="!convocatoriaForm.form.valid">Submit</ion-button>
+            <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
  
     </form>
 </ion-content>

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -25,8 +26,8 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { FormsModule }   from '@angular/forms';
+import { NgCalendarModule  } from 'ionic2-calendar';
 
- 
 
 
 
@@ -39,7 +40,9 @@ import { FormsModule }   from '@angular/forms';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgCalendarModule
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
