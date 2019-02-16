@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -18,11 +19,15 @@ import {  ErrorInterceptor } from './_helpers/error-interceptor';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// para manejar la camara y la subida de archivos
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
- 
+
+import { FormsModule }   from '@angular/forms';
+import { NgCalendarModule  } from 'ionic2-calendar';
+
 
 
 
@@ -34,7 +39,10 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     IonicModule.forRoot(), 
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    NgCalendarModule
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

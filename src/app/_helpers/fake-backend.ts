@@ -6,7 +6,10 @@ import { User } from '../_models/user';
 import { Role } from '../_models/role';
 import { Inspeccion } from '../_models/inspeccion';
 import { Establecimiento } from '../_models/establecimiento';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../_services/authentication.service';
+import { Licencia } from '../_models/licencia';
+import { Convocatoria } from '../_models/convocatoria';
+
 
 /*
 The fake backend provider enables the example to run without a backend / backendless,
@@ -111,8 +114,9 @@ export class FakeBackend implements HttpInterceptor{
           } 
         }
       ];
-      
-      private establecimientosCollection:Establecimiento[] =[
+    private licenciaCollection: Licencia[] =[]; 
+    private convocatoriaCollection: Convocatoria[] =[]; 
+    private establecimientosCollection:Establecimiento[] =[
         {
             cue:"1",
             distrito: 1,
@@ -307,7 +311,22 @@ export class FakeBackend implements HttpInterceptor{
                 if (!inspeccion) return error('Username or password is incorrect');
                 return ok(inspeccion);
             }
+             /********************************************************************************* */
+            // add a licencia
+            if (request.url.endsWith('/members/licencias/addLicencia') && request.method === 'POST') {
+              const licenciaNueva = request.body.licencia;
+              if (!isLoggedIn) return unauthorised();
+              this.licenciaCollection.push(licenciaNueva);
+              return ok("Nueva Licencia Agregada");
+          }
             /* ***************************************************************************** */
+            if (request.url.endsWith('/members/convocatorias/addConvocatoria') && request.method === 'POST') {
+              const convocatoriaNueva = request.body.convocatoria;
+              if (!isLoggedIn) return unauthorised();
+              this.convocatoriaCollection.push(convocatoriaNueva);
+              return ok("Nueva Licencia Agregada");
+            }
+
             /* ***************************************************************************** */
 
             // pass through any requests not handled above

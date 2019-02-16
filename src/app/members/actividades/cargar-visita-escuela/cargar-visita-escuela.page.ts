@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { TodoService } from './../../../services/todo.service';
+import { TodoService } from './../../../_services/todo.service';
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
