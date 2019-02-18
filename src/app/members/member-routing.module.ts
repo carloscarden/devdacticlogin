@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'addInspeccion', loadChildren: './add-inspeccion/add-inspeccion.module#AddInspeccionPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'agenda', loadChildren: './agenda/agenda.module#AgendaPageModule' },
-  { path: 'informes', loadChildren: './informes/informes.module#InformesPageModule' },
+  { path: 'informes', loadChildren: './informes/informes.module#InformesPageModule' },  { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },
+
 
 ];
 /*

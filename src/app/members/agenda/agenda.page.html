@@ -1,4 +1,14 @@
 <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>AGENDA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
   <ion-toolbar color="primary">
       <ion-title>{{viewTitle}}</ion-title>
       <ion-buttons end>
@@ -7,6 +17,9 @@
           <button ion-button (click)="changeMode('week')">W</button>
           <button ion-button (click)="changeMode('day')">D</button>
           <button ion-button (click)="loadEvents()">Load Events</button>
+          <button ion-button icon-only (click)="addEvent()">
+            <ion-icon name="add"></ion-icon>
+          </button>
       </ion-buttons>
   </ion-toolbar>
 </ion-header>
