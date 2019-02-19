@@ -27,7 +27,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { FormsModule }   from '@angular/forms';
 import { NgCalendarModule  } from 'ionic2-calendar';
-import { EventModalPage } from './members/event-modal/event-modal.page'
+import { EventModalPage } from './members/event-modal/event-modal.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 
 
@@ -42,7 +43,8 @@ import { EventModalPage } from './members/event-modal/event-modal.page'
     IonicStorageModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    NgCalendarModule
+    NgCalendarModule,
+    IonicSelectableModule
     
   ],
   providers: [

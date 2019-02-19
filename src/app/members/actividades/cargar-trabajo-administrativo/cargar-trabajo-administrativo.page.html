@@ -27,12 +27,15 @@
 
         <ion-item>
           <ion-label>TRABAJO ADMINISTRATIVO</ion-label>
-          <ion-select value="brown" okText="Okay" cancelText="Dismiss">
-             <ion-select-option value="brown">Brown</ion-select-option>
-             <ion-select-option value="blonde">Blonde</ion-select-option>
-             <ion-select-option value="black">Black</ion-select-option>
-             <ion-select-option value="red">Red</ion-select-option>
-          </ion-select>
+          <ionic-selectable
+            item-content
+            [(ngModel)]="tipoTrabajo"
+            itemValueField="id"
+            itemTextField="tipo"
+            [items]="tiposTrabajos"
+            [canSearch]="true"
+            (onSearch)="searchPorts($event)">
+          </ionic-selectable>
         </ion-item>
 
         <ion-item>
@@ -40,6 +43,7 @@
           <ion-input type="text"></ion-input>
         </ion-item>
 
+        <!-- 
         <ion-item>
             <h4 *ngIf="images.length == 0" text-center>SUBIR ACTAS!</h4>
             <ion-list>
@@ -65,7 +69,13 @@
             <ion-button fill="clear" expand="full"  (click)="selectImage()">
                <ion-icon slot="start" name="camera"></ion-icon> Select Image
             </ion-button>
-          </ion-item>
+          </ion-item> -->
+
+          <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button routerLink="" routerDirection="forward">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
  
     </form>  
 

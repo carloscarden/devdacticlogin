@@ -9,6 +9,7 @@ import { Establecimiento } from '../_models/establecimiento';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Licencia } from '../_models/licencia';
 import { Convocatoria } from '../_models/convocatoria';
+import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
 
 
 /*
@@ -175,7 +176,12 @@ export class FakeBackend implements HttpInterceptor{
 
 
       ];
-
+    private tiposTrabajosAdministrativoCollection:TipoTrabajoAdministrativo[]=[
+      {id:1,tipo:"copret"},
+      {id:2,tipo:"entrevista"},
+     {id:3, tipo:"mensajes"},
+     {id:4, tipo:"mesa de inclusion"}];
+    
     constructor(private authenticationService: AuthenticationService) { } 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -328,6 +334,13 @@ export class FakeBackend implements HttpInterceptor{
             }
 
             /* ***************************************************************************** */
+
+            // get ALL tipoTrabajoAdmin
+            if (request.url.endsWith('/members/tipoTrabajoAdmin') && request.method === 'GET') {
+              if (!isLoggedIn) return unauthorised();
+              return ok(this.tiposTrabajosAdministrativoCollection);
+          }
+
 
             // pass through any requests not handled above
             return next.handle(request);
