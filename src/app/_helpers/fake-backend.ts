@@ -10,6 +10,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { Licencia } from '../_models/licencia';
 import { Convocatoria } from '../_models/convocatoria';
 import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
+import { Calendario } from '../_models/calendario';
 
 
 /*
@@ -181,7 +182,7 @@ export class FakeBackend implements HttpInterceptor{
       {id:2,tipo:"entrevista"},
      {id:3, tipo:"mensajes"},
      {id:4, tipo:"mesa de inclusion"}];
-    
+    private tareasCollection:Calendario[]=[];
     constructor(private authenticationService: AuthenticationService) { } 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -339,8 +340,21 @@ export class FakeBackend implements HttpInterceptor{
             if (request.url.endsWith('/members/tipoTrabajoAdmin') && request.method === 'GET') {
               if (!isLoggedIn) return unauthorised();
               return ok(this.tiposTrabajosAdministrativoCollection);
-          }
+            }
 
+             /******************************************************************************* */
+            // AGENDA
+            if (request.url.endsWith('/members/cargarTareas') && request.method === 'GET') {
+              if (!isLoggedIn) return unauthorised();
+              return ok(this.tiposTrabajosAdministrativoCollection);
+            }
+
+            if (request.url.endsWith('/members/agregarTarea') && request.method === 'POST') {
+              const tarea = request.body.calendario;
+              if (!isLoggedIn) return unauthorised();
+              this.tareasCollection.push(tarea);
+              return ok("Nueva Tarea Agregada");
+            }
 
             // pass through any requests not handled above
             return next.handle(request);

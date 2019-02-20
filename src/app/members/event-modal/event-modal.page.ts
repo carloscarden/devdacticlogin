@@ -1,5 +1,6 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import {  NavController,  ModalController } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 
 
@@ -13,7 +14,7 @@ export class EventModalPage implements OnInit {
   event = { startTime: new Date().toISOString(), endTime: new Date().toISOString(), allDay: false };
   minDate = new Date().toISOString();
   selectedDay:any;
-  constructor(private nav:NavController, private modalCtrl:ModalController) { }
+  constructor(private nav:NavController, private modalCtrl:ModalController, navParams: NavParams) { }
 
   ngOnInit() {
     let preselectedDate = moment(this.selectedDay).format();
@@ -22,9 +23,10 @@ export class EventModalPage implements OnInit {
 
   }
 
-  async closeModal()
+  async cancel()
   {
-    await this.modalCtrl.dismiss();
+    
+    this.modalCtrl.dismiss();
   }
 
   async save() {

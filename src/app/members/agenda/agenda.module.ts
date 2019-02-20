@@ -11,7 +11,6 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import {EventModalPageModule} from '../event-modal/event-modal.module';
 
 
-
 const routes: Routes = [
   {
     path: '',
@@ -28,6 +27,7 @@ const routes: Routes = [
     NgCalendarModule
   ],
   declarations: [AgendaPage],
-  exports: [AgendaPage]
+  exports: [AgendaPage],
+  
 })
 export class AgendaPageModule {}

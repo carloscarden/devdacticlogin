@@ -11,7 +11,8 @@ import * as moment from 'moment';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
-  eventSource;
+  eventSource = [];
+
   viewTitle;
   isToday: boolean;
   selectedDay = new Date();
@@ -47,15 +48,31 @@ export class AgendaPage implements OnInit {
       await  alert.present();
   }
 
-  /* async addEvent(){
+  async addEvent(){
    let modal = await this.modalCtrl.create({
-      component: 'EventModalPage',
+      component: EventModalPage,
       componentProps: { selectedDay: this.selectedDay }
       });
+    
+   modal.onDidDismiss().then((data) => {
+      if (data) {
+        let eventData = data.data;
+        eventData.startTime = new Date(data.data.startTime);
+        eventData.endTime = new Date(data.data.endTime);
 
-    return await modal.present();
-
-  }*/
+        let events = this.eventSource;
+        events.push(eventData);
+        this.eventSource = [];
+        setTimeout(() => {
+          this.eventSource = events;
+        });
+      }
+      console.log(data);
+      console.log(data.data);
+   });
+   return await modal.present();
+    
+  }
 
   changeMode(mode) {
     this.calendar.mode = mode;
@@ -75,6 +92,7 @@ export class AgendaPage implements OnInit {
   }
 
   createRandomEvents() {
+    let colors: string[] = ['primary', 'warning', 'danger', 'success'];
     var events = [];
     for (var i = 0; i < 50; i += 1) {
         var date = new Date();
