@@ -11,6 +11,7 @@ import { Licencia } from '../_models/licencia';
 import { Convocatoria } from '../_models/convocatoria';
 import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
 import { Calendario } from '../_models/calendario';
+import { TipoConvocatoria } from '../_models/tipo-convocatoria';
 
 
 /*
@@ -183,6 +184,27 @@ export class FakeBackend implements HttpInterceptor{
      {id:3, tipo:"mensajes"},
      {id:4, tipo:"mesa de inclusion"}];
     private tareasCollection:Calendario[]=[];
+    private tipoConvocatoriaCollection:TipoConvocatoria[]=[
+      { id: 1,
+        codigo: 1,
+        descripcion: "Plenario"},
+      { id: 2,
+        codigo: 2,
+        descripcion: "Concurso"},
+      {  id: 3,
+        codigo: 3,
+        descripcion: "Prueba Seleccion"},
+      {  id: 4,
+        codigo: 4,
+        descripcion: "Capacitacion"},
+      {  id: 5,
+        codigo: 5,
+        descripcion: "Citacion de Autoridad Compentente"},
+      {  id: 6,
+        codigo: 6,
+        descripcion: "Otro"}
+    ];
+
     constructor(private authenticationService: AuthenticationService) { } 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -331,7 +353,13 @@ export class FakeBackend implements HttpInterceptor{
               const convocatoriaNueva = request.body.convocatoria;
               if (!isLoggedIn) return unauthorised();
               this.convocatoriaCollection.push(convocatoriaNueva);
-              return ok("Nueva Licencia Agregada");
+              return ok("Nueva Convocatoria Agregada");
+            }
+
+             // AGENDA
+             if (request.url.endsWith('/members/tipoConvocatorias') && request.method === 'GET') {
+              if (!isLoggedIn) return unauthorised();
+              return ok(this.tiposTrabajosAdministrativoCollection);
             }
 
             /* ***************************************************************************** */
@@ -344,7 +372,7 @@ export class FakeBackend implements HttpInterceptor{
 
              /******************************************************************************* */
             // AGENDA
-            if (request.url.endsWith('/members/cargarTareas') && request.method === 'GET') {
+            if (request.url.endsWith('/members/tareas') && request.method === 'GET') {
               if (!isLoggedIn) return unauthorised();
               return ok(this.tiposTrabajosAdministrativoCollection);
             }
@@ -355,6 +383,8 @@ export class FakeBackend implements HttpInterceptor{
               this.tareasCollection.push(tarea);
               return ok("Nueva Tarea Agregada");
             }
+
+            /* ************************************************************************ */
 
             // pass through any requests not handled above
             return next.handle(request);

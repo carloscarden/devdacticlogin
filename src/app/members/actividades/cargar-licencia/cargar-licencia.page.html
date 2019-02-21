@@ -7,9 +7,27 @@
     <ion-title>CARGAR LICENCIA</ion-title>
   </ion-toolbar>
 </ion-header>
+{{ diagnostic }}
 {{ error }}
 <ion-content padding>
     <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
+        <ion-item>
+           <ion-label>INICIO LICENCIA</ion-label>
+               <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+               <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
+                    La fecha de inicio es requerida
+               </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>FIN LICENCIA</ion-label>
+            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+                <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
+                       La fecha de inicio es requerida
+                </div>
+        </ion-item>
+
+
         <ion-item>
             <ion-label>NUMERO DE SOLICITUD</ion-label>
             <ion-input type="number" [(ngModel)]="licencia.nroSolicitud" name="nroSolicitud" #nroSolicitud="ngModel" required ></ion-input>
@@ -24,8 +42,7 @@
         <ion-label color="danger" [hidden]="nroSolicitud.valid || nroSolicitud.pristine">El nro de la SOLICITUD es requerido</ion-label>
         --> 
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button type="submit" [disabled]="!licenciaForm.form.valid">
-              
+            <ion-fab-button type="submit" [disabled]="!licenciaForm.form.valid">           
               <ion-button type="submit" [disabled]="!licenciaForm.form.valid">
                     <ion-icon name="checkmark-circle-outline"></ion-icon>
               </ion-button>

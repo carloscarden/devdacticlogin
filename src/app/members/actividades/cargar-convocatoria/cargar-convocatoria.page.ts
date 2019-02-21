@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Convocatoria } from './../../../_models/convocatoria';
-import { ActividadesService } from './../../../_services/actividades.service';
+
+
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IonicSelectableComponent } from 'ionic-selectable';
+
+/*  SERVICES */
+import { ActividadesService } from './../../../_services/actividades.service';
+
+/*  MODELOS */
+import { Convocatoria } from './../../../_models/convocatoria';
+import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
+
+
+
 
 @Component({
   selector: 'app-cargar-convocatoria',
@@ -10,15 +21,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./cargar-convocatoria.page.scss'],
 })
 export class CargarConvocatoriaPage implements OnInit {
-  tipos = [
-    'Plenario', 'Concurso', 'Prueba Seleccion', 
-    'Capacitacion','Citacion de Autoridad Competente', 'Otro'
-  ];
-
   convocatoria = new Convocatoria();
   loading = false;
   error= '';
-  constructor(private licenciaService: ActividadesService,) { }
+  constructor(private convocatoriaService: ActividadesService,) { }
 
   ngOnInit() {
   }
@@ -26,7 +32,7 @@ export class CargarConvocatoriaPage implements OnInit {
   onSubmit() {
     this.loading = true;
 
-    this.licenciaService.addConvocatoria(this.convocatoria).pipe(first())
+    this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
            this.loading=false;

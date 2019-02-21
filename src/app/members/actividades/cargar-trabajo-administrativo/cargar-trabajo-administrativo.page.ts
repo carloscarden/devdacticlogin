@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TipoTrabajoAdministrativo } from './../../../_models/tipo-trabajo-administrativo';
-import { ActividadesService } from './../../../_services/actividades.service';
+
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+
+
+/* MODELOS */
+import { TipoTrabajoAdministrativo } from './../../../_models/tipo-trabajo-administrativo';
+import { TareaAdministrativa } from  './../../../_models/tarea-administrativa';
+
+/* SERVICES */
+import { ActividadesService } from './../../../_services/actividades.service';
+
 
 @Component({
   selector: 'app-cargar-trabajo-administrativo',
@@ -36,17 +44,6 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     if (this.actividadesSubscription) {
       this.actividadesSubscription.unsubscribe();
     }
-
-    /*if (!text) {
-      // Close any running subscription.
-      if (this.portsSubscription) {
-        this.portsSubscription.unsubscribe();
-      }
-
-      event.component.items = [];
-      event.component.endSearch();
-      return;
-    }*/
 
     this.actividadesSubscription = this.actividadesService.getTipoTrabajoAdministrativo().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
