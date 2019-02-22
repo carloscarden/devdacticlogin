@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 
 /* MODELOS */
 import { TipoTrabajoAdministrativo } from './../../../_models/tipo-trabajo-administrativo';
-import { TareaAdministrativa } from  './../../../_models/tarea-administrativa';
+import { TrabajoAdministrativo } from  './../../../_models/trabajo-administrativo';
 
 /* SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
@@ -18,14 +19,41 @@ import { ActividadesService } from './../../../_services/actividades.service';
   styleUrls: ['./cargar-trabajo-administrativo.page.scss'],
 })
 export class CargarTrabajoAdministrativoPage implements OnInit {
+  trabajoAdmin = new TrabajoAdministrativo();
   tiposTrabajosAdministrativos: TipoTrabajoAdministrativo[];
   tipoTrabajo: TipoTrabajoAdministrativo;
   actividadesSubscription: Subscription;
+  cargaCorrecta = false;
+  loading = false;
+  error= '';
 
   constructor(private actividadesService: ActividadesService) { }
 
   ngOnInit() {
   }
+
+  onSubmit() { 
+    console.log("cargar");
+    
+    this.loading = true;
+    this.actividadesService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
+    .subscribe(
+        data => {
+           this.loading=false;
+           this.trabajoAdmin = new TrabajoAdministrativo();
+           this.error = '';
+           alert(data);
+        },
+        error => {
+            this.error = error;
+            this.loading = false;
+        });;
+  
+  }
+
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.trabajoAdmin); }
+
 
   filterPorts(tipos: TipoTrabajoAdministrativo[], text: string) {
     return tipos.filter(t => {

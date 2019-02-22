@@ -34,6 +34,7 @@ export class AgendaPage implements OnInit {
   
   onViewTitleChanged(title) {
         this.viewTitle = title;
+        console.log(title);
   }
 
   async onEventSelected(event) {
@@ -67,8 +68,7 @@ export class AgendaPage implements OnInit {
           this.eventSource = events;
         });
       }
-      console.log(data);
-      console.log(data.data);
+
    });
    return await modal.present();
     
@@ -85,6 +85,8 @@ export class AgendaPage implements OnInit {
  
 
   onCurrentDateChanged(event:Date) {
+    console.log(event)
+    console.log(event.getMonth());
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);

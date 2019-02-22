@@ -7,11 +7,21 @@ import { Role } from '../_models/role';
 import { Inspeccion } from '../_models/inspeccion';
 import { Establecimiento } from '../_models/establecimiento';
 import { AuthenticationService } from '../_services/authentication.service';
-import { Licencia } from '../_models/licencia';
-import { Convocatoria } from '../_models/convocatoria';
-import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
+
+/*  AGENDA */
 import { Calendario } from '../_models/calendario';
+
+/* TAREAS DEL INSPECTOR */
+import { Licencia } from '../_models/licencia';
+
+import { Convocatoria } from '../_models/convocatoria';
 import { TipoConvocatoria } from '../_models/tipo-convocatoria';
+
+import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
+import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
+
+
+
 
 
 /*
@@ -117,8 +127,14 @@ export class FakeBackend implements HttpInterceptor{
           } 
         }
       ];
+   
+    
+    private tareasCollection:Calendario[]=[];
+
+
+    /* TAREAS DEL INSPECTOR */
     private licenciaCollection: Licencia[] =[]; 
-    private convocatoriaCollection: Convocatoria[] =[]; 
+    
     private establecimientosCollection:Establecimiento[] =[
         {
             cue:"1",
@@ -178,31 +194,34 @@ export class FakeBackend implements HttpInterceptor{
 
 
       ];
+    
+    private trabajosAdministrativosCollection:TrabajoAdministrativo[]=[];
     private tiposTrabajosAdministrativoCollection:TipoTrabajoAdministrativo[]=[
       {id:1,tipo:"copret"},
       {id:2,tipo:"entrevista"},
-     {id:3, tipo:"mensajes"},
-     {id:4, tipo:"mesa de inclusion"}];
-    private tareasCollection:Calendario[]=[];
+      {id:3, tipo:"mensajes"},
+      {id:4, tipo:"mesa de inclusion"}];
+
+    private convocatoriaCollection: Convocatoria[] =[]; 
     private tipoConvocatoriaCollection:TipoConvocatoria[]=[
       { id: 1,
         codigo: 1,
-        descripcion: "Plenario"},
+        tipo: "Plenario"},
       { id: 2,
         codigo: 2,
-        descripcion: "Concurso"},
+        tipo: "Concurso"},
       {  id: 3,
         codigo: 3,
-        descripcion: "Prueba Seleccion"},
+        tipo: "Prueba Seleccion"},
       {  id: 4,
         codigo: 4,
-        descripcion: "Capacitacion"},
+        tipo: "Capacitacion"},
       {  id: 5,
         codigo: 5,
-        descripcion: "Citacion de Autoridad Compentente"},
+        tipo: "Citacion de Autoridad Compentente"},
       {  id: 6,
         codigo: 6,
-        descripcion: "Otro"}
+        tipo: "Otro"}
     ];
 
     constructor(private authenticationService: AuthenticationService) { } 
@@ -342,27 +361,36 @@ export class FakeBackend implements HttpInterceptor{
             }
              /********************************************************************************* */
             // add a licencia
-            if (request.url.endsWith('/members/licencias/addLicencia') && request.method === 'POST') {
+            if (request.url.endsWith('/members/addLicencia') && request.method === 'POST') {
               const licenciaNueva = request.body.licencia;
               if (!isLoggedIn) return unauthorised();
               this.licenciaCollection.push(licenciaNueva);
               return ok("Nueva Licencia Agregada");
           }
             /* ***************************************************************************** */
-            if (request.url.endsWith('/members/convocatorias/addConvocatoria') && request.method === 'POST') {
+            // addConvocatoria
+            if (request.url.endsWith('/members/addConvocatoria') && request.method === 'POST') {
               const convocatoriaNueva = request.body.convocatoria;
               if (!isLoggedIn) return unauthorised();
               this.convocatoriaCollection.push(convocatoriaNueva);
               return ok("Nueva Convocatoria Agregada");
             }
 
-             // AGENDA
+             // tipos convocatoria
              if (request.url.endsWith('/members/tipoConvocatorias') && request.method === 'GET') {
               if (!isLoggedIn) return unauthorised();
-              return ok(this.tiposTrabajosAdministrativoCollection);
+              return ok(this.tipoConvocatoriaCollection);
             }
 
             /* ***************************************************************************** */
+
+             // addConvocatoria
+             if (request.url.endsWith('/members/addTrabajoAdmin') && request.method === 'POST') {
+              const trabajoAdmin = request.body.trabajoAdmin;
+              if (!isLoggedIn) return unauthorised();
+              this.trabajosAdministrativosCollection.push(trabajoAdmin);
+              return ok("Nueva Convocatoria Agregada");
+            }
 
             // get ALL tipoTrabajoAdmin
             if (request.url.endsWith('/members/tipoTrabajoAdmin') && request.method === 'GET') {

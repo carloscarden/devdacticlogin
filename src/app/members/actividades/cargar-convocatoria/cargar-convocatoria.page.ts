@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { Subscription } from 'rxjs';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
@@ -22,6 +23,9 @@ import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
 })
 export class CargarConvocatoriaPage implements OnInit {
   convocatoria = new Convocatoria();
+  tiposConvocatorias: TipoConvocatoria[];
+  actividadesSubscription: Subscription;
+  cargaCorrecta = false;
   loading = false;
   error= '';
   constructor(private convocatoriaService: ActividadesService,) { }
@@ -46,4 +50,42 @@ export class CargarConvocatoriaPage implements OnInit {
         });;
 
    }
+
+   // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.convocatoria); }
+
+
+  filterPorts(tipos: TipoConvocatoria[], text: string) {
+    return tipos.filter(t => {
+      return t.tipo.toLowerCase().indexOf(text) !== -1 ;
+    });
+  }
+
+  searchPorts(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    // Close any running subscription.
+    if (this.actividadesSubscription) {
+      this.actividadesSubscription.unsubscribe();
+    }
+
+    this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
+      // Subscription will be closed when unsubscribed manually.
+     if (this.actividadesSubscription.closed) {
+        return;
+      }
+
+      event.component.items = this.filterPorts(tipos, text);
+      event.component.endSearch();
+    });
+  }
+
+
+
+
+
 }
