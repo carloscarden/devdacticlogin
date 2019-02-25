@@ -26,7 +26,7 @@ export class CargarLicenciaPage implements OnInit {
   }
 
   onSubmit() { 
-    
+    console.log("cargar");
     
     this.loading = true;
     this.licenciaService.addLicencia(this.licencia).pipe(first())

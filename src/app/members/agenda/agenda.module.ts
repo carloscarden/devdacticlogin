@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { AgendaPage } from './agenda.page';
 import { NgCalendarModule  } from 'ionic2-calendar';
+// The modal's module of the previous chapter
+import {EventModalPageModule} from '../event-modal/event-modal.module';
+
 
 const routes: Routes = [
   {
@@ -23,6 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgCalendarModule
   ],
-  declarations: [AgendaPage]
+  declarations: [AgendaPage],
+  exports: [AgendaPage],
+  
 })
 export class AgendaPageModule {}

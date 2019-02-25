@@ -1,5 +1,9 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
+import { ModalController, AlertController  } from '@ionic/angular';
+import { EventModalPage } from '../event-modal/event-modal.page'
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-agenda',
@@ -7,15 +11,18 @@ import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
-  eventSource;
+  eventSource = [];
+
   viewTitle;
   isToday: boolean;
+  selectedDay = new Date();
+
   calendar = {
      mode: 'month',
      currentDate: new Date()
   }; // these are the variable used by the calendar.
 
-  constructor(protected agendaService: AgendaServiceService) { }
+  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
 
@@ -24,12 +31,47 @@ export class AgendaPage implements OnInit {
   loadEvents() {
     this.eventSource = this.createRandomEvents();
   }
-    onViewTitleChanged(title) {
-        this.viewTitle = title;
-    }
   
-  onEventSelected(event) {
-        console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+  onViewTitleChanged(title) {
+        this.viewTitle = title;
+        console.log(title);
+  }
+
+  async onEventSelected(event) {
+
+      let start = moment(event.startTime).format('LLLL');
+      let end = moment(event.endTime).format('LLLL');
+      let alert = await this.alertCtrl.create({
+           header: '' + event.title,
+           subHeader:  'From: ' + start + '<br>To: ' + end,
+           buttons: ['OK']
+      });
+      await  alert.present();
+  }
+
+  async addEvent(){
+   let modal = await this.modalCtrl.create({
+      component: EventModalPage,
+      componentProps: { selectedDay: this.selectedDay }
+      });
+    
+   modal.onDidDismiss().then((data) => {
+      if (data) {
+        let eventData = data.data;
+        eventData.startTime = new Date(data.data.startTime);
+        eventData.endTime = new Date(data.data.endTime);
+
+        let events = this.eventSource;
+        events.push(eventData);
+        this.eventSource = [];
+        setTimeout(() => {
+          this.eventSource = events;
+        });
+      }
+
+   });
+   return await modal.present();
+    
   }
 
   changeMode(mode) {
@@ -40,12 +82,11 @@ export class AgendaPage implements OnInit {
     this.calendar.currentDate = new Date();
   }
 
-  onTimeSelected(ev) {
-    console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
-        (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
-  }
+ 
 
   onCurrentDateChanged(event:Date) {
+    console.log(event)
+    console.log(event.getMonth());
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
@@ -53,6 +94,7 @@ export class AgendaPage implements OnInit {
   }
 
   createRandomEvents() {
+    let colors: string[] = ['primary', 'warning', 'danger', 'success'];
     var events = [];
     for (var i = 0; i < 50; i += 1) {
         var date = new Date();

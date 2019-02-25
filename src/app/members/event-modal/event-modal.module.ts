@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CargarConvocatoriaPage } from './cargar-convocatoria.page';
-import { IonicSelectableModule } from 'ionic-selectable';
-
+import { EventModalPage } from './event-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CargarConvocatoriaPage
+    component: EventModalPage
   }
 ];
 
@@ -21,9 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    IonicSelectableModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [CargarConvocatoriaPage]
+  declarations: [EventModalPage],
+  entryComponents: [EventModalPage]
 })
-export class CargarConvocatoriaPageModule {}
+export class EventModalPageModule {}

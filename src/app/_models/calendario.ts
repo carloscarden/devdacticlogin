@@ -1,6 +1,7 @@
 export class Calendario {
-    id:number;
-    userId:number;
-    dia:string;
-    hora:string;
+    title: 'All Day - ' ;
+    startTime: Date;
+    endTime: Date;
+    allDay: true;
+    descripcion:string;
 }

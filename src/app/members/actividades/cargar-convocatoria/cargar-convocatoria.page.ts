@@ -1,8 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Convocatoria } from './../../../_models/convocatoria';
-import { ActividadesService } from './../../../_services/actividades.service';
+
+
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { Subscription } from 'rxjs';
+
+/*  SERVICES */
+import { ActividadesService } from './../../../_services/actividades.service';
+
+/*  MODELOS */
+import { Convocatoria } from './../../../_models/convocatoria';
+import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
+
+
+
 
 @Component({
   selector: 'app-cargar-convocatoria',
@@ -10,15 +22,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./cargar-convocatoria.page.scss'],
 })
 export class CargarConvocatoriaPage implements OnInit {
-  tipos = [
-    'Plenario', 'Concurso', 'Prueba Seleccion', 
-    'Capacitacion','Citacion de Autoridad Competente', 'Otro'
-  ];
-
   convocatoria = new Convocatoria();
+  tiposConvocatorias: TipoConvocatoria[];
+  actividadesSubscription: Subscription;
+  cargaCorrecta = false;
   loading = false;
   error= '';
-  constructor(private licenciaService: ActividadesService,) { }
+  constructor(private convocatoriaService: ActividadesService,) { }
 
   ngOnInit() {
   }
@@ -26,7 +36,7 @@ export class CargarConvocatoriaPage implements OnInit {
   onSubmit() {
     this.loading = true;
 
-    this.licenciaService.addConvocatoria(this.convocatoria).pipe(first())
+    this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
            this.loading=false;
@@ -40,4 +50,42 @@ export class CargarConvocatoriaPage implements OnInit {
         });;
 
    }
+
+   // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.convocatoria); }
+
+
+  filterPorts(tipos: TipoConvocatoria[], text: string) {
+    return tipos.filter(t => {
+      return t.tipo.toLowerCase().indexOf(text) !== -1 ;
+    });
+  }
+
+  searchPorts(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    // Close any running subscription.
+    if (this.actividadesSubscription) {
+      this.actividadesSubscription.unsubscribe();
+    }
+
+    this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
+      // Subscription will be closed when unsubscribed manually.
+     if (this.actividadesSubscription.closed) {
+        return;
+      }
+
+      event.component.items = this.filterPorts(tipos, text);
+      event.component.endSearch();
+    });
+  }
+
+
+
+
+
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { TodoService } from './../../../_services/todo.service';
+
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
@@ -12,7 +12,12 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
+import { TodoService } from './../../../_services/todo.service';
+import { Establecimiento } from './../../../_models/establecimiento';
+
 const STORAGE_KEY = 'my_images';
+
+
 
 
 @Component({
@@ -22,15 +27,18 @@ const STORAGE_KEY = 'my_images';
 })
 export class CargarVisitaEscuelaPage implements OnInit {
   images = [];
+  establecimientos: Establecimiento[];
 
   inspeccion = {}
   constructor(
-    private route: ActivatedRoute,private location: Location,private todoService: TodoService,
+    private route: ActivatedRoute,private location: Location,
     private camera: Camera, private file: File, private http: HttpClient,
     private webview: WebView, private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private storage: Storage, private plt: Platform, private loadingController: LoadingController,
-    private ref: ChangeDetectorRef, private filePath: FilePath) { }
+    private ref: ChangeDetectorRef, private filePath: FilePath,
+    
+    private todoService: TodoService) { }
 
   ngOnInit() {
     this.plt.ready().then(() => {
