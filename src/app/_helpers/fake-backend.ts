@@ -206,22 +206,22 @@ export class FakeBackend implements HttpInterceptor{
     private tipoConvocatoriaCollection:TipoConvocatoria[]=[
       { id: 1,
         codigo: 1,
-        tipo: "Plenario"},
+        descripcion: "Plenario"},
       { id: 2,
         codigo: 2,
-        tipo: "Concurso"},
+        descripcion: "Concurso"},
       {  id: 3,
         codigo: 3,
-        tipo: "Prueba Seleccion"},
+        descripcion: "Prueba Seleccion"},
       {  id: 4,
         codigo: 4,
-        tipo: "Capacitacion"},
+        descripcion: "Capacitacion"},
       {  id: 5,
         codigo: 5,
-        tipo: "Citacion de Autoridad Compentente"},
+        descripcion: "Citacion de Autoridad Compentente"},
       {  id: 6,
         codigo: 6,
-        tipo: "Otro"}
+        descripcion: "Otro"}
     ];
 
     constructor(private authenticationService: AuthenticationService) { } 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform  } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -30,6 +30,10 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import { EventModalPageModule } from './members/event-modal/event-modal.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 
+// http cors
+import { HttpBackend, HttpXhrBackend } from '@angular/common/http';
+import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
+
 
 
 
@@ -45,16 +49,20 @@ import { IonicSelectableModule } from 'ionic-selectable';
     FormsModule,
     NgCalendarModule,
     IonicSelectableModule,
-    EventModalPageModule
+    EventModalPageModule,
+    NativeHttpModule
     
   ],
   providers: [
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackend, multi: true },
+  
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    
     Camera,
     File,
     WebView,

@@ -22,18 +22,9 @@
            </div>
         </ion-item>
 
-<<<<<<< HEAD
-        <ion-item>
-            <ion-label position="stacked">Tipo</ion-label>
-            <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="convocatoria.tipo" name="tipoConvocatoria" #tipoConvocatoria="ngModel" required>
-               <ion-select-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</ion-select-option>
-            </ion-select>
-         </ion-item>
-=======
->>>>>>> a5b61bc3a271a5f45ced490301df1e090854cecc
-
+        
          <ion-item>
-            <ion-label>CONVOCATORIA</ion-label>
+            <ion-label position="stacked">CONVOCATORIA</ion-label>
             <ionic-selectable
               item-content
               [(ngModel)]="convocatoria.tipo"

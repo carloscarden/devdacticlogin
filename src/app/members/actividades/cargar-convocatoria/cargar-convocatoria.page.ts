@@ -57,7 +57,7 @@ export class CargarConvocatoriaPage implements OnInit {
 
   filterPorts(tipos: TipoConvocatoria[], text: string) {
     return tipos.filter(t => {
-      return t.tipo.toLowerCase().indexOf(text) !== -1 ;
+      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
   }
 
@@ -72,6 +72,7 @@ export class CargarConvocatoriaPage implements OnInit {
     if (this.actividadesSubscription) {
       this.actividadesSubscription.unsubscribe();
     }
+    this.convocatoriaService.getTipoConvocatorias();
 
     this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
