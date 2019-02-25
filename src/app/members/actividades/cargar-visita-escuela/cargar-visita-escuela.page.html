@@ -1,29 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>CARGA VISITA ESCUELA</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Visita Escuela</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <form (ngSubmit)="logForm()">
         <ion-item>
-          <ion-label>FECHA</ion-label>
-          <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+          <ion-label position="stacked">Fecha</ion-label>
+          <br>
+          <ion-datetime displayFormat="MM DD YY"></ion-datetime>
         </ion-item>
 
         <ion-item>
-          <ion-label>HORA INICIO</ion-label>
+          <ion-label position="stacked">Hora inicio</ion-label>
           <ion-datetime displayFormat="HH:mm"></ion-datetime>
         </ion-item>
         
         <ion-item>
-          <ion-label>HORA FIN</ion-label>
+          <ion-label position="stacked">Hora Fin</ion-label>
           <ion-datetime displayFormat="HH:mm"></ion-datetime>
         </ion-item>
 
         <ion-item>
-           <ion-label>SERVICIO VISITADO</ion-label>
-           <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+           <ion-label position="stacked">Servicio Visitado</ion-label>
+           <ion-select okText="Okay" cancelText="Dismiss">
               <ion-select-option value="brown">Brown</ion-select-option>
               <ion-select-option value="blonde">Blonde</ion-select-option>
               <ion-select-option value="black">Black</ion-select-option>
@@ -32,8 +33,8 @@
          </ion-item>
 
         <ion-item>
-            <ion-label>MOTIVO</ion-label>
-            <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-label position="stacked">Motivo</ion-label>
+            <ion-select okText="Okay" cancelText="Dismiss">
               <ion-select-option value="brown">Brown</ion-select-option>
               <ion-select-option value="blonde">Blonde</ion-select-option>
               <ion-select-option value="black">Black</ion-select-option>
@@ -42,13 +43,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>OBSERVACIONES</ion-label>
+          <ion-label position="stacked">Observaciones</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label>INSPECTOR VISITANTE</ion-label>
-          <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+          <ion-label position="stacked">Inspector Visitante</ion-label>
+          <ion-select okText="Okay" cancelText="Dismiss">
             <ion-select-option value="brown">Brown</ion-select-option>
             <ion-select-option value="blonde">Blonde</ion-select-option>
             <ion-select-option value="black">Black</ion-select-option>
@@ -60,7 +61,6 @@
 
 
         <ion-item>
-           <h4 *ngIf="images.length == 0" text-center>SELECCIONE IMAGENES!</h4>
            <ion-list>
                <ion-item *ngFor="let img of images; index as pos" text-wrap>
                   <ion-thumbnail slot="start">
@@ -81,8 +81,9 @@
 
         
          <ion-item>
-           <ion-button fill="clear" expand="full"  (click)="selectImage()">
-              <ion-icon slot="start" name="camera"></ion-icon> Select Image
+           <ion-button (click)="selectImage()">
+              <ion-icon slot="end" name="camera"></ion-icon> 
+              ADJUNTAR
            </ion-button>
          </ion-item>
 
@@ -93,3 +94,9 @@
       <button (click)="goBack()">go back</button>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="textoFooter">Buenos Aires Provincia</ion-title>
+  </ion-toolbar>
+</ion-footer>

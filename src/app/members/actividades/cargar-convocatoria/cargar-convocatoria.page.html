@@ -1,30 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cargarConvocatoria</ion-title>
+    <ion-title>Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <form  #convocatoriaForm="ngForm" (ngSubmit)="logForm()">
         <ion-item>
-            <ion-label>INICIO CONVOCATORIA</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="convocatoria.fechaInicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+            <ion-label position="stacked">Fecha Inicio</ion-label>
+            <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaInicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
             <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
               La fecha de inicio es requerida
            </div>
           </ion-item>
 
         <ion-item>
-            <ion-label>FIN CONVOCATORIA</ion-label>
-            <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="convocatoria.fechaFin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+            <ion-label position="stacked">Fecha Fin</ion-label>
+            <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaFin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
             <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
               La fecha de fin es requerida
            </div>
         </ion-item>
 
         <ion-item>
-            <ion-label>CONVOCATORIA</ion-label>
-            <ion-select value="brown" okText="Okay" cancelText="Dismiss" [(ngModel)]="convocatoria.tipo" name="tipoConvocatoria" #tipoConvocatoria="ngModel" required>
+            <ion-label position="stacked">Tipo</ion-label>
+            <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="convocatoria.tipo" name="tipoConvocatoria" #tipoConvocatoria="ngModel" required>
                <ion-select-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</ion-select-option>
             </ion-select>
          </ion-item>
@@ -52,7 +52,8 @@
          
           <ion-item>
             <ion-button fill="clear" expand="full"  (click)="selectImage()">
-               <ion-icon slot="start" name="camera"></ion-icon> Select Image
+               <ion-icon slot="end" name="camera">
+               ADJUNTAR</ion-icon> Select Image
             </ion-button>
           </ion-item>
 

@@ -1,0 +1,33 @@
+.ion-title {
+	color:grey;
+	text-align: left;
+}
+
+.titulo1 {
+	color:grey;
+	text-align:center;
+}
+
+.botonActividad {
+	--ion-color-primary: #b50f68;
+  	color: white;
+  	margin-top:1rem;
+  	margin-bottom:1rem;
+  	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+  	
+
+}
+
+.botonActividad:hover {
+	background-color: #b50f68;
+	color:white;
+}
+
+            /*FOOTER*/
+.textoFooter {
+  color:#fff;
+  text-align:center;
+  font-size: 1rem;
+}  
+
+

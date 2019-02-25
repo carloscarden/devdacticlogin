@@ -4,30 +4,30 @@
       <ion-menu-button>
       </ion-menu-button>
     </ion-buttons>
-    <ion-title>CARGAR TRABAJO ADMINISTRATIVO</ion-title>
+    <ion-title>Trabajo Administrativo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     <form (ngSubmit)="logForm()">
         <ion-item>
-          <ion-label>FECHA</ion-label>
-          <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+          <ion-label position="stacked">Fecha inicio</ion-label>
+          <ion-datetime displayFormat="MM DD YY"></ion-datetime>
         </ion-item>
   
         <ion-item>
-          <ion-label>HORA INICIO</ion-label>
+          <ion-label position="stacked">Horario Inicio</ion-label>
           <ion-datetime displayFormat="HH:mm"></ion-datetime>
         </ion-item>
           
         <ion-item>
-          <ion-label>HORA FIN</ion-label>
+          <ion-label position="stacked">Horario Fin</ion-label>
           <ion-datetime displayFormat="HH:mm"></ion-datetime>
         </ion-item>
 
         <ion-item>
-          <ion-label>TRABAJO ADMINISTRATIVO</ion-label>
-          <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+          <ion-label position="stacked">Tipo</ion-label>
+          <ion-select okText="Okay" cancelText="Dismiss">
              <ion-select-option value="brown">Brown</ion-select-option>
              <ion-select-option value="blonde">Blonde</ion-select-option>
              <ion-select-option value="black">Black</ion-select-option>
@@ -36,7 +36,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>OBSERVACIONES</ion-label>
+          <ion-label position="stacked">Observaciones</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
 
@@ -51,6 +51,7 @@
                       {{ img.name }}
                    </ion-label>
                    <ion-button slot="end" fill="clear" (click)="startUpload(img)">
+                    ADJUNTAR
                      <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
                    </ion-button>
                    <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
@@ -62,7 +63,7 @@
  
          
           <ion-item>
-            <ion-button fill="clear" expand="full"  (click)="selectImage()">
+            <ion-button (click)="selectImage()">
                <ion-icon slot="start" name="camera"></ion-icon> Select Image
             </ion-button>
           </ion-item>

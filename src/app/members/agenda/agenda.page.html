@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+    <ion-toolbar color="primary">
       <ion-title>{{viewTitle}}</ion-title>
       <ion-buttons end>
           <button ion-button [disabled]="isToday" (click)="today()">Today</button>
@@ -9,6 +9,7 @@
           <button ion-button (click)="loadEvents()">Load Events</button>
       </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content class="has-header">
@@ -21,4 +22,9 @@
             (onTimeSelected)="onTimeSelected($event)"
             step="30">
   </calendar>
+
+
+
+
+
 </ion-content>
