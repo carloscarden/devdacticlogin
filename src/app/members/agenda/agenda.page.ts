@@ -2,6 +2,7 @@ import { Component, OnInit,ViewChild  } from '@angular/core';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
 import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
+import { Tarea } from './../../_models/tarea';
 import * as moment from 'moment';
 
 
@@ -94,40 +95,26 @@ export class AgendaPage implements OnInit {
   }
 
   createRandomEvents() {
-    let colors: string[] = ['primary', 'warning', 'danger', 'success'];
     var events = [];
-    for (var i = 0; i < 50; i += 1) {
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        var startDay = Math.floor(Math.random() * 90) - 45;
-        var endDay = Math.floor(Math.random() * 2) + startDay;
-        var startTime;
-        var endTime;
-        if (eventType === 0) {
-            startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-            if (endDay === startDay) {
-                endDay += 1;
-            }
-            endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
-            events.push({
-                title: 'All Day - ' + i,
-                startTime: startTime,
-                endTime: endTime,
-                allDay: true
-            });
-        } else {
-            var startMinute = Math.floor(Math.random() * 24 * 60);
-            var endMinute = Math.floor(Math.random() * 180) + startMinute;
-            startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-            endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-            events.push({
-                title: 'Event - ' + i,
-                startTime: startTime,
-                endTime: endTime,
-                allDay: false
-            });
+    this.agendaService.getEvents().subscribe(
+      // Subscription will be closed when unsubscribed manually.
+      (data: any)=>{
+        var tareas=JSON.parse(data._body);
+        for (let entry of tareas) {
+
+          events.push({
+            title: entry.actividad.descripcion,
+            startTime: new Date(entry.inicio),
+            endTime: new Date(entry.fin),
+            allDay: false
+          });
+
+          
         }
-    }
+      }
+      
+    );
+    console.log(events);
     return events;
    }
 

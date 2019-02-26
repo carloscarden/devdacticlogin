@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http'
+
 import { Observable, of } from 'rxjs';
 
-import { HTTP } from '@ionic-native/http/ngx';
 import 'rxjs/add/observable/fromPromise';
 
 
@@ -12,16 +13,23 @@ import { Convocatoria }  from '../_models/convocatoria';
 import { TipoConvocatoria } from '../_models/tipo-convocatoria'
 import { TipoTrabajoAdministrativo }  from '../_models/tipo-trabajo-administrativo';
 import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
-import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
+import { Platform } from '@ionic/angular'
 
-
-const URL = `http://localhost:8100/api/`;
+const URL = `http://test2.abc.gov.ar:8080/InspectoresApp/`;
 @Injectable({
   providedIn: 'root'
 })
 export class ActividadesService {
+  basepath="/api";
 
-  constructor(private http: HttpClient,private httpNative:HTTP) { }
+  constructor(private http: HttpClient,
+              private httpOtro:Http,
+              private _platform: Platform ) {
+
+        if(this._platform.is("cordova")){
+          this.basepath ="http://test2.abc.gov.ar:8080";
+        }
+  }
   /******************************************************************************** */
              /* LICENCIAS CRUD */
   addLicencia(licencia: Licencia) {
@@ -42,11 +50,8 @@ export class ActividadesService {
   }
 
   getTipoConvocatorias(): Observable<any>{
-    
-    let responseData= this.httpNative.get(`http://test2.abc.gov.ar:8080/InspectoresApp/tareas`,{},{}).then(data => {
+    return this.httpOtro.get(URL+`tiposConvocatoria`);
 
-      resp =>  JSON.parse(resp.data)});
-    return Observable.fromPromise(responseData);
   }
   /******************************************************************************** */
          /*  TRABAJO ADMINISTRATIVO */

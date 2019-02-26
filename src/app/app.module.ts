@@ -33,7 +33,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
 // http cors
 import { HttpBackend, HttpXhrBackend } from '@angular/common/http';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
-
+import { HttpModule } from '@angular/http';
 
 
 
@@ -50,7 +50,7 @@ import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-n
     NgCalendarModule,
     IonicSelectableModule,
     EventModalPageModule,
-    NativeHttpModule
+    NativeHttpModule,HttpModule
     
   ],
   providers: [

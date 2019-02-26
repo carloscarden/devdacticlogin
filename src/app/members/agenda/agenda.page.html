@@ -11,7 +11,16 @@
 <ion-header>
   <ion-toolbar color="secondary">
       <ion-title>{{viewTitle}}</ion-title>
-      
+    <!--   <ion-buttons end>
+        <button ion-button [disabled]="isToday" (click)="today()">Today</button>
+        <button ion-button (click)="changeMode('month')">M</button>
+        <button ion-button (click)="changeMode('week')">W</button>
+        <button ion-button (click)="changeMode('day')">D</button>
+        <button ion-button (click)="loadEvents()">Load Events</button>
+        <button ion-button icon-only (click)="addEvent()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>  -->
   </ion-toolbar>
 
 </ion-header>
@@ -63,3 +72,6 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+
+
+ 

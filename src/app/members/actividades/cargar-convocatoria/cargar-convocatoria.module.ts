@@ -9,6 +9,7 @@ import { CargarConvocatoriaPage } from './cargar-convocatoria.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 
 
+
 const routes: Routes = [
   {
     path: '',

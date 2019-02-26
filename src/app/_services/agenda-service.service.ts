@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Http } from '@angular/http';
 
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Observable, of } from 'rxjs';
 })
 export class AgendaServiceService {
 
-  constructor() { }
+  constructor( private httpOtro:Http) { }
 
   public getEvents(): Observable<any> {
     let data: any = [
@@ -69,6 +70,7 @@ export class AgendaServiceService {
           start: '2019-02-16'
         }
       ];
-    return of(data);
+
+    return this.httpOtro.get(`http://test2.abc.gov.ar:8080/InspectoresApp/tareas`);
 }
 }

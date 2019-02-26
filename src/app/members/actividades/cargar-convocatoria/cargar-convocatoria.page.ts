@@ -76,11 +76,12 @@ export class CargarConvocatoriaPage implements OnInit {
 
     this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
+      var tareas=JSON.parse(tipos._body);
      if (this.actividadesSubscription.closed) {
         return;
       }
 
-      event.component.items = this.filterPorts(tipos, text);
+      event.component.items = this.filterPorts(tareas, text);
       event.component.endSearch();
     });
   }
