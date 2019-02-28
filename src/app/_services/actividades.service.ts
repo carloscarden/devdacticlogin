@@ -33,11 +33,11 @@ export class ActividadesService {
   /******************************************************************************** */
              /* LICENCIAS CRUD */
   addLicencia(licencia: Licencia) {
-    return this.http.post<any>(URL+`addLicencia`, { licencia });
+    return this.httpOtro.post(URL+`licencias`, { licencia });
   }
 
-  getLicencias(): Observable<Licencia[]> {
-    return this.http.get<Licencia[]>(URL+`licencias`);
+  getLicencias(): Observable<any> {
+    return this.httpOtro.get(URL+`licencias`);
   }
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */
@@ -63,8 +63,8 @@ export class ActividadesService {
     return this.http.get<TrabajoAdministrativo[]>(URL+`tareaAdministrativas`);
   }
 
-  getTipoTrabajoAdministrativo(): Observable<TipoTrabajoAdministrativo[]>{
-    return this.http.get<TipoTrabajoAdministrativo[]>(URL+`tipoTrabajoAdmin`);
+  getTipoTrabajoAdministrativo(): Observable<any>{
+    return this.httpOtro.get(URL+`tiposTrabajoAdmin`);
   }
   /******************************************************************************** */
   

@@ -23,14 +23,14 @@ export class CargarLicenciaPage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
+    this.licencia.inspector={"id":2,"nombre":"Guye","apellido":"No tiene"};
   }
 
   onSubmit() { 
     console.log("cargar");
     
     this.loading = true;
-    this.licenciaService.addLicencia(this.licencia).pipe(first())
-    .subscribe(
+    this.licenciaService.addLicencia(this.licencia).subscribe(
         data => {
            this.loading=false;
            this.licencia = new Licencia();

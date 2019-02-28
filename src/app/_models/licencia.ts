@@ -1,9 +1,9 @@
-import { User } from "./user";
+import { Inspector } from "./inspector";
 
 export class Licencia {
     id:number;
     inicio:Date;
     fin:Date;
     nroSolicitud:number;
-    inspector:User;
+    inspector:Inspector;
 }

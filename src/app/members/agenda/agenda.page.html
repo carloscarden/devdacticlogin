@@ -11,16 +11,7 @@
 <ion-header>
   <ion-toolbar color="secondary">
       <ion-title>{{viewTitle}}</ion-title>
-     <ion-buttons end>
-        <button ion-button [disabled]="isToday" (click)="today()">Today</button>
-        <button ion-button (click)="changeMode('month')">M</button>
-        <button ion-button (click)="changeMode('week')">W</button>
-        <button ion-button (click)="changeMode('day')">D</button>
-        <button ion-button (click)="loadEvents()">Load Events</button>
-        <button ion-button icon-only (click)="addEvent()">
-          <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-buttons> 
+    
   </ion-toolbar>
 
 </ion-header>
@@ -39,39 +30,63 @@
   </calendar>
 </ion-content>
 
- <!-- <ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="today" [disabled]="isToday" (click)="today()">
-      <ion-icon name="today"></ion-icon>
-      <ion-label>Hoy</ion-label>
-    </ion-tab-button>
 
-    <ion-tab-button tab="day" (click)="changeMode('day')">
-      <ion-icon name="clock"></ion-icon>
-      <ion-label>Día</ion-label>
-    </ion-tab-button>
+<ion-footer>
+       <ion-tab-bar slot="bottom">
+         <ion-tab-button tab="today" [disabled]="isToday" (click)="today()">
+          <ion-icon name="today"></ion-icon>
+          <ion-label>Hoy</ion-label>
+         </ion-tab-button>
 
-    <ion-tab-button tab="week" (click)="changeMode('week')">
-      <ion-icon name="calendar"></ion-icon>
-      <ion-label>Semana</ion-label>
-    </ion-tab-button>
+       
+         <ion-tab-button tab="day" (click)="changeMode('day')">
+            <ion-icon name="clock"></ion-icon>
+            <ion-label>Día</ion-label>
+          </ion-tab-button>
 
-    <ion-tab-button tab="month" (click)="changeMode('month')">
-      <ion-icon name="apps"></ion-icon>
-      <ion-label>Mes</ion-label>
-    </ion-tab-button>
+          <ion-tab-button tab="week" (click)="changeMode('week')">
+              <ion-icon name="calendar"></ion-icon>
+              <ion-label>Semana</ion-label>
+            </ion-tab-button>
+        
+            <ion-tab-button tab="month" (click)="changeMode('month')">
+              <ion-icon name="apps"></ion-icon>
+              <ion-label>Mes</ion-label>
+            </ion-tab-button>
+        
+            <ion-tab-button tab="about" (click)="loadEvents()" >
+              <ion-icon name="book"></ion-icon>
+              <ion-label>Ver</ion-label>
+            </ion-tab-button>
+        
+            <ion-tab-button tab="add" (click)="addEvent()">
+              <ion-icon name="add-circle"></ion-icon>
+              <ion-label>Nuevo</ion-label>
+            </ion-tab-button>
+      
+      
+        </ion-tab-bar>
 
-    <ion-tab-button tab="about" (click)="loadEvents()" >
-      <ion-icon name="book"></ion-icon>
-      <ion-label>Ver</ion-label>
-    </ion-tab-button>
+        
 
-    <ion-tab-button tab="add" (click)="addEvent()">
-      <ion-icon name="add-circle"></ion-icon>
-      <ion-label>Nuevo</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>  -->
+        
+   
+</ion-footer>  
 
+  <!--
+    <ion-buttons end>
+          <button ion-button [disabled]="isToday" (click)="today()">Today</button>
+          <button ion-button (click)="changeMode('month')">M</button>
+          <button ion-button (click)="changeMode('week')">W</button>
+          <button ion-button (click)="changeMode('day')">D</button>
+          <button ion-button (click)="loadEvents()">Load Events</button>
+          <button ion-button icon-only (click)="addEvent()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+      </ion-buttons> 
+
+      -->  
+  
+ 
 
  
