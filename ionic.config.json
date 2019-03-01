@@ -8,7 +8,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://test2.abc.gov.ar:8080"
+      "proxyUrl": "http://test2.abc.gov.ar:8080/InspectoresApp/"
     }
   ]
 }

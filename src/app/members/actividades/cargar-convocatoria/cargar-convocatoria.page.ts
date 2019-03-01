@@ -36,6 +36,8 @@ export class CargarConvocatoriaPage implements OnInit {
   onSubmit() {
     this.loading = true;
 
+  
+
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
@@ -56,6 +58,7 @@ export class CargarConvocatoriaPage implements OnInit {
 
 
   filterPorts(tipos: TipoConvocatoria[], text: string) {
+    console.log(tipos);
     return tipos.filter(t => {
       return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });

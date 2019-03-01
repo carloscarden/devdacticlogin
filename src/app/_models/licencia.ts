@@ -4,6 +4,6 @@ export class Licencia {
     id:number;
     inicio:Date;
     fin:Date;
-    nroSolicitud:number;
+    codigo:string;
     inspector:Inspector;
 }

@@ -30,8 +30,8 @@
 
         <ion-item>
             <ion-label position="stacked">NUMERO DE SOLICITUD</ion-label>
-            <ion-input type="number" [(ngModel)]="licencia.nroSolicitud" name="nroSolicitud" #nroSolicitud="ngModel" required ></ion-input>
-            <div *ngIf="!(nroSolicitud.valid || nroSolicitud.pristine)" class="invalid-feedback">
+            <ion-input type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel" required ></ion-input>
+            <div *ngIf="!(codigo.valid || codigo.pristine)" class="invalid-feedback">
                     El nro de la SOLICITUD es requerido
             </div>
         </ion-item>
@@ -39,7 +39,7 @@
             <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
        
-        <ion-label color="danger" [hidden]="nroSolicitud.valid || nroSolicitud.pristine">El nro de la SOLICITUD es requerido</ion-label>
+        <ion-label color="danger" [hidden]="codigo.valid || codigo.pristine">El nro de la SOLICITUD es requerido</ion-label>
 
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
             <ion-fab-button type="submit" [disabled]="!licenciaForm.form.valid">           

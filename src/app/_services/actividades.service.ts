@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
-import { Http } from '@angular/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http,Headers ,RequestOptions } from '@angular/http'
 
 import { Observable, of } from 'rxjs';
 
@@ -21,9 +21,10 @@ const URL = `http://test2.abc.gov.ar:8080/InspectoresApp/`;
 })
 export class ActividadesService {
   basepath="/api";
+ 
 
   constructor(private http: HttpClient,
-              private httpOtro:Http,
+              private httpOtro:Http, // este es el que me funciona en la base de datos
               private _platform: Platform ) {
 
         if(this._platform.is("cordova")){
@@ -32,8 +33,30 @@ export class ActividadesService {
   }
   /******************************************************************************** */
              /* LICENCIAS CRUD */
-  addLicencia(licencia: Licencia) {
-    return this.httpOtro.post(URL+`licencias`, { licencia });
+  addLicencia(licencia: any) {
+
+    var l={
+      "inicio":"2018-12-12",
+      "fin":"2018-12-12",
+      "codigo":"lalala",
+      "inspector":{
+            "id":2,
+            "nombre":"Guye",
+            "apellido":"No tiene"
+        }
+      };
+  /* var headers = new Headers();
+   
+
+    return this.httpOtro.post(URL+`licencias`,  l );*/
+
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers.set('Accept-Type', 'application/json; charset=utf-8');
+    headers.set('Access-Control-Allow-Origin' , '*');
+    headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
+    return this.http.post<any>(this.basepath+"/licencias",  licencia,{headers: headers});
   }
 
   getLicencias(): Observable<any> {
@@ -42,7 +65,7 @@ export class ActividadesService {
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */
   addConvocatoria(convocatoria: Convocatoria) {
-    return this.http.post<any>(URL+`addConvocatoria`, { convocatoria });
+    return this.http.post<any>(this.basepath+`addConvocatoria`, { convocatoria });
   }
 
   getConvocatorias(): Observable<Convocatoria[]> {
@@ -56,7 +79,7 @@ export class ActividadesService {
   /******************************************************************************** */
          /*  TRABAJO ADMINISTRATIVO */
   addTrabajoAdministrativo(trabajoAdmin: TrabajoAdministrativo){
-    return this.http.post<any>(URL+`addTrabajoAdmin`, { trabajoAdmin });
+    return this.http.post<any>(URL+`addTrabajoAdmin`,  trabajoAdmin );
   }
 
   getTrabajoAdministrativo(){
