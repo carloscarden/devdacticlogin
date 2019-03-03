@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
        <ion-menu-button>
        </ion-menu-button>
     </ion-buttons>
-    <ion-title>Licencia</ion-title>
+    <ion-title class="textoTitulo">Licencia</ion-title>
   </ion-toolbar>
 </ion-header>
 {{ diagnostic }}
@@ -12,16 +12,16 @@
 <ion-content padding>
     <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
         <ion-item>
-           <ion-label position="stacked">INICIO LICENCIA</ion-label>
-               <ion-datetime displayFormat="DD MM YY" placeholder="Select Date" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+           <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
+               <ion-datetime displayFormat="DD MM YY" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
                <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                </div>
         </ion-item>
 
         <ion-item>
-            <ion-label position="stacked">FIN LICENCIA</ion-label>
-            <ion-datetime displayFormat="DD MM YY" placeholder="Select Date" [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
+            <ion-datetime displayFormat="DD MM YY" [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
                 <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
                        La fecha de inicio es requerida
                 </div>
@@ -29,7 +29,7 @@
 
 
         <ion-item>
-            <ion-label position="stacked">NUMERO DE SOLICITUD</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Código</ion-label>
             <ion-input type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel" required ></ion-input>
             <div *ngIf="!(codigo.valid || codigo.pristine)" class="invalid-feedback">
                     El nro de la SOLICITUD es requerido
@@ -41,12 +41,18 @@
        
         <ion-label color="danger" [hidden]="codigo.valid || codigo.pristine">El nro de la SOLICITUD es requerido</ion-label>
 
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button type="submit" [disabled]="!licenciaForm.form.valid">           
-              <ion-button type="submit" [disabled]="!licenciaForm.form.valid">
-                    <ion-icon name="checkmark-circle-outline"></ion-icon>
-              </ion-button>
+        <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
+            <ion-fab-button type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">    
+              <!--<ion-button type="submit" [disabled]="!licenciaForm.form.valid">-->
+                    <ion-icon name="checkmark"></ion-icon>
+              <!--</ion-button>-->
             </ion-fab-button>
         </ion-fab>
     </form>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="textoFooter">Buenos Aires Provincia</ion-title>
+  </ion-toolbar>
+</ion-footer>

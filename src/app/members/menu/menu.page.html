@@ -2,8 +2,8 @@
   
   <ion-menu contentId="content">
     <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title class="textoTitulo">Menu</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -11,13 +11,13 @@
         <ion-list>
           <ion-menu-toggle auto-hide="false">
             <ion-item (click)="open('principal')" >
-                CARGAR ACTIVIDAD
+                ACTIVIDAD
             </ion-item>
             <ion-item (click)="open('second')" >
-                 VER AGENDA
+                 AGENDA
             </ion-item>
             <ion-item (click)="open('second')" >
-                VER INFORMES
+                INFORMES
            </ion-item>
            <ion-button (click)="logout()">
                   <ion-icon slot="icon-only" name="log-out"> </ion-icon>

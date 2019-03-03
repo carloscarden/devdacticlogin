@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Visita Escuela</ion-title>
+    <ion-title class="textoTitulo">Visita Escuela</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,24 +8,34 @@
     <form #visitaForm="ngForm"  (ngSubmit)="logForm()">
 
         <ion-item>
-            <ion-label position="stacked">FECHA</ion-label>
-                <ion-datetime displayFormat="MM DD YY" placeholder="Select Date" [(ngModel)]="inspeccion.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+           <ion-label position="stacked" class="textoBold" color="success">Servicio Visitado</ion-label>
+           <ion-select okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="brown">Brown</ion-select-option>
+              <ion-select-option value="blonde">Blonde</ion-select-option>
+              <ion-select-option value="black">Black</ion-select-option>
+              <ion-select-option value="red">Red</ion-select-option>
+           </ion-select>
+         </ion-item>      
+
+        <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha</ion-label>
+                <ion-datetime displayFormat="MM DD YY" [(ngModel)]="inspeccion.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
                 <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                      La fecha de inicio es requerida
                 </div>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">HORA INICIO</ion-label>
-          <ion-datetime displayFormat="HH:mm" placeholder="Select Hora Inicio" [(ngModel)]="inspeccion.horaInicio" name="horaInicio" #horaInicio="ngModel" required></ion-datetime>
+          <ion-label position="stacked" class="textoBold" color="success">Hora inicio</ion-label>
+          <ion-datetime displayFormat="HH:mm" [(ngModel)]="inspeccion.horaInicio" name="horaInicio" #horaInicio="ngModel" required></ion-datetime>
           <div *ngIf="!(horaInicio.valid || horaInicio.pristine)" class="invalid-feedback">
               La fecha de inicio es requerida
          </div>
         </ion-item>
         
         <ion-item>
-          <ion-label position="stacked">HORA FIN</ion-label>
-          <ion-datetime displayFormat="HH:mm" placeholder="Select Hora Fin" [(ngModel)]="inspeccion.horaFin" name="horaFin" #horaFin="ngModel" required></ion-datetime>
+          <ion-label position="stacked" class="textoBold" color="success">Hora Fin</ion-label>
+          <ion-datetime displayFormat="HH:mm" [(ngModel)]="inspeccion.horaFin" name="horaFin" #horaFin="ngModel" required></ion-datetime>
           <div *ngIf="!(horaFin.valid || horaFin.pristine)" class="invalid-feedback">
               La fecha de inicio es requerida
          </div>
@@ -57,18 +67,10 @@
               </ionic-selectable>
           </ion-item>   -->
 
-        <ion-item>
-           <ion-label position="stacked">SERVICIO VISITADO</ion-label>
-           <ion-select okText="Okay" cancelText="Dismiss">
-              <ion-select-option value="brown">Brown</ion-select-option>
-              <ion-select-option value="blonde">Blonde</ion-select-option>
-              <ion-select-option value="black">Black</ion-select-option>
-              <ion-select-option value="red">Red</ion-select-option>
-           </ion-select>
-         </ion-item>
+
 
         <ion-item>
-            <ion-label position="stacked">MOTIVO</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Motivo de la Visita</ion-label>
             <ion-select okText="Okay" cancelText="Dismiss">
               <ion-select-option value="brown">Brown</ion-select-option>
               <ion-select-option value="blonde">Blonde</ion-select-option>
@@ -78,20 +80,14 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">OBSERVACIONES</ion-label>
+          <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
           <ion-input type="text" [(ngModel)]="inspeccion.observaciones" name="observaciones" #observaciones="ngModel" required></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="stacked">INSPECTOR VISITANTE</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Inspector Acompañante</ion-label>
             <ion-input type="text" [(ngModel)]="inspeccion.inspectorVisitante" name="observaciones" #observaciones="ngModel" required></ion-input>
         </ion-item>
-        
-
-        
-        
-
-
 
         <ion-item>
            <ion-list>
@@ -112,23 +108,25 @@
           </ion-list>
         </ion-item>
 
-        
+        <div class="botonAd">
          <ion-item>
            <ion-button (click)="selectImage()">
-              <ion-icon slot="end" name="camera"></ion-icon> 
+              <!--<ion-icon slot="end" name="camera"></ion-icon>-->
               ADJUNTAR
            </ion-button>
          </ion-item>
+        </div> 
 
-       
-         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-             <ion-fab-button type="submit" [disabled]="!visitaForm.form.valid">
-                <ion-button type="submit" [disabled]="!visitaForm.form.valid">
-                      <ion-icon name="checkmark-circle-outline"></ion-icon>
-                </ion-button>
+         <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
+             <ion-fab-button type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
+               <!-- <ion-button type="submit" [disabled]="!visitaForm.form.valid"> --> 
+                      <ion-icon name="checkmark"></ion-icon>
+               <!-- </ion-button> -->
              </ion-fab-button>
           </ion-fab>
       </form>
+
+
       <button (click)="goBack()">go back</button>
 
 </ion-content>

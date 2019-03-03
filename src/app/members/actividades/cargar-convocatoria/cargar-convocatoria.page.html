@@ -1,13 +1,14 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Convocatoria</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
 {{ diagnostic }}
+
 <ion-content padding>
     <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
-            <ion-label position="stacked">Fecha Inicio</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
             <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaInicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
             <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
               La fecha de inicio es requerida
@@ -15,16 +16,15 @@
         </ion-item>
 
         <ion-item>
-            <ion-label position="stacked">Fecha Fin</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
             <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaFin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
             <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
               La fecha de fin es requerida
            </div>
         </ion-item>
-
         
          <ion-item>
-            <ion-label position="stacked">CONVOCATORIA</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
             <ionic-selectable
               item-content
               [(ngModel)]="convocatoria.tipo"
@@ -36,6 +36,8 @@
               (onSearch)="searchPorts($event)">
             </ionic-selectable>
           </ion-item>
+
+          
         <!-- 
           <ion-item>
             <h4 *ngIf="images.length == 0" text-center>CARGA CERTIFICADO!</h4>
@@ -74,13 +76,19 @@
         </div>
 
 
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button type="submit" [disabled]="!convocatoriaForm.form.valid">
-             <ion-button type="submit" [disabled]="!convocatoriaForm.form.valid">
-                  <ion-icon name="checkmark-circle-outline"></ion-icon>
-            </ion-button>
+        <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
+          <ion-fab-button type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
+            <!-- <ion-button type="submit" [disabled]="!convocatoriaForm.form.valid">-->
+                  <ion-icon name="checkmark"></ion-icon>
+            <!--</ion-button>-->
           </ion-fab-button>
-        </ion-fab>
- 
+        </ion-fab> 
+
     </form>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="textoFooter">Buenos Aires Provincia</ion-title>
+  </ion-toolbar>
+</ion-footer>

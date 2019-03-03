@@ -1,8 +1,27 @@
+         /*HEADER*/
+.textoTitulo {
+	font-family:"DIN";
+}
 
+.textoBold {
+	font-weight:bold;
+}
 
-            /*FOOTER*/
+         /*CENTRAR BOTON*/
+.form-group {
+	text-align:center;
+}
+
+         /*SOMBRA BOTON*/
+.ion-button {
+	box-shadow: 7px 9px 5px 67px rgba (0,0,0,0.75);
+}
+
+             /*FOOTER*/
 .textoFooter {
+  font-family:"DIN";
   color:#fff;
   text-align:center;
   font-size: 1rem;
 }  
+
