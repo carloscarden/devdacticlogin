@@ -9,18 +9,23 @@
 :root {
 
 @font-face {
-  font-family:"DIN";
+  font-family:'DIN';
   font-style:normal;
   font-weight:normal;
-  src:url(../assets/fonts/DIN/DINNextRoundedLTPro-Regular.otf);
+  src:url(../assets/fonts/DIN/DINNextRoundedLTPro-Regular.ttf);
 }
 
 @font-face {
-  font-family:"DIN";
+  font-family:'DIN';
   font-style:normal;
   font-weight:bold;
-  src:url(../assets/fonts/DIN/DINNextRoundedLTPro-Bold.otf);
+  src:url(../assets/fonts/DIN/DINNextRoundedLTPro-Bold.ttf);
 }
+
+.textoTitulo {
+  font-family: 'DIN';
+}
+
 
 /*border color*/
   --ion-item-border-color: #9aca3c;

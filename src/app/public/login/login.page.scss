@@ -3,6 +3,31 @@
 	font-family:"DIN";
 }
 
+.anchoLogo {
+  margin-left:20px;
+  margin-right:20px; 
+}
+
+.supervision {
+  color:#365fb5;
+  font-weight:bold;
+  margin-top:26px;
+  margin-bottom:0;
+}
+
+.educativa {
+  color:#365fb5;
+  font-weight:bold;
+  margin-bottom:0;
+  margin-top:0;
+}
+
+.anchoForm{
+  margin-left:40px;
+  margin-right:40px; 
+}
+
+        /*TEXTO INPUT*/
 .textoBold {
 	font-weight:bold;
 }
@@ -12,9 +37,14 @@
 	text-align:center;
 }
 
-         /*SOMBRA BOTON*/
-.ion-button {
-	box-shadow: 7px 9px 5px 67px rgba (0,0,0,0.75);
+         /*BOTON*/
+.tipoBoton {
+  font-size: 1rem;
+  font-weight:bold;
+}
+
+.tipoBoton:hover {
+  background-color: #365fb5;
 }
 
              /*FOOTER*/
