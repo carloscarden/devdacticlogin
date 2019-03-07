@@ -50,7 +50,8 @@ import { HttpModule } from '@angular/http';
     NgCalendarModule,
     IonicSelectableModule,
     EventModalPageModule,
-    NativeHttpModule,HttpModule
+    NativeHttpModule,
+    HttpModule
     
   ],
   providers: [
