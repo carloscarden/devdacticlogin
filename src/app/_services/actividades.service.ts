@@ -38,7 +38,7 @@ export class ActividadesService {
     var l={
       "inicio":"2018-12-12",
       "fin":"2018-12-12",
-      "codigo":"lalala",
+      "codigo":666,
       "inspector":{
             "id":2,
             "nombre":"Guye",
@@ -49,6 +49,8 @@ export class ActividadesService {
    
 
     return this.httpOtro.post(URL+`licencias`,  l );*/
+    console.log(l);
+    console.log(licencia);
 
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
@@ -56,7 +58,7 @@ export class ActividadesService {
     headers.set('Access-Control-Allow-Origin' , '*');
     headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<any>(this.basepath+"/licencias",  licencia,{headers: headers});
+    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  l,{headers: headers});
   }
 
   getLicencias(): Observable<any> {
