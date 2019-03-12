@@ -12,7 +12,6 @@ const routes: Routes = [
     path: '',
     component: MenuPage,
     children:[
-      { path: 'principal', loadChildren: '../principal/principal.module#PrincipalPageModule' },
       { path: 'agenda', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
       { path: 'informes', loadChildren: '../informes/informes.module#InformesPageModule' },
       { path: 'actividad', loadChildren: '../actividades/actividades-routing.module#ActividadesRoutingModule' }

@@ -23,9 +23,20 @@ export class MenuPage implements OnInit {
   ngOnInit() {
   }
 
-  open(page: string) {
-    this.router.navigateByUrl('/menu/' + page);
+  openActividades() {
+    this.router.navigateByUrl('/members/menu/actividad/seleccionarActividad');
   }
+
+  openAgenda() {
+    this.router.navigateByUrl('/members/menu/agenda');
+  }
+
+
+  openInformes() {
+    this.router.navigateByUrl('/members/menu/informes');
+  }
+
+
 
   logout() {
     this.authService.logout();
