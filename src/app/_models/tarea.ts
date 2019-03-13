@@ -5,5 +5,7 @@ export class Tarea {
     inicio: Date;
     fin: Date;
     detalle: string;
+    idInspector: number;
     actividad: Actividad;
+
 }

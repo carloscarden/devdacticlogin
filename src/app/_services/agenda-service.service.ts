@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Http } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Tarea } from "../_models/tarea";
+import { Actividad } from "../_models/actividad";
+
+
 
 
 const URL = `http://test2.abc.gov.ar:8080/InspectoresApp/`;
@@ -11,13 +16,13 @@ const URL = `http://test2.abc.gov.ar:8080/InspectoresApp/`;
 })
 export class AgendaServiceService {
 
-  constructor( private httpOtro:Http) { }
+  constructor( private httpOtro:Http, private http: HttpClient) { }
 
-  public getEvents(): Observable<any> {
-    return this.httpOtro.get(URL+`tareas`);
+  public getEvents(month, year): Observable<any> {
+    return this.http.get<Tarea>(URL+`tareasQmonth=${month}&year=${year}`);
   }
 
   public getTipoActividades():  Observable<any> {
-    return this.httpOtro.get(URL+`actividades`);
+    return this.http.get<Actividad>(URL+`actividades/all`);
   }
 }

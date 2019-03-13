@@ -18,6 +18,7 @@ export class EventModalPage implements OnInit {
 
   ngOnInit() {
     let preselectedDate = moment(this.selectedDay).format();
+    
     this.event.startTime = preselectedDate;
     this.event.endTime = preselectedDate;
 

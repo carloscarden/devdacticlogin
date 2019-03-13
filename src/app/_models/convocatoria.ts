@@ -3,10 +3,10 @@ import { TipoConvocatoria } from "./tipo-convocatoria";
 
 export class Convocatoria {
     id:number;
-    fechaInicio:Date;
-    fechaFin:Date;
+    inicio:Date;
+    fin:Date;
     tipoConvocatoria: TipoConvocatoria;
-    imagen:string;
+    imagenes:Array<any>;
 
 }
 

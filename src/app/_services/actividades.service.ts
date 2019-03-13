@@ -92,6 +92,18 @@ export class ActividadesService {
     return this.httpOtro.get(URL+`tiposTrabajoAdmin`);
   }
   /******************************************************************************** */
+
+  addVisita(visita: any){
+
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers.set('Accept-Type', 'application/json; charset=utf-8');
+    headers.set('Access-Control-Allow-Origin' , '*');
+    headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
+    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  visita,{headers: headers});
+
+  }
   
 
   

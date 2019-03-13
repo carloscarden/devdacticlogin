@@ -25,6 +25,21 @@ export class ImagenService {
     private toastController: ToastController
     ) { }
 
+
+   loadStoredImages(img) {
+        this.storage.get(STORAGE_KEY).then(images => {
+          if (img) {
+            let arr = JSON.parse(images);
+            img = [];
+            for (let img of arr) {
+              let filePath = this.file.dataDirectory + img;
+              let resPath = this.pathForImage(filePath);
+              img.push({ name: img, path: resPath, filePath: filePath });
+            }
+          }
+        });
+  }
+
   pathForImage(img) {
     if (img === null) {
       return '';
@@ -35,7 +50,7 @@ export class ImagenService {
   }
 
 
-  takePicture(sourceType: PictureSourceType) {
+  takePicture(sourceType: PictureSourceType, imgs) {
     var options: CameraOptions = {
         quality: 100,
         sourceType: sourceType,
@@ -49,12 +64,12 @@ export class ImagenService {
                 .then(filePath => {
                     let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
                     let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                    this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+                    this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), imgs);
                 });
         } else {
             var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
             var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), imgs);
         }
     });
  
@@ -76,16 +91,16 @@ async presentToast(text) {
   toast.present();
 }
 
-   copyFileToLocalDir(namePath, currentName, newFileName) {
+   copyFileToLocalDir(namePath, currentName, newFileName, img) {
       this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-          this.updateStoredImages(newFileName);
+          this.updateStoredImages(newFileName, img);
       }, error => {
           this.presentToast('Error while storing file.');
       });
     }
 
 
-    updateStoredImages(name) {
+    updateStoredImages(name, img) {
       this.storage.get(STORAGE_KEY).then(images => {
           let arr = JSON.parse(images);
           if (!arr) {
@@ -105,9 +120,53 @@ async presentToast(text) {
               filePath: filePath
           };
    
-          //this.images = [newEntry, ...this.images];
-          this.ref.detectChanges(); // trigger change detection cycle
+          img = [newEntry, ... img];
+          
       });
+  }
+
+
+  deleteImage(imgEntry, position, imgs) {
+    imgs.splice(position, 1);
+ 
+    this.storage.get(STORAGE_KEY).then(images => {
+        let arr = JSON.parse(images);
+        let filtered = arr.filter(name => name != imgEntry.name);
+        this.storage.set(STORAGE_KEY, JSON.stringify(filtered));
+ 
+        var correctPath = imgEntry.filePath.substr(0, imgEntry.filePath.lastIndexOf('/') + 1);
+ 
+        this.file.removeFile(correctPath, imgEntry.name).then(res => {
+            this.presentToast('File removed.');
+        });
+    });
+  }
+
+
+  convertToBase64(imgs){
+    this.file.resolveLocalFilesystemUrl(imgs.filePath)
+    .then(entry => {
+        ( < FileEntry > entry).file(file => this.readFile(file))
+    })
+    .catch(err => {
+        this.presentToast('Error while reading file.');
+    });
+  }
+
+  readFile(file: any) {
+    console.log("fileReader");
+    var fileReader = new FileReader();
+    var fileToLoad =file;
+    fileReader.onload = function(fileLoadedEvent) {
+        var srcData = fileReader.result+''; // <--- data: base64
+        console.log("Converted Base64 version is " + srcData);
+        var comoLoQuiereJuancito = srcData.split(',');
+        return comoLoQuiereJuancito;
+    }
+
+    fileReader.readAsDataURL(fileToLoad);
+    console.log("func readAsDataURL");
+    console.log(fileToLoad);
   }
   
 

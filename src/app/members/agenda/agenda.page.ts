@@ -17,6 +17,8 @@ export class AgendaPage implements OnInit {
   viewTitle;
   isToday: boolean;
   selectedDay = new Date();
+  currentMonth = this.selectedDay.getMonth();
+  currentYear = this.selectedDay.getFullYear();
 
   calendar = {
      mode: 'month',
@@ -26,6 +28,10 @@ export class AgendaPage implements OnInit {
   constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
+    let diaActual= new Date();
+    /*
+    this.eventSource = this.cargarEvents(diaActual.month(), diaActual.year());
+    */
 
   }
 
@@ -51,12 +57,12 @@ export class AgendaPage implements OnInit {
   }
 
   async addEvent(){
-   let modal = await this.modalCtrl.create({
+    let modal = await this.modalCtrl.create({
       component: EventModalPage,
       componentProps: { selectedDay: this.selectedDay }
       });
     
-   modal.onDidDismiss().then((data) => {
+    modal.onDidDismiss().then((data) => {
       if (data) {
         let eventData = data.data;
         eventData.startTime = new Date(data.data.startTime);
@@ -70,8 +76,8 @@ export class AgendaPage implements OnInit {
         });
       }
 
-   });
-   return await modal.present();
+    });
+    return await modal.present();
     
   }
 
@@ -88,15 +94,49 @@ export class AgendaPage implements OnInit {
   onCurrentDateChanged(event:Date) {
     console.log(event)
     console.log(event.getMonth());
+    if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
+    {
+       this.currentMonth=event.getMonth();
+       this.currentYear = event.getFullYear();
+      /*
+       this.eventSource = this.cargarEvents(this.currentMonth, this.currentYear);
+       */
+
+    }
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
   }
 
+  cargarEvents(month, year){
+    var events = [];
+    this.agendaService.getEvents(month,year).subscribe(
+      // Subscription will be closed when unsubscribed manually.
+      (data: any)=>{
+        var tareas=JSON.parse(data._body);
+        for (let entry of tareas) {
+
+          events.push({
+            title: entry.actividad.descripcion,
+            startTime: new Date(entry.inicio),
+            endTime: new Date(entry.fin),
+            allDay: false
+          });
+
+          
+        }
+      }
+      
+    );
+    console.log(events);
+    return events;
+
+  }
+
   createRandomEvents() {
     var events = [];
-    this.agendaService.getEvents().subscribe(
+    this.agendaService.getEvents(1,2019).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
         var tareas=JSON.parse(data._body);
@@ -121,7 +161,7 @@ export class AgendaPage implements OnInit {
       for (var i = 0; i < 50; i += 1) {
         var date = new Date();
         var eventType = Math.floor(Math.random() * 2);
-        var startDay = Math.floor(Math.random() * 90) - 45;
+        var startDay = Math.floor(Math.random() * 90) - 45; diaActual.year()
         var endDay = Math.floor(Math.random() * 2) + startDay;
         var startTime;
         var endTime;
@@ -152,11 +192,11 @@ export class AgendaPage implements OnInit {
     */
    }
 
-   onRangeChanged(ev) {
+  onRangeChanged(ev) {
     console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
-   }
+  }
 
-   markDisabled = (date:Date) => {
+  markDisabled = (date:Date) => {
     var current = new Date();
     current.setHours(0, 0, 0);
     return date < current;
