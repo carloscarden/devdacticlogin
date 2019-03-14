@@ -168,6 +168,18 @@ async presentToast(text) {
     console.log("func readAsDataURL");
     console.log(fileToLoad);
   }
+
+  convertirAb64yBorrarImgsEnMemoria(images){
+    let imgs64=[];
+    while (images.length!=0){
+      let img = images.pop();
+      let img64= this.convertToBase64(img);
+      imgs64.push(img64);
+      this.deleteImage(img, 0, images);
+    }
+
+    return imgs64;
+  }
   
 
 }

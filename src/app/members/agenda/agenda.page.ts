@@ -110,11 +110,15 @@ export class AgendaPage implements OnInit {
   }
 
   cargarEvents(month, year){
+    console.log("eventos");
     var events = [];
+    console.log("llamo al service");
     this.agendaService.getEvents(month,year).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
-        var tareas=JSON.parse(data._body);
+        console.log("jsondata");
+        console.log(data);
+        /*var tareas=JSON.parse(data._body);
         for (let entry of tareas) {
 
           events.push({
@@ -125,7 +129,7 @@ export class AgendaPage implements OnInit {
           });
 
           
-        }
+        }*/
       }
       
     );
@@ -136,7 +140,7 @@ export class AgendaPage implements OnInit {
 
   createRandomEvents() {
     var events = [];
-    this.agendaService.getEvents(1,2019).subscribe(
+    this.agendaService.getEvents(2,2019).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
         var tareas=JSON.parse(data._body);

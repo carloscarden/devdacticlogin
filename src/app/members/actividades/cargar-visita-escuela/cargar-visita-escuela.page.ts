@@ -91,17 +91,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
   onSubmit() { 
     console.log("cargar");
     this.loading = true;
-    let imgs64=[];
-    let imgLength=this.images.length;
-    for (var _i = 0; _i < imgLength; _i++) {
-      let img=this.images[_i];
-      let img64=this.imgService.convertToBase64(this.images[_i])
-      imgs64.push(img64)
-      this.imgService.deleteImage(img,_i,this.images);
-
-    }
-
-    
+    let imgs64= this.imgService.convertirAb64yBorrarImgsEnMemoria(this.images);
+ 
     this.visita.imagenes=imgs64;
 
     this.actividadService.addVisita(this.visita).subscribe(
@@ -120,13 +111,6 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
 
-  logForm() {
-    console.log(this.inspeccion);
-  }
-
-  uploadFile() {
-   console.log("uploadFile");
-  }
 
   goBack(): void {
     this.location.back();
