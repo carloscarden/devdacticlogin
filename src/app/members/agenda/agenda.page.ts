@@ -92,8 +92,8 @@ export class AgendaPage implements OnInit {
  
 
   onCurrentDateChanged(event:Date) {
-    console.log(event)
-    console.log(event.getMonth());
+    /*console.log(event)
+    console.log(event.getMonth());*/
     if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
     {
        this.currentMonth=event.getMonth();
@@ -143,13 +143,25 @@ export class AgendaPage implements OnInit {
     this.agendaService.getEvents(2,2019).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
-        var tareas=JSON.parse(data._body);
+        console.log(data);
+        var tareas=data;
+        var i=new Date("2019-02-01T00:09:00.000Z");
+        console.log(i);
+
+        i.setSeconds(3*60*60);
+        console.log(i);
+
         for (let entry of tareas) {
+          let inicio= new Date(entry.inicio);
+          inicio.setSeconds(3*60*60);
+          let fin= new Date(entry.fin);
+          fin.setSeconds(3*60*60);
+
 
           events.push({
             title: entry.actividad.descripcion,
-            startTime: new Date(entry.inicio),
-            endTime: new Date(entry.fin),
+            startTime: inicio,
+            endTime: fin,
             allDay: false
           });
 
