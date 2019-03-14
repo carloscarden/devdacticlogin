@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class AgendaPage implements OnInit {
   eventSource = [];
-
+  data;
   viewTitle;
   isToday: boolean;
   selectedDay = new Date();
@@ -22,21 +22,20 @@ export class AgendaPage implements OnInit {
 
   calendar = {
      mode: 'month',
-     currentDate: new Date()
+     currentDate: new Date(),
+     locale: 'es_AR'
   }; // these are the variable used by the calendar.
 
   constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     let diaActual= new Date();
-    /*
-    this.eventSource = this.cargarEvents(diaActual.month(), diaActual.year());
-    */
+    this.eventSource=this.cargarEvents(diaActual.getMonth()+1, diaActual.getFullYear());
 
   }
 
   loadEvents() {
-    this.eventSource = this.createRandomEvents();
+    this.eventSource=this.cargarEvents(this.currentMonth+1, this.currentYear);
   }
   
   onViewTitleChanged(title) {
@@ -94,13 +93,15 @@ export class AgendaPage implements OnInit {
   onCurrentDateChanged(event:Date) {
     /*console.log(event)
     console.log(event.getMonth());*/
+    this.currentMonth=event.getMonth();
+    this.currentYear = event.getFullYear();
     if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
     {
        this.currentMonth=event.getMonth();
        this.currentYear = event.getFullYear();
-      /*
-       this.eventSource = this.cargarEvents(this.currentMonth, this.currentYear);
-       */
+      
+       
+       
 
     }
     var today = new Date();
@@ -110,103 +111,38 @@ export class AgendaPage implements OnInit {
   }
 
   cargarEvents(month, year){
-    console.log("eventos");
     var events = [];
-    console.log("llamo al service");
     this.agendaService.getEvents(month,year).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
-        console.log("jsondata");
-        console.log(data);
-        /*var tareas=JSON.parse(data._body);
-        for (let entry of tareas) {
-
-          events.push({
-            title: entry.actividad.descripcion,
-            startTime: new Date(entry.inicio),
-            endTime: new Date(entry.fin),
-            allDay: false
-          });
-
-          
-        }*/
+        this.data=data;
+        
+        
       }
       
     );
-    console.log(events);
+
+    if(this.data!= null){
+    for (let entry of this.data) {
+         // conversion de iso a gmt sumandole 3 horas
+        let inicio= new Date(entry.inicio);
+        inicio.setSeconds(3*60*60);
+        let fin= new Date(entry.fin);
+        fin.setSeconds(3*60*60);
+        events.push({
+              title: "entry.actividad.descripcion",
+              startTime: inicio,
+              endTime: fin,
+              allDay: false
+            });
+  
+            
+          }
+    }
     return events;
 
   }
 
-  createRandomEvents() {
-    var events = [];
-    this.agendaService.getEvents(2,2019).subscribe(
-      // Subscription will be closed when unsubscribed manually.
-      (data: any)=>{
-        console.log(data);
-        var tareas=data;
-        var i=new Date("2019-02-01T00:09:00.000Z");
-        console.log(i);
-
-        i.setSeconds(3*60*60);
-        console.log(i);
-
-        for (let entry of tareas) {
-          let inicio= new Date(entry.inicio);
-          inicio.setSeconds(3*60*60);
-          let fin= new Date(entry.fin);
-          fin.setSeconds(3*60*60);
-
-
-          events.push({
-            title: entry.actividad.descripcion,
-            startTime: inicio,
-            endTime: fin,
-            allDay: false
-          });
-
-          
-        }
-      }
-      
-    );
-    console.log(events);
-    return events;
-
-    /*
-      for (var i = 0; i < 50; i += 1) {
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        var startDay = Math.floor(Math.random() * 90) - 45; diaActual.year()
-        var endDay = Math.floor(Math.random() * 2) + startDay;
-        var startTime;
-        var endTime;
-        if (eventType === 0) {
-            startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-            if (endDay === startDay) {
-                endDay += 1;
-            }
-            endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
-            events.push({
-                title: 'All Day - ' + i,
-                startTime: startTime,
-                endTime: endTime,
-                allDay: true
-            });
-        } else {
-            var startMinute = Math.floor(Math.random() * 24 * 60);
-            var endMinute = Math.floor(Math.random() * 180) + startMinute;
-            startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-            endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-            events.push({
-                title: 'Event - ' + i,
-                startTime: startTime,
-                endTime: endTime,
-                allDay: false
-            });
-    
-    */
-   }
 
   onRangeChanged(ev) {
     console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);

@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./cargar-licencia.page.scss'],
 })
 export class CargarLicenciaPage implements OnInit {
-  
+ 
   licencia = new Licencia();
   cargaCorrecta = false;
   loading = false;
@@ -24,6 +24,7 @@ export class CargarLicenciaPage implements OnInit {
 
   ngOnInit() {
     this.licencia.inspector={"id":2,"nombre":"Guye","apellido":"No tiene"};
+
   }
 
   onSubmit() { 
