@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons start>
+    <ion-buttons slot="end">
       <button ion-button icon-only (click)="cancel()">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>Event Details</ion-title>
+    <ion-title class="textoTitulo">Nuevo Evento</ion-title>
   </ion-toolbar>
 </ion-header>
 {{ diagnostic }}
@@ -37,7 +37,11 @@
     </ion-item>
   </ion-list>
  
-  <button ion-button full icon-left (click)="save()">
+ <div class="centrarBoton">
+  <ion-button ion-button full color="primary" class="sombra" (click)="save()">AGENDAR</ion-button>
+ </div>
+
+  <!--<button ion-button full icon-left (click)="save()">
     <ion-icon name="checkmark"></ion-icon> Add Event
-  </button>
+  </button>-->
 </ion-content>
