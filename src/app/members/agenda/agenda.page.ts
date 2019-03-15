@@ -2,6 +2,8 @@ import { Component, OnInit,ViewChild  } from '@angular/core';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
 import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
+import { CalendarComponent } from "ionic2-calendar/calendar";
+
 import { Tarea } from './../../_models/tarea';
 import * as moment from 'moment';
 
@@ -12,6 +14,8 @@ import * as moment from 'moment';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
+  @ViewChild(CalendarComponent) myCalendar:CalendarComponent;
+  
   eventSource = [];
   data;
   viewTitle;
@@ -23,19 +27,27 @@ export class AgendaPage implements OnInit {
   calendar = {
      mode: 'month',
      currentDate: new Date(),
-     locale: 'es_AR'
+     locale: 'en-GB'
   }; // these are the variable used by the calendar.
 
-  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { }
+  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { 
+    this.loadEvents();
+  }
 
   ngOnInit() {
     let diaActual= new Date();
-    this.eventSource=this.cargarEvents(diaActual.getMonth()+1, diaActual.getFullYear());
+    this.loadEvents();
+    console.log(this.eventSource);
+    
 
   }
 
   loadEvents() {
+    
     this.eventSource=this.cargarEvents(this.currentMonth+1, this.currentYear);
+    console.log("data load")
+    console.log(this.eventSource);
+    //this.myCalendar.loadEvents();
   }
   
   onViewTitleChanged(title) {
@@ -85,7 +97,7 @@ export class AgendaPage implements OnInit {
   }
 
   today() {
-    this.calendar.currentDate = new Date();
+    this.myCalendar.currentDate = new Date();
   }
 
  
@@ -110,35 +122,43 @@ export class AgendaPage implements OnInit {
     this.isToday = today.getTime() === event.getTime();
   }
 
-  cargarEvents(month, year){
+ cargarEvents(month, year){
+  console.log("cargar eventos");
     var events = [];
     this.agendaService.getEvents(month,year).subscribe(
       // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
         this.data=data;
+        console.log("data");
+        console.log(this.data);
+
         
         
       }
       
     );
+    console.log(this.data);
 
     if(this.data!= null){
-    for (let entry of this.data) {
-         // conversion de iso a gmt sumandole 3 horas
-        let inicio= new Date(entry.inicio);
-        inicio.setSeconds(3*60*60);
-        let fin= new Date(entry.fin);
-        fin.setSeconds(3*60*60);
-        events.push({
-              title: "entry.actividad.descripcion",
-              startTime: inicio,
-              endTime: fin,
-              allDay: false
-            });
-  
-            
-          }
+        for (let entry of this.data) {
+            // conversion de iso a gmt sumandole 3 horas
+            let inicio= new Date(entry.inicio);
+            inicio.setSeconds(3*60*60);
+            let fin= new Date(entry.fin);
+            fin.setSeconds(3*60*60);
+            events.push({
+                  title: "entry.actividad.descripcion",
+                  startTime: inicio,
+                  endTime: fin,
+                  allDay: false
+                });
+      
+                
+              }
     }
+
+    console.log(events);
+    this.eventSource=events;
     return events;
 
   }
