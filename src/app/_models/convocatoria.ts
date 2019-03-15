@@ -1,4 +1,5 @@
 import { TipoConvocatoria } from "./tipo-convocatoria";
+import { Imagen } from "./imagen";
 
 
 export class Convocatoria {
@@ -6,7 +7,7 @@ export class Convocatoria {
     inicio:Date;
     fin:Date;
     tipoConvocatoria: TipoConvocatoria;
-    imagenes:Array<any>;
+    adjuntos:Array<Imagen>;
 
 }
 

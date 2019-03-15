@@ -35,8 +35,22 @@ export class AgendaPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit()");
     let diaActual= new Date();
-    this.loadEvents();
+   
+
+    setTimeout(() => { 
+      this.cargarEvents(this.currentMonth+1, this.currentYear).then(
+        (data:any)=>
+        {
+          console.log("data desde el cargar eventos");
+          this.eventSource=data;
+        }
+  
+      );
+   }, 700);
+    
+   
     console.log(this.eventSource);
     
 
@@ -44,7 +58,14 @@ export class AgendaPage implements OnInit {
 
   loadEvents() {
     
-    this.eventSource=this.cargarEvents(this.currentMonth+1, this.currentYear);
+    this.cargarEvents(this.currentMonth+1, this.currentYear).then(
+      (data:any)=>
+      {
+        console.log("data desde el load events");
+        this.eventSource=data;
+      }
+
+    );
     console.log("data load")
     console.log(this.eventSource);
     //this.myCalendar.loadEvents();
@@ -75,6 +96,7 @@ export class AgendaPage implements OnInit {
     
     modal.onDidDismiss().then((data) => {
       if (data) {
+        console.log(data);
         let eventData = data.data;
         eventData.startTime = new Date(data.data.startTime);
         eventData.endTime = new Date(data.data.endTime);
@@ -122,7 +144,7 @@ export class AgendaPage implements OnInit {
     this.isToday = today.getTime() === event.getTime();
   }
 
- cargarEvents(month, year){
+ async cargarEvents(month, year){
   console.log("cargar eventos");
     var events = [];
     this.agendaService.getEvents(month,year).subscribe(
@@ -159,7 +181,7 @@ export class AgendaPage implements OnInit {
 
     console.log(events);
     this.eventSource=events;
-    return events;
+    return await events;
 
   }
 

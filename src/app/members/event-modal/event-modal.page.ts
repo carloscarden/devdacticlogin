@@ -2,6 +2,8 @@ import { Component, OnInit, Input  } from '@angular/core';
 import {  NavController,  ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import * as moment from 'moment';
+import { Actividad } from 'src/app/_models/actividad';
+import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
 
 
 @Component({
@@ -10,19 +12,39 @@ import * as moment from 'moment';
   styleUrls: ['./event-modal.page.scss'],
 })
 export class EventModalPage implements OnInit {
-
-  event = { startTime: new Date().toISOString(), endTime: new Date().toISOString(), allDay: false };
-  minDate = new Date().toISOString();
+  actividades=[];
+  event = { actividad: Actividad,
+            startTime: new Date().toISOString(),
+            endTime: new Date().toISOString(),
+            allDay: false };
   selectedDay:any;
-  constructor(private nav:NavController, private modalCtrl:ModalController, navParams: NavParams) { }
+  constructor(private nav:NavController,
+              private modalCtrl:ModalController, 
+              navParams: NavParams,
+              private agendaService: AgendaServiceService) { }
 
   ngOnInit() {
+    this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
     let preselectedDate = moment(this.selectedDay).format();
     
     this.event.startTime = preselectedDate;
     this.event.endTime = preselectedDate;
 
   }
+
+  public selectObjectById(list: any[], id: string, property: string) {
+    console.log(list);
+    var item = list.find(item => item._id === id);
+    console.log("item");
+    console.log(item);
+    var prop = eval('this.' + property);
+    prop = property;
+  }
+
+
+  get diagnostic() { 
+    console.log(this.event.actividad);
+    return JSON.stringify(this.event); }
 
   async cancel()
   {
@@ -33,5 +55,7 @@ export class EventModalPage implements OnInit {
   async save() {
     await this.modalCtrl.dismiss(this.event);
   }
+
+
 
 }

@@ -23,7 +23,21 @@ export class AgendaServiceService {
     return this.http.get<any>(URL+`inspectores/1/tareas?month=${month}&year=${year}`);
   }
 
-  public getTipoActividades():  Observable<any> {
+  public getTipoActividades():  Observable<any> { 
     return this.http.get<Actividad>(URL+`actividades/all`);
   }
+
+  addTarea(tarea: Tarea){
+
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers.set('Accept-Type', 'application/json; charset=utf-8');
+    headers.set('Access-Control-Allow-Origin' , '*');
+    headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
+    return this.http.post<Tarea>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  tarea,{headers: headers});
+
+  }
+
+
 }
