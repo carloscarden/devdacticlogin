@@ -98,8 +98,8 @@ export class AgendaPage implements OnInit {
       if (data) {
         console.log(data);
         let eventData = data.data;
-        eventData.startTime = new Date(data.data.startTime);
-        eventData.endTime = new Date(data.data.endTime);
+        eventData.startTime = new Date(data.data.inicio);
+        eventData.endTime = new Date(data.data.fin);
 
         let events = this.eventSource;
         events.push(eventData);

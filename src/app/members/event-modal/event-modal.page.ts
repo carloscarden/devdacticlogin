@@ -3,7 +3,11 @@ import {  NavController,  ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 import { Actividad } from 'src/app/_models/actividad';
+import { Evento } from 'src/app/_models/evento';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
+
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,11 +16,9 @@ import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
   styleUrls: ['./event-modal.page.scss'],
 })
 export class EventModalPage implements OnInit {
-  actividades=[];
-  event = { actividad: Actividad,
-            startTime: new Date().toISOString(),
-            endTime: new Date().toISOString(),
-            allDay: false };
+  actividadesSubscription: Subscription;
+
+  evento = new Evento();
   selectedDay:any;
   constructor(private nav:NavController,
               private modalCtrl:ModalController, 
@@ -24,27 +26,56 @@ export class EventModalPage implements OnInit {
               private agendaService: AgendaServiceService) { }
 
   ngOnInit() {
-    this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
+    //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
     let preselectedDate = moment(this.selectedDay).format();
-    
-    this.event.startTime = preselectedDate;
-    this.event.endTime = preselectedDate;
+    console.log(preselectedDate);
+    this.evento.inicio = preselectedDate;
+    this.evento.fin = preselectedDate;
 
   }
 
-  public selectObjectById(list: any[], id: string, property: string) {
-    console.log(list);
-    var item = list.find(item => item._id === id);
-    console.log("item");
-    console.log(item);
-    var prop = eval('this.' + property);
-    prop = property;
+  
+
+  
+  filterPorts(tipos: Actividad[], text: string) {
+    console.log(tipos);
+    return tipos.filter(t => {
+      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
+    });
   }
+
+  searchPorts(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    // Close any running subscription.
+    if (this.actividadesSubscription) {
+      this.actividadesSubscription.unsubscribe();
+    }
+    this.agendaService.getTipoActividades();
+
+    this.actividadesSubscription = this.agendaService.getTipoActividades().subscribe(tipos => {
+      // Subscription will be closed when unsubscribed manually.
+      var tareas=tipos;
+      console.log(tareas);
+     if (this.actividadesSubscription.closed) {
+        return;
+      }
+
+      event.component.items = this.filterPorts(tareas, text);
+      event.component.endSearch();
+    });
+  }
+  
+  
+  
 
 
   get diagnostic() { 
-    console.log(this.event.actividad);
-    return JSON.stringify(this.event); }
+    return JSON.stringify(this.evento); }
 
   async cancel()
   {
@@ -53,7 +84,7 @@ export class EventModalPage implements OnInit {
   }
 
   async save() {
-    await this.modalCtrl.dismiss(this.event);
+    await this.modalCtrl.dismiss(this.evento);
   }
 
 

@@ -7,6 +7,7 @@
     <ion-title class="textoTitulo">Trabajo Administrativo</ion-title>
   </ion-toolbar>
 </ion-header>
+{{ diagnostic }}
 <ion-content padding>
     <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
@@ -40,7 +41,7 @@
             [(ngModel)]="trabajoAdmin.tipoTrabajo"
             name="tipoTrabajo"
             itemValueField="id"
-            itemTextField="tipo"
+            itemTextField="descripcion"
             [items]="tiposTrabajos"
             [canSearch]="true"
             (onSearch)="searchPorts($event)">

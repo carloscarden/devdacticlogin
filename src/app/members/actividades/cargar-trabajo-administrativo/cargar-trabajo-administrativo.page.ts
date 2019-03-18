@@ -57,7 +57,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
   filterPorts(tipos: TipoTrabajoAdministrativo[], text: string) {
     return tipos.filter(t => {
-      return t.tipo.toLowerCase().indexOf(text) !== -1 ;
+      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
   }
 
@@ -78,8 +78,9 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
      if (this.actividadesSubscription.closed) {
         return;
       }
-
-      event.component.items = this.filterPorts(tipos, text);
+      let valorTipos=JSON.parse(tipos._body);
+      console.log(valorTipos.content);
+      event.component.items = this.filterPorts(valorTipos.content, text);
       event.component.endSearch();
     });
   }

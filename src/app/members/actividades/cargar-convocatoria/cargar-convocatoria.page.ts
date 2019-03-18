@@ -41,14 +41,14 @@ export class CargarConvocatoriaPage implements OnInit {
   error= '';
   constructor(
     
-    private location: Location,
     private camera: Camera, private http: HttpClient,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
-    private plt: Platform, 
     private ref: ChangeDetectorRef,
     private imgService:  ImagenService,
-    private convocatoriaService: ActividadesService,) { }
+    private convocatoriaService: ActividadesService,
+    private route: ActivatedRoute,
+    private router: Router,) { }
 
   ngOnInit() {
   }
@@ -101,11 +101,12 @@ export class CargarConvocatoriaPage implements OnInit {
     this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
       var tareas=JSON.parse(tipos._body);
+      console.log(tareas.content);
      if (this.actividadesSubscription.closed) {
         return;
       }
 
-      event.component.items = this.filterPorts(tareas, text);
+      event.component.items = this.filterPorts(tareas.content, text);
       event.component.endSearch();
     });
   }

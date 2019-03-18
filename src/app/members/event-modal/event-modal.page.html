@@ -14,26 +14,33 @@
   <ion-list>
     
     <ion-item>
-      <ion-label>Gender</ion-label>
-      <ion-select placeholder="Select One" [(ngModel)]="event.actividad" >
-        <ion-select-option *ngFor="let actividad of actividades" value="{{actividad}}">{{ actividad.descripcion }}</ion-select-option>
-      </ion-select>
+      <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
+      <ionic-selectable
+        item-content
+        [(ngModel)]="evento.tipo"
+        name="eventoTipo"
+        itemValueField="codigo"
+        itemTextField="descripcion"
+        [items]="tiposTrabajos"
+        [canSearch]="true"
+        (onSearch)="searchPorts($event)">
+      </ionic-selectable>
     </ion-item>
     
 
     <ion-item>
       <ion-label>Start</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label>End</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label>All Day?</ion-label>
-      <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="evento.allDay"></ion-checkbox>
     </ion-item>
   </ion-list>
  

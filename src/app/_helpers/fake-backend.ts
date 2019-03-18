@@ -197,10 +197,10 @@ export class FakeBackend implements HttpInterceptor{
     
     private trabajosAdministrativosCollection:TrabajoAdministrativo[]=[];
     private tiposTrabajosAdministrativoCollection:TipoTrabajoAdministrativo[]=[
-      {id:1,tipo:"copret"},
-      {id:2,tipo:"entrevista"},
-      {id:3, tipo:"mensajes"},
-      {id:4, tipo:"mesa de inclusion"}];
+      {id:1,codigo:1,descripcion:"lalal"},
+      {id:2,codigo:2,descripcion:"lalal"},
+      {id:3, codigo:3,descripcion:"lalal"},
+      {id:4, codigo:4,descripcion:"lalal"}];
 
     private convocatoriaCollection: Convocatoria[] =[]; 
     private tipoConvocatoriaCollection:TipoConvocatoria[]=[
