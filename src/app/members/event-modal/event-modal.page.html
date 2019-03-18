@@ -17,7 +17,7 @@
       <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
       <ionic-selectable
         item-content
-        [(ngModel)]="evento.tipo"
+        [(ngModel)]="evento.actividad"
         name="eventoTipo"
         itemValueField="codigo"
         itemTextField="descripcion"
@@ -39,9 +39,10 @@
     </ion-item>
  
     <ion-item>
-      <ion-label>All Day?</ion-label>
-      <ion-checkbox [(ngModel)]="evento.allDay"></ion-checkbox>
+        <ion-label>Código Carpeta Médica</ion-label>
+        <ion-input type="text" [(ngModel)]="evento.detalle"></ion-input>
     </ion-item>
+
   </ion-list>
  
  <div class="centrarBoton">

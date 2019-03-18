@@ -4,6 +4,7 @@ import { NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 import { Actividad } from 'src/app/_models/actividad';
 import { Evento } from 'src/app/_models/evento';
+import { Tarea } from 'src/app/_models/tarea';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
 
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -18,8 +19,10 @@ import { Subscription } from 'rxjs';
 export class EventModalPage implements OnInit {
   actividadesSubscription: Subscription;
 
-  evento = new Evento();
+  evento = new Tarea();
   selectedDay:any;
+  loading;
+  error;
   constructor(private nav:NavController,
               private modalCtrl:ModalController, 
               navParams: NavParams,
@@ -84,6 +87,28 @@ export class EventModalPage implements OnInit {
   }
 
   async save() {
+
+    console.log("cargar evento");
+    let init=new Date(this.evento.inicio);
+    this.evento.idInspector=1;
+    this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
+    console.log(this.evento);
+    let end= new Date(this.evento.fin);
+    this.evento.fin=(end.getMonth()+1).toString()+"-"+end.getDate()+"-"+end.getFullYear()+" "+end.getHours()+":"+end.getMinutes();
+    console.log(this.evento.inicio);
+    this.loading = true;
+    this.agendaService.addTarea(this.evento).subscribe(
+        data => {
+          console.log(data);
+           this.loading=false;
+           this.evento = new Tarea();
+           this.error = '';
+           alert(data);
+        },
+        error => {
+            this.error = error;
+            this.loading = false;
+        });;
     await this.modalCtrl.dismiss(this.evento);
   }
 

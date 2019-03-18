@@ -48,7 +48,7 @@ export class AgendaPage implements OnInit {
         }
   
       );
-   }, 700);
+   }, 2000);
     
    
     console.log(this.eventSource);
@@ -98,6 +98,8 @@ export class AgendaPage implements OnInit {
       if (data) {
         console.log(data);
         let eventData = data.data;
+
+        eventData.title=data.data.tipo.descripcion;
         eventData.startTime = new Date(data.data.inicio);
         eventData.endTime = new Date(data.data.fin);
 

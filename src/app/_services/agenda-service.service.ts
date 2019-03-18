@@ -35,9 +35,25 @@ export class AgendaServiceService {
     headers.set('Access-Control-Allow-Origin' , '*');
     headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<Tarea>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  tarea,{headers: headers});
+    console.log(URL+`tareas`);
+    console.log("tarea");
+    console.log(tarea);
+    console.log(tarea.inicio);
+    console.log(tarea.fin);
+    let t={"inicio": tarea.inicio,
+    "fin": tarea.fin,
+    "detalle": tarea.detalle,
+    "idInspector": tarea.idInspector,
+    "actividad":tarea.actividad
+    };
+    console.log("t");
+    console.log(t);
+
+    return this.http.post<Tarea>(URL+`tareas`,  t,{headers: headers});
 
   }
+
+  
 
 
 }

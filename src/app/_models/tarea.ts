@@ -2,8 +2,8 @@ import { Actividad } from "./actividad";
 
 export class Tarea {
     id: number;
-    inicio: Date;
-    fin: Date;
+    inicio: string;
+    fin: string;
     detalle: string;
     idInspector: number;
     actividad: Actividad;
