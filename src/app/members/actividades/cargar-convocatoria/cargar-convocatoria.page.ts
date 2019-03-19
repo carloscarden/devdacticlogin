@@ -35,6 +35,7 @@ export class CargarConvocatoriaPage implements OnInit {
   convocatoria = new Convocatoria();
   tiposConvocatorias: TipoConvocatoria[];
   images = [];
+  imagesWeb = [];
   actividadesSubscription: Subscription;
   cargaCorrecta = false;
   loading = false;
@@ -150,6 +151,26 @@ export class CargarConvocatoriaPage implements OnInit {
   deleteImage(imgEntry, position) {
     this.imgService.deleteImage(imgEntry, position, this.images);
   
+  }
+
+
+  changeListener($event) : void {
+    var archivoWeb = $event.target.files[0];
+    console.log(archivoWeb);
+    
+
+    var reader = new FileReader();
+    reader.readAsDataURL(archivoWeb);
+    reader.onload = (event: any) => {
+        this.imagesWeb.push(event.target.result) ;
+    }
+            
+  }
+
+  deleteImageWeb(pos){
+    this.imagesWeb.splice(pos, 1);
+    this.presentToast('File removed.');
+
   }
 
 
