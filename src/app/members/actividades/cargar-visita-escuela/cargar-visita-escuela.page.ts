@@ -31,7 +31,6 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
   inspeccion = {}
   constructor(
-    private location: Location,
     private camera: Camera, private http: HttpClient,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
@@ -42,9 +41,9 @@ export class CargarVisitaEscuelaPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.plt.ready().then(() => {
+    /*this.plt.ready().then(() => {
       this.imgService.loadStoredImages(this.images);
-    });
+    });*/
   }
 
   
@@ -110,10 +109,5 @@ export class CargarVisitaEscuelaPage implements OnInit {
   
   }
 
-
-
-  goBack(): void {
-    this.location.back();
-  }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable , ChangeDetectorRef} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
@@ -17,11 +17,11 @@ const STORAGE_KEY = 'my_images';
 export class ImagenService {
 
   constructor(
-    private route: ActivatedRoute,private location: Location,
+    private route: ActivatedRoute,
     private camera: Camera, private file: File, private http: HttpClient,
     private webview: WebView, private actionSheetController: ActionSheetController,
     private storage: Storage, private plt: Platform, private loadingController: LoadingController,
-    private ref: ChangeDetectorRef, private filePath: FilePath,
+    private filePath: FilePath,
     private toastController: ToastController
     ) { }
 
