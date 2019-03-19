@@ -67,7 +67,7 @@ export class ActividadesService {
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */
   addConvocatoria(convocatoria: Convocatoria) {
-    return this.http.post<any>(this.basepath+`addConvocatoria`, { convocatoria });
+    return this.http.post<any>(URL+`convocatoriass`,  convocatoria );
   }
 
   getConvocatorias(): Observable<Convocatoria[]> {

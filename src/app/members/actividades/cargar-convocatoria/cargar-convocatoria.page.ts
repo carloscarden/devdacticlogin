@@ -22,6 +22,7 @@ import { ActividadesService } from './../../../_services/actividades.service';
 /*  MODELOS */
 import { Convocatoria } from './../../../_models/convocatoria';
 import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
+import { Imagen } from './../../../_models/imagen';
 
 
 
@@ -57,8 +58,15 @@ export class CargarConvocatoriaPage implements OnInit {
   onSubmit() {
     this.loading = true;
     let imgs64= this.imgService.convertirAb64yBorrarImgsEnMemoria(this.images);
-  
-
+    let imgsConvertidas =[];
+    for(let img of this.imagesWeb){
+      let conversion= img.archivo.split(',');
+      img.archivo = conversion[1];
+      imgsConvertidas.push(img);
+    }
+    this.imagesWeb=[];
+    this.convocatoria.adjuntos=imgsConvertidas;
+    console.log(this.convocatoria);
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
@@ -76,7 +84,7 @@ export class CargarConvocatoriaPage implements OnInit {
    }
 
    // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.convocatoria); }
+  get diagnostic() { return JSON.stringify(this.imagesWeb); }
 
 
   filterPorts(tipos: TipoConvocatoria[], text: string) {
@@ -162,7 +170,11 @@ export class CargarConvocatoriaPage implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(archivoWeb);
     reader.onload = (event: any) => {
-        this.imagesWeb.push(event.target.result) ;
+        let imagenNueva= new Imagen();
+        imagenNueva.nombre= archivoWeb.name;
+        imagenNueva.tipo = archivoWeb.type;
+        imagenNueva.archivo = event.target.result;
+        this.imagesWeb.push(imagenNueva) ;
     }
             
   }

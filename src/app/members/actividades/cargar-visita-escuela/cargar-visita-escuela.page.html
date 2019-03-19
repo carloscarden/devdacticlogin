@@ -91,7 +91,7 @@
             <ion-label position="stacked" class="textoBold" color="success">Inspector Acompañante</ion-label>
             <ion-input type="text" [(ngModel)]="inspeccion.inspectorVisitante" name="observaciones" #observaciones="ngModel" required></ion-input>
         </ion-item>
-
+<!--
         <ion-item>
            <ion-list>
                <ion-item *ngFor="let img of images; index as pos" text-wrap>
@@ -109,13 +109,13 @@
                   </ion-button>
                </ion-item>
           </ion-list>
-        </ion-item>
+        </ion-item> -->
 
-         <ion-item class="centrarBoton">
+         
            <ion-button class="tipoBoton" (click)="selectImage()">
               ADJUNTAR
            </ion-button>
-         </ion-item>
+         
 
          <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
              <ion-fab-button type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
