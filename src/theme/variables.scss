@@ -5,9 +5,6 @@
 
 
 
-
-:root {
-
 @font-face {
   font-family:'DIN';
   font-style:normal;
@@ -21,6 +18,9 @@
   font-weight:bold;
   src:url(../assets/fonts/DIN/DINNextRoundedLTPro-Bold.ttf);
 }
+
+:root {
+
 
 .textoTitulo {
   font-family: 'DIN';
