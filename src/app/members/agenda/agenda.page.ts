@@ -31,24 +31,12 @@ export class AgendaPage implements OnInit {
   }; // these are the variable used by the calendar.
 
   constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { 
-    this.loadEvents();
   }
 
   ngOnInit() {
     console.log("ngOnInit()");
     let diaActual= new Date();
-   
-
-    setTimeout(() => { 
-      this.cargarEvents(this.currentMonth+1, this.currentYear).then(
-        (data:any)=>
-        {
-          console.log("data desde el cargar eventos");
-          this.eventSource=data;
-        }
-  
-      );
-   }, 2000);
+    this.cargarEvents(this.currentMonth+1, this.currentYear);
     
    
     console.log(this.eventSource);
@@ -56,21 +44,6 @@ export class AgendaPage implements OnInit {
 
   }
 
-  loadEvents() {
-    
-    this.cargarEvents(this.currentMonth+1, this.currentYear).then(
-      (data:any)=>
-      {
-        console.log("data desde el load events");
-        this.eventSource=data;
-      }
-
-    );
-    console.log("data load")
-    console.log(this.eventSource);
-    //this.myCalendar.loadEvents();
-  }
-  
   onViewTitleChanged(title) {
         this.viewTitle = title;
         console.log(title);
@@ -127,14 +100,13 @@ export class AgendaPage implements OnInit {
  
 
   onCurrentDateChanged(event:Date) {
-    /*console.log(event)
-    console.log(event.getMonth());*/
-    this.currentMonth=event.getMonth();
-    this.currentYear = event.getFullYear();
+    console.log(event)
+    console.log(event.getMonth());
     if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
     {
        this.currentMonth=event.getMonth();
        this.currentYear = event.getFullYear();
+       this.cargarEvents(this.currentMonth+1,this.currentYear);
       
        
        
@@ -146,46 +118,49 @@ export class AgendaPage implements OnInit {
     this.isToday = today.getTime() === event.getTime();
   }
 
- async cargarEvents(month, year){
-  console.log("cargar eventos");
-    var events = [];
-    this.agendaService.getEvents(month,year).subscribe(
-      // Subscription will be closed when unsubscribed manually.
+  cargarEvents(month, year){
+    console.log("cargar eventos");
+      this.eventSource = [];
+      this.agendaService.getEvents(month,year).subscribe(
+        // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
-        this.data=data;
-        console.log("data");
-        console.log(this.data);
-
-        
-        
-      }
-      
-    );
-    console.log(this.data);
-
-    if(this.data!= null){
-        for (let entry of this.data) {
-            // conversion de iso a gmt sumandole 3 horas
-            let inicio= new Date(entry.inicio);
-            inicio.setSeconds(3*60*60);
-            let fin= new Date(entry.fin);
-            fin.setSeconds(3*60*60);
-            events.push({
-                  title: "entry.actividad.descripcion",
-                  startTime: inicio,
-                  endTime: fin,
-                  allDay: false
-                });
-      
+          this.data=data;
+          console.log("data");
+          console.log(this.data);
+          if(this.data!= null){
+            for (let entry of this.data) {
+               
+                let inicio= new Date(entry.inicio);
+                 // conversion de iso a gmt sumandole 3 horas
+                //inicio.setSeconds(3*60*60);
+                //fin.setSeconds(3*60*60);
+                let fin= new Date(entry.fin);
                 
-              }
+                this.eventSource.push({
+                      title: "entry.actividad.descripcion",
+                      startTime: inicio,
+                      endTime: fin,
+                      allDay: false
+                    });
+                console.log("cargando");
+                this.myCalendar.loadEvents();
+          
+                    
+             }
+          }
+        console.log(this.eventSource);
+  
+          
+          
+        }
+        
+      );
+
+     
+      this.myCalendar.loadEvents();
+
+  
     }
-
-    console.log(events);
-    this.eventSource=events;
-    return await events;
-
-  }
 
 
   onRangeChanged(ev) {
