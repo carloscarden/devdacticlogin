@@ -58,7 +58,7 @@ export class ActividadesService {
     headers.set('Access-Control-Allow-Origin' , '*');
     headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  l,{headers: headers});
+    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`, licencia,{headers: headers});
   }
 
   getLicencias(): Observable<any> {
@@ -67,7 +67,7 @@ export class ActividadesService {
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */
   addConvocatoria(convocatoria: Convocatoria) {
-    return this.http.post<any>(URL+`convocatoriass`,  convocatoria );
+    return this.http.post<any>(URL+`convocatorias`,  convocatoria );
   }
 
   getConvocatorias(): Observable<Convocatoria[]> {
@@ -75,13 +75,13 @@ export class ActividadesService {
   }
 
   getTipoConvocatorias(): Observable<any>{
-    return this.httpOtro.get(URL+`tiposConvocatoria`);
+    return this.httpOtro.get(URL+`tiposConvocatoria/all`);
 
   }
   /******************************************************************************** */
          /*  TRABAJO ADMINISTRATIVO */
   addTrabajoAdministrativo(trabajoAdmin: TrabajoAdministrativo){
-    return this.http.post<any>(URL+`addTrabajoAdmin`,  trabajoAdmin );
+    return this.http.post<any>(URL+`trabajosAdmin`,  trabajoAdmin );
   }
 
   getTrabajoAdministrativo(){
@@ -89,7 +89,7 @@ export class ActividadesService {
   }
 
   getTipoTrabajoAdministrativo(): Observable<any>{
-    return this.httpOtro.get(URL+`tiposTrabajoAdmin`);
+    return this.httpOtro.get(URL+`tiposTrabajoAdmin/all`);
   }
   /******************************************************************************** */
 

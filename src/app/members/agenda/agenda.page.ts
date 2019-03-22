@@ -34,12 +34,8 @@ export class AgendaPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit()");
     let diaActual= new Date();
     this.cargarEvents(this.currentMonth+1, this.currentYear);
-    
-   
-    console.log(this.eventSource);
     
 
   }
@@ -100,8 +96,6 @@ export class AgendaPage implements OnInit {
  
 
   onCurrentDateChanged(event:Date) {
-    console.log(event)
-    console.log(event.getMonth());
     if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
     {
        this.currentMonth=event.getMonth();
@@ -119,18 +113,16 @@ export class AgendaPage implements OnInit {
   }
 
   cargarEvents(month, year){
-    console.log("cargar eventos");
       this.eventSource = [];
       this.agendaService.getEvents(month,year).subscribe(
         // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
           this.data=data;
-          console.log("data");
-          console.log(this.data);
           if(this.data!= null){
             for (let entry of this.data) {
-               
+
                 let inicio= new Date(entry.inicio);
+
                  // conversion de iso a gmt sumandole 3 horas
                 //inicio.setSeconds(3*60*60);
                 //fin.setSeconds(3*60*60);
@@ -142,13 +134,11 @@ export class AgendaPage implements OnInit {
                       endTime: fin,
                       allDay: false
                     });
-                console.log("cargando");
                 this.myCalendar.loadEvents();
           
                     
              }
           }
-        console.log(this.eventSource);
   
           
           

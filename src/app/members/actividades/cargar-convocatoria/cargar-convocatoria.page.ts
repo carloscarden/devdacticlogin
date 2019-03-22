@@ -59,6 +59,8 @@ export class CargarConvocatoriaPage implements OnInit {
     this.loading = true;
     let imgs64= this.imgService.convertirAb64yBorrarImgsEnMemoria(this.images);
     let imgsConvertidas =[];
+
+    /* convertir todas las imagenes al formato que acepta el backend */
     for(let img of this.imagesWeb){
       let conversion= img.archivo.split(',');
       img.archivo = conversion[1];
@@ -66,6 +68,22 @@ export class CargarConvocatoriaPage implements OnInit {
     }
     this.imagesWeb=[];
     this.convocatoria.adjuntos=imgsConvertidas;
+
+
+    /* convertir la fecha de inicio al formato que acepta el backend*/
+    let inicio= new Date(this.convocatoria.inicio);
+    inicio.setSeconds(3*60*60);
+    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+inicio.getHours()+":"+inicio.getMinutes();
+    this.convocatoria.inicio=formatoCorrectoInicio;
+
+
+    /* convertir la fecha de fin al formato correcto el backend*/
+    let fin= new Date(this.convocatoria.fin);
+    fin.setSeconds(3*60*60);
+    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+fin.getHours()+":"+fin.getMinutes();
+    this.convocatoria.fin=formatoCorrectoFin;
+
+
     console.log(this.convocatoria);
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
@@ -84,7 +102,7 @@ export class CargarConvocatoriaPage implements OnInit {
    }
 
    // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.imagesWeb); }
+  get diagnostic() { return JSON.stringify(this.convocatoria); }
 
 
   filterPorts(tipos: TipoConvocatoria[], text: string) {
@@ -110,12 +128,11 @@ export class CargarConvocatoriaPage implements OnInit {
     this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
       var tareas=JSON.parse(tipos._body);
-      console.log(tareas.content);
      if (this.actividadesSubscription.closed) {
         return;
       }
 
-      event.component.items = this.filterPorts(tareas.content, text);
+      event.component.items = this.filterPorts(tareas, text);
       event.component.endSearch();
     });
   }

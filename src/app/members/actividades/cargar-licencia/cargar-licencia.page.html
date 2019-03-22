@@ -12,7 +12,7 @@
     <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
         <ion-item>
            <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-               <ion-datetime displayFormat="DD MM YY" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+               <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
                <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                </div>
@@ -28,14 +28,43 @@
 
 
         <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Código Carpeta Médica</ion-label>
-            <ion-input type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel" required ></ion-input>
-            <div *ngIf="!(codigo.valid || codigo.pristine)" class="invalid-feedback">
+            <ion-label position="stacked" class="textoBold" color="success">Articulo</ion-label>
+            <ion-input type="text" [(ngModel)]="licencia.articulo" name="articulo" #articulo="ngModel" required ></ion-input>
+            <div *ngIf="!(articulo.valid || articulo.pristine)" class="invalid-feedback">
                     El nro de la SOLICITUD es requerido
             </div>
         </ion-item>
 
-        <ion-label color="danger" [hidden]="codigo.valid || codigo.pristine">El nro de la SOLICITUD es requerido</ion-label>
+        <ion-label color="danger" [hidden]="articulo.valid || articulo.pristine">El nro de la SOLICITUD es requerido</ion-label>
+
+        <!-- ************************************************************************************************** -->
+        <ion-list>
+            <ion-radio-group [(ngModel)]="licencia.medica" name="medica"  #medica="ngModel">
+              <ion-list-header >
+                <ion-label>Tipo de licencia</ion-label>
+              </ion-list-header>
+          
+              <ion-item>
+                <ion-label>Medica</ion-label>
+                <ion-radio slot="start" value="T" checked></ion-radio>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>No Medica</ion-label>
+                <ion-radio slot="start" value="F"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+       
+        
+
+        <!-- ************************************************************************************************** -->
+
+        <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Codigo</ion-label>
+            <ion-input type="number" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
+        </ion-item>
+
 
         <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
              <ion-button type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">

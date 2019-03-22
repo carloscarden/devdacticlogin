@@ -6,21 +6,21 @@
     <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
-
+{{ diagnostic }}
 <ion-content padding>
     <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-            <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaInicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
-            <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
+            <ion-datetime displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.inicio" name="inicio" #inicio="ngModel" required></ion-datetime>
+            <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
               La fecha de inicio es requerida
            </div>
         </ion-item>
 
         <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-            <ion-datetime displayFormat="MM DD YY" [(ngModel)]="convocatoria.fechaFin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
-            <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
+            <ion-datetime displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.fin" name="fin" #fin="ngModel" required></ion-datetime>
+            <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
               La fecha de fin es requerida
            </div>
         </ion-item>
@@ -29,7 +29,7 @@
             <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
             <ionic-selectable
               item-content
-              [(ngModel)]="convocatoria.tipo"
+              [(ngModel)]="convocatoria.tipoConvocatoria"
               name="convocatoriaTipo"
               itemValueField="codigo"
               itemTextField="descripcion"

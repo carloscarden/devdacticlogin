@@ -23,7 +23,8 @@ export class CargarLicenciaPage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
-    this.licencia.inspector={"id":2,"nombre":"Guye","apellido":"No tiene"};
+    this.licencia.idInspector=2;
+    this.licencia.medica="T";
 
   }
 

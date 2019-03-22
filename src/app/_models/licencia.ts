@@ -4,6 +4,8 @@ export class Licencia {
     id:number;
     inicio:Date;
     fin:Date;
-    codigo:string;
-    inspector:Inspector;
+    articulo: string;
+    medica: string;
+    codigo: number;
+    idInspector: number;
 }

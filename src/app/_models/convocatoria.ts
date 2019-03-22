@@ -4,8 +4,8 @@ import { Imagen } from "./imagen";
 
 export class Convocatoria {
     id:number;
-    inicio:Date;
-    fin:Date;
+    inicio:string;
+    fin:string;
     tipoConvocatoria: TipoConvocatoria;
     adjuntos:Array<Imagen>;
 
