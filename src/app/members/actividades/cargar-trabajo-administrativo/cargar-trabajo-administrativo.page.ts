@@ -37,8 +37,10 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   error= '';
   images = [];
   imagesWeb = [];
+  esPlataformaMovil=this.plt.is('android');
 
   constructor(
+    private plt: Platform,
     private camera: Camera, private http: HttpClient,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,

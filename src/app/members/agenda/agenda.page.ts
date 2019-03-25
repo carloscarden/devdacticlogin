@@ -77,6 +77,8 @@ export class AgendaPage implements OnInit {
         this.eventSource = [];
         setTimeout(() => {
           this.eventSource = events;
+          this.myCalendar.loadEvents();
+
         });
       }
 
