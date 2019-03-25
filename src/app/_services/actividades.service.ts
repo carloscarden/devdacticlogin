@@ -62,7 +62,7 @@ export class ActividadesService {
   }
 
   getLicencias(): Observable<any> {
-    return this.httpOtro.get(URL+`licencias`);
+    return this.http.get(URL+`licencias`);
   }
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */

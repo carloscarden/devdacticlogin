@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title class="textoTitulo">Informes</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+       
+      <ion-item>
+          <ion-label position="stacked" class="textoBold" color="success">SELECCIONAR ACTIVIDAD</ion-label>
+          <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Dismiss" [(ngModel)]="url">
+             <ion-select-option value="/members/menu/listar-convocatoria" >Convocatoria</ion-select-option>
+             <ion-select-option value="/members/menu/listar-licencia" >Licencia</ion-select-option>
+             <ion-select-option value="/members/menu/listar-trabajo-admin" >Trabajo Administrativo</ion-select-option>
+             <ion-select-option value="/members/menu/listar-visita-escuela" >Visita Escuela</ion-select-option>
+          </ion-select>
+      </ion-item>  
+
+      <h1> Informes de la Licencia</h1>
+      <h2>Buscar </h2>
+      <ion-item><ion-input type="text"></ion-input></ion-item>
+
+    
+      <ion-list margin-top>
+          <ion-item-sliding *ngFor="let item of inspecciones">
+            <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
+              <ion-label>
+                {{ item.task }}
+                <p>{{ item.createdAt | date:'short' }}</p>
+              </ion-label>
+              <ion-note slot="end" color="primary">{{ item.priority }}</ion-note>
+            </ion-item>
+       
+            <ion-item-options side="end">
+              <ion-item-option (click)="remove(item)" color="secondary">
+                Check
+                <ion-icon name="checkmark" slot="end"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+  </ion-content>
+
+  <ion-footer>
+   <ion-toolbar color="primary">
+    <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
+   </ion-toolbar>
+  </ion-footer>
+  
