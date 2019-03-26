@@ -11,10 +11,10 @@
       <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">SELECCIONAR ACTIVIDAD</ion-label>
           <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Dismiss" [(ngModel)]="url">
-             <ion-select-option value="/members/menu/listar-convocatoria" >Convocatoria</ion-select-option>
-             <ion-select-option value="/members/menu/listar-licencia" >Licencia</ion-select-option>
-             <ion-select-option value="/members/menu/listar-trabajo-admin" >Trabajo Administrativo</ion-select-option>
-             <ion-select-option value="/members/menu/listar-visita-escuela" >Visita Escuela</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarConvocatoria" >Convocatoria</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarLicencia" >Licencia</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarTrabajoAdmin" >Trabajo Administrativo</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarVisita" >Visita Escuela</ion-select-option>
           </ion-select>
       </ion-item>      
 
@@ -42,6 +42,15 @@
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
+
+
+       <!--
+        <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+        --> 
+      
   </ion-content>
 
   <ion-footer>

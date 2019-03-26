@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 
 /* SERVICES */
 import { Todo, TodoService } from './../../../_services/todo.service';
@@ -17,18 +20,52 @@ import { Pagina } from './../../../_models/pagina';
 })
 export class ListarLicenciaPage implements OnInit {
   url;
+  pagLicencia: Pagina;
+  page = 0;
+  maximumPages = 3;
+  licencias=[];
+  size=5
+
   constructor( private router:Router,
     private todoService: TodoService,
-    private licenciaService:ActividadesService ) { }
+    private licenciaService:ActividadesService,
+    private httpClient: HttpClient ) { 
+      this.licenciaService.getLicencias(this.size,this.page)
+      .subscribe(res  =>{
+                   console.log("resultados");
+                   this.licencias=res.content;
+                   this.maximumPages=res.totalPages-1;
+                   console.log(res);
+                  }  
+                 );
+    }
 
-    inspecciones: Inspeccion[];
-    licencias: Pagina;
+    
 
 
-  ngOnInit() {
-    this.todoService.getInspecciones()
-    .subscribe(inspecciones => this.inspecciones = inspecciones);
+  ngOnInit() { }
+
+
+  loadUsers(infiniteScroll?) {
+    this.licenciaService.getLicencias(this.size,this.page)
+    .subscribe(res  =>{
+                 console.log("resultados");
+                 this.licencias=this.licencias.concat(res['content']);
+                 if (infiniteScroll) {
+                  infiniteScroll.target.complete();       
+                  }             
+              });
   }
+ 
+  loadMore(infiniteScroll) {
+    this.page++;
+    this.loadUsers(infiniteScroll);
+ 
+    if (this.page === this.maximumPages) {
+      infiniteScroll.target.disabled = true;
+    }
+  }
+  
 
   onChange(newValue) {
     console.log("onChange");

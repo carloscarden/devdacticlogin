@@ -131,7 +131,7 @@ export class AgendaPage implements OnInit {
                 let fin= new Date(entry.fin);
                 
                 this.eventSource.push({
-                      title: "entry.actividad.descripcion",
+                      title: entry.actividad.descripcion,
                       startTime: inicio,
                       endTime: fin,
                       allDay: false

@@ -33,7 +33,7 @@ export class MenuPage implements OnInit {
 
 
   openInformes() {
-    this.router.navigateByUrl('/members/menu/listar-convocatoria');
+    this.router.navigateByUrl('/members/menu/actividadesLectura/listarConvocatoria');
   }
 
 

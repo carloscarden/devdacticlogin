@@ -13,14 +13,10 @@ const routes: Routes = [
     component: MenuPage,
     children:[
       { path: 'agenda', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
-      { path: 'informes', loadChildren: '../informes/informes.module#InformesPageModule' },
-      
       { path: 'actividad', loadChildren: '../actividades/actividades-routing.module#ActividadesRoutingModule' },
-      { path: 'listar-convocatoria', loadChildren: './actividadesLectura/listar-convocatoria/listar-convocatoria.module#ListarConvocatoriaPageModule' },
-      { path: 'listar-trabajo-admin', loadChildren: './actividadesLectura/listar-trabajo-admin/listar-trabajo-admin.module#ListarTrabajoAdminPageModule' },
-      { path: 'listar-licencia', loadChildren: './actividadesLectura/listar-licencia/listar-licencia.module#ListarLicenciaPageModule' },
-      { path: 'listar-visita-escuela', loadChildren: './actividadesLectura/listar-visita-escuela/listar-visita-escuela.module#ListarVisitaEscuelaPageModule' },
-      { path: 'seleccionar-informe', loadChildren: './actividadesLectura/seleccionar-informe/seleccionar-informe.module#SeleccionarInformePageModule' },
+      { path: 'actividadesLectura', loadChildren: '../actividadesLectura/actividadesLectura-routing.module#ActividadesLecturaRoutingModule' },
+
+  
     
     ]
   },

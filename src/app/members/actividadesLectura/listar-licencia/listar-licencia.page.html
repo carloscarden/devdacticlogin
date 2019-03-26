@@ -13,10 +13,10 @@
       <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">SELECCIONAR ACTIVIDAD</ion-label>
           <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Dismiss" [(ngModel)]="url">
-             <ion-select-option value="/members/menu/listar-convocatoria" >Convocatoria</ion-select-option>
-             <ion-select-option value="/members/menu/listar-licencia" >Licencia</ion-select-option>
-             <ion-select-option value="/members/menu/listar-trabajo-admin" >Trabajo Administrativo</ion-select-option>
-             <ion-select-option value="/members/menu/listar-visita-escuela" >Visita Escuela</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarConvocatoria" >Convocatoria</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarLicencia" >Licencia</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarTrabajoAdmin" >Trabajo Administrativo</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarVisita" >Visita Escuela</ion-select-option>
           </ion-select>
       </ion-item>  
 
@@ -26,23 +26,22 @@
 
     
       <ion-list margin-top>
-          <ion-item-sliding *ngFor="let item of inspecciones">
+          <ion-item-sliding *ngFor="let item of licencias">
             <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
               <ion-label>
-                {{ item.task }}
-                <p>{{ item.createdAt | date:'short' }}</p>
+                ARTICULO: {{ item.articulo }} <br>
+                INICIO: <p>{{ item.inicio }}</p>
+                FIN:  <p>{{ item.fin }}</p>
               </ion-label>
-              <ion-note slot="end" color="primary">{{ item.priority }}</ion-note>
             </ion-item>
-       
-            <ion-item-options side="end">
-              <ion-item-option (click)="remove(item)" color="secondary">
-                Check
-                <ion-icon name="checkmark" slot="end"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
           </ion-item-sliding>
-        </ion-list>
+      </ion-list>
+
+      
+       <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+       
   </ion-content>
 
   <ion-footer>

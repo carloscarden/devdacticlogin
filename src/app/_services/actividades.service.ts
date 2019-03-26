@@ -28,7 +28,7 @@ export class ActividadesService {
               private _platform: Platform ) {
 
         if(this._platform.is("cordova")){
-          this.basepath ="http://test2.abc.gov.ar:8080";
+          this.basepath ="test2.abc.gov.ar:8080";
         }
   }
   /******************************************************************************** */
@@ -61,8 +61,10 @@ export class ActividadesService {
     return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`, licencia,{headers: headers});
   }
 
-  getLicencias(): Observable<any> {
-    return this.http.get(URL+`licencias`);
+  getLicencias(size,page): Observable<any> {
+    console.log("url");
+    console.log(URL+`licencias?size=${size}&page=${page}`);
+    return this.http.get<any>(URL+`licencias?size=${size}&page=${page}&sort=ASC`);
   }
   /******************************************************************************** */
         /*  CONVOCATORIA CRUD */
