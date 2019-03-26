@@ -10,21 +10,22 @@
   
   <ion-content padding>
 
-      <ion-item>
-          <ion-label position="stacked" class="textoBold" color="success">SELECCIONAR ACTIVIDAD</ion-label>
+      <ion-item class="busquedaPrimera">
+          <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
           <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Dismiss" [(ngModel)]="url">
              <ion-select-option value="/members/menu/listar-convocatoria" >Convocatoria</ion-select-option>
              <ion-select-option value="/members/menu/listar-licencia" >Licencia</ion-select-option>
-             <ion-select-option value="/members/menu/listar-trabajo-admin" >Trabajo Administrativo</ion-select-option>
+             <ion-select-option value="/members/menu/listar-trabajo-admin" selected>Trabajo Administrativo</ion-select-option>
              <ion-select-option value="/members/menu/listar-visita-escuela" >Visita Escuela</ion-select-option>
           </ion-select>
       </ion-item>    
 
-      <h1> Informes de Trabajo Administrativo</h1>
-      <h2>Buscar </h2>
-      <ion-item><ion-input type="text"></ion-input></ion-item>
-
-
+      <ion-item class="busquedaSegunda"> 
+        <ion-label position="stacked" class="textoBold" color="success">Buscar por tipo</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+     
+      
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of inspecciones">
             <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
