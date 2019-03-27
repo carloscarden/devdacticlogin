@@ -21,15 +21,82 @@ import { Inspeccion } from './../../../_models/inspeccion';
 })
 export class ListarConvocatoriaPage implements OnInit {
   inspecciones: Inspeccion[];
-  url="/members/menu/actividadesLectura/listarConvocatoria"; 
+  url;
+  tipo;
+  filtroTipo=false;
+  page = 0;
+  maximumPages = 3;
+  convocatorias=[];
+  size=5;
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
-              private todoService: TodoService) { }
+              private todoService: TodoService) {
+
+                this.convocatoriaService.getConvocatorias(this.size,this.page)
+                .subscribe(res  =>{
+                             console.log("resultados");
+                             this.convocatorias=res.content;
+                             this.maximumPages=res.totalPages-1;
+                             console.log(res);
+                            }  
+                           );
+
+  }
 
   ngOnInit() {
-    this.todoService.getInspecciones()
-      .subscribe(inspecciones => this.inspecciones = inspecciones);
+  }
+
+
+
+  loadConvocatorias(page, infiniteScroll? ) {
+    if(page <= this.maximumPages){
+      this.convocatoriaService.getConvocatorias(this.size,page)
+      .subscribe(res  =>{
+                   console.log("page"); console.log(this.page);
+                   this.convocatorias=this.convocatorias.concat(res['content']);
+                   console.log(this.convocatorias);
+                   if(this.filtroTipo){
+                     if(!(this.tipo === "")){
+                        console.log("entro");
+                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion === this.tipo);
+                        console.log(this.convocatorias);
+                     }
+                    
+                   }
+                   
+                   if (infiniteScroll) {
+                    infiniteScroll.target.complete();       
+                    }             
+                });
+
+
+    }
+    
+  }
+
+
+  loadMore(infiniteScroll) {
+    this.page++;
+    console.log("load more");
+    this.loadConvocatorias(this.page,infiniteScroll);
+    if (this.page >= this.maximumPages ) {
+      infiniteScroll.target.disabled = true;
+    }
+  }
+
+
+  filtrar(infiniteScroll?){
+    console.log("filtrar");
+    this.filtroTipo=true;
+    this.convocatorias = [];
+    this.page=0;
+    while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
+      this.loadConvocatorias(this.page, infiniteScroll );
+      console.log(this.convocatorias);
+      this.page++;
+    }
+      
   }
 
 
@@ -38,8 +105,6 @@ export class ListarConvocatoriaPage implements OnInit {
     console.log(this.url);
 
     this.router.navigateByUrl(this.url);
-  
-  
   }
 
 }

@@ -49,31 +49,34 @@ export class ListarLicenciaPage implements OnInit {
 
 
   loadLicencias(page, infiniteScroll? ) {
-    this.licenciaService.getLicencias(this.size,page)
-    .subscribe(res  =>{
-                 console.log("page"); console.log(this.page);
-                 this.licencias=this.licencias.concat(res['content']);
-                 if(this.filtroTipo){
-                  this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
-                 }
-                 
-                 if (infiniteScroll) {
-                  infiniteScroll.target.complete();       
-                  }             
-              });
+    if(page <= this.maximumPages){
+      this.licenciaService.getLicencias(this.size,page)
+      .subscribe(res  =>{
+                   console.log("page"); console.log(this.page);
+                   this.licencias=this.licencias.concat(res['content']);
+                   console.log(this.licencias);
+                   if(this.filtroTipo){
+                     if(!(this.tipo === "")){
+                        console.log("entro");
+                        this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
+                        console.log(this.licencias);
+                     }
+                    
+                   }
+                   
+                   if (infiniteScroll) {
+                    infiniteScroll.target.complete();       
+                    }             
+                });
+    }
+    
   }
  
   loadMore(infiniteScroll) {
     this.page++;
-    if(this.filtroTipo){
-      this.filtrar(infiniteScroll);
-    }
-    else{
-      this.loadLicencias(this.page,infiniteScroll);
-    }
-    
+    this.loadLicencias(this.page,infiniteScroll);
  
-    if (this.page === this.maximumPages) {
+    if (this.page >= this.maximumPages) {
       infiniteScroll.target.disabled = true;
     }
   }
@@ -81,14 +84,12 @@ export class ListarLicenciaPage implements OnInit {
   filtrar(infiniteScroll?){
     console.log("filtrar");
     this.filtroTipo=true;
-    this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
-    console.log("licencia lenght"); console.log(this.licencias.length);
-    
-    while(this.licencias.length<2 && !(this.page === this.maximumPages)){
-      this.page++;
+    this.licencias = [];
+    this.page=0;
+    while(this.licencias.length<2 && !(this.page === this.maximumPages+1)){
       this.loadLicencias(this.page, infiniteScroll );
-     
-      
+      console.log(this.licencias);
+      this.page++;
     }
       
   }

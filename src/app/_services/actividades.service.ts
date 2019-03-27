@@ -59,12 +59,14 @@ export class ActividadesService {
     return this.http.post<any>(URL+`convocatorias`,  convocatoria );
   }
 
-  getConvocatorias(): Observable<Convocatoria[]> {
-    return this.http.get<Convocatoria[]>(URL+`convocatorias`);
+  getConvocatorias(size,page): Observable<any> {
+    console.log("url");
+    console.log(URL+`convocatorias?size=${size}&page=${page}`);
+    return this.http.get<any>(URL+`convocatorias?size=${size}&page=${page}&sort=ASC`);
   }
 
   getTipoConvocatorias(): Observable<any>{
-    return this.httpOtro.get(URL+`tiposConvocatoria/all`);
+    return this.http.get(URL+`tiposConvocatoria/all`);
 
   }
 
@@ -79,8 +81,8 @@ export class ActividadesService {
     return this.http.post<any>(URL+`trabajosAdmin`,  trabajoAdmin );
   }
 
-  getTrabajoAdministrativo(){
-    return this.http.get<TrabajoAdministrativo[]>(URL+`tareaAdministrativas`);
+  getTrabajoAdministrativo(): Observable<any>{
+    return this.http.get<any>(URL+`trabajosAdmin`);
   }
 
   getTipoTrabajoAdministrativo(): Observable<any>{

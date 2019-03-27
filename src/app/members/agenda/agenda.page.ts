@@ -123,12 +123,25 @@ export class AgendaPage implements OnInit {
           if(this.data!= null){
             for (let entry of this.data) {
 
-                let inicio= new Date(entry.inicio);
+                
 
                  // conversion de iso a gmt sumandole 3 horas
                 //inicio.setSeconds(3*60*60);
                 //fin.setSeconds(3*60*60);
-                let fin= new Date(entry.fin);
+                let inicio;
+                let fin
+                if(navigator.userAgent.indexOf("Chrome") != -1 )
+                {
+                  inicio= new Date(entry.inicio);
+                  fin= new Date(entry.fin);
+                }
+                if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+                {
+                  let txtInicio= entry.inicio.replace(/-/g,"/");
+                  let txtFin= entry.fin.replace(/-/g,"/");
+                  inicio= new Date(txtInicio);
+                  fin= new Date(txtFin);
+                }
                 
                 this.eventSource.push({
                       title: entry.actividad.descripcion,
