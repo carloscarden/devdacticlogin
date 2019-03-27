@@ -35,21 +35,8 @@ export class ActividadesService {
              /* LICENCIAS CRUD */
   addLicencia(licencia: any) {
 
-    var l={
-      "inicio":"2018-12-12",
-      "fin":"2018-12-12",
-      "codigo":666,
-      "inspector":{
-            "id":2,
-            "nombre":"Guye",
-            "apellido":"No tiene"
-        }
-      };
   /* var headers = new Headers();
-   
-
     return this.httpOtro.post(URL+`licencias`,  l );*/
-    console.log(l);
     console.log(licencia);
 
     const headers = new HttpHeaders();
@@ -78,6 +65,12 @@ export class ActividadesService {
 
   getTipoConvocatorias(): Observable<any>{
     return this.httpOtro.get(URL+`tiposConvocatoria/all`);
+
+  }
+
+
+  getDistritos(): Observable<any>{
+    return this.httpOtro.get(URL+`distritos`);
 
   }
   /******************************************************************************** */

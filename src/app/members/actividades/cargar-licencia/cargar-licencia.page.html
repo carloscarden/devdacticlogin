@@ -12,7 +12,7 @@
     <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
         <ion-item>
            <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-               <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+               <ion-datetime displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
                <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                </div>
@@ -20,7 +20,7 @@
 
         <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-            <ion-datetime displayFormat="DD MM YY" [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+            <ion-datetime displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
                 <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
                        La fecha de inicio es requerida
                 </div>
@@ -62,7 +62,7 @@
 
         <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Codigo</ion-label>
-            <ion-input type="number" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
+            <ion-input type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
         </ion-item>
 
 

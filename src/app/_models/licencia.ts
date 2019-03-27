@@ -2,10 +2,10 @@ import { Inspector } from "./inspector";
 
 export class Licencia {
     id:number;
-    inicio:Date;
-    fin:Date;
+    inicio:string;
+    fin:string;
     articulo: string;
     medica: string;
-    codigo: number;
+    codigo: string;
     idInspector: number;
 }

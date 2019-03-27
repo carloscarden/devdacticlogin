@@ -34,6 +34,7 @@ import { Imagen } from './../../../_models/imagen';
 })
 export class CargarConvocatoriaPage implements OnInit {
   convocatoria = new Convocatoria();
+  
   tiposConvocatorias: TipoConvocatoria[];
   images = [];
   imagesWeb = [];
@@ -55,6 +56,8 @@ export class CargarConvocatoriaPage implements OnInit {
     private router: Router,) { }
 
   ngOnInit() {
+    /* id del inspector */
+    this.convocatoria.idInspector=1;
   }
 
   onSubmit() {
@@ -85,6 +88,8 @@ export class CargarConvocatoriaPage implements OnInit {
     let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+fin.getHours()+":"+fin.getMinutes();
     this.convocatoria.fin=formatoCorrectoFin;
 
+    
+
 
     console.log(this.convocatoria);
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
@@ -107,8 +112,10 @@ export class CargarConvocatoriaPage implements OnInit {
   get diagnostic() { return JSON.stringify(this.convocatoria); }
 
 
+
+  /****************************** TIPOS CONVOCATORIAS ************************************************************ */
+
   filterPorts(tipos: TipoConvocatoria[], text: string) {
-    console.log(tipos);
     return tipos.filter(t => {
       return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
@@ -138,6 +145,46 @@ export class CargarConvocatoriaPage implements OnInit {
       event.component.endSearch();
     });
   }
+
+
+  /******************************************************************************************** */
+
+
+  filterDistritos(tipos: TipoConvocatoria[], text: string) {
+    return tipos.filter(t => {
+      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
+    });
+  }
+
+
+
+
+  searchDistritos(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    // Close any running subscription.
+    if (this.actividadesSubscription) {
+      this.actividadesSubscription.unsubscribe();
+    }
+    this.convocatoriaService.getTipoConvocatorias();
+
+    this.actividadesSubscription = this.convocatoriaService.getDistritos().subscribe(tipos => {
+      // Subscription will be closed when unsubscribed manually.
+      var tareas=JSON.parse(tipos._body);
+     if (this.actividadesSubscription.closed) {
+        return;
+      }
+
+      event.component.items = this.filterDistritos(tareas, text);
+      event.component.endSearch();
+    });
+  }
+
+  /******************************************************************************************** */
 
 
   async presentToast(text) {

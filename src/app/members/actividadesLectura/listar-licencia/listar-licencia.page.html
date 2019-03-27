@@ -21,9 +21,10 @@
       </ion-item>  
 
       <h1> Informes de la Licencia</h1>
-      <h2>Buscar </h2>
-      <ion-item><ion-input type="text"></ion-input></ion-item>
-
+      <ion-label>Buscar </ion-label>
+      <ion-item><ion-input type="text"  [(ngModel)]="tipo"></ion-input></ion-item>
+      <ion-button (click)="filtrar()">Buscar</ion-button>
+  
     
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of licencias">

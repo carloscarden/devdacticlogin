@@ -31,6 +31,21 @@ export class CargarLicenciaPage implements OnInit {
   onSubmit() { 
     console.log("cargar");
     this.loading = true;
+
+    /* convertir la fecha de inicio al formato que acepta el backend*/
+    let inicio= new Date(this.licencia.inicio);
+    inicio.setSeconds(3*60*60);
+    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear();
+    this.licencia.inicio=formatoCorrectoInicio;
+
+
+    /* convertir la fecha de fin al formato correcto el backend*/
+    let fin= new Date(this.licencia.fin);
+    fin.setSeconds(3*60*60);
+    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear();
+    this.licencia.fin=formatoCorrectoFin;
+
+
     this.licenciaService.addLicencia(this.licencia).subscribe(
         data => {
           console.log(data);

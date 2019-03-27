@@ -1,5 +1,7 @@
 import { TipoConvocatoria } from "./tipo-convocatoria";
 import { Imagen } from "./imagen";
+import { Distrito } from "./distrito";
+
 
 
 export class Convocatoria {
@@ -7,6 +9,9 @@ export class Convocatoria {
     inicio:string;
     fin:string;
     tipoConvocatoria: TipoConvocatoria;
+    distrito: Distrito;
+    lugar: string;
+    idInspector:number;
     adjuntos:Array<Imagen>;
 
 }

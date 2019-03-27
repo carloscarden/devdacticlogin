@@ -21,7 +21,7 @@ import { Inspeccion } from './../../../_models/inspeccion';
 })
 export class ListarConvocatoriaPage implements OnInit {
   inspecciones: Inspeccion[];
-  url="";
+  url="/members/menu/actividadesLectura/listarConvocatoria"; 
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,

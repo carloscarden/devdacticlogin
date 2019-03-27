@@ -20,11 +20,13 @@ import { Pagina } from './../../../_models/pagina';
 })
 export class ListarLicenciaPage implements OnInit {
   url;
+  tipo;
+  filtroTipo=false;
   pagLicencia: Pagina;
   page = 0;
   maximumPages = 3;
   licencias=[];
-  size=5
+  size=5;
 
   constructor( private router:Router,
     private todoService: TodoService,
@@ -46,11 +48,15 @@ export class ListarLicenciaPage implements OnInit {
   ngOnInit() { }
 
 
-  loadUsers(infiniteScroll?) {
-    this.licenciaService.getLicencias(this.size,this.page)
+  loadLicencias(page, infiniteScroll? ) {
+    this.licenciaService.getLicencias(this.size,page)
     .subscribe(res  =>{
-                 console.log("resultados");
+                 console.log("page"); console.log(this.page);
                  this.licencias=this.licencias.concat(res['content']);
+                 if(this.filtroTipo){
+                  this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
+                 }
+                 
                  if (infiniteScroll) {
                   infiniteScroll.target.complete();       
                   }             
@@ -59,11 +65,32 @@ export class ListarLicenciaPage implements OnInit {
  
   loadMore(infiniteScroll) {
     this.page++;
-    this.loadUsers(infiniteScroll);
+    if(this.filtroTipo){
+      this.filtrar(infiniteScroll);
+    }
+    else{
+      this.loadLicencias(this.page,infiniteScroll);
+    }
+    
  
     if (this.page === this.maximumPages) {
       infiniteScroll.target.disabled = true;
     }
+  }
+
+  filtrar(infiniteScroll?){
+    console.log("filtrar");
+    this.filtroTipo=true;
+    this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
+    console.log("licencia lenght"); console.log(this.licencias.length);
+    
+    while(this.licencias.length<2 && !(this.page === this.maximumPages)){
+      this.page++;
+      this.loadLicencias(this.page, infiniteScroll );
+     
+      
+    }
+      
   }
   
 
