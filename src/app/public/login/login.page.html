@@ -11,14 +11,15 @@
   
   <ion-grid class="anchoLogo">
     <ion-row>
-      <ion-col col-4>
-   		
+      <ion-col size-md="1" class="logo" class="ion-float-left">  		
          <ion-img src="../../assets/img/LogoAppInspectores.png"></ion-img>
-        
       </ion-col>
-      <ion-col col-4>
-        <h2 class="supervision">Supervisión</h2>
-        <h2 class="educativa">Educativa</h2>
+
+      <ion-col size-md="2" class="ion-float-bottom">
+        <div class="titulo">
+          <h3 class="supervision">Supervisión</h3>
+          <h3 class="educativa">Educativa</h3>
+        </div>
       </ion-col>  
     </ion-row>
   </ion-grid>      
@@ -27,7 +28,7 @@
 
   <ion-grid class="anchoForm">
     <ion-row>
-      <ion-col>
+      <ion-col size-md="2">
           <form [formGroup]="loginForm" (submit)="onSubmit()">
               <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Usuario</ion-label>
