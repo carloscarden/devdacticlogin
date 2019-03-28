@@ -4,15 +4,15 @@ import { TipoVisita } from "./tipo-visita";
 
 export class VisitaEscuela {
     id: number;
-    fechaInicio: Date;
-    fechaFin: Date;
-    horaInicio: Date;
-    horaFin: Date;
-    escuela: Establecimiento;
+    inicio: string;
+    fin: string;
+    establecimiento: Establecimiento;
+    urgente:string;
+    idInspector:number;
     motivo: TipoVisita;
     observaciones: string;
-    otroInspector: string;
-    imagenes: Array<any>;
+    acompaniante: string;
+    adjuntos: Array<any>;
 
     
 }

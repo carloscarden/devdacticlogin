@@ -81,8 +81,10 @@ export class ActividadesService {
     return this.http.post<any>(URL+`trabajosAdmin`,  trabajoAdmin );
   }
 
-  getTrabajoAdministrativo(): Observable<any>{
-    return this.http.get<any>(URL+`trabajosAdmin`);
+  getTrabajoAdministrativo(size,page): Observable<any>{
+    console.log("url");
+    console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);
+    return this.http.get<any>(URL+`trabajosAdmin?size=${size}&page=${page}`);
   }
 
   getTipoTrabajoAdministrativo(): Observable<any>{
@@ -98,8 +100,12 @@ export class ActividadesService {
     headers.set('Access-Control-Allow-Origin' , '*');
     headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresApp/licencias`,  visita,{headers: headers});
+    return this.http.post<any>(URL+`visitas`,  visita,{headers: headers});
 
+  }
+
+  getMotivosVisitas(): Observable<any>{
+    return this.http.get(URL+`motivosVisitas/all`);
   }
   
 

@@ -11,7 +11,6 @@ import { Todo, TodoService } from './../../../_services/todo.service';
 import { Convocatoria } from './../../../_models/convocatoria';
 import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
 import { Imagen } from './../../../_models/imagen';
-import { Inspeccion } from './../../../_models/inspeccion';
 
 
 @Component({
@@ -20,7 +19,6 @@ import { Inspeccion } from './../../../_models/inspeccion';
   styleUrls: ['./listar-convocatoria.page.scss'],
 })
 export class ListarConvocatoriaPage implements OnInit {
-  inspecciones: Inspeccion[];
   url;
   tipo;
   filtroTipo=false;
