@@ -1,5 +1,7 @@
-
-
+         
+.ion-content {
+  justify-content:center;
+}
 
          /*HEADER*/
 .textoTitulo {
@@ -12,10 +14,14 @@
   margin-right:20px; 
 }
 
+.titulo {
+  vertical-align: bottom!important;
+}
+
 .supervision {
   color:#365fb5;
   font-weight:bold;
-  margin-top:56px;
+  /*margin-top:50px;*/
   margin-bottom:0;
 }
 
