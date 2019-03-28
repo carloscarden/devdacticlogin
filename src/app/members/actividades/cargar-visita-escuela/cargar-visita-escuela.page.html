@@ -81,7 +81,7 @@
           </ion-radio-group>
       </ion-list>
 <!-- ********************************* Para plataformas moviles *********************************************************************** -->
-      <div *ngIf="esPlataformaMovil">
+      <!--<div *ngIf="esPlataformaMovil">
         <ion-item>
           <h4 *ngIf="images.length == 0" text-center>CARGA CERTIFICADO!</h4>
           <ion-list>
@@ -106,11 +106,10 @@
               ADJUNTAR</ion-icon> Select Image
             </ion-button>
         </ion-item>
-      </div>
+      </div>-->
 
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
 
-      <div *ngIf="!(esPlataformaMovil)">
           <h3 *ngIf="imagesWeb.length == 0" text-center>Please Select Image!</h3>
           <ion-list>
               <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
@@ -129,7 +128,6 @@
             <ion-label id="profile_image" color="primary" stacked>Imagen WEB</ion-label>
             <ion-input type="file" (change)="changeListener($event)"></ion-input>
           </ion-item>
-      </div>
 <!-- ******************************************************************************************************** -->
          
       <div class="form-group">
