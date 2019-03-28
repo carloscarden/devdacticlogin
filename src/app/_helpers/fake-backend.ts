@@ -138,58 +138,50 @@ export class FakeBackend implements HttpInterceptor{
     private establecimientosCollection:Establecimiento[] =[
         {
             cue:"1",
-            distrito: 1,
-            descripcionDistrito:"BERAZATEGUI",
-            region: "I"
+            nombre: "",
+            tipoOrg:"BERAZATEGUI",
+            localidad: "I"
           } ,
         {
             cue:"2",
-            distrito: 1,
-            descripcionDistrito:"BERAZATEGUI",
-            region: "I"
+            nombre:  "",
+            tipoOrg:"BERAZATEGUI",
+            localidad: "I"
           } ,
         {
             cue:"3",
-            distrito: 1,
-            descripcionDistrito:"BERAZATEGUI",
-            region: "I"
+            nombre: "1",
+            tipoOrg:"BERAZATEGUI",
+            localidad: "I"
           },
         {
             cue:"4",
-            distrito: 2,
-            descripcionDistrito:"BRANDSEN",
-            region: "I"
+            nombre: "2",
+            tipoOrg:"BRANDSEN",
+            localidad: "I"
           } ,
         {
             cue:"5",
-            distrito: 1,
-            descripcionDistrito:"BRANDSEN",
-            region: "I"
+            nombre: "1",
+            tipoOrg:"BRANDSEN",
+            localidad: "I"
           } ,
         {  cue: "6",
-           distrito: 3,
-           descripcionDistrito: "F VARELA",
-           region: "string"
+           nombre: "3",
+           tipoOrg: "F VARELA",
+           localidad: "string"
         },
         {  cue: "7",
-           distrito: 4,
-           descripcionDistrito: "MONTE",
-           region: "string"
+           nombre:" 4",
+           tipoOrg: "MONTE",
+           localidad: "string"
         },
-        {  cue: "8",
-           distrito: 1,
-           descripcionDistrito: "SAN VICENTE",
-           region: "string"
-        },
-        {  cue: "9",
-           distrito: 1,
-           descripcionDistrito: "A BROWN",
-           region: "string"
-        },
+       
+        
         {  cue: "10",
-           distrito: 1,
-           descripcionDistrito: "LANUS",
-           region: "string"
+            nombre:" 1",
+            tipoOrg: "LANUS",
+            localidad: "string"
         },
 
 

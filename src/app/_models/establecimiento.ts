@@ -1,6 +1,6 @@
 export class Establecimiento {
     cue: string;
-    distrito: number;
-    descripcionDistrito: string;
-    region: string
+    nombre: string;
+    tipoOrg: string;
+    localidad: string
 }

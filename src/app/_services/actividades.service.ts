@@ -107,6 +107,12 @@ export class ActividadesService {
   getMotivosVisitas(): Observable<any>{
     return this.http.get(URL+`motivosVisitas/all`);
   }
+
+  getVisitas(size,page): Observable<any>{
+     console.log("url");
+     console.log(URL+`visitas?size=${size}&page=${page} ` )   ;
+     return this.http.get<any>(URL+`visitas?size=${size}&page=${page}&sort=ASC`); 
+  }
   
 
   
