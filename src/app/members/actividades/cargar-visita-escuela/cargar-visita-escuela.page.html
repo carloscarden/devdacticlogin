@@ -6,12 +6,12 @@
     <ion-title class="textoTitulo">Visita Escuela</ion-title>
   </ion-toolbar>
 </ion-header>
-{{ diagnostic }}
+<!--{{ diagnostic }}-->
 <ion-content padding>
     <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
 
       <ion-item>
-        <ion-label position="stacked" class="textoBold" color="success">Servicio visitado</ion-label>
+        <ion-label position="stacked" class="textoBold" color="success">CUE</ion-label>
         <ion-input type="text" [(ngModel)]="visita.establecimiento.cue" name="cue" #cue="ngModel" required></ion-input>
         <div *ngIf="!(cue.valid || cue.pristine)" class="invalid-feedback">
             La escuela es requerida
@@ -38,7 +38,7 @@
       
       
       <ion-item>
-         <ion-label position="stacked" class="textoBold" color="success">MOTIVO</ion-label>
+         <ion-label position="stacked" class="textoBold" color="success">Motivo</ion-label>
          <ionic-selectable
             item-content
             [(ngModel)]="visita.motivo"
@@ -63,10 +63,10 @@
       </ion-item>
 
 
-      <ion-list>
+      <ion-list class="centerGroup">
           <ion-radio-group [(ngModel)]="visita.urgente" name="urgente"  #urgente="ngModel">
             <ion-list-header >
-              <ion-label>Tipo de visita</ion-label>
+              <ion-label class="textoBold" color="success">Tipo de visita</ion-label>
             </ion-list-header>
         
             <ion-item>
@@ -109,15 +109,15 @@
       </div>-->
 
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
-
-          <h3 *ngIf="imagesWeb.length == 0" text-center>Please Select Image!</h3>
+        <hr>
+        <ion-label class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
           <ion-list>
               <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
                   <ion-thumbnail slot="start">  
                       <ion-img [src]="img.archivo"></ion-img>
                   </ion-thumbnail>
         
-          
+
                   <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                   </ion-button>
@@ -134,18 +134,22 @@
         <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
       </div>
 
+      <!--<ion-fab-button vertical="bottom" horizontal="end" slot="fixed" type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
+          <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>  -->   
+
       <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
           <ion-button type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
                 <ion-icon name="checkmark"></ion-icon>
           </ion-button>
-      </ion-fab>  
+      </ion-fab> 
   </form>
 
 
 </ion-content>
 
-<ion-footer>
+<!--<ion-footer>
   <ion-toolbar color="primary">
     <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->

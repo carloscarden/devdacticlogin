@@ -6,7 +6,7 @@
     <ion-title class="textoTitulo">Trabajo Administrativo</ion-title>
   </ion-toolbar>
 </ion-header>
-{{ diagnostic }}
+<!--{{ diagnostic }}-->
 <ion-content padding>
     <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
@@ -77,8 +77,8 @@
               </ion-item>  -->
         
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
-
-              <h3 *ngIf="imagesWeb.length == 0" text-center>Please Select Image!</h3>
+              <hr>
+              <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
               <ion-list>
                   <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
                       <ion-thumbnail slot="start">  
@@ -115,8 +115,8 @@
 
 </ion-content>
 
-<ion-footer>
+<!--<ion-footer>
   <ion-toolbar color="primary">
     <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->

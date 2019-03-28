@@ -6,7 +6,7 @@
     <ion-title class="textoTitulo">Nuevo Evento</ion-title>
   </ion-toolbar>
 </ion-header>
-{{ diagnostic }}
+<!--{{ diagnostic }}-->
 
 <ion-content>
   <ion-list>
@@ -27,12 +27,12 @@
     
 
     <ion-item>
-      <ion-label>Inicio</ion-label>
+      <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"></ion-datetime>
     </ion-item>
  
     <ion-item>
-      <ion-label>Fin</ion-label>
+      <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"></ion-datetime>
     </ion-item>
  

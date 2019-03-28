@@ -6,7 +6,7 @@
     <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
-{{ diagnostic }}
+<!--{{ diagnostic }}-->
 <ion-content padding>
     <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
@@ -92,7 +92,8 @@
 
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
 
-      <h3 *ngIf="imagesWeb.length == 0" text-center>Please Select Image!</h3>
+      <hr>
+        <ion-label position="stacked" class="textoBold" color="success"*ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</h3>
       <ion-list>
           <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
               <ion-thumbnail slot="start">  
@@ -126,8 +127,8 @@
     </form>
 </ion-content>
 
-<ion-footer>
+<!--<ion-footer>
   <ion-toolbar color="primary">
     <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->

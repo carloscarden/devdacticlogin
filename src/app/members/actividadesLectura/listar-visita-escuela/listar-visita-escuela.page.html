@@ -21,13 +21,18 @@
           </ion-select>
       </ion-item>       
 
-      <h1> Informes de la Visita a Escuela</h1>
+  
       <ion-item class="busquedaSegunda">
          <ion-label position="stacked" class="textoBold" color="success">Buscar </ion-label>
          <ion-input type="text"  [(ngModel)]="tipo"></ion-input>
       </ion-item>
-      <ion-button (click)="filtrar()">Buscar</ion-button>
-
+      <hr>
+      <hr>
+      <hr>
+      <hr>
+       <div class="form-group">
+        <ion-button (click)="filtrar()">Buscar</ion-button>
+       </div> 
 
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of visitasEscuelas">
