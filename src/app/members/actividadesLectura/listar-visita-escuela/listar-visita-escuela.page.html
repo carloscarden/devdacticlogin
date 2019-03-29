@@ -39,7 +39,7 @@
           <ion-item-sliding *ngFor="let item of visitasEscuelas">
             <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
               <ion-label>
-                TIPO DE TRABAJO ADMINISTRATIVO: {{ item.establecimiento.nombre }} <br>
+                ESTABLECIMIENTO: {{ item.establecimiento.nombre }} <br>
                 INICIO: <p>{{ item.inicio }}</p>
                 FIN:  <p>{{ item.fin }}</p>
               </ion-label>
