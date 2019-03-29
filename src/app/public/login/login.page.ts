@@ -20,13 +20,26 @@ export class LoginPage implements OnInit {
   returnUrl: string;
   error = '';
   data = '';
-  
+  showFooter = true;
+  self=this;
+
+  keyboardShowHandler(e){         
+     this.showFooter=false;
+  };
+
+  keyboardHideHandler(e){
+     this.showFooter=true;
+  };
+
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
-    ) { }
+    private formBuilder: FormBuilder
+    ) {
+          window.addEventListener('native.keyboardshow', this.keyboardShowHandler);
+          window.addEventListener('native.keyboardhide', this.keyboardHideHandler);
+     }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

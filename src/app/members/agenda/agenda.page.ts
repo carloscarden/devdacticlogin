@@ -47,11 +47,12 @@ export class AgendaPage implements OnInit {
 
   async onEventSelected(event) {
 
-      let start = moment(event.startTime).format('LLLL');
-      let end = moment(event.endTime).format('LLLL');
+      let start = moment(event.startTime).format('lll');
+      let end = moment(event.endTime).format('lll');
       let alert = await this.alertCtrl.create({
            header: '' + event.title,
-           subHeader:  'From: ' + start + '<br>To: ' + end,
+           subHeader:  'descripcion',
+           message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
            buttons: ['OK']
       });
       await  alert.present();
@@ -65,13 +66,35 @@ export class AgendaPage implements OnInit {
     
     modal.onDidDismiss().then((data) => {
       if (data) {
+        console.log("data");
         console.log(data);
         let eventData = data.data;
 
-        eventData.title=data.data.tipo.descripcion;
-        eventData.startTime = new Date(data.data.inicio);
-        eventData.endTime = new Date(data.data.fin);
+        let inicio;
+        let fin
+        if(navigator.userAgent.indexOf("Chrome") != -1 )
+        {
+                  inicio= new Date(data.data.inicio);
+                  fin= new Date(data.data.fin);
+        }
+        if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+        {
+          let txtInicio= data.data.inicio.replace(/-/g,"/");
+          let txtFin= data.data.fin.replace(/-/g,"/");
+          inicio= new Date(txtInicio);
+          fin= new Date(txtFin);
+        }
 
+        eventData.title=data.data.actividad.descripcion;
+        eventData.startTime = new Date(inicio);
+        eventData.endTime = new Date(fin);
+
+
+
+        this.eventSource.push(eventData);
+        console.log(this.eventSource);
+        this.myCalendar.loadEvents();
+        /*
         let events = this.eventSource;
         events.push(eventData);
         this.eventSource = [];
@@ -79,7 +102,7 @@ export class AgendaPage implements OnInit {
           this.eventSource = events;
           this.myCalendar.loadEvents();
 
-        });
+        });*/
       }
 
     });
