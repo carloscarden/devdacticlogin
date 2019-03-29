@@ -92,25 +92,25 @@
 
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
 
-      <hr>
-        <ion-label position="stacked" class="textoBold" color="success"*ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</h3>
-      <ion-list>
-          <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
-              <ion-thumbnail slot="start">  
-                  <ion-img [src]="img.archivo"></ion-img>
-              </ion-thumbnail>
-    
-      
-              <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
-                  <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-button>
-          </ion-item> 
-      </ion-list>
+<hr>
+<ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
+<ion-list>
+    <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
+        <ion-thumbnail slot="start">  
+            <ion-img [src]="img.archivo"></ion-img>
+        </ion-thumbnail>
 
-      <ion-item>
-        <ion-label id="profile_image" color="primary" stacked>Imagen WEB</ion-label>
-        <ion-input type="file" (change)="changeListener($event)"></ion-input>
-      </ion-item>
+
+        <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+    </ion-item> 
+</ion-list>
+
+<ion-item>
+  <ion-label id="profile_image" color="primary" stacked>Imagen WEB</ion-label>
+  <ion-input type="file" (change)="changeListener($event)"></ion-input>
+</ion-item>
 <!-- ******************************************************************************************************** -->
         
 
