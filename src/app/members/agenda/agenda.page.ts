@@ -4,6 +4,10 @@ import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
 import { CalendarComponent } from "ionic2-calendar/calendar";
 
+import { registerLocaleData } from '@angular/common';
+import localeZh from '@angular/common/locales/zh';
+registerLocaleData(localeZh);
+
 import { Tarea } from './../../_models/tarea';
 import * as moment from 'moment';
 
@@ -26,8 +30,7 @@ export class AgendaPage implements OnInit {
 
   calendar = {
      mode: 'month',
-     currentDate: new Date(),
-     locale: 'en-GB'
+     currentDate: new Date()
   }; // these are the variable used by the calendar.
 
   constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { 

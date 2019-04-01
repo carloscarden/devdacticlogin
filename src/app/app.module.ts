@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -30,10 +30,14 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import { EventModalPageModule } from './members/event-modal/event-modal.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 
-// http cors
+// http corsregisterLocaleData(localeDeAt);
 import { HttpBackend, HttpXhrBackend } from '@angular/common/http';
 import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 import { HttpModule } from '@angular/http';
+
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs);
 
 
 
@@ -59,6 +63,8 @@ import { HttpModule } from '@angular/http';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackend, multi: true },
+    { provide: LOCALE_ID, useValue: 'es' },
+   
   
     StatusBar,
     SplashScreen,
