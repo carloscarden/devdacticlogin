@@ -11,7 +11,7 @@
     <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-          <ion-datetime displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required></ion-datetime>
+          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required></ion-datetime>
           <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
             La fecha de inicio es requerida
          </div>
@@ -20,7 +20,7 @@
 
         <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-          <ion-datetime displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required></ion-datetime>
+          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required></ion-datetime>
           <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
             La fecha de fin es requerida
          </div>
@@ -28,7 +28,7 @@
   
        <ion-item>
         <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
-        <ionic-selectable
+        <ionic-selectable class="fuente"
           item-content
           [(ngModel)]="trabajoAdmin.tipoTrabajoAdmin"
           name="convocatoriaTipo"
@@ -43,12 +43,12 @@
       
        <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
-          <ion-input type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>
+          <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Lugar</ion-label>
-          <ion-input type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.lugar" #observaciones="ngModel"></ion-input>
+          <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.lugar" #observaciones="ngModel"></ion-input>
         </ion-item>
 <!-- ********************************* Para plataformas moviles *********************************************************************** -->
           <!--  <ion-item>
@@ -78,7 +78,9 @@
         
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
               <hr>
+              <div class="posicion">
               <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
+              </div>
               <ion-list>
                   <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
                       <ion-thumbnail slot="start">  

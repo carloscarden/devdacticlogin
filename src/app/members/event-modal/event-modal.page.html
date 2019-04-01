@@ -13,7 +13,7 @@
     
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
-      <ionic-selectable
+      <ionic-selectable class="fuente"
         item-content
         [(ngModel)]="evento.actividad"
         name="eventoTipo"
@@ -28,17 +28,17 @@
 
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"></ion-datetime>
+      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"></ion-datetime>
+      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"></ion-datetime>
     </ion-item>
  
     <ion-item>
         <ion-label position="stacked" class="textoBold" color="success">Detalles de la tarea</ion-label>
-        <ion-input type="text" [(ngModel)]="evento.detalle"></ion-input>
+        <ion-input class="fuente" type="text" [(ngModel)]="evento.detalle"></ion-input>
     </ion-item>
 
   </ion-list>

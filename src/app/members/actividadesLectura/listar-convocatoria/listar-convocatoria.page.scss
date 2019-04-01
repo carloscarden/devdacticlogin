@@ -1,24 +1,23 @@
-         /*HEADER*/
+                /*HEADER*/
          .textoTitulo {
             font-family:"DIN";
         }
         
-                /*TEXTO INPUT*/
+                /*TEXTO LABEL*/
         .textoBold {
           font-weight:bold;
           font-size:17px;
+        }
+        
+                /*TEXTO INPUT*/
+        .fuente {
+          font-size:21px;
         }
         
         .ion-title {
             color:grey;
             text-align: left;
         }
-        
-        .item-inner {
-            border-style:none;
-        }
-
-
         
         .busquedaPrimera {
             padding-left:1rem;

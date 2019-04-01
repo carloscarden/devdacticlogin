@@ -19,8 +19,8 @@
 
       <ion-col size="6">
         <div class="titulo">
-          <h3 class="supervision">Supervisión</h3>
-          <h3 class="educativa">Educativa</h3>
+          <h4 class="supervision">Supervisión</h4>
+          <h4 class="educativa">Educativa</h4>
         </div>
       </ion-col>
     </ion-row>
@@ -37,14 +37,14 @@
           <form [formGroup]="loginForm" (submit)="onSubmit()">
               <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Usuario</ion-label>
-                 <ion-input type="mail" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"></ion-input>
+                 <ion-input class="fuente" type="mail" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"></ion-input>
                  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                     <div *ngIf="f.username.errors.required">Username is required</div>
                  </div>
               </ion-item>
               <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Contraseña</ion-label>
-                 <ion-input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
+                 <ion-input class="fuente" type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors.required">Password is required</div>
                  </div>
