@@ -9,6 +9,10 @@ import { AgendaPage } from './agenda.page';
 import { NgCalendarModule  } from 'ionic2-calendar';
 // The modal's module of the previous chapter
 import {EventModalPageModule} from '../event-modal/event-modal.module';
+import { registerLocaleData } from '@angular/common';
+import localeZh from '@angular/common/locales/zh';
+registerLocaleData(localeZh);
+
 
 
 const routes: Routes = [
