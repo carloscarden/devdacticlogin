@@ -11,7 +11,12 @@
     <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required></ion-datetime>
+          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+            monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+            monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+            dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+            dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+          ></ion-datetime>
           <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
             La fecha de inicio es requerida
          </div>
@@ -20,7 +25,12 @@
 
         <ion-item>
           <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required></ion-datetime>
+          <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required
+            monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+            monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+            dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+            dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+          ></ion-datetime>
           <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
             La fecha de fin es requerida
          </div>
@@ -103,22 +113,26 @@
           <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
 
+
+        <ion-fab horizontal="end" >
+          <ion-fab-button color="tertiary">
+           <ion-button class="centerGroup" type="submit" [disabled]="!trabajoAdminForm.form.valid" color="tertiary">
+            <ion-icon name="checkmark"></ion-icon>
+           </ion-button>
+          </ion-fab-button>
+        </ion-fab> 
          
+       
+
+        
+        <!--
         <ion-fab vertical="bottom" horizontal="end" >
             <ion-fab-button color="tertiary">
           <ion-button type="submit" [disabled]="!trabajoAdminForm.form.valid" color="tertiary">
                 <ion-icon    name="checkmark"></ion-icon>
           </ion-button>
         </ion-fab-button>
-         </ion-fab> 
-
-        
-        <!--
-        <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
-            <ion-button type="submit" [disabled]="!trabajoAdminForm.form.valid" color="tertiary">
-                   <ion-icon name="checkmark"></ion-icon>
-             </ion-button>
-       </ion-fab> -->
+         </ion-fab>  -->
        
       
        

@@ -18,7 +18,7 @@
 
 
 
-<ion-content class="has-tabs">
+<ion-content >
   <calendar [monthviewDisplayEventTemplate]="template"
             [eventSource]="eventSource"
             [calendarMode]="calendar.mode"
@@ -26,7 +26,6 @@
             (onCurrentDateChanged)="onCurrentDateChanged($event)"
             (onEventSelected)="onEventSelected($event)"
             (onTitleChanged)="onViewTitleChanged($event)"
-            class="dia"
 
             step="30">
   </calendar>

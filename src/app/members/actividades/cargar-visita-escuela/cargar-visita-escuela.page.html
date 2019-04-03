@@ -7,6 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <!--{{ diagnostic }}-->
+{{ !visitaForm.form.valid }}
 <ion-content padding>
         <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
 
@@ -21,7 +22,12 @@
 
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
-            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required></ion-datetime>
+            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
+              monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+              monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+              dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+            ></ion-datetime>
             <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
                La fecha de inicio es requerida
             </div>
@@ -30,7 +36,12 @@
 
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
-            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.fin" name="fin" #fin="ngModel" required></ion-datetime>
+            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.fin" name="fin" #fin="ngModel" required
+              monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+              monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+              dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+            ></ion-datetime>
             <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                   La fecha de fin es requerida
             </div>

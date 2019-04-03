@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title class="textoTitulo">Informes</ion-title>
+      <ion-title class="textoTitulo">Informes de Licencia</ion-title>
     </ion-toolbar>
   </ion-header>
   
@@ -13,7 +13,7 @@
     <ion-item class="busquedaPrimera">
       <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
       <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Dismiss" [(ngModel)]="url">
-         <ion-select-option value="/members/menu/actividadesLectura/listarConvocatoria" selected >Convocatoria</ion-select-option>
+         <ion-select-option value="/members/menu/actividadesLectura/listarConvocatoria">Convocatoria</ion-select-option>
          <ion-select-option value="/members/menu/actividadesLectura/listarLicencia" >Licencia</ion-select-option>
          <ion-select-option value="/members/menu/actividadesLectura/listarTrabajoAdmin" >Trabajo Administrativo</ion-select-option>
          <ion-select-option value="/members/menu/actividadesLectura/listarVisita" >Visita Escuela</ion-select-option>
@@ -32,6 +32,10 @@
       <hr>
        <div class="form-group">
         <ion-button (click)="filtrar()">Buscar</ion-button>
+       </div>
+
+       <div  *ngIf="licencias.length==0">
+        <ion-label> No hay resultados</ion-label>
        </div>
     
       <ion-list margin-top>

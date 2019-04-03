@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router, RouterEvent } from '@angular/router';
 
 /*  SERVICES */
@@ -8,9 +7,9 @@ import { Todo, TodoService } from './../../../_services/todo.service';
 
 
 /*  MODELOS */
-import { Convocatoria } from './../../../_models/convocatoria';
+/*import { Convocatoria } from './../../../_models/convocatoria';
 import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
-import { Imagen } from './../../../_models/imagen';
+import { Imagen } from './../../../_models/imagen';*/
 
 
 @Component({
@@ -19,7 +18,7 @@ import { Imagen } from './../../../_models/imagen';
   styleUrls: ['./listar-convocatoria.page.scss'],
 })
 export class ListarConvocatoriaPage implements OnInit {
-  url;
+  url1;
   tipo;
   filtroTipo=false;
   page = 0;
@@ -30,6 +29,7 @@ export class ListarConvocatoriaPage implements OnInit {
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
               private todoService: TodoService) {
+                this.url1=""
 
                 this.convocatoriaService.getConvocatorias(this.size,this.page)
                 .subscribe(res  =>{
@@ -43,6 +43,7 @@ export class ListarConvocatoriaPage implements OnInit {
   }
 
   ngOnInit() {
+    this.url1=""
   }
 
 
@@ -99,10 +100,28 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   onChange(newValue) {
+    console.log(newValue);
     console.log("onChange");
-    console.log(this.url);
 
-    this.router.navigateByUrl(this.url);
+    console.log(this.url1);
+   /* switch(this.url1){
+      case("/members/menu/actividadesLectura/listarConvocatoria"):{
+
+      }
+      case("/members/menu/actividadesLectura/listarConvocatoria"):{
+
+      }
+      case("/members/menu/actividadesLectura/listarConvocatoria"):{
+
+      }
+      case("/members/menu/actividadesLectura/listarConvocatoria"):{
+
+      }
+      default:
+        
+    }*/
+
+    this.router.navigateByUrl(this.url1);
   }
 
 }

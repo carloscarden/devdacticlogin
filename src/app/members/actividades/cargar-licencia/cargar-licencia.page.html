@@ -12,7 +12,12 @@
     <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
         <ion-item>
            <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-               <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required></ion-datetime>
+               <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
+                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+               ></ion-datetime>
                <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                </div>
@@ -20,7 +25,12 @@
 
         <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-            <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required></ion-datetime>
+            <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
+              monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+              monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+              dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+            ></ion-datetime>
                 <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
                        La fecha de inicio es requerida
                 </div>
@@ -67,20 +77,24 @@
 
 
 
-        <ion-fab vertical="bottom" horizontal="end" >
+
+        <ion-fab horizontal="end" >
+          <ion-fab-button color="tertiary">
+           <ion-button class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
+            <ion-icon name="checkmark"></ion-icon>
+           </ion-button>
+          </ion-fab-button>
+        </ion-fab> 
+
+        
+
+
+      <!--
+     <ion-fab vertical="bottom" horizontal="end" >
           <ion-button ion-fab type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
                 <ion-icon name="checkmark"></ion-icon>
           </ion-button>
          </ion-fab> 
-
-
-      <!--
-      <ion-fab vertical="bottom" horizontal="end" slot="icon-only">
-             <ion-button type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
-                    <ion-icon name="checkmark"></ion-icon>
-              </ion-button>
-        </ion-fab> 
-
 
        -->  
     </form>

@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title class="textoTitulo">Informes</ion-title>
+      <ion-title class="textoTitulo">Informes de Trabajo Administrativo</ion-title>
     </ion-toolbar>
   </ion-header>
   
@@ -32,6 +32,10 @@
        <div class="form-group">
         <ion-button (click)="filtrar()">Buscar</ion-button>
        </div> 
+
+       <div  *ngIf="trabajosAdmin.length==0">
+        <ion-label> No hay resultados</ion-label>
+       </div>
       
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of trabajosAdmin">

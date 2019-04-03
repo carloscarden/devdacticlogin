@@ -28,12 +28,22 @@
 
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
-      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"></ion-datetime>
+      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"
+      monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+      monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+      dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+      dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+           ></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
-      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"></ion-datetime>
+      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"
+      monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+      monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+      dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+      dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+          ></ion-datetime>
     </ion-item>
  
     <ion-item>

@@ -44,7 +44,7 @@ export class AgendaPage implements OnInit {
   }
 
   onViewTitleChanged(title) {
-        this.viewTitle = title;
+        this.viewTitle = title.replace("Week", "Semana");
         console.log(title);
   }
 

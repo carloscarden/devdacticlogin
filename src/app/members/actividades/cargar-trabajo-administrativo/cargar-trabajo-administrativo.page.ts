@@ -178,6 +178,14 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   changeListener($event) : void {
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
+
+     /*
+    megasArchivo=(archivoWeb.size/1024)/1024;
+    if(megasArchivo>4){
+        this.presentToast('El archivo supera la cantidad permitida.');
+    }
+    else{}
+    */
     
 
     var reader = new FileReader();
