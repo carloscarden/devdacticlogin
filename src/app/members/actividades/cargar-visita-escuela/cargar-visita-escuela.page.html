@@ -147,7 +147,7 @@
           </div>
 
           <ion-fab horizontal="end" >
-            <ion-fab-button color="tertiary">
+            <ion-fab-button color="tertiary" [disabled]="!visitaForm.form.valid">
              <ion-button class="centerGroup" type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
               <ion-icon name="checkmark"></ion-icon>
              </ion-button>

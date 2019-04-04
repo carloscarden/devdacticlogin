@@ -27,6 +27,7 @@ export class ListarLicenciaPage implements OnInit {
   maximumPages = 3;
   licencias=[];
   size=5;
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
   constructor( private router:Router,
     private todoService: TodoService,
@@ -93,13 +94,36 @@ export class ListarLicenciaPage implements OnInit {
     }
       
   }
+
+  checkFocus(newValue){
+    console.log(newValue)
+  }
   
 
   onChange(newValue) {
     console.log("onChange");
     console.log(this.url);
-
-    this.router.navigateByUrl(this.url);
+    switch(this.url){
+      case("Convocatoria"):{
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+          break; 
+      }
+      case("Licencia"):{
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
+          break; 
+      }
+      case("Trabajo Administrativo"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarTrabajoAdmin");
+            break; 
+      }
+      case("Visita Escuela"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarVisita");
+            break; 
+      }
+      default:
+         this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+         break; 
+    };
   
   
   }

@@ -79,7 +79,7 @@
 
 
         <ion-fab horizontal="end" >
-          <ion-fab-button color="tertiary">
+          <ion-fab-button color="tertiary" [disabled]="!licenciaForm.form.valid">
            <ion-button class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
             <ion-icon name="checkmark"></ion-icon>
            </ion-button>

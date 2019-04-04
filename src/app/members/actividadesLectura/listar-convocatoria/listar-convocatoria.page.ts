@@ -25,6 +25,7 @@ export class ListarConvocatoriaPage implements OnInit {
   maximumPages = 3;
   convocatorias=[];
   size=5;
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
@@ -99,29 +100,34 @@ export class ListarConvocatoriaPage implements OnInit {
   }
 
 
-  onChange(newValue) {
+  cambiar(newValue) {
     console.log(newValue);
     console.log("onChange");
 
     console.log(this.url1);
-   /* switch(this.url1){
-      case("/members/menu/actividadesLectura/listarConvocatoria"):{
-
+    switch(this.url1){
+      case("Convocatoria"):{
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+          break; 
       }
-      case("/members/menu/actividadesLectura/listarConvocatoria"):{
-
+      case("Licencia"):{
+          this.router.navigate(["/members/menu/actividadesLectura/listarLicencia"]);
+          break; 
       }
-      case("/members/menu/actividadesLectura/listarConvocatoria"):{
-
+      case("Trabajo Administrativo"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarTrabajoAdmin");
+            break; 
       }
-      case("/members/menu/actividadesLectura/listarConvocatoria"):{
-
+      case("Visita Escuela"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarVisita");
+            break; 
       }
       default:
-        
-    }*/
+         this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+         break; 
+    };
 
-    this.router.navigateByUrl(this.url1);
+    
   }
 
 }

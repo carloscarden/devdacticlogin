@@ -23,6 +23,8 @@ export class ListarTrabajoAdminPage implements OnInit {
   maximumPages = 3;
   trabajosAdmin=[];
   size=5;
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+
 
 
   constructor( private router:Router, private trabajosService:ActividadesService, private todoService: TodoService) { 
@@ -95,7 +97,27 @@ export class ListarTrabajoAdminPage implements OnInit {
     console.log("onChange");
     console.log(this.url);
 
-    this.router.navigateByUrl(this.url);
+    switch(this.url){
+      case("Convocatoria"):{
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+          break; 
+      }
+      case("Licencia"):{
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
+          break; 
+      }
+      case("Trabajo Administrativo"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarTrabajoAdmin");
+            break; 
+      }
+      case("Visita Escuela"):{
+            this.router.navigateByUrl("/members/menu/actividadesLectura/listarVisita");
+            break; 
+      }
+      default:
+         this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+         break; 
+    };
   
   
   }
