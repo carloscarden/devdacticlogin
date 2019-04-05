@@ -28,11 +28,15 @@ export class ListarLicenciaPage implements OnInit {
   licencias=[];
   size=5;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+  value=0;
 
   constructor( private router:Router,
     private todoService: TodoService,
     private licenciaService:ActividadesService,
     private httpClient: HttpClient ) { 
+      console.log("creacion del licencias");
+      console.log(this.url);
+      this.url="";
       this.licenciaService.getLicencias(this.size,this.page)
       .subscribe(res  =>{
                    console.log("resultados");
@@ -46,7 +50,10 @@ export class ListarLicenciaPage implements OnInit {
     
 
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log("init del listar licencia");
+    this.url="";
+  }
 
 
   loadLicencias(page, infiniteScroll? ) {
@@ -59,7 +66,7 @@ export class ListarLicenciaPage implements OnInit {
                    if(this.filtroTipo){
                      if(!(this.tipo === "")){
                         console.log("entro");
-                        this.licencias = this.licencias.filter(items => items.articulo === this.tipo);
+                        this.licencias = this.licencias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
                         console.log(this.licencias);
                      }
                     
@@ -96,35 +103,25 @@ export class ListarLicenciaPage implements OnInit {
   }
 
   checkFocus(newValue){
+    console.log("Entra al focus");
+    console.log("value");
+    console.log(this.value);
+    console.log("La url");
+    console.log(this.url);
+    this.value=this.value+1;
+    console.log(this.value % 2==0);
+   /* if(this.value % 2==0){
+      this.router.navigateByUrl(this.url);
+    }*/
     console.log(newValue)
   }
   
 
   onChange(newValue) {
     console.log("onChange");
+    console.log("change de licencias");
     console.log(this.url);
-    switch(this.url){
-      case("Convocatoria"):{
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
-          break; 
-      }
-      case("Licencia"):{
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
-          break; 
-      }
-      case("Trabajo Administrativo"):{
-            this.router.navigateByUrl("/members/menu/actividadesLectura/listarTrabajoAdmin");
-            break; 
-      }
-      case("Visita Escuela"):{
-            this.router.navigateByUrl("/members/menu/actividadesLectura/listarVisita");
-            break; 
-      }
-      default:
-         this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
-         break; 
-    };
-  
+    this.router.navigateByUrl(this.url);
   
   }
 

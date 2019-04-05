@@ -25,11 +25,12 @@ export class ListarConvocatoriaPage implements OnInit {
   maximumPages = 3;
   convocatorias=[];
   size=5;
-  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+  opciones=["Trabajo Administrativo","Visita Escuela","Licencia"];
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
               private todoService: TodoService) {
+                console.log("crecion de listar convocatoria");
                 this.url1=""
 
                 this.convocatoriaService.getConvocatorias(this.size,this.page)
@@ -59,7 +60,7 @@ export class ListarConvocatoriaPage implements OnInit {
                    if(this.filtroTipo){
                      if(!(this.tipo === "")){
                         console.log("entro");
-                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion === this.tipo);
+                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipo.toLowerCase());
                         console.log(this.convocatorias);
                      }
                     
@@ -99,35 +100,5 @@ export class ListarConvocatoriaPage implements OnInit {
       
   }
 
-
-  cambiar(newValue) {
-    console.log(newValue);
-    console.log("onChange");
-
-    console.log(this.url1);
-    switch(this.url1){
-      case("Convocatoria"):{
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
-          break; 
-      }
-      case("Licencia"):{
-          this.router.navigate(["/members/menu/actividadesLectura/listarLicencia"]);
-          break; 
-      }
-      case("Trabajo Administrativo"):{
-            this.router.navigateByUrl("/members/menu/actividadesLectura/listarTrabajoAdmin");
-            break; 
-      }
-      case("Visita Escuela"):{
-            this.router.navigateByUrl("/members/menu/actividadesLectura/listarVisita");
-            break; 
-      }
-      default:
-         this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
-         break; 
-    };
-
-    
-  }
 
 }

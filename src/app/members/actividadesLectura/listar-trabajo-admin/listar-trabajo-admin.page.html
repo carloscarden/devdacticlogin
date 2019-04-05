@@ -10,12 +10,7 @@
   
   <ion-content padding>
 
-    <ion-item class="busquedaPrimera">
-      <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
-      <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Cancelar" [(ngModel)]="url">
-          <ion-select-option *ngFor="let opt of opciones">{{opt}}</ion-select-option>
-      </ion-select>
-  </ion-item>      
+
 
       
       <ion-item class="busquedaSegunda">
