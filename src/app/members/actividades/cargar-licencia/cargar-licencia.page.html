@@ -14,7 +14,7 @@
       <ion-col>
         <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
             <ion-item>
-               <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
+               <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Inicio</ion-label>
                    <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
                     monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                     monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
@@ -27,7 +27,7 @@
             </ion-item>
 
             <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Fin</ion-label>
                 <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
