@@ -7,7 +7,6 @@
   </ion-toolbar>
 </ion-header>
 <!--{{ diagnostic }}-->
-{{ !visitaForm.form.valid }}
 <ion-content padding>
         <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
 
@@ -73,24 +72,11 @@
             <ion-input class="fuente" type="text" [(ngModel)]="visita.acompaniante" name="acompaniante" #acompaniante="ngModel"></ion-input>
           </ion-item>
 
-
-          <ion-list>
-              <ion-radio-group [(ngModel)]="visita.urgente" name="urgente"  #urgente="ngModel">
-                <ion-list-header >
-                  <ion-label class="textoBold" color="success">Tipo de visita</ion-label>
-                </ion-list-header>
-            
-                <ion-item>
-                  <ion-label>Urgente</ion-label>
-                  <ion-radio slot="start" value="T" checked></ion-radio>
-                </ion-item>
-            
-                <ion-item>
-                  <ion-label>No Urgente</ion-label>
-                  <ion-radio slot="start" value="F"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-          </ion-list>
+          <ion-item>
+            <ion-label class="textoBold" color="success" >Situaci&oacute;n de conflicto</ion-label>
+            <ion-checkbox checked="true" [(ngModel)]="conflicto" name="urg"></ion-checkbox>
+          </ion-item>
+         
     <!-- ********************************* Para plataformas moviles *********************************************************************** -->
           <!--<div *ngIf="esPlataformaMovil">
             <ion-item>

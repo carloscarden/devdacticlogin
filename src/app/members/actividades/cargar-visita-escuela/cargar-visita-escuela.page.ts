@@ -42,6 +42,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
   error:string;
   images = [];
   imagesWeb = [];
+  conflicto=false;
   
   actividadesSubscription: Subscription;
 
@@ -95,6 +96,12 @@ export class CargarVisitaEscuelaPage implements OnInit {
     this.visita.fin=formatoCorrectoFin;
 
     this.visita.idInspector=1;
+    if(this.conflicto){
+      this.visita.urgente="T"
+    }
+    else{
+      this.visita.urgente="F"
+    }
 
     console.log(this.visita);
 
@@ -105,7 +112,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
           console.log(data);
            this.loading=false;
            this.visita = new VisitaEscuela();
-           this.visita.urgente="T";
+           this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
            alert(data);

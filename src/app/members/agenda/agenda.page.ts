@@ -54,7 +54,7 @@ export class AgendaPage implements OnInit {
       let end = moment(event.endTime).format('lll');
       let alert = await this.alertCtrl.create({
            header: '' + event.title,
-           subHeader:  'descripcion',
+           subHeader:  'descripción',
            message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
            buttons: ['OK']
       });

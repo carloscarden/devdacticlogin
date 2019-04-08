@@ -102,7 +102,7 @@
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
     <hr>
     <div class="posicion">
-    <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
+    <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una im&aacute;gen</ion-label>
     </div>
     <ion-list>
     <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
@@ -118,7 +118,7 @@
 </ion-list>
 
 <ion-item>
-  <ion-label id="profile_image" color="primary" stacked>Imagen WEB</ion-label>
+  <ion-label id="profile_image" color="primary" stacked>Im&aacute;gen WEB</ion-label>
   <ion-input type="file" (change)="changeListener($event)"></ion-input>
 </ion-item>
 <!-- ******************************************************************************************************** -->

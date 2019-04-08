@@ -48,33 +48,21 @@
         <ion-label color="danger" [hidden]="articulo.valid || articulo.pristine">El nro de la SOLICITUD es requerido</ion-label>
 
         <!-- ************************************************************************************************** -->
-        <ion-list>
-            <ion-radio-group [(ngModel)]="licencia.medica" name="medica"  #medica="ngModel">
-              <ion-list-header >
-                <ion-label position="stacked" class="textoBold" color="success">Tipo de licencia</ion-label>
-              </ion-list-header>
-          
-              <ion-item>
-                <ion-label>Medica</ion-label>
-                <ion-radio slot="start" value="T" checked></ion-radio>
-              </ion-item>
-          
-              <ion-item>
-                <ion-label>No Medica</ion-label>
-                <ion-radio slot="start" value="F"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list>
+        
+        <ion-item>
+          <ion-label class="textoBold" color="success" >Licencia m&eacute;dica</ion-label>
+          <ion-checkbox checked="true" [(ngModel)]="tipoLicencia" name="lic"></ion-checkbox>
+        </ion-item>
        
         
 
         <!-- ************************************************************************************************** -->
-
+        <div *ngIf="tipoLicencia">
         <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Codigo</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">C&oacute;digo</ion-label>
             <ion-input class="fuente" type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
         </ion-item>
-
+      </div>
 
 
 

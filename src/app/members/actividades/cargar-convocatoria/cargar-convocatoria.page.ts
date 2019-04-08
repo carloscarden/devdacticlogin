@@ -200,16 +200,16 @@ export class CargarConvocatoriaPage implements OnInit {
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
+      header: "Seleccione ",
       buttons:
         [
-          {text: 'Load from Library',
+          {text: 'Cargar',
           handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.PHOTOLIBRARY); }
           },
-          {text: 'Use Camera',
+          {text: 'Usar cámara',
           handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.CAMERA); }
           },
-          {text: 'Cancel',
+          {text: 'Cancelar',
           role: 'cancel'
           }
         ]
@@ -256,7 +256,7 @@ export class CargarConvocatoriaPage implements OnInit {
 
   deleteImageWeb(pos){
     this.imagesWeb.splice(pos, 1);
-    this.presentToast('File removed.');
+    this.presentToast('Archivo removido.');
 
   }
 
