@@ -37,7 +37,6 @@
                </div>
           </ion-item>
             
-
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria</ion-label>
                 <ionic-selectable class="fuente"
@@ -52,9 +51,6 @@
                 </ionic-selectable>
           </ion-item>
 
-
-
-
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Distrito</ion-label>
                 <ionic-selectable class="fuente"
@@ -68,7 +64,6 @@
                   (onSearch)="searchDistritos($event)">
                 </ionic-selectable>
           </ion-item>
-
 
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Lugar de la convocatoria</ion-label>
@@ -108,7 +103,7 @@
 <!-- **********************************  Para plataformas web  ********************************************************************** -->
     <hr>
     <div class="posicion">
-    <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una im&aacute;gen</ion-label>
+    <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
     </div>
     <ion-list>
         <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
