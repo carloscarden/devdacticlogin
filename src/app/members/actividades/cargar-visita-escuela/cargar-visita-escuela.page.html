@@ -8,19 +8,13 @@
 </ion-header>
 <!--{{ diagnostic }}-->
 <ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
         <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
 
           <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">CUE</ion-label>
-            <ion-input class="fuente" type="text" [(ngModel)]="visita.establecimiento.cue" name="cue" #cue="ngModel" required></ion-input>
-            <div *ngIf="!(cue.valid || cue.pristine)" class="invalid-feedback">
-                La escuela es requerida
-            </div>
-          </ion-item>    
-
-
-          <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Inicio</ion-label>
             <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
               monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
               monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
@@ -34,18 +28,25 @@
             
 
           <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Fin</ion-label>
             <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="visita.fin" name="fin" #fin="ngModel" required
               monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
               monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
               dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-            ></ion-datetime>
+              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom">  
+              </ion-datetime>
             <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                   La fecha de fin es requerida
             </div>
           </ion-item>
           
+           <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">CUE</ion-label>
+            <ion-input class="fuente" type="text" [(ngModel)]="visita.establecimiento.cue" name="cue" #cue="ngModel" required></ion-input>
+            <div *ngIf="!(cue.valid || cue.pristine)" class="invalid-feedback">
+                La escuela es requerida
+            </div>
+          </ion-item>
           
           <ion-item>
              <ion-label position="stacked" class="textoBold" color="success">Motivo</ion-label>
@@ -140,11 +141,9 @@
             </ion-fab-button>
           </ion-fab> 
        </form>  
+      </ion-col>
+     </ion-row>
+    </ion-grid>   
        
 </ion-content>
 
-<!--<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
-  </ion-toolbar>
-</ion-footer>-->
