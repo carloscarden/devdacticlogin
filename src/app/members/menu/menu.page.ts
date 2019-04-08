@@ -33,7 +33,7 @@ export class MenuPage implements OnInit {
 
 
   openInformes() {
-    this.router.navigate(["/members/menu/actividadesLectura/listarLicencia"]);
+    this.router.navigate(["/members/menu/actividadesLectura/seleccionarInforme"]);
   }
 
 

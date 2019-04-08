@@ -10,99 +10,95 @@
 <!--{{ diagnostic }}
 {{ error }}-->
 <ion-content padding>
-    <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
-        <ion-item>
-           <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio</ion-label>
-               <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
-                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-                monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
-                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-                dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-               ></ion-datetime>
-               <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
-                    La fecha de inicio es requerida
-               </div>
-        </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
+            <ion-item>
+               <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Inicio</ion-label>
+                   <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
+                    monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                    monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+                    dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                    dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                   ></ion-datetime>
+                   <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
+                        La fecha de inicio es requerida
+                   </div>
+            </ion-item>
 
-        <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Fecha Fin</ion-label>
-            <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
-              monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-              monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
-              dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-              dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-            ></ion-datetime>
-                <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
-                       La fecha de inicio es requerida
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Fin</ion-label>
+                <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
+                  monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                  monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+                  dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                  dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                ></ion-datetime>
+                    <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
+                           La fecha de inicio es requerida
+                    </div>
+            </ion-item>
+
+
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Articulo</ion-label>
+                <ion-input class="fuente" type="text" [(ngModel)]="licencia.articulo" name="articulo" #articulo="ngModel" required ></ion-input>
+                <div *ngIf="!(articulo.valid || articulo.pristine)" class="invalid-feedback">
+                        El nro de la SOLICITUD es requerido
                 </div>
-        </ion-item>
+            </ion-item>
 
+            <ion-label color="danger" [hidden]="articulo.valid || articulo.pristine">El nro de la SOLICITUD es requerido</ion-label>
 
-        <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Articulo</ion-label>
-            <ion-input class="fuente" type="text" [(ngModel)]="licencia.articulo" name="articulo" #articulo="ngModel" required ></ion-input>
-            <div *ngIf="!(articulo.valid || articulo.pristine)" class="invalid-feedback">
-                    El nro de la SOLICITUD es requerido
-            </div>
-        </ion-item>
+            <!-- ************************************************************************************************** -->
+            <ion-list>
+                <ion-radio-group [(ngModel)]="licencia.medica" name="medica"  #medica="ngModel">
+                  <ion-list-header >
+                    <ion-label position="stacked" class="textoBold" color="success">Tipo de licencia</ion-label>
+                  </ion-list-header>
+              
+                  <ion-item>
+                    <ion-label>Medica</ion-label>
+                    <ion-radio slot="start" value="T" checked></ion-radio>
+                  </ion-item>
+              
+                  <ion-item>
+                    <ion-label>No Medica</ion-label>
+                    <ion-radio slot="start" value="F"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+           
+            
 
-        <ion-label color="danger" [hidden]="articulo.valid || articulo.pristine">El nro de la SOLICITUD es requerido</ion-label>
+            <!-- ************************************************************************************************** -->
 
-        <!-- ************************************************************************************************** -->
-        <ion-list>
-            <ion-radio-group [(ngModel)]="licencia.medica" name="medica"  #medica="ngModel">
-              <ion-list-header >
-                <ion-label position="stacked" class="textoBold" color="success">Tipo de licencia</ion-label>
-              </ion-list-header>
-          
-              <ion-item>
-                <ion-label>Medica</ion-label>
-                <ion-radio slot="start" value="T" checked></ion-radio>
-              </ion-item>
-          
-              <ion-item>
-                <ion-label>No Medica</ion-label>
-                <ion-radio slot="start" value="F"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list>
-       
-        
-
-        <!-- ************************************************************************************************** -->
-
-        <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Codigo</ion-label>
-            <ion-input class="fuente" type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Codigo</ion-label>
+                <ion-input class="fuente" type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel"></ion-input>
+            </ion-item>
 
 
 
 
-        <ion-fab horizontal="end" >
-          <ion-fab-button color="tertiary" [disabled]="!licenciaForm.form.valid">
-           <ion-button class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
-            <ion-icon name="checkmark"></ion-icon>
-           </ion-button>
-          </ion-fab-button>
-        </ion-fab> 
-
-        
-
-
-      <!--
-     <ion-fab vertical="bottom" horizontal="end" >
-          <ion-button ion-fab type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
+            <ion-fab horizontal="end" >
+              <ion-fab-button color="tertiary" [disabled]="!licenciaForm.form.valid">
+               <ion-button class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
                 <ion-icon name="checkmark"></ion-icon>
-          </ion-button>
-         </ion-fab> 
+               </ion-button>
+              </ion-fab-button>
+            </ion-fab> 
 
-       -->  
-    </form>
+          <!--<ion-fab vertical="bottom" horizontal="end" >
+              <ion-button ion-fab type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
+                    <ion-icon name="checkmark"></ion-icon>
+              </ion-button>
+             </ion-fab>-->  
+         </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>       
 </ion-content>
 
-<!--<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
-  </ion-toolbar>
-</ion-footer>-->

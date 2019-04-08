@@ -11,7 +11,6 @@
   
   <ion-grid class="anchoLogo">
     <ion-row>
-
       <ion-col size="6">  	
         <div class="logo">
             <ion-img src="../../assets/img/LogoAppInspectores.png"></ion-img>
@@ -24,7 +23,6 @@
           <h4 class="educativa">Educativa</h4>
         </div>
       </ion-col>
-      
     </ion-row>
   </ion-grid>      
 
@@ -33,7 +31,7 @@
   <ion-grid class="anchoForm">
     <ion-row>
 
-      <ion-col size=none size-md="3"></ion-col>
+      <!--<ion-col size=none size-md="3"></ion-col> CENTRAR WEB-->
 
       <ion-col size-md="6">
           <form [formGroup]="loginForm" (submit)="onSubmit()">
@@ -64,9 +62,7 @@
           </form>        
      </ion-col>
     </ion-row>
-  </ion-grid>      
+  </ion-grid>    
+
 </ion-content>
 
-<ion-footer *ngIf="showFoot">
-  <ion-toolbar color="primary"></ion-toolbar>
-</ion-footer>
