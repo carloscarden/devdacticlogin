@@ -18,7 +18,19 @@
 	text-align:center;
 }
 
-        /*PADDING SELECCION*/
+        /*PADDING LINEA CHECKBOX*/
+.paddingcheck {
+  --padding-start:0;
+}        
+
+        /*PADDING TITULO CHECKBOX*/
+.paddinglabel {
+  padding-left:1rem;
+  font-weight:bold;
+  font-size:17px;
+}        
+
+        /*PADDING SELECCION IMG*/
 .posicion {
   padding-left:1rem;
 }
