@@ -6,9 +6,17 @@
       <ion-title class="textoTitulo">Informes de Trabajo Administrativo</ion-title>
     </ion-toolbar>
   </ion-header>
-  
-  
+
   <ion-content padding>
+
+      <ion-item class="busquedaPrimera">
+          <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
+          <ion-select  (ionChange)="onChange($event)" (ionFocus)="checkFocus($event)" okText="Okay" cancelText="Cancelar" [(ngModel)]="url">
+              <ion-select-option *ngFor="let opt of opciones">{{opt}}</ion-select-option>
+          </ion-select>
+      </ion-item>    
+        
+        
 
 
 
@@ -31,7 +39,7 @@
       
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of trabajosAdmin">
-              <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
+              <ion-item lines="inset">
                 <ion-label>
                   TIPO DE TRABAJO ADMINISTRATIVO: {{ item.tipoTrabajoAdmin.descripcion }} <br>
                   INICIO: <p>{{ item.inicio }}</p>

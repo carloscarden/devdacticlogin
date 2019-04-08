@@ -18,34 +18,31 @@ import { Imagen } from './../../../_models/imagen';*/
   styleUrls: ['./listar-convocatoria.page.scss'],
 })
 export class ListarConvocatoriaPage implements OnInit {
-  url1;
+  url;
   tipo;
   filtroTipo=false;
   page = 0;
   maximumPages = 3;
   convocatorias=[];
   size=5;
-  opciones=["Trabajo Administrativo","Visita Escuela","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
               private todoService: TodoService) {
-                console.log("crecion de listar convocatoria");
-                this.url1=""
+                this.url=""
 
                 this.convocatoriaService.getConvocatorias(this.size,this.page)
                 .subscribe(res  =>{
-                             console.log("resultados");
                              this.convocatorias=res.content;
                              this.maximumPages=res.totalPages-1;
-                             console.log(res);
                             }  
                            );
 
   }
 
   ngOnInit() {
-    this.url1=""
+    this.url=""
   }
 
 
@@ -88,7 +85,6 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   filtrar(infiniteScroll?){
-    console.log("filtrar");
     this.filtroTipo=true;
     this.convocatorias = [];
     this.page=0;
@@ -98,6 +94,37 @@ export class ListarConvocatoriaPage implements OnInit {
       this.page++;
     }
       
+  }
+
+
+  onChange(newValue) {
+    let irUrl=""
+    switch(this.url){
+      case("Convocatoria"):{
+          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Licencia"):{
+          irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Trabajo Administrativo"):{
+         irUrl="/members/menu/actividadesLectura/listarTrabajoAdmin/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      case("Visita Escuela"):{
+         irUrl="/members/menu/actividadesLectura/listarVisita/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      default:
+         irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+         this.router.navigateByUrl(irUrl);
+         break; 
+    };
   }
 
 

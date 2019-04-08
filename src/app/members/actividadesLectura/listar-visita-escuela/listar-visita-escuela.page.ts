@@ -23,7 +23,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
   maximumPages = 3;
   visitasEscuelas=[];
   size=5;
-  opciones=["Convocatoria","Trabajo Administrativo","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
 
 
@@ -31,15 +31,14 @@ export class ListarVisitaEscuelaPage implements OnInit {
     console.log("creacion del listar visitas");
       this.visitaService.getVisitas(this.size,this.page)
       .subscribe(res  =>{
-                  console.log("resultados");
                   this.visitasEscuelas=res.content;
                   this.maximumPages=res.totalPages-1;
-                  console.log(res);
                   }  
       );
    }
 
   ngOnInit() {
+    console.log("init del visita escuela");
   }
 
 
@@ -91,6 +90,39 @@ export class ListarVisitaEscuelaPage implements OnInit {
       this.page++;
     }
       
+  }
+
+
+  
+  onChange(newValue) {
+    console.log("onChange_Convocatoria");
+    let irUrl=""
+    switch(this.url){
+      case("Convocatoria"):{
+          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Licencia"):{
+          irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Trabajo Administrativo"):{
+         irUrl="/members/menu/actividadesLectura/listarTrabajoAdmin/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      case("Visita Escuela"):{
+         irUrl="/members/menu/actividadesLectura/listarVisita/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      default:
+         irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+         this.router.navigateByUrl(irUrl);
+         break; 
+    };
   }
 
 

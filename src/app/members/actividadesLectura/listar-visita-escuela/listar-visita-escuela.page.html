@@ -7,8 +7,18 @@
     </ion-toolbar>
   </ion-header>
   
-  
+
   <ion-content padding>
+
+      <ion-item class="busquedaPrimera">
+          <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
+          <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Cancelar" [(ngModel)]="url">
+             <ion-select-option value="/members/menu/actividadesLectura/listarConvocatoria/v" selected >Convocatoria</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarLicencia/v" >Licencia</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarTrabajoAdmin/v" >Trabajo Administrativo</ion-select-option>
+             <ion-select-option value="/members/menu/actividadesLectura/listarVisita/v" >Visita Escuela</ion-select-option>
+          </ion-select>
+      </ion-item>      
 
 
 
@@ -31,7 +41,7 @@
 
       <ion-list margin-top>
           <ion-item-sliding *ngFor="let item of visitasEscuelas">
-            <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
+            <ion-item lines="inset" >
               <ion-label>
                 ESTABLECIMIENTO: {{ item.establecimiento.nombre }} <br>
                 INICIO: <p>{{ item.inicio }}</p>

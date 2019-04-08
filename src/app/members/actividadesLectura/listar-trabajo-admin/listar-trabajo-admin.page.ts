@@ -23,7 +23,7 @@ export class ListarTrabajoAdminPage implements OnInit {
   maximumPages = 3;
   trabajosAdmin=[];
   size=5;
-  opciones=["Convocatoria","Visita Escuela","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
 
 
@@ -31,10 +31,8 @@ export class ListarTrabajoAdminPage implements OnInit {
     console.log("creacion del listar trabajos admin");
     this.trabajosService.getTrabajoAdministrativo(this.size,this.page)
     .subscribe(res  =>{
-                 console.log("resultados");
                  this.trabajosAdmin=res.content;
                  this.maximumPages=res.totalPages-1;
-                 console.log(res);
                 }  
                );
   }
@@ -92,6 +90,39 @@ export class ListarTrabajoAdminPage implements OnInit {
       this.page++;
     }
       
+  }
+
+
+ 
+  onChange(newValue) {
+    console.log("onChange_Convocatoria");
+    let irUrl=""
+    switch(this.url){
+      case("Convocatoria"):{
+          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Licencia"):{
+          irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
+          break; 
+      }
+      case("Trabajo Administrativo"):{
+         irUrl="/members/menu/actividadesLectura/listarTrabajoAdmin/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      case("Visita Escuela"):{
+         irUrl="/members/menu/actividadesLectura/listarVisita/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+         this.router.navigateByUrl(irUrl);
+         break; 
+      }
+      default:
+         irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+         this.router.navigateByUrl(irUrl);
+         break; 
+    };
   }
 
 

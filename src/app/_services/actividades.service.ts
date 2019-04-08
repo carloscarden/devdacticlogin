@@ -49,8 +49,8 @@ export class ActividadesService {
   }
 
   getLicencias(size,page): Observable<any> {
-    console.log("url");
-    console.log(URL+`licencias?size=${size}&page=${page}`);
+   /* console.log("url");
+    console.log(URL+`licencias?size=${size}&page=${page}`);*/
     return this.http.get<any>(URL+`licencias?size=${size}&page=${page}&sort=ASC`);
   }
   /******************************************************************************** */
@@ -60,8 +60,8 @@ export class ActividadesService {
   }
 
   getConvocatorias(size,page): Observable<any> {
-    console.log("url");
-    console.log(URL+`convocatorias?size=${size}&page=${page}`);
+   /* console.log("url");
+    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
     return this.http.get<any>(URL+`convocatorias?size=${size}&page=${page}&sort=ASC`);
   }
 
@@ -82,8 +82,8 @@ export class ActividadesService {
   }
 
   getTrabajoAdministrativo(size,page): Observable<any>{
-    console.log("url");
-    console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);
+   /* console.log("url");
+    console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
     return this.http.get<any>(URL+`trabajosAdmin?size=${size}&page=${page}`);
   }
 
@@ -109,8 +109,8 @@ export class ActividadesService {
   }
 
   getVisitas(size,page): Observable<any>{
-     console.log("url");
-     console.log(URL+`visitas?size=${size}&page=${page} ` )   ;
+    /* console.log("url");
+     console.log(URL+`visitas?size=${size}&page=${page} ` )   ;*/
      return this.http.get<any>(URL+`visitas?size=${size}&page=${page}&sort=ASC`); 
   }
   

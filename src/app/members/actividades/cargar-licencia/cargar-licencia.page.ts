@@ -60,7 +60,7 @@ export class CargarLicenciaPage implements OnInit {
            this.loading=false;
            this.licencia = new Licencia();
            this.error = '';
-           alert(data);
+           alert("Enviado correctamente");
         },
         error => {
             this.error = error;
