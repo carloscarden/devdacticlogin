@@ -105,13 +105,13 @@ export class ListarLicenciaPage implements OnInit {
     let irUrl=""
     switch(this.url){
       case("Convocatoria"):{
-          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl(irUrl);
+         // irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
           break; 
       }
       case("Licencia"):{
           irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl(irUrl);
+          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
           break; 
       }
       case("Trabajo Administrativo"):{
