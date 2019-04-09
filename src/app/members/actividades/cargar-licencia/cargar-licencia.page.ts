@@ -36,6 +36,7 @@ export class CargarLicenciaPage implements OnInit {
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let inicio= new Date(this.licencia.inicio);
     inicio.setSeconds(3*60*60);
+    let month= inicio.getMonth()+1;
     let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear();
     this.licencia.inicio=formatoCorrectoInicio;
 
@@ -57,14 +58,15 @@ export class CargarLicenciaPage implements OnInit {
     this.licenciaService.addLicencia(this.licencia).subscribe(
         data => {
           console.log(data);
-           this.loading=false;
-           this.licencia = new Licencia();
-           this.error = '';
-           alert("Enviado correctamente");
+          this.loading=false;
+          this.licencia = new Licencia();
+          this.error = '';
+          alert("Enviado correctamente");
         },
         error => {
-            this.error = error;
-            this.loading = false;
+          alert("Hubo errores");
+          this.error = error;
+          this.loading = false;
         });;
   
   }

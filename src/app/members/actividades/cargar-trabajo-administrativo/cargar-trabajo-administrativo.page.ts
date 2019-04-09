@@ -36,9 +36,11 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   loading = false;
   error= '';
   images = [];
+  imgs;
   imagesWeb = [];
   esPlataformaMovil=this.plt.is('android');
-
+  megasDeLosArchivos=0;
+  
   constructor(
     private plt: Platform,
     private camera: Camera, private http: HttpClient,
@@ -87,10 +89,12 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
         data => {
            this.loading=false;
            this.trabajoAdmin = new TrabajoAdministrativo();
+           this.imgs=null;
            this.error = '';
-           alert(data);
+           alert("Enviado correctamente");
         },
         error => {
+          alert("Hubo errores");
             this.error = error;
             this.loading = false;
         });;
@@ -176,33 +180,34 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
 
   changeListener($event) : void {
+    console.log(this.imgs);
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
 
-     /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
-    }
-    else{}
-    */
     
-
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
+    let posibleArchivoaAgregar=this.megasDeLosArchivos+(archivoWeb.size/1024)/1024
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
     }
-            
+    else{
+       this.megasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+       }       
+    }
   }
 
   deleteImageWeb(pos){
     this.imagesWeb.splice(pos, 1);
     this.presentToast('File removed.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 

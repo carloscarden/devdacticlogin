@@ -120,7 +120,7 @@
 
       <ion-item>
         <ion-label id="profile_image" color="primary" stacked>Im&aacute;gen WEB</ion-label>
-        <ion-input type="file" (change)="changeListener($event)"></ion-input>
+        <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
       </ion-item>
 <!-- ******************************************************************************************************** -->
         

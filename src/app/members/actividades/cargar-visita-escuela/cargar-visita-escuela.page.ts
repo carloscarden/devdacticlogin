@@ -43,8 +43,9 @@ export class CargarVisitaEscuelaPage implements OnInit {
   images = [];
   imagesWeb = [];
   conflicto=false;
-  
+  imgs;
   actividadesSubscription: Subscription;
+  megasDeLosArchivos=0;
 
   inspeccion = {}
   constructor(
@@ -115,9 +116,11 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
-           alert(data);
+           this.imgs=null;
+           alert("Enviado correctamente");
         },
         error => {
+            alert("Hubo errores");
             this.error = error;
             this.loading = false;
         });;
@@ -210,24 +213,26 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
   /***********************  IMAGENES DE WEB ********************************************** */
   changeListener($event) : void {
+    console.log(this.imgs);
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
-    /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
-    }
-    else{}
-    */
 
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
+    
+    let posibleArchivoaAgregar=this.megasDeLosArchivos+(archivoWeb.size/1024)/1024
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
+    }
+    else{
+       this.megasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+       }       
     }
             
   }
@@ -235,6 +240,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
   deleteImageWeb(pos){
     this.imagesWeb.splice(pos, 1);
     this.presentToast('File removed.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 

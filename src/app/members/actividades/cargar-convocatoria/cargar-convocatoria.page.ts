@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+import { ViewChild } from '@angular/core';
 
 import { Location } from '@angular/common';
 
@@ -42,7 +43,11 @@ export class CargarConvocatoriaPage implements OnInit {
   cargaCorrecta = false;
   loading = false;
   error= '';
+  megasDeLosArchivos=0;
   esPlataformaMovil=this.plt.is('android');
+  
+  imgs;
+  
  
   constructor(
     private plt: Platform,
@@ -98,10 +103,12 @@ export class CargarConvocatoriaPage implements OnInit {
            
            this.loading=false;
            this.convocatoria = new Convocatoria();
+           this.imgs=null;
            this.error = '';
-           alert(data);
+           alert("Enviado correctamente");
         },
         error => {
+            alert("Hubo errores al cargar la convocatoria");
             this.error = error;
             this.loading = false;
         });;
@@ -224,39 +231,49 @@ export class CargarConvocatoriaPage implements OnInit {
   }
 
   deleteImage(imgEntry, position) {
+    console.log("delete");
     this.imgService.deleteImage(imgEntry, position, this.images);
-  
+    console.log(this.imgs);
+    this.imgs=null;
+    console.log(this.imgs);
   }
 
 
   changeListener($event) : void {
+    console.log(this.imgs);
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
 
-     /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
+    
+    let posibleArchivoaAgregar=this.megasDeLosArchivos+(archivoWeb.size/1024)/1024
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
     }
-    else{}
-    */
+    else{
+       this.megasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+       }
+
+    }
+    
     
 
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
-    }
+    
             
   }
 
   deleteImageWeb(pos){
     this.imagesWeb.splice(pos, 1);
     this.presentToast('Archivo removido.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 
