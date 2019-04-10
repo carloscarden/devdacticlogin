@@ -101,17 +101,16 @@ export class ListarLicenciaPage implements OnInit {
 
 
   onChange(newValue) {
-    console.log("onChange_Convocatoria");
     let irUrl=""
     switch(this.url){
       case("Convocatoria"):{
-         // irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
           break; 
       }
       case("Licencia"):{
           irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
+          this.router.navigateByUrl(irUrl);
           break; 
       }
       case("Trabajo Administrativo"):{
@@ -131,4 +130,6 @@ export class ListarLicenciaPage implements OnInit {
     };
   }
 
+
+ 
 }

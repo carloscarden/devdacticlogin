@@ -28,6 +28,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
 
   constructor(private router:Router, private visitaService: ActividadesService) {
+    this.url=""
     console.log("creacion del listar visitas");
       this.visitaService.getVisitas(this.size,this.page)
       .subscribe(res  =>{
@@ -95,8 +96,9 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   
   onChange(newValue) {
-    console.log("onChange_Convocatoria");
     let irUrl=""
+    console.log("url listar visita escuela");
+    console.log(this.url);
     switch(this.url){
       case("Convocatoria"):{
           irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
@@ -124,6 +126,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
          break; 
     };
   }
+
 
 
 }

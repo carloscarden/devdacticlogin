@@ -39,7 +39,8 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   imgs;
   imagesWeb = [];
   esPlataformaMovil=this.plt.is('android');
-  megasDeLosArchivos=0;
+  megasDeLosArchivos=[];
+  totalMegasDeLosArchivos=0;
   
   constructor(
     private plt: Platform,
@@ -178,19 +179,25 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   
   }
 
+  
+ /***********************  IMAGENES DE WEB ********************************************** */
 
   changeListener($event) : void {
-    console.log(this.imgs);
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
 
     
-    let posibleArchivoaAgregar=this.megasDeLosArchivos+(archivoWeb.size/1024)/1024
+     //calcular la cantidad de megas del archivo
+     let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
+
+     //sumarselo a la cantidad total que tengo de megas
+     let posibleArchivoaAgregar=this.totalMegasDeLosArchivos+megaPosibleArchivo;
+
     if(posibleArchivoaAgregar>4){
        this.presentToast('El archivo supera la cantidad permitida.');
     }
     else{
-       this.megasDeLosArchivos=posibleArchivoaAgregar;
+       this.totalMegasDeLosArchivos=posibleArchivoaAgregar;
        var reader = new FileReader();
        reader.readAsDataURL(archivoWeb);
        reader.onload = (event: any) => {
@@ -199,13 +206,22 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
             imagenNueva.tipo = archivoWeb.type;
             imagenNueva.archivo = event.target.result;
             this.imagesWeb.push(imagenNueva) ;
+            // en este arreglo tengo todos los valores de los megas que puso el usuario
+            this.megasDeLosArchivos.push(megaPosibleArchivo);
        }       
     }
   }
 
   deleteImageWeb(pos){
-    this.imagesWeb.splice(pos, 1);
-    this.presentToast('File removed.');
+     // Cuando borro una imagen debo sacarle tambien del total de megas que tengo 
+     this.totalMegasDeLosArchivos=--this.megasDeLosArchivos[pos];
+
+     // Borro la imagen
+     this.imagesWeb.splice(pos, 1);
+ 
+     // Saco la cantidad de megas que tiene el archivo
+     this.megasDeLosArchivos.splice(pos,1);
+    this.presentToast('Archivo removido.');
     this.imgs=null;
     console.log(this.imgs);
 

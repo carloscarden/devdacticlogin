@@ -126,5 +126,7 @@ export class ListarTrabajoAdminPage implements OnInit {
   }
 
 
+  
+
 
 }

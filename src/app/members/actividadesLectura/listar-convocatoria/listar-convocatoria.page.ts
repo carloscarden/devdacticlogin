@@ -29,7 +29,7 @@ export class ListarConvocatoriaPage implements OnInit {
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
-              private todoService: TodoService) {
+            ) {
                 this.url=""
 
                 this.convocatoriaService.getConvocatorias(this.size,this.page)
@@ -101,13 +101,13 @@ export class ListarConvocatoriaPage implements OnInit {
     let irUrl=""
     switch(this.url){
       case("Convocatoria"):{
-          //irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarConvocatoria");
+          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
           break; 
       }
       case("Licencia"):{
-          //irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl("/members/menu/actividadesLectura/listarLicencia");
+          irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
+          this.router.navigateByUrl(irUrl);
           break; 
       }
       case("Trabajo Administrativo"):{
@@ -127,9 +127,7 @@ export class ListarConvocatoriaPage implements OnInit {
     };
   }
 
-  ionViewWillEnter(){
-    this.url="Convocatoria";
-  }
+ 
 
 
 }
