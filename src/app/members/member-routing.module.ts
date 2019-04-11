@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },
 
 
+
+
 ];
 /*
 Notice that this is a child routing and therefore the routes are added to the router 

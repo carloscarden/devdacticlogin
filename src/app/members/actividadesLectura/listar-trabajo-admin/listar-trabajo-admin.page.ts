@@ -94,36 +94,6 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
  
-  onChange(newValue) {
-    console.log("onChange_Convocatoria");
-    let irUrl=""
-    switch(this.url){
-      case("Convocatoria"):{
-          irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl(irUrl);
-          break; 
-      }
-      case("Licencia"):{
-          irUrl="/members/menu/actividadesLectura/listarLicencia/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-          this.router.navigateByUrl(irUrl);
-          break; 
-      }
-      case("Trabajo Administrativo"):{
-         irUrl="/members/menu/actividadesLectura/listarTrabajoAdmin/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-         this.router.navigateByUrl(irUrl);
-         break; 
-      }
-      case("Visita Escuela"):{
-         irUrl="/members/menu/actividadesLectura/listarVisita/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5); 
-         this.router.navigateByUrl(irUrl);
-         break; 
-      }
-      default:
-         irUrl="/members/menu/actividadesLectura/listarConvocatoria/"+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-         this.router.navigateByUrl(irUrl);
-         break; 
-    };
-  }
 
 
   
