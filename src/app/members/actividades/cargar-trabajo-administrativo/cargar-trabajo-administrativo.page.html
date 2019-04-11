@@ -15,7 +15,7 @@
         <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
 
             <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio</ion-label>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio (*)</ion-label>
               <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                 monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
@@ -28,7 +28,7 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Fecha y hora Fin</ion-label>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha y hora Fin  (*)</ion-label>
               <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required
                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                 monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
