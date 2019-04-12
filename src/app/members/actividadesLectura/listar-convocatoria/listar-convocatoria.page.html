@@ -1,28 +1,24 @@
 
-    <ion-grid>
+   <!-- <ion-grid>
       <ion-col>
-        <ion-col>
+        <ion-col> -->
 
         
-          <ion-item class="busquedaSegunda">
+          <ion-item>
              <ion-label position="stacked" class="textoBold" color="success">Buscar por Tipo</ion-label>
-             <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
+             <ion-input type="text"  [(ngModel)]="tipo"></ion-input>
           </ion-item>
-
           <hr>
           <hr>
           <hr>
           <hr>
-
            <div class="form-group">
             <ion-button (click)="filtrar()">Buscar</ion-button>
            </div>
 
-
            <div  *ngIf="convocatorias.length==0" class="centrarResultado">
             <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
            </div>
-
 
             <ion-list margin-top>
                 <ion-item-sliding *ngFor="let item of convocatorias">
@@ -41,8 +37,8 @@
                <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
             
-          </ion-col>
+         <!-- </ion-col>
         </ion-col>
-      </ion-grid>
+      </ion-grid> -->
 
   
