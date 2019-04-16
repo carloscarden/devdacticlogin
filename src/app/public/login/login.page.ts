@@ -75,7 +75,7 @@ export class LoginPage implements OnInit {
         data => {
            this.loading=false;
            this.error='';
-           this.router.navigate(['/members/menu/agenda']);
+           this.router.navigate(['/members/menu/agenda/month']);
         },
         error => {
             this.error = "El usuario o la contraseña es incorrecta";

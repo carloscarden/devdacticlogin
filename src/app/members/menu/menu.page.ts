@@ -28,7 +28,7 @@ export class MenuPage implements OnInit {
   }
 
   openAgenda() {
-    this.router.navigateByUrl('/members/menu/agenda');
+    this.router.navigateByUrl('/members/menu/agenda/month');
   }
 
 
