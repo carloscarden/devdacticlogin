@@ -93,6 +93,12 @@ export class ListarTrabajoAdminPage implements OnInit {
   }
 
 
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
+
  
 
 

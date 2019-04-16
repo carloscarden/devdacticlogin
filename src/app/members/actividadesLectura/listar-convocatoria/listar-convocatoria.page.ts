@@ -88,12 +88,20 @@ export class ListarConvocatoriaPage implements OnInit {
     this.filtroTipo=true;
     this.convocatorias = [];
     this.page=0;
+
+    // el infinite scroll actua cuando hay por lo menos 2 convocatorias, por eso pido paginas hasta tener 2 
+    // o hasta llegar al tope de las paginas
     while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
       this.loadConvocatorias(this.page, infiniteScroll );
       console.log(this.convocatorias);
       this.page++;
     }
       
+  }
+
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
   }
 
 

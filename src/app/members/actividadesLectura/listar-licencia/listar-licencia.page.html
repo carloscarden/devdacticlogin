@@ -26,8 +26,8 @@
               <ion-item lines="inset">
                 <ion-label>
                   ARTICULO: {{ item.articulo }} <br>
-                  INICIO: <p>{{ item.inicio }}</p>
-                   FIN:  <p>{{ item.fin }}</p>
+                  INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
+                  FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
                 </ion-label>
               </ion-item>
             </ion-item-sliding>

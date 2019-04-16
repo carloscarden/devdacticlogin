@@ -94,6 +94,12 @@ export class ListarVisitaEscuelaPage implements OnInit {
   }
 
 
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
+
 
 
 }

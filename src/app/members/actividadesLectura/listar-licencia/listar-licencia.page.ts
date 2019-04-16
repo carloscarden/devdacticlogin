@@ -98,6 +98,11 @@ export class ListarLicenciaPage implements OnInit {
       
   }
 
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
 
 
 
