@@ -6,12 +6,12 @@
         /*TEXTO LABEL*/
 .textoBold {
 	font-weight:bold;
-  font-size:17px;
+  font-size:16px;
 }
 
         /*TEXTO INPUT*/
 .fuente {
-  font-size:21px;
+  font-size:20px;
 }
 
 .centrarBoton {
@@ -28,7 +28,7 @@
   padding-left:1rem;
   padding-bottom: 2rem;
   font-weight:bold;
-  font-size:17px;
+  font-size:16px;
 }        
 
         /*PADDING SELECCION IMG*/
@@ -38,16 +38,12 @@
 
         /*SOMBRA BOTON*/
 .tipoBoton {
-	  -webkit-box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
-    box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
+    box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75); 
 }
+
         /*SOMBRA FAB*/
 .ion-fab-button{
     box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75); 
-	  /*-webkit-box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
-    box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);*/
 }
 
 

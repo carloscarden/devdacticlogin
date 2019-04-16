@@ -3,11 +3,12 @@
             font-family:"DIN";
         }
         
-                /*TEXTO INPUT*/
+                /*TEXTO LABEL*/
         .textoBold {
             font-weight:bold;
-            font-size:17px;
+            font-size:16px;
         }
+       
         
         .ion-title {
             color:grey;
@@ -16,16 +17,6 @@
         
         .item-inner {
             border-style:none;
-        }
-
-        .busquedaPrimera {
-            padding-left:1rem;
-            padding-right:1rem;
-        }
-
-         .busquedaSegunda {
-            padding-left:1rem;
-            padding-right:1rem;
         }
         
         .list-md .item-lines-inset {
@@ -49,11 +40,4 @@
             text-align:center;
             margin-top:50px;
         }        
-        
-                     /*FOOTER*/
-        .textoFooter {
-          font-family:"DIN";
-          color:#fff;
-          text-align:center;
-          font-size: 1rem;
-        } 
+  
