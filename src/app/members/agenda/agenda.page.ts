@@ -40,11 +40,7 @@ export class AgendaPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("id");
-    this.calendar.mode=this.route.snapshot.paramMap.get('id');
-
-    let diaActual= new Date();
-    this.cargarEvents(this.currentMonth+1, this.currentYear);
+    
     
 
   }
@@ -55,12 +51,13 @@ export class AgendaPage implements OnInit {
   }
 
   async onEventSelected(event) {
+      console.log(event);
+      console.log(event.descripcion);
 
       let start = moment(event.startTime).format('lll');
       let end = moment(event.endTime).format('lll');
       let alert = await this.alertCtrl.create({
            header: '' + event.title,
-           subHeader:  'descripción',
            message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
            buttons: ['OK']
       });
@@ -215,5 +212,14 @@ export class AgendaPage implements OnInit {
 
     this.router.navigate(["/members/menu/calendario"]);
   }
+
+  ionViewWillEnter(){
+    //your code;
+    console.log("id");
+    this.calendar.mode=this.route.snapshot.paramMap.get('id');
+
+    this.cargarEvents(this.currentMonth+1, this.currentYear);
+  }
+
 
 }

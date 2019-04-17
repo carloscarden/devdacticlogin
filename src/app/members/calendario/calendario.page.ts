@@ -26,7 +26,7 @@ export class CalendarioPage implements OnInit {
   anioBuscado= new Date().getFullYear();
   nombreMeses= ["ENERO","FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
   mesesCargados=[];
-  mesAbuscar="todos";
+  mesAbuscar=new Date().getMonth().toString();
  
   constructor(
     protected agendaService: AgendaServiceService,
@@ -37,11 +37,9 @@ export class CalendarioPage implements OnInit {
     }
 
   ngOnInit() { 
-    for(var _i =0; _i<2; _i++){
-      this.nuevoMes(this.page+1);        
-      this.page=this.page+1;
-
-    }
+    this.page=parseInt(this.mesAbuscar)+1;
+    this.maximumPages=1;
+    this.nuevoMes(this.page);
 
    }
 
@@ -50,10 +48,12 @@ export class CalendarioPage implements OnInit {
     this.agendaService.getEvents(mes,this.anio)
         .subscribe(res  =>{
                     let mesActual=this.nombreMeses[mes-1];
+                    console.log(res);
                     if(res==null){
                       this.mesesCargados.push({nombreMes:mesActual, nroMes:mes, tareas:[]} )
                     }
                     else{
+
                       this.mesesCargados.push({nombreMes:mesActual, nroMes:mes, tareas:res} );
                     };
                     if (infiniteScroll) {
@@ -123,14 +123,76 @@ export class CalendarioPage implements OnInit {
 
    }
 
-   stringAsDate(dateStr) {
+  
+
+  changeMode(mode) {
+    let url='/members/menu/agenda/'+mode;
+    this.router.navigateByUrl(url);
+  }
+
+  buscar(mes, nuevaTarea){
+    for (var i=0; i < this.mesesCargados.length; i++) {
+      if (this.mesesCargados[i].nroMes === mes) {
+          this.mesesCargados[i].tareas.push(nuevaTarea);
+          return this.mesesCargados[i];
+      }
+  }
+  }
+
+
+
+  async addEvent(){
+    let modal = await this.modalCtrl.create({
+      component: EventModalPage,
+      componentProps: { selectedDay: new Date() }
+      });
+    
+    modal.onDidDismiss().then((data) => {
+      if (data) {
+        console.log("data");
+        console.log(data);
+        let eventData = data.data;
+        console.log(this.mesesCargados);
+
+        
+
+        let inicio;
+        let fin
+        if(navigator.userAgent.indexOf("Chrome") != -1 )
+        {
+                  inicio= new Date(data.data.inicio);
+                  fin= new Date(data.data.fin);
+        }
+        if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+        {
+          let txtInicio= data.data.inicio.replace(/-/g,"/");
+          let txtFin= data.data.fin.replace(/-/g,"/");
+          inicio= new Date(txtInicio);
+          fin= new Date(txtFin);
+        }
+
+        this.buscar(inicio.getMonth()+1,eventData);
+      
+
+      }
+
+    });
+    return await modal.present();
+    
+  }
+
+// Conversiones para que se vea con un formato mejor
+  stringAsDate(dateStr) {
     let reemplazar=dateStr.replace(/-/g,"/");
     return new Date(reemplazar);
   }
 
-  changeMode(mode) {
-    
+  hora(dateStr){
+    var a=dateStr.split(" ")
+    return a[1];
   }
+
+
 
 
 

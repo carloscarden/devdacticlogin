@@ -98,6 +98,7 @@ export class ListarLicenciaPage implements OnInit {
       
   }
 
+   // Conversiones para que se vea con un formato mejor
   stringAsDate(dateStr) {
     let reemplazar=dateStr.replace(/-/g,"/");
     return new Date(reemplazar);
