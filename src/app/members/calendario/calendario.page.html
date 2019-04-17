@@ -49,7 +49,7 @@
 
     <ion-list margin-top>
          <ion-item-sliding *ngFor="let tarea of tareasMeses.tareas">
-              <ion-item lines="inset" button >
+              <ion-item lines="inset" button (click)="mostrarTarea(tarea)">
                 <ion-label>
                   TAREA {{tarea.actividad.descripcion}}<br>
                   INICIO   <p>{{ stringAsDate(tarea.inicio) | date:'fullDate' }} {{ hora(tarea.inicio)}}</p>

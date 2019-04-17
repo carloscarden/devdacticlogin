@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import {  AlertController  } from '@ionic/angular';
+
 
 
 /* SERVICES  */
 import { ActividadesService } from './../../../_services/actividades.service';
 
-/* MODELS  */
-import { Establecimiento } from './../../../_models/establecimiento';
-import { VisitaEscuela } from './../../../_models/visita-escuela';
-import { MotivoVisita } from './../../../_models/motivo-visita';
 
 @Component({
   selector: 'app-listar-visita-escuela',
@@ -27,7 +25,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
 
 
-  constructor(private router:Router, private visitaService: ActividadesService) {
+  constructor(private router:Router, private visitaService: ActividadesService, private alertCtrl: AlertController) {
     this.url=""
     console.log("creacion del listar visitas");
       this.visitaService.getVisitas(this.size,this.page)
@@ -94,6 +92,17 @@ export class ListarVisitaEscuelaPage implements OnInit {
       
   }
 
+  async mostrarVisita(event) {
+    console.log("evento")
+    console.log(event);
+    let alert = await this.alertCtrl.create({
+         header: '' +event.establecimiento.nombre ,
+         message: 'Desde:<br> ' + event.inicio + '<br><br>Hasta: <br>' + event.fin,
+         buttons: ['OK']
+    });
+    await  alert.present();
+}
+
 
    // Conversiones para que se vea con un formato mejor
   stringAsDate(dateStr) {
@@ -105,6 +114,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
     var a=dateStr.split(" ")
     return a[1];
   }
+
 
 
 

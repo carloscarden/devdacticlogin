@@ -11,6 +11,9 @@ import { EventModalPage } from '../event-modal/event-modal.page'
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 
+import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.page.html',
@@ -31,7 +34,7 @@ export class CalendarioPage implements OnInit {
   constructor(
     protected agendaService: AgendaServiceService,
     private modalCtrl: ModalController,
-    private router:Router) { 
+    private router:Router, private alertCtrl: AlertController) { 
    
      
     }
@@ -180,6 +183,22 @@ export class CalendarioPage implements OnInit {
     return await modal.present();
     
   }
+
+
+  async mostrarTarea(event) {
+    console.log("evento")
+    console.log(event);
+
+    let start = moment(event.startTime).format('lll');
+    let end = moment(event.endTime).format('lll');
+    let alert = await this.alertCtrl.create({
+         header: '' +event.actividad.descripcion ,
+         subHeader:  event.detalle,
+         message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
+         buttons: ['OK']
+    });
+    await  alert.present();
+}
 
 // Conversiones para que se vea con un formato mejor
   stringAsDate(dateStr) {

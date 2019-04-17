@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> ec14057cc1dd9c8528965f38a2d1ed4ee52b9e88
 
    <!-- <ion-grid>
       <ion-row>
@@ -26,7 +22,7 @@
 
            <ion-list margin-top>
               <ion-item-sliding *ngFor="let item of visitasEscuelas">
-                <ion-item lines="inset" >
+                <ion-item lines="inset" button (click)="mostrarVisita(item)">
                   <ion-label>
                     ESTABLECIMIENTO: {{ item.establecimiento.nombre }} <br>
                     INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}  {{ hora(item.inicio)}}</p>
