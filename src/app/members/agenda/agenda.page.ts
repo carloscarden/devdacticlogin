@@ -40,9 +40,14 @@ export class AgendaPage implements OnInit {
   }
 
   ngOnInit() {
-    
-    
+  }
 
+  ionViewWillEnter(){
+    //your code;
+    console.log("id");
+    this.calendar.mode=this.route.snapshot.paramMap.get('id');
+
+    this.cargarEvents(this.currentMonth+1, this.currentYear);
   }
 
   onViewTitleChanged(title) {
@@ -58,6 +63,7 @@ export class AgendaPage implements OnInit {
       let end = moment(event.endTime).format('lll');
       let alert = await this.alertCtrl.create({
            header: '' + event.title,
+           subHeader:  event.descripcion,
            message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
            buttons: ['OK']
       });
@@ -149,8 +155,10 @@ export class AgendaPage implements OnInit {
         // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
           this.data=data;
+          console.log(data);
           if(this.data!= null){
             for (let entry of this.data) {
+                
 
                 
 
@@ -174,6 +182,7 @@ export class AgendaPage implements OnInit {
                 
                 this.eventSource.push({
                       title: entry.actividad.descripcion,
+                      descripcion: entry.detalle,
                       startTime: inicio,
                       endTime: fin,
                       allDay: false
@@ -213,13 +222,7 @@ export class AgendaPage implements OnInit {
     this.router.navigate(["/members/menu/calendario"]);
   }
 
-  ionViewWillEnter(){
-    //your code;
-    console.log("id");
-    this.calendar.mode=this.route.snapshot.paramMap.get('id');
-
-    this.cargarEvents(this.currentMonth+1, this.currentYear);
-  }
+  
 
 
 }
