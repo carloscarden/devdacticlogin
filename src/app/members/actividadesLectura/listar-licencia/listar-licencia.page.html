@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
@@ -11,47 +12,47 @@
   
   <ion-content padding>
  
+=======
+>>>>>>> 81031daaed55ee29ca04ab93af7afb1d33206a73
 
+   <!-- <ion-grid>
+      <ion-row>
+        <ion-col>-->
 
+          <ion-item>
+             <ion-label position="stacked" class="textoBold" color="success">Buscar por Art&iacute;culo</ion-label>
+             <ion-input type="text"  [(ngModel)]="tipo"></ion-input>
+          </ion-item>
+
+          <hr>
+          <hr>
+          <hr>
+          <hr>
+          
+          <div class="form-group">
+           <ion-button (click)="filtrar()">Buscar</ion-button>
+          </div>
+
+          <div  *ngIf="licencias.length==0" class="centrarResultado">
+           <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
+          </div>
     
-      <ion-item class="busquedaSegunda">
-         <ion-label position="stacked" class="textoBold" color="success">Buscar </ion-label>
-         <ion-input type="text"  [(ngModel)]="tipo"></ion-input>
-      </ion-item>
-      <hr>
-      <hr>
-      <hr>
-      <hr>
-       <div class="form-group">
-        <ion-button (click)="filtrar()">Buscar</ion-button>
-       </div>
-
-       <div  *ngIf="licencias.length==0">
-        <ion-label> No hay resultados</ion-label>
-       </div>
-    
-      <ion-list margin-top>
-          <ion-item-sliding *ngFor="let item of licencias">
-            <ion-item lines="inset" button [routerLink]="['/members/details', item.id]">
-              <ion-label>
-                ARTICULO: {{ item.articulo }} <br>
-                INICIO: <p>{{ item.inicio }}</p>
-                FIN:  <p>{{ item.fin }}</p>
-              </ion-label>
-            </ion-item>
-          </ion-item-sliding>
-      </ion-list>
-
+          <ion-list margin-top>
+            <ion-item-sliding *ngFor="let item of licencias">
+              <ion-item lines="inset">
+                <ion-label>
+                  ARTICULO: {{ item.articulo }} <br>
+                  INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
+                  FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-sliding>
+          </ion-list>
       
-       <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-       
-  </ion-content>
-
-  <ion-footer>
-   <ion-toolbar color="primary">
-    <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
-   </ion-toolbar>
-  </ion-footer>
-  
+          <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+          
+     <!-- </ion-col>
+      </ion-row>
+    </ion-grid> -->

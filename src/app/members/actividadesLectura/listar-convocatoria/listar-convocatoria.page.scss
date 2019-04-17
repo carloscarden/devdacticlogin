@@ -6,29 +6,16 @@
                 /*TEXTO LABEL*/
         .textoBold {
           font-weight:bold;
-          font-size:17px;
+          font-size:16px;
         }
-        
-                /*TEXTO INPUT*/
-        .fuente {
-          font-size:21px;
-        }
+      
         
         .ion-title {
             color:grey;
             text-align: left;
         }
         
-        .busquedaPrimera {
-            padding-left:1rem;
-            padding-right:1rem;
-        }
-
-         .busquedaSegunda {
-            padding-left:1rem;
-            padding-right:1rem;
-        }
-
+       
         .list-md .item-lines-inset {
             border-style: solid;
             border-width: 1px 1px 1px 8px;
@@ -45,11 +32,9 @@
         .form-group {
             text-align:center;
         }
-        
-                     /*FOOTER*/
-        .textoFooter {
-          font-family:"DIN";
-          color:#fff;
-          text-align:center;
-          font-size: 1rem;
-        } 
+
+                /*CENTRAR NO RESULTADO*/
+        .centrarResultado {
+            text-align:center;
+            margin-top:50px;
+        }        

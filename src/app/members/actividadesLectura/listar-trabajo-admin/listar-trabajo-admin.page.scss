@@ -3,10 +3,10 @@
             font-family:"DIN";
         }
         
-                /*TEXTO INPUT*/
+                /*TEXTO LABEL*/
         .textoBold {
             font-weight:bold;
-            font-size:17px;
+            font-size:16px;
         }
         
         .ion-title {
@@ -17,18 +17,7 @@
         .item-inner {
             border-style:none;
         }
-        
-        .busquedaPrimera {
-            padding-left:1rem;
-            padding-right:1rem;
-        }
-
-         .busquedaSegunda {
-            padding-left:1rem;
-            padding-right:1rem;
-        }
-
-        
+             
         .list-md .item-lines-inset {
             border-style: solid;
             border-width: 1px 1px 1px 8px;
@@ -44,11 +33,10 @@
         .form-group {
             text-align:center;
         }
+
+               /*CENTRAR NO RESULTADO*/
+        .centrarResultado {
+            text-align:center;
+            margin-top:50px;
+        }  
         
-                     /*FOOTER*/
-        .textoFooter {
-          font-family:"DIN";
-          color:#fff;
-          text-align:center;
-          font-size: 1rem;
-        } 

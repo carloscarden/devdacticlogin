@@ -34,15 +34,12 @@ export class ListarLicenciaPage implements OnInit {
     private todoService: TodoService,
     private licenciaService:ActividadesService,
     private httpClient: HttpClient ) { 
-      console.log("creacion del licencias");
-      console.log(this.url);
       this.url="";
       this.licenciaService.getLicencias(this.size,this.page)
       .subscribe(res  =>{
-                   console.log("resultados");
+                   console.log(res);
                    this.licencias=res.content;
                    this.maximumPages=res.totalPages-1;
-                   console.log(res);
                   }  
                  );
     }
@@ -51,7 +48,6 @@ export class ListarLicenciaPage implements OnInit {
 
 
   ngOnInit() { 
-    console.log("init del listar licencia");
     this.url="";
   }
 
@@ -102,27 +98,15 @@ export class ListarLicenciaPage implements OnInit {
       
   }
 
-  checkFocus(newValue){
-    console.log("Entra al focus");
-    console.log("value");
-    console.log(this.value);
-    console.log("La url");
-    console.log(this.url);
-    this.value=this.value+1;
-    console.log(this.value % 2==0);
-   /* if(this.value % 2==0){
-      this.router.navigateByUrl(this.url);
-    }*/
-    console.log(newValue)
-  }
-  
-
-  onChange(newValue) {
-    console.log("onChange");
-    console.log("change de licencias");
-    console.log(this.url);
-    this.router.navigateByUrl(this.url);
-  
+   // Conversiones para que se vea con un formato mejor
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
   }
 
+
+
+
+
+ 
 }

@@ -42,8 +42,11 @@ export class CargarVisitaEscuelaPage implements OnInit {
   error:string;
   images = [];
   imagesWeb = [];
-  
+  conflicto=false;
+  imgs;
   actividadesSubscription: Subscription;
+  megasDeLosArchivos=[];
+  totalMegasDeLosArchivos=0;
 
   inspeccion = {}
   constructor(
@@ -95,6 +98,12 @@ export class CargarVisitaEscuelaPage implements OnInit {
     this.visita.fin=formatoCorrectoFin;
 
     this.visita.idInspector=1;
+    if(this.conflicto){
+      this.visita.urgente="T"
+    }
+    else{
+      this.visita.urgente="F"
+    }
 
     console.log(this.visita);
 
@@ -105,12 +114,14 @@ export class CargarVisitaEscuelaPage implements OnInit {
           console.log(data);
            this.loading=false;
            this.visita = new VisitaEscuela();
-           this.visita.urgente="T";
+           this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
-           alert(data);
+           this.imgs=null;
+           alert("Enviado correctamente");
         },
         error => {
+            alert("Hubo errores");
             this.error = error;
             this.loading = false;
         });;
@@ -205,29 +216,49 @@ export class CargarVisitaEscuelaPage implements OnInit {
   changeListener($event) : void {
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
-    /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
-    }
-    else{}
-    */
 
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
+
+    //calcular la cantidad de megas del archivo
+    let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
+
+    //sumarselo a la cantidad total que tengo de megas
+    let posibleArchivoaAgregar=this.totalMegasDeLosArchivos+megaPosibleArchivo;
+
+
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
+    }
+    else{
+       this.totalMegasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+
+            // en este arreglo tengo todos los valores de los megas que puso el usuario
+            this.megasDeLosArchivos.push(megaPosibleArchivo);
+       }       
     }
             
   }
 
   deleteImageWeb(pos){
+
+    // Cuando borro una imagen debo sacarle tambien del total de megas que tengo 
+    this.totalMegasDeLosArchivos=--this.megasDeLosArchivos[pos];
+
+    // Borro la imagen
     this.imagesWeb.splice(pos, 1);
-    this.presentToast('File removed.');
+
+    // Saco la cantidad de megas que tiene el archivo
+    this.megasDeLosArchivos.splice(pos,1);
+    this.presentToast('Archivo removido.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 

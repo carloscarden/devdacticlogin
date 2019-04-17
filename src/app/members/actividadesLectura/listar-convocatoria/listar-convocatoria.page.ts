@@ -18,34 +18,31 @@ import { Imagen } from './../../../_models/imagen';*/
   styleUrls: ['./listar-convocatoria.page.scss'],
 })
 export class ListarConvocatoriaPage implements OnInit {
-  url1;
+  url;
   tipo;
   filtroTipo=false;
   page = 0;
   maximumPages = 3;
   convocatorias=[];
   size=5;
-  opciones=["Trabajo Administrativo","Visita Escuela","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
-              private todoService: TodoService) {
-                console.log("crecion de listar convocatoria");
-                this.url1=""
+            ) {
+                this.url=""
 
                 this.convocatoriaService.getConvocatorias(this.size,this.page)
                 .subscribe(res  =>{
-                             console.log("resultados");
                              this.convocatorias=res.content;
                              this.maximumPages=res.totalPages-1;
-                             console.log(res);
                             }  
                            );
 
   }
 
   ngOnInit() {
-    this.url1=""
+    this.url=""
   }
 
 
@@ -88,10 +85,12 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   filtrar(infiniteScroll?){
-    console.log("filtrar");
     this.filtroTipo=true;
     this.convocatorias = [];
     this.page=0;
+
+    // el infinite scroll actua cuando hay por lo menos 2 convocatorias, por eso pido paginas hasta tener 2 
+    // o hasta llegar al tope de las paginas
     while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
       this.loadConvocatorias(this.page, infiniteScroll );
       console.log(this.convocatorias);
@@ -99,6 +98,24 @@ export class ListarConvocatoriaPage implements OnInit {
     }
       
   }
+
+
+
+  // Conversiones para que se vea con un formato mejor
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
+
+  hora(dateStr){
+    var a=dateStr.split(" ")
+    return a[1];
+  }
+
+
+
+ 
 
 
 }

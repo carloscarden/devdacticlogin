@@ -12,10 +12,10 @@ const routes: Routes = [
     path: '',
     component: MenuPage,
     children:[
-      { path: 'agenda', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
+      { path: 'agenda/:id', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
       { path: 'actividad', loadChildren: '../actividades/actividades-routing.module#ActividadesRoutingModule' },
       { path: 'actividadesLectura', loadChildren: '../actividadesLectura/actividadesLectura-routing.module#ActividadesLecturaRoutingModule' },
-
+      { path: 'calendario', loadChildren: '../calendario/calendario.module#CalendarioPageModule' },
   
     
     ]

@@ -17,6 +17,7 @@ export class CargarLicenciaPage implements OnInit {
   cargaCorrecta = false;
   loading = false;
   error= '';
+  tipoLicencia=false;
   constructor(
     private licenciaService: ActividadesService,
     private route: ActivatedRoute,
@@ -24,7 +25,7 @@ export class CargarLicenciaPage implements OnInit {
 
   ngOnInit() {
     this.licencia.idInspector=2;
-    this.licencia.medica="T";
+    this.licencia.medica="F";
 
   }
 
@@ -35,6 +36,7 @@ export class CargarLicenciaPage implements OnInit {
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let inicio= new Date(this.licencia.inicio);
     inicio.setSeconds(3*60*60);
+    let month= inicio.getMonth()+1;
     let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear();
     this.licencia.inicio=formatoCorrectoInicio;
 
@@ -45,18 +47,26 @@ export class CargarLicenciaPage implements OnInit {
     let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear();
     this.licencia.fin=formatoCorrectoFin;
 
+    if(this.tipoLicencia){
+      this.licencia.medica="T"
+    }
+    else{
+      this.licencia.medica="F"
+    }
+
 
     this.licenciaService.addLicencia(this.licencia).subscribe(
         data => {
           console.log(data);
-           this.loading=false;
-           this.licencia = new Licencia();
-           this.error = '';
-           alert(data);
+          this.loading=false;
+          this.licencia = new Licencia();
+          this.error = '';
+          alert("Enviado correctamente");
         },
         error => {
-            this.error = error;
-            this.loading = false;
+          alert("Hubo errores");
+          this.error = error;
+          this.loading = false;
         });;
   
   }

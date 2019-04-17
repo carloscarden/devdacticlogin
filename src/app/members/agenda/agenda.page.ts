@@ -4,6 +4,9 @@ import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
 import { CalendarComponent } from "ionic2-calendar/calendar";
 
+
+import { Router, RouterEvent, ActivatedRoute } from '@angular/router';
+
 import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
@@ -33,12 +36,11 @@ export class AgendaPage implements OnInit {
      currentDate: new Date()
   }; // these are the variable used by the calendar.
 
-  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController) { 
+  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController,private router:Router, private route: ActivatedRoute ) { 
   }
 
   ngOnInit() {
-    let diaActual= new Date();
-    this.cargarEvents(this.currentMonth+1, this.currentYear);
+    
     
 
   }
@@ -49,12 +51,13 @@ export class AgendaPage implements OnInit {
   }
 
   async onEventSelected(event) {
+      console.log(event);
+      console.log(event.descripcion);
 
       let start = moment(event.startTime).format('lll');
       let end = moment(event.endTime).format('lll');
       let alert = await this.alertCtrl.create({
            header: '' + event.title,
-           subHeader:  'descripcion',
            message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
            buttons: ['OK']
       });
@@ -203,5 +206,20 @@ export class AgendaPage implements OnInit {
     current.setHours(0, 0, 0);
     return date < current;
   }
+
+
+  cargarCalendario(){
+
+    this.router.navigate(["/members/menu/calendario"]);
+  }
+
+  ionViewWillEnter(){
+    //your code;
+    console.log("id");
+    this.calendar.mode=this.route.snapshot.paramMap.get('id');
+
+    this.cargarEvents(this.currentMonth+1, this.currentYear);
+  }
+
 
 }

@@ -1,19 +1,26 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
+<<<<<<< HEAD
       <ion-menu-button>
       </ion-menu-button>
+=======
+      <ion-menu-button></ion-menu-button>
+>>>>>>> 81031daaed55ee29ca04ab93af7afb1d33206a73
     </ion-buttons>
     <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
+
+
+
 <ion-content padding>
   <ion-grid>
     <ion-row>
       <ion-col>
         <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
           <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Inicio</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.inicio" name="inicio" #inicio="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
@@ -23,10 +30,10 @@
                 <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
                   La fecha de inicio es requerida
                </div>
-            </ion-item>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora de Fin</ion-label>
+          <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Fin  (*)</ion-label>
                 <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.fin" name="fin" #fin="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
@@ -36,9 +43,9 @@
                 <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                   La fecha de fin es requerida
                </div>
-            </ion-item>
+          </ion-item>
             
-             <ion-item>
+          <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria</ion-label>
                 <ionic-selectable class="fuente"
                   item-content
@@ -50,12 +57,9 @@
                   [canSearch]="true"
                   (onSearch)="searchPorts($event)">
                 </ionic-selectable>
-              </ion-item>
+          </ion-item>
 
-
-
-
-              <ion-item>
+          <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Distrito</ion-label>
                 <ionic-selectable class="fuente"
                   item-content
@@ -67,13 +71,12 @@
                   [canSearch]="true"
                   (onSearch)="searchDistritos($event)">
                 </ionic-selectable>
-              </ion-item>
+          </ion-item>
 
-
-            <ion-item>
+          <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Lugar de la convocatoria</ion-label>
                 <ion-input class="fuente" type="text" [(ngModel)]="convocatoria.lugar" name="lugar" #lugar="ngModel"></ion-input>
-            </ion-item>
+        </ion-item>
 
       <!-- ********************************* Para plataformas moviles *********************************************************************** -->
      <!-- <div *ngIf="esPlataformaMovil">
@@ -103,12 +106,14 @@
           </ion-item>
     </div>-->
 
-    <!-- **********************************  Para plataformas web  ********************************************************************** -->
-        <hr>
-        <div class="posicion">
-        <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>Seleccione una imagen</ion-label>
-        </div>
-        <ion-list>
+
+
+<!-- **********************************  Para plataformas web  ********************************************************************** -->
+    <hr>
+    <div class="posicion">
+    <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>No hay im&aacute;genes seleccionadas</ion-label>
+    </div>
+    <ion-list>
         <ion-item *ngFor="let img of imagesWeb; index as pos" text-wrap>
             <ion-thumbnail slot="start">  
                 <ion-img [src]="img.archivo"></ion-img>
@@ -121,12 +126,14 @@
         </ion-item> 
     </ion-list>
 
-    <ion-item>
-      <ion-label id="profile_image" color="primary" stacked>Imagen WEB</ion-label>
-      <ion-input type="file" (change)="changeListener($event)"></ion-input>
-    </ion-item>
-    <!-- ******************************************************************************************************** -->
-            
+      <ion-item>
+        <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
+        <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
+      </ion-item>
+<!-- ******************************************************************************************************** -->
+        
+
+
 
              <div class="form-group">
               <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

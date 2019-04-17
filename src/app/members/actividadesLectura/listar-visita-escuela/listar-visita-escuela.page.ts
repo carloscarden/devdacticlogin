@@ -23,23 +23,24 @@ export class ListarVisitaEscuelaPage implements OnInit {
   maximumPages = 3;
   visitasEscuelas=[];
   size=5;
-  opciones=["Convocatoria","Trabajo Administrativo","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
 
 
   constructor(private router:Router, private visitaService: ActividadesService) {
+    this.url=""
     console.log("creacion del listar visitas");
       this.visitaService.getVisitas(this.size,this.page)
       .subscribe(res  =>{
-                  console.log("resultados");
+                  console.log(res.content);
                   this.visitasEscuelas=res.content;
                   this.maximumPages=res.totalPages-1;
-                  console.log(res);
                   }  
       );
    }
 
   ngOnInit() {
+    console.log("init del visita escuela");
   }
 
 
@@ -53,7 +54,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
                    if(this.filtroTipo){
                      if(!(this.tipo === "")){
                         console.log("entro");
-                        this.visitasEscuelas = this.visitasEscuelas.filter(items => items.establecimiento.nombre.toLowerCase() === this.tipo.toLowerCase());
+                        this.visitasEscuelas = this.visitasEscuelas.filter(items => items.establecimiento.cue.toLowerCase() === this.tipo.toLowerCase());
                         console.log(this.visitasEscuelas);
                      }
                     
@@ -92,6 +93,21 @@ export class ListarVisitaEscuelaPage implements OnInit {
     }
       
   }
+
+
+   // Conversiones para que se vea con un formato mejor
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
+  hora(dateStr){
+    var a=dateStr.split(" ")
+    return a[1];
+  }
+
+
+
 
 
 }

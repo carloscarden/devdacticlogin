@@ -36,9 +36,12 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   loading = false;
   error= '';
   images = [];
+  imgs;
   imagesWeb = [];
   esPlataformaMovil=this.plt.is('android');
-
+  megasDeLosArchivos=[];
+  totalMegasDeLosArchivos=0;
+  
   constructor(
     private plt: Platform,
     private camera: Camera, private http: HttpClient,
@@ -87,10 +90,12 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
         data => {
            this.loading=false;
            this.trabajoAdmin = new TrabajoAdministrativo();
+           this.imgs=null;
            this.error = '';
-           alert(data);
+           alert("Enviado correctamente");
         },
         error => {
+          alert("Hubo errores");
             this.error = error;
             this.loading = false;
         });;
@@ -174,35 +179,51 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   
   }
 
+  
+ /***********************  IMAGENES DE WEB ********************************************** */
 
   changeListener($event) : void {
     var archivoWeb = $event.target.files[0];
     console.log(archivoWeb);
 
-     /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
-    }
-    else{}
-    */
     
+     //calcular la cantidad de megas del archivo
+     let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
 
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
+     //sumarselo a la cantidad total que tengo de megas
+     let posibleArchivoaAgregar=this.totalMegasDeLosArchivos+megaPosibleArchivo;
+
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
     }
-            
+    else{
+       this.totalMegasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+            // en este arreglo tengo todos los valores de los megas que puso el usuario
+            this.megasDeLosArchivos.push(megaPosibleArchivo);
+       }       
+    }
   }
 
   deleteImageWeb(pos){
-    this.imagesWeb.splice(pos, 1);
-    this.presentToast('File removed.');
+     // Cuando borro una imagen debo sacarle tambien del total de megas que tengo 
+     this.totalMegasDeLosArchivos=--this.megasDeLosArchivos[pos];
+
+     // Borro la imagen
+     this.imagesWeb.splice(pos, 1);
+ 
+     // Saco la cantidad de megas que tiene el archivo
+     this.megasDeLosArchivos.splice(pos,1);
+    this.presentToast('Archivo removido.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 

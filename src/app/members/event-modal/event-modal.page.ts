@@ -88,7 +88,6 @@ export class EventModalPage implements OnInit {
 
   async save() {
 
-    console.log("cargar evento");
     let init=new Date(this.evento.inicio);
     this.evento.idInspector=1;
     this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
@@ -99,11 +98,10 @@ export class EventModalPage implements OnInit {
     this.loading = true;
     this.agendaService.addTarea(this.evento).subscribe(
         data => {
-          console.log(data);
            this.loading=false;
            this.evento = new Tarea();
            this.error = '';
-           alert(data);
+           alert("La tarea ha sido creada exitosamente");
         },
         error => {
             this.error = error;

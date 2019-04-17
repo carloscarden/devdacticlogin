@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+import { ViewChild } from '@angular/core';
 
 import { Location } from '@angular/common';
 
@@ -42,7 +43,12 @@ export class CargarConvocatoriaPage implements OnInit {
   cargaCorrecta = false;
   loading = false;
   error= '';
+  megasDeLosArchivos=[];
+  totalMegasDeLosArchivos=0;
   esPlataformaMovil=this.plt.is('android');
+  
+  imgs;
+  
  
   constructor(
     private plt: Platform,
@@ -98,10 +104,12 @@ export class CargarConvocatoriaPage implements OnInit {
            
            this.loading=false;
            this.convocatoria = new Convocatoria();
+           this.imgs=null;
            this.error = '';
-           alert(data);
+           alert("Enviado correctamente");
         },
         error => {
+            alert("Hubo errores al cargar la convocatoria");
             this.error = error;
             this.loading = false;
         });;
@@ -200,16 +208,16 @@ export class CargarConvocatoriaPage implements OnInit {
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
+      header: "Seleccione ",
       buttons:
         [
-          {text: 'Load from Library',
+          {text: 'Cargar',
           handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.PHOTOLIBRARY); }
           },
-          {text: 'Use Camera',
+          {text: 'Usar cámara',
           handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.CAMERA); }
           },
-          {text: 'Cancel',
+          {text: 'Cancelar',
           role: 'cancel'
           }
         ]
@@ -224,39 +232,63 @@ export class CargarConvocatoriaPage implements OnInit {
   }
 
   deleteImage(imgEntry, position) {
+    console.log("delete");
     this.imgService.deleteImage(imgEntry, position, this.images);
-  
+    console.log(this.imgs);
+    this.imgs=null;
+    console.log(this.imgs);
   }
 
-
+  /***********************  IMAGENES DE WEB ********************************************** */
   changeListener($event) : void {
     var archivoWeb = $event.target.files[0];
-    console.log(archivoWeb);
 
-     /*
-    megasArchivo=(archivoWeb.size/1024)/1024;
-    if(megasArchivo>4){
-        this.presentToast('El archivo supera la cantidad permitida.');
+    
+     //calcular la cantidad de megas del archivo
+     let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
+
+     //sumarselo a la cantidad total que tengo de megas
+     let posibleArchivoaAgregar=this.totalMegasDeLosArchivos+megaPosibleArchivo;
+
+    if(posibleArchivoaAgregar>4){
+       this.presentToast('El archivo supera la cantidad permitida.');
     }
-    else{}
-    */
+    else{
+       this.totalMegasDeLosArchivos=posibleArchivoaAgregar;
+       var reader = new FileReader();
+       reader.readAsDataURL(archivoWeb);
+       reader.onload = (event: any) => {
+            let imagenNueva= new Imagen();
+            imagenNueva.nombre= archivoWeb.name;
+            imagenNueva.tipo = archivoWeb.type;
+            imagenNueva.archivo = event.target.result;
+            this.imagesWeb.push(imagenNueva) ;
+            // en este arreglo tengo todos los valores de los megas que puso el usuario
+            this.megasDeLosArchivos.push(megaPosibleArchivo);
+       }
+
+    }
+    
     
 
-    var reader = new FileReader();
-    reader.readAsDataURL(archivoWeb);
-    reader.onload = (event: any) => {
-        let imagenNueva= new Imagen();
-        imagenNueva.nombre= archivoWeb.name;
-        imagenNueva.tipo = archivoWeb.type;
-        imagenNueva.archivo = event.target.result;
-        this.imagesWeb.push(imagenNueva) ;
-    }
+    
             
   }
 
   deleteImageWeb(pos){
+    
+    // Cuando borro una imagen debo sacarle tambien del total de megas que tengo 
+    this.totalMegasDeLosArchivos=--this.megasDeLosArchivos[pos];
+
+    // Borro la imagen
     this.imagesWeb.splice(pos, 1);
-    this.presentToast('File removed.');
+
+    // Saco la cantidad de megas que tiene el archivo
+    this.megasDeLosArchivos.splice(pos,1);
+    
+    this.presentToast('Archivo removido.');
+    this.imgs=null;
+    console.log(this.imgs);
 
   }
 

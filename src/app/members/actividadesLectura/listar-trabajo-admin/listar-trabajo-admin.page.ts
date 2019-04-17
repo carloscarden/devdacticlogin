@@ -23,7 +23,7 @@ export class ListarTrabajoAdminPage implements OnInit {
   maximumPages = 3;
   trabajosAdmin=[];
   size=5;
-  opciones=["Convocatoria","Visita Escuela","Licencia"];
+  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
 
 
@@ -31,10 +31,8 @@ export class ListarTrabajoAdminPage implements OnInit {
     console.log("creacion del listar trabajos admin");
     this.trabajosService.getTrabajoAdministrativo(this.size,this.page)
     .subscribe(res  =>{
-                 console.log("resultados");
                  this.trabajosAdmin=res.content;
                  this.maximumPages=res.totalPages-1;
-                 console.log(res);
                 }  
                );
   }
@@ -94,6 +92,24 @@ export class ListarTrabajoAdminPage implements OnInit {
       
   }
 
+
+   // Conversiones para que se vea con un formato mejor
+  stringAsDate(dateStr) {
+    let reemplazar=dateStr.replace(/-/g,"/");
+    return new Date(reemplazar);
+  }
+
+
+  hora(dateStr){
+    var a=dateStr.split(" ")
+    return a[1];
+  }
+
+
+ 
+
+
+  
 
 
 }
