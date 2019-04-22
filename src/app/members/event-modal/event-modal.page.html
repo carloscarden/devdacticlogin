@@ -21,28 +21,43 @@
         itemTextField="descripcion"
         [items]="tiposTrabajos"
         [canSearch]="true"
+        searchPlaceholder="buscar tipo"
         (onSearch)="searchPorts($event)">
+        <ng-template ionicSelectablePlaceholderTemplate>
+            buscar
+        </ng-template>
+        <ng-template ionicSelectableCloseButtonTemplate>
+            <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+        </ng-template>
       </ionic-selectable>
     </ion-item>
     
 
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
-      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.inicio"
+      <ion-datetime class="fuente" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DDD MMM YYYY:HH:mm" [(ngModel)]="evento.inicio"
       monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
       monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
       dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
       dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-           ></ion-datetime>
+      min="2019"
+      max="2100" 
+      cancelText="cancelar"
+      doneText="guardar"
+      ></ion-datetime>
     </ion-item>
  
     <ion-item>
       <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
-      <ion-datetime class="fuente" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="evento.fin"
+      <ion-datetime class="fuente" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DDD MMM YYYY:HH:mm" [(ngModel)]="evento.fin"
       monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
       monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
       dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
       dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+      min="2019"
+      max="2100"
+      cancelText="cancelar"
+      doneText="guardar"
           ></ion-datetime>
     </ion-item>
  

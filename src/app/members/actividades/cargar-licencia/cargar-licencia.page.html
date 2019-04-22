@@ -1,12 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-<<<<<<< HEAD
-      <ion-menu-button>
-      </ion-menu-button>
-=======
       <ion-menu-button></ion-menu-button>
->>>>>>> ec14057cc1dd9c8528965f38a2d1ed4ee52b9e88
     </ion-buttons>
     <ion-title class="textoTitulo">Licencia</ion-title>
   </ion-toolbar>
@@ -21,11 +16,16 @@
         <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
             <ion-item>
                <ion-label position="stacked" class="textoBold" color="success">Fecha de Inicio  (*)</ion-label>
-                   <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
+                   <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="licencia.inicio" name="fechaInicio" #fechaInicio="ngModel" required
                     monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                     monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                     dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                     dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                    min="2019"
+                    max="2100"
+                    placeholder="dia/mes/a&ntilde;o"
+                    cancelText="cancelar"
+                    doneText="guardar"
                    ></ion-datetime>
                    <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
                         La fecha de inicio es requerida
@@ -34,11 +34,16 @@
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Fecha de Fin  (*)</ion-label>
-                <ion-datetime class="fuente" displayFormat="MMM DD, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
+                <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="licencia.fin" name="fechaFin" #fechaFin="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                   dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                   dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                  min="2019"
+                  max="2100"
+                  placeholder="dia/mes/a&ntilde;o"
+                  cancelText="cancelar"
+                  doneText="guardar"
                 ></ion-datetime>
                     <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
                            La fecha de inicio es requerida
@@ -80,8 +85,8 @@
 
             <ion-fab horizontal="end" >
               <ion-fab-button color="tertiary" [disabled]="!licenciaForm.form.valid">
-               <ion-button class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
-                <ion-icon name="checkmark"></ion-icon>
+                  <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
                </ion-button>
               </ion-fab-button>
             </ion-fab> 

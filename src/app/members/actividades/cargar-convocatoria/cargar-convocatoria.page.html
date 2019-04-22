@@ -1,12 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-<<<<<<< HEAD
-      <ion-menu-button>
-      </ion-menu-button>
-=======
       <ion-menu-button></ion-menu-button>
->>>>>>> ec14057cc1dd9c8528965f38a2d1ed4ee52b9e88
     </ion-buttons>
     <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
@@ -21,11 +16,16 @@
         <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio  (*)</ion-label>
-            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.inicio" name="inicio" #inicio="ngModel" required
+            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="convocatoria.inicio" name="inicio" #inicio="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                   dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                   dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                  min="2019"
+                  max="2050"
+                  placeholder="dia/mes/a&ntilde;o hora:minuto"
+                  cancelText="cancelar"
+                  doneText="guardar"
             ></ion-datetime>
                 <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
                   La fecha de inicio es requerida
@@ -34,11 +34,16 @@
 
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Fin  (*)</ion-label>
-                <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MM-YYYY HH:mm" [(ngModel)]="convocatoria.fin" name="fin" #fin="ngModel" required
+                <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="convocatoria.fin" name="fin" #fin="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                   dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                   dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                  min="2019"
+                  max="2050"
+                  placeholder="dia/mes/a&ntilde;o hora:minuto"
+                  cancelText="cancelar"
+                  doneText="guardar"
                 ></ion-datetime>
                 <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                   La fecha de fin es requerida
@@ -55,7 +60,14 @@
                   itemTextField="descripcion"
                   [items]="tiposTrabajos"
                   [canSearch]="true"
+                  searchPlaceholder="buscar tipo convocatoria"
                   (onSearch)="searchPorts($event)">
+                  <ng-template ionicSelectablePlaceholderTemplate>
+                      buscar
+                  </ng-template>
+                  <ng-template ionicSelectableCloseButtonTemplate>
+                      <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                  </ng-template>
                 </ionic-selectable>
           </ion-item>
 
@@ -69,7 +81,14 @@
                   itemTextField="descripcion"
                   [items]="tiposDistritos"
                   [canSearch]="true"
+                  searchPlaceholder="buscar distrito"
                   (onSearch)="searchDistritos($event)">
+                  <ng-template ionicSelectablePlaceholderTemplate>
+                      buscar
+                  </ng-template>
+                  <ng-template ionicSelectableCloseButtonTemplate>
+                      <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                  </ng-template>
                 </ionic-selectable>
           </ion-item>
 
@@ -127,8 +146,10 @@
     </ion-list>
 
       <ion-item>
-        <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
-        <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
+        <div class="fileUpload btn btn-primary">
+           <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
+         <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
+        </div>
       </ion-item>
 <!-- ******************************************************************************************************** -->
         
@@ -142,9 +163,9 @@
 
             <ion-fab horizontal="end" >
               <ion-fab-button color="tertiary" [disabled]="!convocatoriaForm.form.valid">
-               <ion-button class="centerGroup" type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
-                <ion-icon name="checkmark"></ion-icon>
-               </ion-button>
+                <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
+                </ion-button>
               </ion-fab-button>
             </ion-fab> 
 
