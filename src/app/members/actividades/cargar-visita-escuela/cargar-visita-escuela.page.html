@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title class="textoTitulo">Visita Escuela</ion-title>
   </ion-toolbar>
@@ -15,7 +15,7 @@
 
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio  (*)</ion-label>
-            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
+            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, hh:mm" pickerFormat="DD-MMM-YYYY hh:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
               monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
               monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
               dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
