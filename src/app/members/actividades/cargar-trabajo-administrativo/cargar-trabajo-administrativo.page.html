@@ -14,7 +14,7 @@
 
         <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
 
-            <ion-item>
+<!--ANTERIOR  <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio (*)</ion-label>
               <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
@@ -48,8 +48,45 @@
               <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                 La fecha de fin es requerida
               </div>
+            </ion-item> -->
+
+
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                min="2019"
+                max="2100"
+                cancelText="cancelar"
+                doneText="guardar"
+              ></ion-datetime>
+              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+                La fecha de inicio es requerida
+             </div>
             </ion-item>
-      
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Hora Inicio (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+                cancelText="cancelar"
+                doneText="guardar"
+              ></ion-datetime>
+              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+                La fecha de inicio es requerida
+             </div>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Hora Fin (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+                cancelText="cancelar"
+                doneText="guardar"
+              ></ion-datetime>
+              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+                La fecha de inicio es requerida
+             </div>
+            </ion-item>
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
               <ionic-selectable class="fuente"
@@ -60,22 +97,21 @@
                 itemTextField="descripcion"
                 [items]="tiposTrabajos"
                 [canSearch]="true"
-                searchPlaceholder="buscar tipo trabajo"
+
                 (onSearch)="searchPorts($event)">
-                <ng-template ionicSelectablePlaceholderTemplate>
+                
+            <!--<ng-template ionicSelectablePlaceholderTemplate>
                     buscar
-                </ng-template>
+                </ng-template>-->
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
-            </ion-item>
-          
+            </ion-item>   
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
               <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>
             </ion-item>
-
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Lugar</ion-label>
               <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.lugar" #observaciones="ngModel"></ion-input>
@@ -107,7 +143,7 @@
                   </ion-item>  -->
             
     <!-- **********************************  Para plataformas web  ********************************************************************** -->
-            <hr>
+           <!-- <hr>
             <div class="posicion">
               <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>No hay im&aacute;genes seleccionadas</ion-label>
             </div>
@@ -126,12 +162,21 @@
             <ion-item>
               <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
               <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs"  (change)="changeListener($event)"></ion-input>
-            </ion-item>
+            </ion-item> -->
     <!-- ******************************************************************************************************** -->
-             <div class="form-group">
+        <!--     <div class="form-group">
               <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            </div>
+            </div>-->
 
+            <hr>
+          <hr>
+          <hr>
+              <div class="form-group">
+                <ion-button class="tipoBoton" type="submit" [disabled]="loading">ADJUNTAR IMAGEN</ion-button>
+              </div>
+          <hr>
+          <hr>
+          <hr> 
             <ion-fab horizontal="end" >
               <ion-fab-button color="tertiary" [disabled]="!trabajoAdminForm.form.valid">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon> 

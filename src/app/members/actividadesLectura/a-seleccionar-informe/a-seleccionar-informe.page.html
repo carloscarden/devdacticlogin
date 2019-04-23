@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title class="textoTitulo">Informes</ion-title>
   </ion-toolbar>
@@ -14,7 +14,7 @@
 
         <ion-item>
            <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
-           <ion-select  (ionChange)="onChange($event)" okText="Okay" cancelText="Cancelar" [(ngModel)]="url">
+           <ion-select  class="fuente" (ionChange)="onChange($event)" okText="Okay" cancelText="Cancelar" [(ngModel)]="url">
               <ion-select-option *ngFor="let opt of opciones">{{opt}}</ion-select-option>
            </ion-select>
         </ion-item>

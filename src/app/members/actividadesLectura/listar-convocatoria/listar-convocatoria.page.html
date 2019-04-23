@@ -6,14 +6,14 @@
         
           <ion-item>
              <ion-label position="stacked" class="textoBold" color="success">Buscar por Tipo</ion-label>
-             <ion-input type="text"  [(ngModel)]="tipo"></ion-input>
+             <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
           </ion-item>
           <hr>
           <hr>
           <hr>
           <hr>
            <div class="form-group">
-            <ion-button (click)="filtrar()">Buscar</ion-button>
+            <ion-button (click)="filtrar()" class="btnBuscar">Buscar</ion-button>
            </div>
 
            <div  *ngIf="convocatorias.length==0" class="centrarResultado">

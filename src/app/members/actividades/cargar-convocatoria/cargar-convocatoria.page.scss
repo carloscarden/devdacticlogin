@@ -6,12 +6,13 @@
          /*TEXTO LABEL*/
 .textoBold {
 	font-weight:bold;
-  font-size:16px;
+  font-size:14px;
+  color:#454545;
 }
 
         /*TEXTO INPUT*/
 .fuente {
-  font-size:20px;
+  font-size:19px;
 }
 
         /*PADDING SELECCION*/
@@ -28,6 +29,16 @@
   background-color:red;
 }
 
+         /*CENTRAR BOTON*/
+.form-group {
+  text-align:center;
+}
 
+         /*BOTON*/
+.tipoBoton {
+  font-size: 14px;
+  font-weight:bold;
+  box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
+}
 
 

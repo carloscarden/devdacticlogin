@@ -11,9 +11,11 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
+  
+       <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
+  
 
-          <ion-item>
+<!-- ANTERIOR <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, hh:mm" pickerFormat="DD-MMM-YYYY hh:mm" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
               monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
@@ -30,7 +32,6 @@
                La fecha de inicio es requerida
             </div>
           </ion-item>
-            
 
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Fin  (*)</ion-label>
@@ -49,15 +50,52 @@
                   La fecha de fin es requerida
             </div>
           </ion-item>
-          
+           -->
+  
+      
+         <ion-item>
+          <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
+                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
+                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                min="2019"
+                max="2100"
+                cancelText="cancelar"
+                doneText="guardar"
+              ></ion-datetime>
+            <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+               La fecha de inicio es requerida
+            </div>
+         </ion-item>  
+         <ion-item>
+          <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="visita.fin" name="fin" #fin="ngModel" required
+                cancelText="cancelar"
+                doneText="guardar">  
+              </ion-datetime>
+              <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
+                La hora de inicio es requerida
+              </div>
+          </ion-item>      
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Hora Fin  (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="visita.fin" name="fin" #fin="ngModel" required
+                cancelText="cancelar"
+                doneText="guardar">  
+                </ion-datetime>
+              <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
+                    La hora de fin es requerida
+              </div>
+          </ion-item>  
            <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">CUE  (*)</ion-label>
             <ion-input class="fuente" type="text" [(ngModel)]="visita.establecimiento.cue" name="cue" #cue="ngModel" required></ion-input>
             <div *ngIf="!(cue.valid || cue.pristine)" class="invalid-feedback">
                 La escuela es requerida
             </div>
-          </ion-item>
-          
+          </ion-item>   
           <ion-item>
              <ion-label position="stacked" class="textoBold" color="success">Motivo</ion-label>
              <ionic-selectable class="fuente"
@@ -70,26 +108,24 @@
                 [canSearch]="true"
                 searchPlaceholder="buscar motivo visita"
                 (onSearch)="searchMotivos($event)">
-                <ng-template ionicSelectablePlaceholderTemplate>
+
+             <!--   <ng-template ionicSelectablePlaceholderTemplate>
                     buscar
-                </ng-template>
+                </ng-template>   -->
+
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
           </ion-item>   
-
-
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
             <ion-input class="fuente" type="text" [(ngModel)]="visita.observaciones" name="observaciones" #observaciones="ngModel"></ion-input>
           </ion-item>
-
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Inspector Acompañante</ion-label>
             <ion-input class="fuente" type="text" [(ngModel)]="visita.acompaniante" name="acompaniante" #acompaniante="ngModel"></ion-input>
           </ion-item>
-
           <ion-item class="paddingcheck">
             <ion-label class="paddinglabel" color="success" >Situaci&oacute;n de conflicto</ion-label>
             <ion-checkbox checked="true" [(ngModel)]="conflicto" name="urg"></ion-checkbox>
@@ -124,7 +160,8 @@
           </div>-->
 
     <!-- **********************************  Para plataformas web  ********************************************************************** -->
-          <hr>
+    
+     <!-- <hr>
           <div class="posicion">
           <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0">No hay im&aacute;genes seleccionadas</ion-label>
         </div>
@@ -143,25 +180,34 @@
           <ion-item class="centerGroup">
             <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
             <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
-          </ion-item>
+          </ion-item>  -->
     <!-- ******************************************************************************************************** -->
              
-          <div class="form-group">
-            <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-          </div>
+     <!-- <div class="form-group">
+            <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+          </div> -->
+        
 
+
+          <hr>
+          <hr>
+          <hr>
+              <div class="form-group">
+                <ion-button class="tipoBoton" type="submit" [disabled]="loading">ADJUNTAR IMAGEN</ion-button>
+              </div>
+          <hr>
+          <hr>
+          <hr>    
           <ion-fab horizontal="end" >
             <ion-fab-button color="tertiary" [disabled]="!visitaForm.form.valid">
                 <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!visitaForm.form.valid" color="tertiary">
-             
-             </ion-button>
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!visitaForm.form.valid" color="tertiary"> </ion-button>
             </ion-fab-button>
           </ion-fab> 
        </form>  
-      </ion-col>
-     </ion-row>
-    </ion-grid>   
+    </ion-col>
+  </ion-row>
+ </ion-grid>   
        
 </ion-content>
 

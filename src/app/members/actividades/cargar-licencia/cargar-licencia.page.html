@@ -23,7 +23,6 @@
                     dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
                     min="2019"
                     max="2100"
-                    placeholder="dia/mes/a&ntilde;o"
                     cancelText="cancelar"
                     doneText="guardar"
                    ></ion-datetime>
@@ -41,12 +40,11 @@
                   dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
                   min="2019"
                   max="2100"
-                  placeholder="dia/mes/a&ntilde;o"
                   cancelText="cancelar"
                   doneText="guardar"
                 ></ion-datetime>
                     <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
-                           La fecha de inicio es requerida
+                           La fecha de fin es requerida
                     </div>
             </ion-item>
 
