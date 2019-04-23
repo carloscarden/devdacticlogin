@@ -5,7 +5,6 @@ We’ve created this additional file with the Angular CLI and inside we only nee
 reference the Dashboard
 */
 const routes: Routes = [
-  { path: 'details/:id', loadChildren: './details/details.module#DetailsPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'agenda/:id', loadChildren: './agenda/agenda.module#AgendaPageModule' },
   { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },

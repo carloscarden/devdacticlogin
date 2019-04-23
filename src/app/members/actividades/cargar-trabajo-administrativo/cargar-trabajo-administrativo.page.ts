@@ -1,13 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
+import { ToastController, Platform } from '@ionic/angular';
 
-import { HttpClient } from '@angular/common/http';
 
 import { ImagenService } from './../../../_services/imagen.service';
 
@@ -44,10 +42,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   
   constructor(
     private plt: Platform,
-    private camera: Camera, private http: HttpClient,
-    private actionSheetController: ActionSheetController,
     private toastController: ToastController,
-    private ref: ChangeDetectorRef,
     private imgService:  ImagenService,
     private actividadesService: ActividadesService) { }
 
@@ -149,30 +144,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   }
 
 
-  async selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
-      buttons:
-        [
-          {text: 'Load from Library',
-          handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.PHOTOLIBRARY); }
-          },
-          {text: 'Use Camera',
-          handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.CAMERA); }
-          },
-          {text: 'Cancel',
-          role: 'cancel'
-          }
-        ]
-    });
-    await actionSheet.present();
-  }
 
-  tomarFoto(sourceType: PictureSourceType){
-    this.imgService.takePicture(sourceType, this.images);
-    this.ref.detectChanges(); // trigger change detection cycle
-
-  }
 
   deleteImage(imgEntry, position) {
     this.imgService.deleteImage(imgEntry, position, this.images);

@@ -20,9 +20,7 @@ import {  ErrorInterceptor } from './_helpers/error-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // para manejar la camara y la subida de archivos
-import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { FormsModule }   from '@angular/forms';
@@ -70,9 +68,7 @@ registerLocaleData(localeEs);
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     
-    Camera,
     File,
-    WebView,
     FilePath
   ],
   bootstrap: [AppComponent]

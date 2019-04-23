@@ -2,18 +2,13 @@ import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
 
 
 import { first } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
-import { ViewChild } from '@angular/core';
-
-import { Location } from '@angular/common';
 
 
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
 
-import { HttpClient } from '@angular/common/http';
+import { ToastController, Platform } from '@ionic/angular';
+
 
 import { ImagenService } from './../../../_services/imagen.service';
 
@@ -52,14 +47,10 @@ export class CargarConvocatoriaPage implements OnInit {
  
   constructor(
     private plt: Platform,
-    private camera: Camera, private http: HttpClient,
-    private actionSheetController: ActionSheetController,
     private toastController: ToastController,
-    private ref: ChangeDetectorRef,
     private imgService:  ImagenService,
     private convocatoriaService: ActividadesService,
-    private route: ActivatedRoute,
-    private router: Router,) { }
+  ) { }
 
   ngOnInit() {
     /* id del inspector */
@@ -207,38 +198,7 @@ export class CargarConvocatoriaPage implements OnInit {
   }
 
 
-  async selectImage() {
-    const actionSheet = await this.actionSheetController.create({
-      header: "Seleccione ",
-      buttons:
-        [
-          {text: 'Cargar',
-          handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.PHOTOLIBRARY); }
-          },
-          {text: 'Usar cámara',
-          handler: () =>{ this.tomarFoto(this.camera.PictureSourceType.CAMERA); }
-          },
-          {text: 'Cancelar',
-          role: 'cancel'
-          }
-        ]
-    });
-    await actionSheet.present();
-  }
 
-  tomarFoto(sourceType: PictureSourceType){
-    this.imgService.takePicture(sourceType, this.images);
-    this.ref.detectChanges(); // trigger change detection cycle
-
-  }
-
-  deleteImage(imgEntry, position) {
-    console.log("delete");
-    this.imgService.deleteImage(imgEntry, position, this.images);
-    console.log(this.imgs);
-    this.imgs=null;
-    console.log(this.imgs);
-  }
 
   /***********************  IMAGENES DE WEB ********************************************** */
   changeListener($event) : void {
@@ -293,13 +253,6 @@ export class CargarConvocatoriaPage implements OnInit {
 
   }
 
-  /**************Valor inicial datetime ********************** */
-  dateInitial() {
-    let timezoneOffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-    let localDateTime = (new Date(Date.now() - timezoneOffset)).toISOString().slice(0,-1);
-  
-    return localDateTime;
-  }
 
 
   
