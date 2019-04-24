@@ -7,6 +7,10 @@
   </ion-toolbar>
 </ion-header>
 
+{{ horaFin}}
+
+{{convocatoria.inicio}}
+{{ horaInicio}}
 
 
 <ion-content padding>
@@ -23,8 +27,9 @@
                   monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                   dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                   dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-                  min="2019"
+                  min="2017"
                   max="2050"
+                  mode="ios"
                   cancelText="cancelar"
                   doneText="guardar"
             ></ion-datetime>
@@ -36,6 +41,7 @@
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
+                  mode="ios"
                   cancelText="cancelar"
                   doneText="guardar"
             ></ion-datetime>
@@ -54,8 +60,9 @@
               monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
               dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
               dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-              min="2019"
+              min="2017"
               max="2050"
+              mode="ios"
               cancelText="cancelar"
               doneText="guardar"
             ></ion-datetime>
@@ -69,6 +76,7 @@
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Hora Fin  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
+                  mode="ios"
                   cancelText="cancelar"
                   doneText="guardar"
             ></ion-datetime>

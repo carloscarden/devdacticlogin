@@ -30,15 +30,22 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   trabajoAdmin = new TrabajoAdministrativo();
   tiposTrabajosAdministrativos: TipoTrabajoAdministrativo[];
   actividadesSubscription: Subscription;
-  cargaCorrecta = false;
-  loading = false;
-  error= '';
+  
+  
+  esPlataformaMovil=this.plt.is('android');
+
   images = [];
   imgs;
   imagesWeb = [];
-  esPlataformaMovil=this.plt.is('android');
   megasDeLosArchivos=[];
   totalMegasDeLosArchivos=0;
+
+  cargaCorrecta = false;
+  loading = false;
+  error= '';
+
+  horaInicio;
+  horaFin;
   
   constructor(
     private plt: Platform,
@@ -66,18 +73,21 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let inicio= new Date(this.trabajoAdmin.inicio);
-    inicio.setSeconds(3*60*60);
-    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+inicio.getHours()+":"+inicio.getMinutes();
+    let hi= new Date(this.horaInicio);
+    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.trabajoAdmin.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
     let fin= new Date(this.trabajoAdmin.fin);
-    fin.setSeconds(3*60*60);
-    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+fin.getHours()+":"+fin.getMinutes();
+    let hf= new Date(this.horaFin);
+    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.trabajoAdmin.fin=formatoCorrectoFin;
 
     this.trabajoAdmin.idInspector=1;
+
+   /********************************************************************* */
+
 
     console.log(this.trabajoAdmin);
     this.actividadesService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
@@ -85,6 +95,8 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
         data => {
            this.loading=false;
            this.trabajoAdmin = new TrabajoAdministrativo();
+           this.horaInicio=null;
+           this.horaFin=null;
            this.imgs=null;
            this.error = '';
            alert("Enviado correctamente");

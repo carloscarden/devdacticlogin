@@ -14,16 +14,19 @@
 
         <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
 
-<!--ANTERIOR  <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Fecha y Hora Inicio (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+
+
+
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha Inicio(*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                 monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                 dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                 dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
+                mode="ios"
                 min="2019"
                 max="2100"
-                placeholder="dia/mes/a&ntilde;o hora:minutos"
                 cancelText="cancelar"
                 doneText="guardar"
               ></ion-datetime>
@@ -32,61 +35,52 @@
              </div>
             </ion-item>
 
+
             <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Fecha y hora Fin  (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY, HH:mm" pickerFormat="DD-MMM-YYYY HH:mm" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required
+              <ion-label position="stacked" class="textoBold" color="success">Hora Inicio (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
+                mode="ios"
+                cancelText="cancelar"
+                doneText="guardar"
+              ></ion-datetime>
+              <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
+                La hora de inicio es requerida
+             </div>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha Fin  (*)</ion-label>
+              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="trabajoAdmin.fin" name="fin" #fin="ngModel" required
                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                 monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
                 dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
                 dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
                 min="2019"
                 max="2100"
-                placeholder="dia/mes/a&ntilde;o hora:minutos"
+                mode="ios"
                 cancelText="cancelar"
                 doneText="guardar"
               ></ion-datetime>
               <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
                 La fecha de fin es requerida
               </div>
-            </ion-item> -->
+            </ion-item>
 
 
-            <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
-                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-                monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
-                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-                dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-                min="2019"
-                max="2100"
-                cancelText="cancelar"
-                doneText="guardar"
-              ></ion-datetime>
-              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
-                La fecha de inicio es requerida
-             </div>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Hora Inicio (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
-                cancelText="cancelar"
-                doneText="guardar"
-              ></ion-datetime>
-              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
-                La fecha de inicio es requerida
-             </div>
-            </ion-item>
+
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Hora Fin (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="trabajoAdmin.inicio" name="inicio" #inicio="ngModel" required
+              <ion-datetime class="fuente" displayFormat="HH:mm A" pickerFormat="HH:mm A" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
+                mode="ios"
                 cancelText="cancelar"
                 doneText="guardar"
               ></ion-datetime>
-              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
-                La fecha de inicio es requerida
+              <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
+                La hora de fin es requerida
              </div>
             </ion-item>
+
+
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
               <ionic-selectable class="fuente"
@@ -97,17 +91,14 @@
                 itemTextField="descripcion"
                 [items]="tiposTrabajos"
                 [canSearch]="true"
-
                 (onSearch)="searchPorts($event)">
-                
-            <!--<ng-template ionicSelectablePlaceholderTemplate>
-                    buscar
-                </ng-template>-->
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
             </ion-item>   
+
+
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
               <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>

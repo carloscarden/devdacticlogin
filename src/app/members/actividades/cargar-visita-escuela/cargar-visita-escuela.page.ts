@@ -44,6 +44,9 @@ export class CargarVisitaEscuelaPage implements OnInit {
   megasDeLosArchivos=[];
   totalMegasDeLosArchivos=0;
 
+  horaInicio;
+  horaFin;
+
   inspeccion = {}
   constructor(
     private toastController: ToastController,
@@ -78,17 +81,18 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let inicio= new Date(this.visita.inicio);
-    inicio.setSeconds(3*60*60);
-    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+inicio.getHours()+":"+inicio.getMinutes();
+    let hi= new Date(this.horaInicio);
+    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.visita.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
     let fin= new Date(this.visita.fin);
-    fin.setSeconds(3*60*60);
-    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+fin.getHours()+":"+fin.getMinutes();
+    let hf= new Date(this.horaFin);
+    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.visita.fin=formatoCorrectoFin;
-
+    /********************************************************************* */
+    
     this.visita.idInspector=1;
     if(this.conflicto){
       this.visita.urgente="T"
@@ -110,6 +114,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
            this.imgs=null;
+           this.horaInicio=null;
+           this.horaFin=null;
            alert("Enviado correctamente");
         },
         error => {

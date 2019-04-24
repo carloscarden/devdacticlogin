@@ -49,6 +49,11 @@ export class CargarConvocatoriaPage implements OnInit {
   cargaCorrecta = false;
   loading = false;
   error= '';
+
+  horaInicio;
+  horaFin;
+
+
   
  
   
@@ -68,37 +73,47 @@ export class CargarConvocatoriaPage implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    let imgs64= this.imgService.convertirAb64yBorrarImgsEnMemoria(this.images);
     let imgsConvertidas =[];
 
     /* convertir todas las imagenes al formato que acepta el backend */
     for(let img of this.imagesWeb){
       let conversion= img.archivo.split(',');
+      // en conversion[1] tengo la imagen
       img.archivo = conversion[1];
       imgsConvertidas.push(img);
     }
+    // vacio el array de las imagenes
     this.imagesWeb=[];
+
+    // agrego las imagenes con el formato correcto
     this.convocatoria.adjuntos=imgsConvertidas;
 
+    
+    
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
+
     let inicio= new Date(this.convocatoria.inicio);
-    inicio.setSeconds(3*60*60);
-    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+inicio.getHours()+":"+inicio.getMinutes();
+    let hi= new Date(this.horaInicio);
+
+    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});;
     this.convocatoria.inicio=formatoCorrectoInicio;
 
-
     /* convertir la fecha de fin al formato correcto el backend*/
+
     let fin= new Date(this.convocatoria.fin);
-    fin.setSeconds(3*60*60);
-    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+fin.getHours()+":"+fin.getMinutes();
+    let hf= new Date(this.horaFin);
+    
+    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.convocatoria.fin=formatoCorrectoFin;
 
-    
+
+     /********************************************************************* */
+
+
 
 
     console.log(this.convocatoria);
-    /*
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
@@ -106,6 +121,8 @@ export class CargarConvocatoriaPage implements OnInit {
            this.loading=false;
            this.convocatoria = new Convocatoria();
            this.imgs=null;
+           this.horaInicio=null;
+           this.horaFin=null;
            this.error = '';
            alert("Enviado correctamente");
         },
@@ -113,7 +130,7 @@ export class CargarConvocatoriaPage implements OnInit {
             alert("Hubo errores al cargar la convocatoria");
             this.error = error;
             this.loading = false;
-        });;*/
+        });;
 
    }
 
