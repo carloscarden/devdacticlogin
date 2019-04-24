@@ -116,34 +116,10 @@
               <ion-label position="stacked" class="textoBold" color="success">Lugar</ion-label>
               <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.lugar" #observaciones="ngModel"></ion-input>
             </ion-item>
-    <!-- ********************************* Para plataformas moviles *********************************************************************** -->
-              <!--  <ion-item>
-                    <h4 *ngIf="images.length == 0" text-center>CARGA CERTIFICADO!</h4>
-                    <ion-list>
-                        <ion-item *ngFor="let img of images; index as pos" text-wrap>
-                          <ion-thumbnail slot="start">
-                            <ion-img [src]="img.path"></ion-img>
-                          </ion-thumbnail>
-                          <ion-label>
-                              {{ img.name }}
-                          </ion-label>
-                          <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
-                            <ion-icon slot="icon-only" name="trash"></ion-icon>
-                          </ion-button>
-                        </ion-item>
-                  </ion-list>
-                </ion-item>
-        
-                
-                  <ion-item>
-                    <ion-button fill="clear" expand="full"  (click)="selectImage()">
-                      <ion-icon slot="end" name="camera">
-                      ADJUNTAR</ion-icon> Select Image
-                    </ion-button>
-                  </ion-item>  -->
+
             
-    <!-- **********************************  Para plataformas web  ********************************************************************** -->
-           <!-- <hr>
+    <!-- **********************************  Carga de las imagenes  ********************************************************************** -->
+           <hr>
             <div class="posicion">
               <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0" text-center>No hay im&aacute;genes seleccionadas</ion-label>
             </div>
@@ -162,7 +138,7 @@
             <ion-item>
               <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
               <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs"  (change)="changeListener($event)"></ion-input>
-            </ion-item> -->
+            </ion-item> 
     <!-- ******************************************************************************************************** -->
         <!--     <div class="form-group">
               <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -171,12 +147,7 @@
             <hr>
           <hr>
           <hr>
-              <div class="form-group">
-                <ion-button class="tipoBoton" type="submit" [disabled]="loading">ADJUNTAR IMAGEN</ion-button>
-              </div>
-          <hr>
-          <hr>
-          <hr> 
+
             <ion-fab horizontal="end" >
               <ion-fab-button color="tertiary" [disabled]="!trabajoAdminForm.form.valid">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon> 

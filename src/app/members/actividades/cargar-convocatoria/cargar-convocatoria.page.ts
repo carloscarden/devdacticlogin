@@ -32,17 +32,25 @@ export class CargarConvocatoriaPage implements OnInit {
   convocatoria = new Convocatoria();
   
   tiposConvocatorias: TipoConvocatoria[];
+ 
+  actividadesSubscription: Subscription;
+ 
+  /* manejo de las imagenes  */
   images = [];
   imagesWeb = [];
-  actividadesSubscription: Subscription;
+  megasDeLosArchivos=[];
+  totalMegasDeLosArchivos=0;
+
+  /* variable para setear el valor del texto del input file cuando se borran las imagenes*/
+  imgs;
+  esPlataformaMovil=this.plt.is('android');
+
+  /* validaciones de alta del formulario */
   cargaCorrecta = false;
   loading = false;
   error= '';
-  megasDeLosArchivos=[];
-  totalMegasDeLosArchivos=0;
-  esPlataformaMovil=this.plt.is('android');
   
-  imgs;
+ 
   
  
   constructor(
@@ -90,6 +98,7 @@ export class CargarConvocatoriaPage implements OnInit {
 
 
     console.log(this.convocatoria);
+    /*
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {
@@ -104,7 +113,7 @@ export class CargarConvocatoriaPage implements OnInit {
             alert("Hubo errores al cargar la convocatoria");
             this.error = error;
             this.loading = false;
-        });;
+        });;*/
 
    }
 
