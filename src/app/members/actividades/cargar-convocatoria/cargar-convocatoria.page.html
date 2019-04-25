@@ -21,7 +21,7 @@
 
             <!--- ******* FECHA Y HORA INICIO **********************************-->
            <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Fecha inicio(*)</ion-label>
+            <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="convocatoria.inicio" name="inicio" #inicio="ngModel" required
                   monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                   monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
@@ -51,25 +51,6 @@
           </ion-item>
 
             <!--- ******* FECHA Y HORA FIN **********************************-->
-
-
-          <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Fecha Fin  (*)</ion-label>
-            <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="convocatoria.fin" name="fin" #fin="ngModel" required
-              monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-              monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
-              dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-              dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
-              min="2017"
-              max="2050"
-              mode="ios"
-              cancelText="cancelar"
-              doneText="guardar"
-            ></ion-datetime>
-            <div *ngIf="!(fin.valid || fin.pristine)" class="invalid-feedback">
-              La fecha de fin es requerida
-           </div>
-         </ion-item>
 
 
 
@@ -150,9 +131,11 @@
     </ion-list>
 
       <ion-item>
-        <div class="fileUpload btn btn-primary">
-           <ion-label id="profile_image" color="primary" stacked>Im&aacute;genes</ion-label>
-         <ion-input type="file" [(ngModel)]="imgs" name="imgs" id="imgs" (change)="changeListener($event)"></ion-input>
+        <div class="fileUpload btn btn-primary">       
+         <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
+         <ion-button class="tipoBoton" (click)="changeListener(fileLoader)">
+              Seleccionar imagen
+         </ion-button>
         </div>
       </ion-item> 
 <!-- ******************************************************************************************************** -->

@@ -39,7 +39,6 @@ export class CargarVisitaEscuelaPage implements OnInit {
   images = [];
   imagesWeb = [];
   conflicto=false;
-  imgs;
   actividadesSubscription: Subscription;
   megasDeLosArchivos=[];
   totalMegasDeLosArchivos=0;
@@ -79,17 +78,19 @@ export class CargarVisitaEscuelaPage implements OnInit {
     this.visita.adjuntos=imgsConvertidas;
 
 
-    /* convertir la fecha de inicio al formato que acepta el backend*/
+   /* formato correcto del dia mes y año */
     let inicio= new Date(this.visita.inicio);
+    let fechaFormat=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear(); 
+
+    /* convertir la fecha de inicio al formato que acepta el backend*/
     let hi= new Date(this.horaInicio);
-    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear()+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let formatoCorrectoInicio=fechaFormat+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.visita.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
-    let fin= new Date(this.visita.fin);
     let hf= new Date(this.horaFin);
-    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear()+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.visita.fin=formatoCorrectoFin;
     /********************************************************************* */
     
@@ -113,7 +114,6 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
-           this.imgs=null;
            this.horaInicio=null;
            this.horaFin=null;
            alert("Enviado correctamente");
@@ -187,36 +187,39 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
 
   /***********************  IMAGENES DE WEB ********************************************** */
-  changeListener($event) : void {
-    var archivoWeb = $event.target.files[0];
-    console.log(archivoWeb);
+  changeListener(fileLoader) : void {
+    fileLoader.click();
+    var that = this;
+    fileLoader.onchange = function () {
+      var archivoWeb = fileLoader.files[0];
+      
+       //calcular la cantidad de megas del archivo
+      let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
+
+       //sumarselo a la cantidad total que tengo de megas
+     let posibleArchivoaAgregar=that.totalMegasDeLosArchivos+megaPosibleArchivo;
+
+     if(posibleArchivoaAgregar>4){
+        that.presentToast('El archivo supera la cantidad permitida.');
+      }
+      else{
+        that.totalMegasDeLosArchivos=posibleArchivoaAgregar;
+        var reader = new FileReader();
+        reader.readAsDataURL(archivoWeb);
+        reader.onload = (event: any) => {
+          let imagenNueva= new Imagen();
+          imagenNueva.nombre= archivoWeb.name;
+          imagenNueva.tipo = archivoWeb.type;
+          imagenNueva.archivo = event.target.result;
+          that.imagesWeb.push(imagenNueva) ;
+          // en este arreglo tengo todos los valores de los megas que puso el usuario
+          that.megasDeLosArchivos.push(megaPosibleArchivo);
+        }
 
 
-    //calcular la cantidad de megas del archivo
-    let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
+      }
 
-    //sumarselo a la cantidad total que tengo de megas
-    let posibleArchivoaAgregar=this.totalMegasDeLosArchivos+megaPosibleArchivo;
-
-
-    if(posibleArchivoaAgregar>4){
-       this.presentToast('El archivo supera la cantidad permitida.');
-    }
-    else{
-       this.totalMegasDeLosArchivos=posibleArchivoaAgregar;
-       var reader = new FileReader();
-       reader.readAsDataURL(archivoWeb);
-       reader.onload = (event: any) => {
-            let imagenNueva= new Imagen();
-            imagenNueva.nombre= archivoWeb.name;
-            imagenNueva.tipo = archivoWeb.type;
-            imagenNueva.archivo = event.target.result;
-            this.imagesWeb.push(imagenNueva) ;
-
-            // en este arreglo tengo todos los valores de los megas que puso el usuario
-            this.megasDeLosArchivos.push(megaPosibleArchivo);
-       }       
-    }
+    }      
             
   }
 
@@ -231,8 +234,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
     // Saco la cantidad de megas que tiene el archivo
     this.megasDeLosArchivos.splice(pos,1);
     this.presentToast('Archivo removido.');
-    this.imgs=null;
-    console.log(this.imgs);
+
 
   }
 
