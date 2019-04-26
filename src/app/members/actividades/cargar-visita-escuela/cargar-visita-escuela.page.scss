@@ -38,9 +38,19 @@
   padding-left:1rem;
 }
 
-        /*SOMBRA BOTON*/
+.itemImagen {
+  --inner-border-width:0;
+}
+
+         /*BOTON*/
+.itemBoton {
+  --inner-border-width:0;
+}
+
 .tipoBoton {
-    box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75); 
+  font-size: 14px;
+  font-weight:bold;
+  box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
 }
 
         /*SOMBRA FAB*/
@@ -48,17 +58,3 @@
     box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75); 
     
 }
-
-         /*CENTRAR BOTON*/
-.form-group {
-  text-align:center;
-}
-
-         /*BOTON*/
-.tipoBoton {
-  font-size: 14px;
-  font-weight:bold;
-  box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
-}
-
-
