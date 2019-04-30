@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: 'agenda/:id', loadChildren: '../agenda/agenda.module#AgendaPageModule' },
       { path: 'actividad', loadChildren: '../actividades/actividades-routing.module#ActividadesRoutingModule' },
       { path: 'actividadesLectura', loadChildren: '../actividadesLectura/actividadesLectura-routing.module#ActividadesLecturaRoutingModule' },
+      { path: 'actividadesDetalles', loadChildren: '../actividadesDetails/actividadesDetalle-routing.module#ActividadesDetalleRoutingModule' },
       { path: 'calendario', loadChildren: '../calendario/calendario.module#CalendarioPageModule' },
   
     

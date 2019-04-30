@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Detalles de la convocatoria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+        <ion-list margin-top>
+                <ion-item-sliding *ngFor="let item of convocatoria">
+                  <ion-item lines="inset" >
+                    <ion-label>
+                      TIPO DE CONVOCATORIA: {{ item.tipoConvocatoria.descripcion }} <br> <br>  
+                      INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p><br>  
+                      FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p><br>  
+                      DISTRITO:  <p>{{ item.distrito.descripcion }}</p><br>  
+                      LUGAR:  <p>{{ item.lugar }}</p><br>  
+                    </ion-label>
+                  </ion-item>
+                </ion-item-sliding>
+        </ion-list>
+
+
+
+  
+<!--
+    Tipo de convocatoria: {{ convocatoria.tipoConvocatoria.descripcion }} <br>
+   
+    Inicio: <p>{{ stringAsDate(convocatoria.inicio) | date:'fullDate' }} {{ hora(convocatoria.inicio)}}</p>
+    Fin:  <p>{{ stringAsDate(convocatoria.fin) | date:'fullDate' }} {{ hora(convocatoria.inicio)}}</p>
+    Distrito:  <p>{{ convocatoria.distrito.descripcion}}</p>
+    Lugar: <p>{{ convocatoria.lugar}}</p>
+    <ion-label position="stacked" class="textoBold" text-center>Imagenes</ion-label>
+    <div class="posicion">
+        <ion-label position="stacked" class="textoBold" color="success" *ngIf="convocatoria.adjuntos == 0" text-center>No hay im&aacute;genes seleccionadas</ion-label>
+        </div>
+        <ion-list>
+
+            <ion-item *ngFor="let img of convocatoria.adjuntos" text-wrap>
+                <ion-thumbnail slot="start">  
+                    <ion-img [src]="crearArchivo(img)"></ion-img>
+                </ion-thumbnail>
+    
+            </ion-item> 
+        </ion-list>
+-->
+</ion-content>

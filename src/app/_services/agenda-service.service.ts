@@ -8,7 +8,7 @@ import { Actividad } from "../_models/actividad";
 
 
 
-const URL = `http://test2.abc.gov.ar:8080/InspectoresApp/`;
+const URL = `http://test2.abc.gov.ar:8080/InspectoresAppSec/`;
 
 
 @Injectable({
@@ -18,9 +18,9 @@ export class AgendaServiceService {
 
   constructor( private httpOtro:Http, private http: HttpClient) { }
 
-  public getEvents(month, year): Observable<any> {
+  public getEvents(month, year,idInspector): Observable<any> {
     console.log(URL+`inspectores/1/tareas?month=${month}&year=${year}`);
-    return this.http.get<any>(URL+`inspectores/1/tareas?month=${month}&year=${year}`);
+    return this.http.get<any>(URL+`inspectores/${idInspector}/tareas?month=${month}&year=${year}`);
   }
 
   public getTipoActividades():  Observable<any> { 

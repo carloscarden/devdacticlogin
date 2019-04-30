@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Detalles de la licencia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list margin-top>
+        <ion-item-sliding *ngFor="let item of licencia">
+          <ion-item lines="inset" >
+            <ion-label>
+                ARTICULO: {{ item.articulo }} <br>
+                <br>
+                INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p><br>
+                FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p><br>
+                 
+                <div  *ngIf="item.medica=='T'" >
+                    TIPO DE LICENCIA: <p>medica </p><br>
+                    CODIGO: <p>{{ item.codigo}}</p><br>
+                </div>
+
+
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
+     </ion-list>
+
+</ion-content>

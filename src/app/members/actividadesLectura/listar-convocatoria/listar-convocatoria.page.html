@@ -22,7 +22,7 @@
 
             <ion-list margin-top>
                 <ion-item-sliding *ngFor="let item of convocatorias">
-                  <ion-item lines="inset" >
+                  <ion-item lines="inset" button [routerLink]="['/members/menu/actividadesDetalles/convocatoriaDetalles', item.id]">
                     <ion-label>
                       TIPO DE CONVOCATORIA: {{ item.tipoConvocatoria.descripcion }} <br>
                       INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>

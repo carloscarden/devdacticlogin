@@ -20,6 +20,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     loadChildren: './members/member-routing.module#MemberRoutingModule'
   }
+
   // { path: 'dashboard', loadChildren: './members/dashboard/dashboard.module#DashboardPageModule' },
 ];
 

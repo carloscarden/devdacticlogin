@@ -16,6 +16,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FakeBackend } from './_helpers/fake-backend';
 import { JwtInterceptor } from './_helpers/jwt-interceptor';
 import {  ErrorInterceptor } from './_helpers/error-interceptor';
+import {  AuthInterceptorService } from './_helpers/auth-interceptor';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -61,6 +62,7 @@ registerLocaleData(localeEs);
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackend, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: LOCALE_ID, useValue: 'es' },
    
   

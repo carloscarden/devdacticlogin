@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Licencia } from './../../../_models/licencia';
 import { ActividadesService } from './../../../_services/actividades.service';
-import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+
 
 
 
@@ -21,12 +22,21 @@ export class CargarLicenciaPage implements OnInit {
   constructor(
     private licenciaService: ActividadesService,
     private route: ActivatedRoute,
-    private router: Router,) { }
+    private router: Router,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
-    this.licencia.idInspector=2;
     this.licencia.medica="F";
 
+  }
+
+  async presentAlert(msj) {
+    const alert = await this.alertCtrl.create({
+      header: msj,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   onSubmit() { 
@@ -47,6 +57,8 @@ export class CargarLicenciaPage implements OnInit {
     let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear();
     this.licencia.fin=formatoCorrectoFin;
 
+    this.licencia.idInspector=2;
+
     if(this.tipoLicencia){
       this.licencia.medica="T"
     }
@@ -61,10 +73,10 @@ export class CargarLicenciaPage implements OnInit {
           this.loading=false;
           this.licencia = new Licencia();
           this.error = '';
-          alert("Enviado correctamente");
+          this.presentAlert("Enviado con éxito.  ");
         },
         error => {
-          alert("Hubo errores");
+          this.presentAlert("Hubo un error, intente nuevamente. ");
           this.error = error;
           this.loading = false;
         });;

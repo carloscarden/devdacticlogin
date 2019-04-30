@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { User } from '../_models/user';
+import {Inspector } from '../_models/inspector'
 import { map } from 'rxjs/operators';
 
 
@@ -36,8 +36,8 @@ There are two properties exposed by the authentication service for accessing the
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<Inspector>;
+  public currentUser: Observable<Inspector>;
 
   authenticationState = new BehaviorSubject(false);
   /*
@@ -47,18 +47,21 @@ export class AuthenticationService {
   previously logged in. In a real scenario you could add an expired check here.
   */
   constructor(private storage:Storage, private platform:Platform, private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<Inspector>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
 
   }
 
   login(username: string, password: string){
+    console.log("username",username);
+    console.log("password",password);
    
-    return this.http.post<any>(`http://localhost:8100/users/authenticate`, { username, password })
+    return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresAppSec/auth`, { username, password })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
-                if (user && user.token) {
+                if (user) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    user.token=localStorage.getItem('token');
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
@@ -74,7 +77,7 @@ export class AuthenticationService {
 
   }
 
-  public get currentUserValue(): User {
+  public get currentUserValue(): Inspector {
     return this.currentUserSubject.value;
   }
 

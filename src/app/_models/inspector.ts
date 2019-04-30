@@ -1,5 +1,8 @@
 export class Inspector {
-    id:number;
-    nombre:string;
-    apellido:string;
+    nombre: string;
+    apellido: string;
+    cuil: string;
+    mail: string;
+    metaPuestoTrabajo:Array<string>;
+    token?: string;
 }

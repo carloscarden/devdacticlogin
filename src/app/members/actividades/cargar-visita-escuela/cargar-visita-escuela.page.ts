@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 /* CAMERA  */
-import {  ToastController} from '@ionic/angular';
+import {  ToastController, AlertController} from '@ionic/angular';
 
 /* SELECTABLE */
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -50,7 +50,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
   constructor(
     private toastController: ToastController,
     private imgService:  ImagenService,
-    private visitaService: ActividadesService
+    private visitaService: ActividadesService,
+    private alertCtrl: AlertController
     ) { }
 
   ngOnInit() {
@@ -61,6 +62,15 @@ export class CargarVisitaEscuelaPage implements OnInit {
     /*this.plt.ready().then(() => {
       this.imgService.loadStoredImages(this.images);
     });*/
+  }
+
+  async presentAlert(msj) {
+    const alert = await this.alertCtrl.create({
+      header: msj,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 
@@ -116,10 +126,10 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.error = '';
            this.horaInicio=null;
            this.horaFin=null;
-           alert("Enviado correctamente");
+           this.presentAlert("Enviado con éxito.  ");
         },
         error => {
-            alert("Hubo errores");
+            this.presentAlert("Hubo un error, intente nuevamente. ");
             this.error = error;
             this.loading = false;
         });;

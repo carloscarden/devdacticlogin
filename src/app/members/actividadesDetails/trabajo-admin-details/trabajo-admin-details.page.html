@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title class="textoTitulo">Detalles del trabajo administrativo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+
+    <ion-list margin-top>
+        <ion-item-sliding *ngFor="let item of trabajoAdmin">
+            <ion-item lines="inset">
+              <ion-label>
+                TIPO: {{ item.tipoTrabajoAdmin.descripcion }} <br>
+                INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p><br>
+                FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p><br>
+                OBSERVACIONES:  <p>{{ item.observaciones }}</p><br>
+              </ion-label>
+            </ion-item>
+        </ion-item-sliding>
+    </ion-list>
+
+</ion-content>

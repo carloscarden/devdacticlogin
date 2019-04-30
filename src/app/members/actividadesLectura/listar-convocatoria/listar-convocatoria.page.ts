@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterEvent } from '@angular/router';
+import { Router } from '@angular/router';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
-import { Todo, TodoService } from './../../../_services/todo.service';
 
 
 /*  MODELOS */
@@ -23,6 +22,7 @@ export class ListarConvocatoriaPage implements OnInit {
   filtroTipo=false;
   page = 0;
   maximumPages = 3;
+  idInspector=1;
   convocatorias=[];
   size=5;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
@@ -32,7 +32,8 @@ export class ListarConvocatoriaPage implements OnInit {
             ) {
                 this.url=""
 
-                this.convocatoriaService.getConvocatorias(this.size,this.page)
+                
+                this.convocatoriaService.getConvocatorias(this.size,this.page, this.idInspector)
                 .subscribe(res  =>{
                              this.convocatorias=res.content;
                              this.maximumPages=res.totalPages-1;
@@ -49,7 +50,7 @@ export class ListarConvocatoriaPage implements OnInit {
 
   loadConvocatorias(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
-      this.convocatoriaService.getConvocatorias(this.size,page)
+      this.convocatoriaService.getConvocatorias(this.size,page, this.idInspector)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);
                    this.convocatorias=this.convocatorias.concat(res['content']);

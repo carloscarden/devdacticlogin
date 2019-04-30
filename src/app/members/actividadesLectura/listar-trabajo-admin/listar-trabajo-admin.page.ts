@@ -24,12 +24,13 @@ export class ListarTrabajoAdminPage implements OnInit {
   trabajosAdmin=[];
   size=5;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+  inspectorId=1;
 
 
 
   constructor( private router:Router, private trabajosService:ActividadesService, private todoService: TodoService) { 
     console.log("creacion del listar trabajos admin");
-    this.trabajosService.getTrabajoAdministrativo(this.size,this.page)
+    this.trabajosService.getTrabajoAdministrativo(this.size,this.page,this.inspectorId)
     .subscribe(res  =>{
                  this.trabajosAdmin=res.content;
                  this.maximumPages=res.totalPages-1;
@@ -44,7 +45,7 @@ export class ListarTrabajoAdminPage implements OnInit {
 
   loadTrabajosAdmin(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
-      this.trabajosService.getTrabajoAdministrativo(this.size,page)
+      this.trabajosService.getTrabajoAdministrativo(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);
                    this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);

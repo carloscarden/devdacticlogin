@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 
 
-import { ToastController, Platform } from '@ionic/angular';
+import { ToastController, Platform, AlertController } from '@ionic/angular';
 
 
 import { ImagenService } from './../../../_services/imagen.service';
@@ -62,12 +62,22 @@ export class CargarConvocatoriaPage implements OnInit {
     private toastController: ToastController,
     private imgService:  ImagenService,
     private convocatoriaService: ActividadesService,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
     /* id del inspector */
     this.convocatoria.idInspector=1;
     this.convocatoria.inicio=null;
+  }
+
+  async presentAlert(msj) {
+    const alert = await this.alertCtrl.create({
+      header: msj,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   onSubmit() {
@@ -121,10 +131,10 @@ export class CargarConvocatoriaPage implements OnInit {
            this.horaInicio=null;
            this.horaFin=null;
            this.error = '';
-           alert("Enviado correctamente");
+           this.presentAlert("Enviado con éxito. ");
         },
         error => {
-            alert("Hubo errores al cargar la convocatoria");
+            this.presentAlert("Hubo un error, intente nuevamente. ");
             this.error = error;
             this.loading = false;
         });;
@@ -249,6 +259,7 @@ export class CargarConvocatoriaPage implements OnInit {
           imagenNueva.nombre= archivoWeb.name;
           imagenNueva.tipo = archivoWeb.type;
           imagenNueva.archivo = event.target.result;
+          console.log(imagenNueva.archivo);
           that.imagesWeb.push(imagenNueva) ;
           // en este arreglo tengo todos los valores de los megas que puso el usuario
           that.megasDeLosArchivos.push(megaPosibleArchivo);

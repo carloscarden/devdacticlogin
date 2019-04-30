@@ -23,7 +23,7 @@
     
           <ion-list margin-top>
             <ion-item-sliding *ngFor="let item of licencias">
-              <ion-item lines="inset">
+              <ion-item lines="inset" button [routerLink]="['/members/menu/actividadesDetalles/licenciaDetalles', item.id]">
                 <ion-label>
                   ARTICULO: {{ item.articulo }} <br>
                   INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>

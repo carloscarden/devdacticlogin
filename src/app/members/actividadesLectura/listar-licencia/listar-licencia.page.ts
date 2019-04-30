@@ -30,12 +30,14 @@ export class ListarLicenciaPage implements OnInit {
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   value=0;
 
+  inspectorId=1;
+
   constructor( private router:Router,
     private todoService: TodoService,
     private licenciaService:ActividadesService,
     private httpClient: HttpClient ) { 
       this.url="";
-      this.licenciaService.getLicencias(this.size,this.page)
+      this.licenciaService.getLicencias(this.size,this.page,this.inspectorId)
       .subscribe(res  =>{
                    console.log(res);
                    this.licencias=res.content;
@@ -54,7 +56,7 @@ export class ListarLicenciaPage implements OnInit {
 
   loadLicencias(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
-      this.licenciaService.getLicencias(this.size,page)
+      this.licenciaService.getLicencias(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);
                    this.licencias=this.licencias.concat(res['content']);

@@ -4,7 +4,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { ToastController, Platform } from '@ionic/angular';
+import { ToastController, Platform, AlertController } from '@ionic/angular';
 
 
 import { ImagenService } from './../../../_services/imagen.service';
@@ -50,9 +50,19 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     private plt: Platform,
     private toastController: ToastController,
     private imgService:  ImagenService,
-    private actividadesService: ActividadesService) { }
+    private actividadesService: ActividadesService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
+  }
+
+  async presentAlert(msj) {
+    const alert = await this.alertCtrl.create({
+      header: msj,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   onSubmit() { 
@@ -104,10 +114,10 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
            this.horaInicio=null;
            this.horaFin=null;
            this.error = '';
-           alert("Enviado correctamente");
+           this.presentAlert("Enviado con éxito. ");
         },
         error => {
-          alert("Hubo errores");
+            this.presentAlert("Hubo un error, intente nuevamente. ");
             this.error = error;
             this.loading = false;
         });;

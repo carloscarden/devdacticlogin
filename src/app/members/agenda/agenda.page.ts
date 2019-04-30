@@ -30,6 +30,7 @@ export class AgendaPage implements OnInit {
   selectedDay = new Date();
   currentMonth = this.selectedDay.getMonth();
   currentYear = this.selectedDay.getFullYear();
+  inspectorId=1;
 
   calendar = {
      mode: 'month',
@@ -151,7 +152,7 @@ export class AgendaPage implements OnInit {
 
   cargarEvents(month, year){
       this.eventSource = [];
-      this.agendaService.getEvents(month,year).subscribe(
+      this.agendaService.getEvents(month,year,this.inspectorId).subscribe(
         // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
           this.data=data;

@@ -22,13 +22,13 @@ export class ListarVisitaEscuelaPage implements OnInit {
   visitasEscuelas=[];
   size=5;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
-
+  inspectorId=1;
 
 
   constructor(private router:Router, private visitaService: ActividadesService, private alertCtrl: AlertController) {
     this.url=""
     console.log("creacion del listar visitas");
-      this.visitaService.getVisitas(this.size,this.page)
+      this.visitaService.getVisitas(this.size,this.page,this.inspectorId)
       .subscribe(res  =>{
                   console.log(res.content);
                   this.visitasEscuelas=res.content;
@@ -44,7 +44,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   loadVisitas(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
-      this.visitaService.getVisitas(this.size,page)
+      this.visitaService.getVisitas(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);
                    this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
@@ -91,17 +91,6 @@ export class ListarVisitaEscuelaPage implements OnInit {
     }
       
   }
-
-  async mostrarVisita(event) {
-    console.log("evento")
-    console.log(event);
-    let alert = await this.alertCtrl.create({
-         header: '' +event.establecimiento.nombre ,
-         message: 'Desde:<br> ' + event.inicio + '<br><br>Hasta: <br>' + event.fin,
-         buttons: ['OK']
-    });
-    await  alert.present();
-}
 
 
    // Conversiones para que se vea con un formato mejor

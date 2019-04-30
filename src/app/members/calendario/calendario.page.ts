@@ -25,6 +25,7 @@ export class CalendarioPage implements OnInit {
   restInfScroll;
   page = 0;
   maximumPages = 12;
+  inspectorId=1;
   anio=  new Date().getFullYear();
   anioBuscado= new Date().getFullYear();
   nombreMeses= ["ENERO","FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
@@ -48,7 +49,7 @@ export class CalendarioPage implements OnInit {
 
 
    nuevoMes(mes, infiniteScroll?){
-    this.agendaService.getEvents(mes,this.anio)
+    this.agendaService.getEvents(mes,this.anio,this.inspectorId)
         .subscribe(res  =>{
                     let mesActual=this.nombreMeses[mes-1];
                     console.log(res);

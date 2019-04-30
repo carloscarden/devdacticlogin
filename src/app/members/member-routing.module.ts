@@ -7,7 +7,13 @@ reference the Dashboard
 const routes: Routes = [
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'agenda/:id', loadChildren: './agenda/agenda.module#AgendaPageModule' },
-  { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' },
+  { path: 'event-modal', loadChildren: './event-modal/event-modal.module#EventModalPageModule' }
+
+
+
+
+
+
   
 
 

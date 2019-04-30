@@ -21,7 +21,7 @@
       
             <ion-list margin-top>
                 <ion-item-sliding *ngFor="let item of trabajosAdmin">
-                    <ion-item lines="inset">
+                    <ion-item lines="inset"  [routerLink]="['/members/menu/actividadesDetalles/trabajoAdminDetalles', item.id]">
                       <ion-label>
                         TIPO: {{ item.tipoTrabajoAdmin.descripcion }} <br>
                         INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
