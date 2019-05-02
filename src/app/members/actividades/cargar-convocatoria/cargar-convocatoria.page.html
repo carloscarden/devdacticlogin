@@ -114,19 +114,20 @@
     </div>-->
     <ion-list>
         <ion-item class="itemImagen" *ngFor="let img of imagesWeb; index as pos" text-wrap>
+
             <ion-thumbnail slot="start">  
                 <ion-img [src]="img.archivo"></ion-img>
             </ion-thumbnail>
 
-
             <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-button>
+            
         </ion-item> 
     </ion-list>
 
       <ion-item class="itemBoton">
-        <div class="centerb" class="fileUpload btn btn-primary">       
+        <div class="form-group" class="fileUpload btn btn-primary">       
          <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
          <ion-button class="tipoBoton" (click)="changeListener(fileLoader)">
               Seleccionar imagen
@@ -149,7 +150,8 @@
                 </ion-button>
               </ion-fab-button>
             </ion-fab> 
-
+            <hr>
+            
           
            <!-- <ion-fab vertical="bottom" horizontal="end" >
               <ion-fab-button type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
