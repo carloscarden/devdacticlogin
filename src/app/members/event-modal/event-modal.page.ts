@@ -1,5 +1,5 @@
 import { Component, OnInit, Input  } from '@angular/core';
-import {  NavController,  ModalController } from '@ionic/angular';
+import {  NavController,  ModalController, AlertController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 import { Actividad } from 'src/app/_models/actividad';
@@ -26,7 +26,17 @@ export class EventModalPage implements OnInit {
   constructor(private nav:NavController,
               private modalCtrl:ModalController, 
               navParams: NavParams,
-              private agendaService: AgendaServiceService) { }
+              private agendaService: AgendaServiceService,
+              private alertCtrl: AlertController) { }
+
+              async presentAlert(msj) {
+                const alert = await this.alertCtrl.create({
+                  header: msj,
+                  buttons: ['OK']
+                });
+            
+                await alert.present();
+              }
 
   ngOnInit() {
     //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
@@ -101,7 +111,7 @@ export class EventModalPage implements OnInit {
            this.loading=false;
            this.evento = new Tarea();
            this.error = '';
-           alert("La tarea ha sido creada exitosamente");
+           this.presentAlert("La tarea ha sido creada exitosamente. ");
         },
         error => {
             this.error = error;

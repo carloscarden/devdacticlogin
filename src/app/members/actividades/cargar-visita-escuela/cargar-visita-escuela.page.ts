@@ -252,6 +252,12 @@ export class CargarVisitaEscuelaPage implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.visita); }
 
+
+  esUnaImagen(tipo){
+    let tipoLower=tipo.toLowerCase();
+    return tipoLower.includes("image");
+  }
+
  
 
 }

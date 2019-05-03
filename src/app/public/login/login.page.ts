@@ -73,11 +73,13 @@ export class LoginPage implements OnInit {
     this.authService.login(this.f.username.value, this.f.password.value).pipe(first())
     .subscribe(
         data => {
+           console.log(data);
            this.loading=false;
            this.error='';
            this.router.navigate(['/members/menu/agenda/month']);
         },
         error => {
+            console.log(error);
             this.error = "El usuario o la contraseña es incorrecta";
             this.loading = false;
         });;

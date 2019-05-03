@@ -152,7 +152,10 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
         return;
       }
       console.log("tipos");
-      let valorTipos=JSON.parse(tipos._body);
+      console.log("tipos",tipos);
+      console.log("tipos",tipos._body);
+      let valorTipos=tipos;
+      
       event.component.items = this.filterPorts(valorTipos, text);
       event.component.endSearch();
     });
@@ -228,6 +231,11 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     this.presentToast('Archivo removido.');
 
 
+  }
+
+  esUnaImagen(tipo){
+    let tipoLower=tipo.toLowerCase();
+    return tipoLower.includes("image");
   }
 
 }

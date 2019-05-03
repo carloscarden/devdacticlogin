@@ -287,6 +287,12 @@ export class CargarConvocatoriaPage implements OnInit {
   }
 
 
+  esUnaImagen(tipo){
+    let tipoLower=tipo.toLowerCase();
+    return tipoLower.includes("image");
+  }
+
+
 
   
 

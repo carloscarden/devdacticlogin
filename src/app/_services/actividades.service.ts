@@ -105,7 +105,7 @@ export class ActividadesService {
   }
 
   getTipoTrabajoAdministrativo(): Observable<any>{
-    return this.httpOtro.get(URL+`tiposTrabajoAdmin/all`);
+    return this.http.get(URL+`tiposTrabajoAdmin/all`);
   }
   /******************************************************************************** */
 
@@ -122,7 +122,7 @@ export class ActividadesService {
   }
 
   getMotivosVisitas(): Observable<any>{
-    return this.http.get(URL+`motivosVisitas/all`);
+    return this.http.get(URL+`motivosVisita/all`);
   }
 
   getVisitas(size,page,idInspector): Observable<any>{

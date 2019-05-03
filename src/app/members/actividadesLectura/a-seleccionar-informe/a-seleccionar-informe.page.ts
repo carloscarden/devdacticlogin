@@ -10,7 +10,7 @@ import { Router, RouterEvent } from '@angular/router';
 export class ASeleccionarInformePage implements OnInit {
   url;
   selectedPath='';
-  opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+  opciones=["Convocatoria","Trabajo administrativo","Visita Escuela","Licencia"];
 
   constructor(private router:Router) { 
     this.router.events.subscribe((event:RouterEvent)=>{
@@ -36,7 +36,7 @@ export class ASeleccionarInformePage implements OnInit {
           this.router.navigateByUrl("/members/menu/actividadesLectura/seleccionarInforme/listarLicencia");
           break; 
       }
-      case("Trabajo Administrativo"):{
+      case("Trabajo administrativo"):{
          this.router.navigateByUrl("/members/menu/actividadesLectura/seleccionarInforme/listarTrabajoAdmin");
          break; 
       }

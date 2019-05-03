@@ -37,5 +37,12 @@ export class TrabajoAdminDetailsPage implements OnInit {
     return a[1];
   }
 
+  esUnaImagen(tipo){
+    console.log(tipo);
+    let tipoLower=tipo.toLowerCase();
+    console.log( tipoLower.includes("image"));
+    return tipoLower.includes("image");
+  }
+
 
 }

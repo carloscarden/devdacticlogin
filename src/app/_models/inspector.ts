@@ -3,6 +3,5 @@ export class Inspector {
     apellido: string;
     cuil: string;
     mail: string;
-    metaPuestoTrabajo:Array<string>;
     token?: string;
 }

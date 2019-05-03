@@ -22,6 +22,26 @@
                   <p> SITUACION DE CONFLICTO </p><br>
               </div>
 
+              <ion-list>
+                  <h2>ARCHIVOS:</h2>
+                  <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
+                      
+                      <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">
+                          {{img.nombre}}
+                      </div>
+                      
+                      <div *ngIf="(esUnaImagen(img.tipo))" class="invalid-feedback">
+                        <ion-thumbnail slot="start"> 
+                           <ion-img [src]="'data:'+img.tipo+';base64,'+img.archivo"></ion-img>
+                        </ion-thumbnail>
+                      </div>
+                     <!--
+                      <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
+                          <ion-icon slot="icon-only" name="trash"></ion-icon>
+                      </ion-button>-->
+                  </ion-item> 
+              </ion-list>
+
             </ion-label>
           </ion-item>
         </ion-item-sliding>

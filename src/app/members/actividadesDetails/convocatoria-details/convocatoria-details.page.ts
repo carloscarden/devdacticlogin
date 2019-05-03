@@ -56,4 +56,9 @@ export class ConvocatoriaDetailsPage implements OnInit {
     return a[1];
   }
 
+  esUnaImagen(tipo){
+    let tipoLower=tipo.toLowerCase();
+    return tipoLower.includes("image");
+  }
+
 }
