@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 
 /*  MODELOS */
@@ -29,10 +31,12 @@ export class ListarConvocatoriaPage implements OnInit {
 
   constructor(private convocatoriaService: ActividadesService,
               private router:Router,
+              private authenticationService: AuthenticationService
             ) {
                 this.url=""
 
-                
+                let currentUser = this.authenticationService.currentUserValue;
+                this.idInspector= currentUser.id;
                 this.convocatoriaService.getConvocatorias(this.size,this.page, this.idInspector)
                 .subscribe(res  =>{
                              this.convocatorias=res.content;
@@ -50,6 +54,8 @@ export class ListarConvocatoriaPage implements OnInit {
 
   loadConvocatorias(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
+      let currentUser = this.authenticationService.currentUserValue;
+      this.idInspector= currentUser.id;
       this.convocatoriaService.getConvocatorias(this.size,page, this.idInspector)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);

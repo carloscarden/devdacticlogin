@@ -43,7 +43,7 @@ export class AgendaServiceService {
     let t={"inicio": tarea.inicio,
     "fin": tarea.fin,
     "detalle": tarea.detalle,
-    "idInspector": tarea.idInspector,
+    "inspectorId": tarea.idInspector,
     "actividad":tarea.actividad
     };
     console.log("t");

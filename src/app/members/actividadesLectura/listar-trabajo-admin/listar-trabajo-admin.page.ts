@@ -5,7 +5,9 @@ import { Router, RouterEvent } from '@angular/router';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
-import { Todo, TodoService } from './../../../_services/todo.service';
+import { TodoService } from './../../../_services/todo.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 /*  MODELOS */
 import { Inspeccion } from './../../../_models/inspeccion';
@@ -28,8 +30,12 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
 
-  constructor( private router:Router, private trabajosService:ActividadesService, private todoService: TodoService) { 
+  constructor( private trabajosService:ActividadesService, 
+               private authenticationService: AuthenticationService
+              ) { 
     console.log("creacion del listar trabajos admin");
+    let currentUser = this.authenticationService.currentUserValue;
+    this.inspectorId= currentUser.id;
     this.trabajosService.getTrabajoAdministrativo(this.size,this.page,this.inspectorId)
     .subscribe(res  =>{
                  this.trabajosAdmin=res.content;
@@ -45,6 +51,8 @@ export class ListarTrabajoAdminPage implements OnInit {
 
   loadTrabajosAdmin(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
+      let currentUser = this.authenticationService.currentUserValue;
+      this.inspectorId= currentUser.id;
       this.trabajosService.getTrabajoAdministrativo(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);

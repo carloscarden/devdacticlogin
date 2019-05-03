@@ -19,7 +19,7 @@ import { Imagen } from './../../../_models/imagen';
 
 /* SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
-
+import { AuthenticationService } from './../../../_services/authentication.service';
 
 @Component({
   selector: 'app-cargar-trabajo-administrativo',
@@ -51,6 +51,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     private toastController: ToastController,
     private imgService:  ImagenService,
     private actividadesService: ActividadesService,
+    private authenticationService: AuthenticationService,
     private alertCtrl: AlertController) { }
 
   ngOnInit() {
@@ -100,7 +101,8 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.trabajoAdmin.fin=formatoCorrectoFin;
 
-    this.trabajoAdmin.idInspector=1;
+    let currentUser = this.authenticationService.currentUserValue;
+    this.trabajoAdmin.inspectorId=currentUser.id;
 
    /********************************************************************* */
 
@@ -117,6 +119,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
            this.presentAlert("Enviado con éxito. ");
         },
         error => {
+          console.log(error);
             this.presentAlert("Hubo un error, intente nuevamente. ");
             this.error = error;
             this.loading = false;
@@ -127,6 +130,8 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.trabajoAdmin); }
 
+
+  /********************************************************************************* */
 
   filterPorts(tipos: TipoTrabajoAdministrativo[], text: string) {
     return tipos.filter(t => {
@@ -160,6 +165,49 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
       event.component.endSearch();
     });
   }
+
+
+  /********************************************************************************* */
+
+
+   /******************************************************************************************** */
+
+
+   filterDistritos(tipos: TipoTrabajoAdministrativo[], text: string) {
+    return tipos.filter(t => {
+      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
+    });
+  }
+
+
+
+
+  searchDistritos(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+
+    // Close any running subscription.
+    if (this.actividadesSubscription) {
+      this.actividadesSubscription.unsubscribe();
+    }
+
+    this.actividadesSubscription = this.actividadesService.getDistritos().subscribe(tipos => {
+      // Subscription will be closed when unsubscribed manually.
+    
+     var tareas=JSON.parse(tipos._body);
+     if (this.actividadesSubscription.closed) {
+        return;
+      }
+
+      event.component.items = this.filterDistritos(tareas, text);
+      event.component.endSearch();
+    });
+  }
+
+  /******************************************************************************************** */
 
 
 

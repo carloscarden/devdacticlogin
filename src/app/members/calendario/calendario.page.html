@@ -9,7 +9,6 @@
 
 <ion-content padding class="bkagenda">
        
-<<<<<<< HEAD
 
 <ion-item class="busquedaPrimera">
   <ion-label position="stacked" class="textoBold" color="success">Seleccionar mes</ion-label>
@@ -45,36 +44,6 @@
     <p>----------------------------------------------------------------------</p>
 
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
-=======
-<!--
-  <ion-item class="busquedaPrimera">
-    <ion-label position="stacked" class="textoBold" color="success">Seleccionar mes</ion-label>
-    <ion-select   okText="Okay" cancelText="Cancelar" [(ngModel)]="mesAbuscar">
-      <ion-select-option value="todos">Todos los meses</ion-select-option>
-      <ion-select-option *ngFor="let opt of nombreMeses; index as pos" value="{{pos}}">{{opt}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item class="busquedaSegunda">
-    <ion-label position="stacked" class="textoBold" color="success">Seleccionar a&ntilde;o</ion-label>
-    <ion-input class="fuente" type="number"  [(ngModel)]="anio" min="2019" max="2100" ></ion-input>
-  </ion-item>
-  <hr>
-  <hr>
-  <hr>
-  <hr>
-
-  <div class="form-group">
-   <ion-button (click)="filtrar()">Buscar</ion-button>
-  </div>
--->
-
-  <p class="areaAnio"><strong>Tareas del {{anioBuscado}}</strong></p>
-
-   {{ ordenar() }}
-   <div *ngFor ="let tareasMeses of mesesCargados">
-        <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
-   <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
->>>>>>> 445b4311f519ab3683f20be8903a00e6abea1605
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
    </div>
 

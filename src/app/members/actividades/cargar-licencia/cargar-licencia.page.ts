@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Licencia } from './../../../_models/licencia';
+
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
@@ -21,8 +24,7 @@ export class CargarLicenciaPage implements OnInit {
   tipoLicencia=false;
   constructor(
     private licenciaService: ActividadesService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private authenticationService: AuthenticationService,
     private alertCtrl: AlertController) { }
 
   ngOnInit() {
@@ -57,7 +59,8 @@ export class CargarLicenciaPage implements OnInit {
     let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear();
     this.licencia.fin=formatoCorrectoFin;
 
-    this.licencia.idInspector=2;
+    let currentUser = this.authenticationService.currentUserValue;
+    this.licencia.inspectorId=currentUser.id;
 
     if(this.tipoLicencia){
       this.licencia.medica="T"
@@ -65,6 +68,8 @@ export class CargarLicenciaPage implements OnInit {
     else{
       this.licencia.medica="F"
     }
+
+    console.log(this.licencia);
 
 
     this.licenciaService.addLicencia(this.licencia).subscribe(
@@ -76,6 +81,7 @@ export class CargarLicenciaPage implements OnInit {
           this.presentAlert("Enviado con éxito.  ");
         },
         error => {
+          console.log(error);
           this.presentAlert("Hubo un error, intente nuevamente. ");
           this.error = error;
           this.loading = false;

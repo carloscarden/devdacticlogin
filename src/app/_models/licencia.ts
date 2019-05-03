@@ -7,5 +7,5 @@ export class Licencia {
     articulo: string;
     medica: string;
     codigo: string;
-    idInspector: number;
+    inspectorId: number;
 }

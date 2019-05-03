@@ -5,8 +5,10 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 /* SERVICES */
-import { Todo, TodoService } from './../../../_services/todo.service';
+import { TodoService } from './../../../_services/todo.service';
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 /* MODELS */
 import { Inspeccion } from './../../../_models/inspeccion';
@@ -33,10 +35,12 @@ export class ListarLicenciaPage implements OnInit {
   inspectorId=1;
 
   constructor( private router:Router,
-    private todoService: TodoService,
+    private authenticationService: AuthenticationService,
     private licenciaService:ActividadesService,
-    private httpClient: HttpClient ) { 
+    ) { 
       this.url="";
+      let currentUser = this.authenticationService.currentUserValue;
+      this.inspectorId= currentUser.id;
       this.licenciaService.getLicencias(this.size,this.page,this.inspectorId)
       .subscribe(res  =>{
                    console.log(res);
@@ -56,6 +60,8 @@ export class ListarLicenciaPage implements OnInit {
 
   loadLicencias(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
+      let currentUser = this.authenticationService.currentUserValue;
+      this.inspectorId= currentUser.id;
       this.licenciaService.getLicencias(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);

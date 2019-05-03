@@ -6,6 +6,8 @@ import {  AlertController  } from '@ionic/angular';
 
 /* SERVICES  */
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 
 @Component({
@@ -25,9 +27,13 @@ export class ListarVisitaEscuelaPage implements OnInit {
   inspectorId=1;
 
 
-  constructor(private router:Router, private visitaService: ActividadesService, private alertCtrl: AlertController) {
+  constructor(private visitaService: ActividadesService,
+              private alertCtrl: AlertController,
+              private authenticationService: AuthenticationService) {
     this.url=""
     console.log("creacion del listar visitas");
+    let currentUser = this.authenticationService.currentUserValue;
+    this.inspectorId= currentUser.id;
       this.visitaService.getVisitas(this.size,this.page,this.inspectorId)
       .subscribe(res  =>{
                   console.log(res.content);
@@ -44,6 +50,8 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   loadVisitas(page, infiniteScroll? ) {
     if(page <= this.maximumPages){
+      let currentUser = this.authenticationService.currentUserValue;
+      this.inspectorId= currentUser.id;
       this.visitaService.getVisitas(this.size,page,this.inspectorId)
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);

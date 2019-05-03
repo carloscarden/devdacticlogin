@@ -108,12 +108,14 @@ export class EventModalPage implements OnInit {
     this.loading = true;
     this.agendaService.addTarea(this.evento).subscribe(
         data => {
+          console.log(data);
            this.loading=false;
            this.evento = new Tarea();
            this.error = '';
            this.presentAlert("La tarea ha sido creada exitosamente. ");
         },
         error => {
+          console.log('error en el add',error);
             this.error = error;
             this.loading = false;
         });;

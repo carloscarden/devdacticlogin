@@ -14,6 +14,8 @@ import { ImagenService } from './../../../_services/imagen.service';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 /*  MODELOS */
 import { Convocatoria } from './../../../_models/convocatoria';
@@ -60,14 +62,14 @@ export class CargarConvocatoriaPage implements OnInit {
   constructor(
     private plt: Platform,
     private toastController: ToastController,
-    private imgService:  ImagenService,
+    private authenticationService: AuthenticationService,
     private convocatoriaService: ActividadesService,
     private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
     /* id del inspector */
-    this.convocatoria.idInspector=1;
+   
     this.convocatoria.inicio=null;
   }
 
@@ -117,8 +119,8 @@ export class CargarConvocatoriaPage implements OnInit {
 
 
      /********************************************************************* */
-
-
+     let currentUser = this.authenticationService.currentUserValue;
+     this.convocatoria.inspectorId=currentUser.id;
 
 
     console.log(this.convocatoria);
@@ -134,6 +136,7 @@ export class CargarConvocatoriaPage implements OnInit {
            this.presentAlert("Enviado con éxito. ");
         },
         error => {
+            console.log('error en el data', error);
             this.presentAlert("Hubo un error, intente nuevamente. ");
             this.error = error;
             this.loading = false;

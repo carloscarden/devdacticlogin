@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
 /* SERVICES  */
 import { ImagenService } from './../../../_services/imagen.service';
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 
 /* MODELS  */
 import { Establecimiento } from './../../../_models/establecimiento';
@@ -51,12 +53,12 @@ export class CargarVisitaEscuelaPage implements OnInit {
     private toastController: ToastController,
     private imgService:  ImagenService,
     private visitaService: ActividadesService,
+    private authenticationService: AuthenticationService,
     private alertCtrl: AlertController
     ) { }
 
   ngOnInit() {
 
-    this.visita.idInspector=2;
     this.visita.urgente="T";
     this.visita.establecimiento = new Establecimiento();
     /*this.plt.ready().then(() => {
@@ -104,7 +106,6 @@ export class CargarVisitaEscuelaPage implements OnInit {
     this.visita.fin=formatoCorrectoFin;
     /********************************************************************* */
     
-    this.visita.idInspector=1;
     if(this.conflicto){
       this.visita.urgente="T"
     }
@@ -112,8 +113,11 @@ export class CargarVisitaEscuelaPage implements OnInit {
       this.visita.urgente="F"
     }
 
-    console.log(this.visita);
+    
 
+    let currentUser = this.authenticationService.currentUserValue;
+    this.visita.inspectorId=currentUser.id;
+    console.log(this.visita);
 
 
     this.visitaService.addVisita(this.visita).subscribe(

@@ -81,18 +81,38 @@
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
-            </ion-item>   
+            </ion-item> 
+            
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Distrito</ion-label>
+              <ionic-selectable class="fuente"
+                item-content
+                [(ngModel)]="trabajoAdmin.distrito"
+                name="trabajoAdminDistrito"
+                itemValueField="numero"
+                itemTextField="descripcion"
+                [items]="tiposDistritos"
+                [canSearch]="true"
+                searchPlaceholder="buscar distrito"
+                (onSearch)="searchDistritos($event)">
+                <ng-template ionicSelectableCloseButtonTemplate>
+                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+
+
+
+            
 
 
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
               <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>
             </ion-item>
-            <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Lugar</ion-label>
-              <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.lugar" #observaciones="ngModel"></ion-input>
-            </ion-item>
 
+
+           
             
     <!-- **********************************  Carga de las imagenes  ********************************************************************** -->
            <hr>

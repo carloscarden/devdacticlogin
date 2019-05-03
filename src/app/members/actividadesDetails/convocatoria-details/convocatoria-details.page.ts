@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
+
 import { ActividadesService } from './../../../_services/actividades.service';
-import { Router, RouterEvent, ActivatedRoute } from '@angular/router';
-import {Convocatoria} from './../../../_models/convocatoria'
+import { AuthenticationService } from './../../../_services/authentication.service';
+
+
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -15,7 +19,9 @@ export class ConvocatoriaDetailsPage implements OnInit {
   convocatoria;
   
 
-  constructor(private convocatoriaService: ActividadesService,
+  constructor(
+    private convocatoriaService: ActividadesService,
+    private authenticationService: AuthenticationService,
     private router:Router, private route: ActivatedRoute) {
      
 
@@ -26,6 +32,8 @@ export class ConvocatoriaDetailsPage implements OnInit {
   ngOnInit() {
     let idConvocatoria=this.route.snapshot.paramMap.get('id');
     console.log(idConvocatoria);
+    let currentUser = this.authenticationService.currentUserValue;
+    this.idInspector= currentUser.id;
     this.convocatoriaService.getConvocatoria(idConvocatoria,this.idInspector) .subscribe(res  =>{
       console.log(res);
       this.convocatoria=[res];

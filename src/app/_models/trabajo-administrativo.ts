@@ -1,13 +1,15 @@
 import { TipoTrabajoAdministrativo } from "./tipo-trabajo-administrativo";
 import { Imagen } from "./imagen";
+import { Distrito } from "./distrito";
+
 
 export class TrabajoAdministrativo {
     inicio:string;
     fin:string;
     observaciones: string;
-    lugar:string;
+    distrito: Distrito;
     tipoTrabajoAdmin: TipoTrabajoAdministrativo;
     adjuntos:Array<Imagen>;
-    idInspector:number;
+    inspectorId:number;
 
 }

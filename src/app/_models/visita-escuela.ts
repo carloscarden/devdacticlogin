@@ -8,7 +8,7 @@ export class VisitaEscuela {
     fin: string;
     establecimiento: Establecimiento;
     urgente:string;
-    idInspector:number;
+    inspectorId:number;
     motivo: TipoVisita;
     observaciones: string;
     acompaniante: string;

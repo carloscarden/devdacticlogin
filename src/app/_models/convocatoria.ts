@@ -11,7 +11,7 @@ export class Convocatoria {
     tipoConvocatoria: TipoConvocatoria;
     distrito: Distrito;
     lugar: string;
-    idInspector:number;
+    inspectorId:number;
     adjuntos:Array<Imagen>;
 
 }

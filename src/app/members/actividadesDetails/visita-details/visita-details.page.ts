@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActividadesService } from './../../../_services/actividades.service';
+import { AuthenticationService } from './../../../_services/authentication.service';
+
 import {  ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,11 +14,14 @@ export class VisitaDetailsPage implements OnInit {
   idInspector=1;
 
   constructor(private visitaService: ActividadesService,
-    private route: ActivatedRoute) { }
+              private authenticationService: AuthenticationService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     let idVisita=this.route.snapshot.paramMap.get('id');
     console.log(idVisita);
+    let currentUser = this.authenticationService.currentUserValue;
+    this.idInspector= currentUser.id;
     this.visitaService.getVisita(idVisita,this.idInspector) .subscribe(res  =>{
       console.log(res);
       this.visitaEscuela=[res];

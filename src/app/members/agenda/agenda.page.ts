@@ -1,11 +1,12 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
 import { CalendarComponent } from "ionic2-calendar/calendar";
 
 
-import { Router, RouterEvent, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
@@ -37,7 +38,13 @@ export class AgendaPage implements OnInit {
      currentDate: new Date()
   }; // these are the variable used by the calendar.
 
-  constructor(protected agendaService: AgendaServiceService,private modalCtrl: ModalController, private alertCtrl: AlertController,private router:Router, private route: ActivatedRoute ) { 
+  constructor(
+    protected agendaService: AgendaServiceService,
+    private modalCtrl: ModalController, 
+    private alertCtrl: AlertController,
+    private router:Router,
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService ) { 
   }
 
   ngOnInit() {
@@ -152,6 +159,8 @@ export class AgendaPage implements OnInit {
 
   cargarEvents(month, year){
       this.eventSource = [];
+      let currentUser = this.authenticationService.currentUserValue;
+      this.inspectorId= currentUser.id;
       this.agendaService.getEvents(month,year,this.inspectorId).subscribe(
         // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
