@@ -35,7 +35,11 @@
   --inner-border-width:0;
 }
 
-         /*BOTON*/
+.form-group {
+display:flex;
+  text-align:center;
+}
+
 .tipoBoton {
   font-size: 14px;
   font-weight:bold;
