@@ -23,25 +23,20 @@
 </ion-item>
 <hr>
 <hr>
-<hr>
-<hr>
+
 
  <div class="form-group">
   <ion-button (click)="filtrar()">Buscar</ion-button>
  </div>
 
-
  <hr>
- <hr>
- <h1>Tareas del {{anioBuscado}}</h1>
+ <p class="areaAnio">Tareas del {{anioBuscado}}</p>
 <hr>
 <hr>
 
 {{ ordenar() }}
 <div *ngFor ="let tareasMeses of mesesCargados">
-    <p>----------------------------------------------------------------------</p>
-        <h3>{{ tareasMeses.nombreMes }}</h3>
-    <p>----------------------------------------------------------------------</p>
+        <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
 
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
@@ -50,7 +45,7 @@
    <ion-list margin-top>
       <ion-item-sliding class="bkevento" *ngFor="let tarea of tareasMeses.tareas">
           <ion-item class="itemBoton" lines="inset" button (click)="mostrarTarea(tarea)">
-            <ion-label>
+            <ion-label class="label">
                <ion-grid>
                  <ion-row>
                   <ion-col size="3">

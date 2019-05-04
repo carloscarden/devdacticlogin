@@ -16,6 +16,9 @@
 	margin:0;
 }
 
+.label {
+	margin:0;
+}
 h2{
 	color:#fff;
 	background-color:#0476af;
@@ -27,9 +30,8 @@ h2{
     margin-top:50px;
 }
 
-
 .itemBoton {
-  inner-border-width:0;
+  /*inner-border-width:0;*/
   --padding-start:0;
   border: solid #b50f68 20px .5px .5px .5px;
 }
