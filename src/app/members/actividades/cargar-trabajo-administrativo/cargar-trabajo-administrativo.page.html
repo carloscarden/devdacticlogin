@@ -66,25 +66,28 @@
 
 
             <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
+              <ion-label position="stacked" class="textoBold" color="success">Tipo (*)</ion-label>
               <ionic-selectable class="fuente"
                 item-content
                 [(ngModel)]="trabajoAdmin.tipoTrabajoAdmin"
-                name="convocatoriaTipo"
+                name="trabajoAdminTipo"
                 itemValueField="codigo"
                 itemTextField="descripcion"
                 [items]="tiposTrabajos"
                 [canSearch]="true"
                 searchPlaceholder="buscar tipo trabajo"
-                (onSearch)="searchPorts($event)">
+                (onSearch)="searchPorts($event)"
+                required>
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
+              
+              
             </ion-item> 
             
             <ion-item>
-              <ion-label position="stacked" class="textoBold" color="success">Distrito</ion-label>
+              <ion-label position="stacked" class="textoBold" color="success">Distrito (*)</ion-label>
               <ionic-selectable class="fuente"
                 item-content
                 [(ngModel)]="trabajoAdmin.distrito"
