@@ -12,30 +12,31 @@
 
 <ion-item class="busquedaPrimera">
   <ion-label position="stacked" class="textoBold" color="success">Seleccionar mes</ion-label>
-  <ion-select   okText="Aceptar" cancelText="Cancelar" [(ngModel)]="mesAbuscar">
+  <ion-select   okText="Aceptar" cancelText="Cancelar" [(ngModel)]="mesAbuscar" (ionChange)="filtrar()">
     <ion-select-option value="todos">Todos los meses</ion-select-option>
     <ion-select-option *ngFor="let opt of nombreMeses; index as pos" value="{{pos}}">{{opt}}</ion-select-option>
   </ion-select>
 </ion-item>
 <ion-item class="busquedaSegunda">
   <ion-label position="stacked" class="textoBold" color="success">Seleccionar a&ntilde;o</ion-label>
-  <ion-input class="fuente" type="number"  [(ngModel)]="anio" min="2019" max="2100" ></ion-input>
+  <ion-input class="fuente" type="number"  [(ngModel)]="anio" min="2019" max="2100" (ionChange)="filtrar()"></ion-input>
 </ion-item>
 <!--<hr>
 <hr>
+<<<<<<< HEAD
 <hr>
 <hr>
 
  <div class="form-group">
   <ion-button (click)="filtrar()">Buscar</ion-button>
  </div>-->
- <hr>
- <div class="areaAnio"><strong>Tareas del {{anioBuscado}}</strong></div>
 
-{{ ordenar() }}
+
+ <hr>
+ <p class="areaAnio">Tareas del {{anioBuscado}}</p>
 <div *ngFor ="let tareasMeses of mesesCargados">
         <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
-    
+
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
    </div>

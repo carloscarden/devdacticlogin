@@ -6,7 +6,7 @@
                 /*TEXTO LABEL*/
         .textoBold {
             font-weight:bold;
-            font-size:19px;
+            font-size:17px;
             color:#454545;
         }
         
@@ -44,4 +44,25 @@
             margin-top:50px;
         }  
         
-      
+       .listado {
+            margin:0;
+            padding:0;
+        } 
+
+        .label {
+           margin:0;
+         }
+
+         .itemBoton {
+          --padding-start:0;
+        }
+
+        .textoDetalle {
+            font-weight:bold;
+            font-size:14px;
+            color:#9aca3c;
+        }
+
+        .listado {
+            --padding-start:0;
+          }

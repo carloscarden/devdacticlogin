@@ -6,7 +6,7 @@
                 /*TEXTO LABEL*/
         .textoBold {
             font-weight:bold;
-            font-size:19px;
+            font-size:17px;
             color:#454545;
         }
         
@@ -35,7 +35,27 @@
             box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
             --inner-border-width:0;
         }
+
+        .textoDetalle {
+            font-weight:bold;
+            font-size:14px;
+            color:#9aca3c;
+        }
         
+        .listado {
+            margin:0;
+            padding:0;
+        } 
+
+        .label {
+           margin:0;
+         }
+
+         .itemBoton {
+          --padding-start:0;
+        }
+
+
                 /*CENTRAR BOTON*/
         .form-group {
             text-align:center;
@@ -47,3 +67,6 @@
             margin-top:50px;
         }  
         
+         .listado {
+            --padding-start:0;
+          }

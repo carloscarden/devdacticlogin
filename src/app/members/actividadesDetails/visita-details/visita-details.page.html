@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title class="textoTitulo">Detalles de la visita</ion-title>
+      <ion-title class="textoTitulo">Detalles de la Visita</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -13,27 +13,25 @@
         <ion-item-sliding *ngFor="let item of visitaEscuela">
           <ion-item class="itemBoton" lines="inset">
             <ion-label class="label">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="3">
-                    <p class="textoBold">Establecimiento</p> 
-                    <p class="textoBold">Inicio</p>   
-                    <p class="textoBold">Fin</p>
-                    <p class="textoBold">Descripci&oacute;n</p>   
-                    <p class="textoBold">Observaciones</p>
-                  </ion-col>
-                  <ion-col size="9">  
+              
+                    <p class="textoDetalle">Lugar:</p> 
                     <p>{{ item.establecimiento.nombre }}</p>
+                    <p class="textoDetalle">Inicio</p>  
                     <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}  {{ hora(item.inicio)}}</p>
+                    <p class="textoDetalle">Fin</p>
                     <p>{{ stringAsDate(item.fin) | date:'fullDate' }}  {{ hora(item.fin)}}</p>
+                    <p class="textoDetalle">Descrip.:</p>  
                     <p>{{ item.motivo.descripcion}}</p>
-                    <p>{{ item.observaciones}}</p>
-              <div  *ngIf="item.urgente=='T'" >
-                  <p> SITUACION DE CONFLICTO </p><br>
+                    <p class="textoDetalle">Observaciones:</p>
+                    <p>{{ item.observaciones}}</p>    
+                    <hr>
+                    
+              <div class="conflict" *ngIf="item.urgente=='T'" >
+                  <p class="sitconfli" > SITUACION DE CONFLICTO </p>
               </div>
 
               <ion-list>
-                  <h2>ARCHIVOS:</h2>
+                  <h3 class="tituloArch">ARCHIVOS</h3>
                   <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
                       
                       <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">

@@ -74,7 +74,7 @@
           
           
           <ion-item>
-             <ion-label position="stacked" class="textoBold" color="success">Motivo</ion-label>
+             <ion-label position="stacked" class="textoBold" color="success">Motivo(*)</ion-label>
              <ionic-selectable class="fuente"
                 item-content
                 [(ngModel)]="visita.motivo"
@@ -84,7 +84,8 @@
                 [items]="motivos"
                 [canSearch]="true"
                 searchPlaceholder="buscar motivo visita"
-                (onSearch)="searchMotivos($event)">
+                (onSearch)="searchMotivos($event)"
+                required>
 
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>

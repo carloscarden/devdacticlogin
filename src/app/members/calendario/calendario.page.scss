@@ -15,6 +15,9 @@
 	margin:0;
 }
 
+.label {
+	margin:0;
+}
 h2{
 	color:#fff;
 	background-color:#0476af;
@@ -26,6 +29,7 @@ h2{
     margin-top:50px;
 }
 
+
 .listado {
 	margin:0;
 	padding:0;
@@ -36,9 +40,9 @@ h2{
 }
 
 .itemBoton {
-  /*--inner-border-width:0;*/
   --padding-start:0;
 }
+
 
 .textoBold {
   font-weight:bold;

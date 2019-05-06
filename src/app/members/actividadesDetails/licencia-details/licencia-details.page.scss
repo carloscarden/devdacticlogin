@@ -1,19 +1,28 @@
-.listado {
+/*.listado {
 	margin:0;
 	padding:0;
-}
+}*/
 
-.label {
+/*.label {
 	margin:0;
-}
+}*/
 
 .itemBoton {
   /*--inner-border-width:0;*/
   --padding-start:0;
+  margin-bottom:30px;
 }
 
-.textoBold {
+.textoDetalle {
   font-weight:bold;
   font-size:14px;
+  color:#9aca3c;
+}
+
+.tituloArch {
+  font-weight:bold;
+  font-size:18px;
   color:#0476af;
+  margin-top:15px;
+  margin-bottom:5px;
 }
