@@ -9,21 +9,30 @@
 
 <ion-content padding>
 
-    <ion-list margin-top>
+    <ion-list margin-top class="listado">
         <ion-item-sliding *ngFor="let item of licencia">
-          <ion-item lines="inset" >
-            <ion-label>
-                ARTICULO: {{ item.articulo }} <br>
-                <br>
-                INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p><br>
-                FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p><br>
-                 
-                <div  *ngIf="item.medica=='T'" >
-                    TIPO DE LICENCIA: <p>medica </p><br>
-                    CODIGO: <p>{{ item.codigo}}</p><br>
-                </div>
-
-
+          <ion-item class="itemBoton" lines="inset" >
+            <ion-label class="label">
+              <ion-grid>
+                       <ion-row>
+                        <ion-col size="3">
+                          <p class="textoBold">ARTICULO</p> 
+                          <p class="textoBold">Inicio</p>   
+                          <p class="textoBold">Fin</p>
+                          <p class="textoBold">Tipo</p>   
+                          <p class="textoBold">C&oacute;digo</p>
+                        </ion-col>
+                        <ion-col size="9">  
+                          <p>{{ item.articulo }}</p>  
+                          <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
+                          <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p>     
+                          <div  *ngIf="item.medica=='T'" >
+                              <p>medica </p>
+                              <p>{{ item.codigo}}</p>
+                          </div>
+                        </ion-col>
+                       </ion-row>
+                    </ion-grid>
             </ion-label>
           </ion-item>
         </ion-item-sliding>

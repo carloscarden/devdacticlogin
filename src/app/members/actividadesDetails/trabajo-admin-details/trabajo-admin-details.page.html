@@ -9,15 +9,26 @@
 
 <ion-content padding>
 
-    <ion-list margin-top>
+    <ion-list margin-top class="listado">
         <ion-item-sliding *ngFor="let item of trabajoAdmin">
-            <ion-item lines="inset">
-              <ion-label>
-                TIPO: {{ item.tipoTrabajoAdmin.descripcion }} <br>
-                INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p><br>
-                FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p><br>
-                OBSERVACIONES:  <p>{{ item.observaciones }}</p><br>
-
+            <ion-item class="itemBoton" lines="inset">
+              <ion-label class="label">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="3">
+                      <p class="textoBold">TIPO</p> 
+                      <p class="textoBold">Inicio</p>   
+                      <p class="textoBold">Fin</p>
+                      <p class="textoBold">Observaciones</p>   
+                    </ion-col>
+                    <ion-col size="9">  
+                      <p>{{ item.tipoTrabajoAdmin.descripcion }}</p>
+                      <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
+                      <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
+                      <p>{{ item.observaciones }}</p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
                 <ion-list>
                     <h2>ARCHIVOS:</h2>
                     <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>

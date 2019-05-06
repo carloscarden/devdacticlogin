@@ -9,15 +9,25 @@
 
 <ion-content padding>
 
-    <ion-list margin-top>
+    <ion-list margin-top class="listado">
         <ion-item-sliding *ngFor="let item of visitaEscuela">
-          <ion-item lines="inset">
-            <ion-label>
-              ESTABLECIMIENTO: {{ item.establecimiento.nombre }} <br>
-              INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}  {{ hora(item.inicio)}}</p><br>
-              FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }}  {{ hora(item.fin)}}</p><br>
-              DESCRIPCION:  <p>{{ item.motivo.descripcion}}</p><br>
-              OBSERVACIONES:  <p>{{ item.observaciones}}</p><br>
+          <ion-item class="itemBoton" lines="inset">
+            <ion-label class="label">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <p class="textoBold">Establecimiento</p> 
+                    <p class="textoBold">Inicio</p>   
+                    <p class="textoBold">Fin</p>
+                    <p class="textoBold">Descripci&oacute;n</p>   
+                    <p class="textoBold">Observaciones</p>
+                  </ion-col>
+                  <ion-col size="9">  
+                    <p>{{ item.establecimiento.nombre }}</p>
+                    <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}  {{ hora(item.inicio)}}</p>
+                    <p>{{ stringAsDate(item.fin) | date:'fullDate' }}  {{ hora(item.fin)}}</p>
+                    <p>{{ item.motivo.descripcion}}</p>
+                    <p>{{ item.observaciones}}</p>
               <div  *ngIf="item.urgente=='T'" >
                   <p> SITUACION DE CONFLICTO </p><br>
               </div>

@@ -9,7 +9,6 @@
 	margin:0;
 	font-size:14px;
 	text-align:right;
-	position:sticky;
 }
 
 .areaMes {
@@ -27,11 +26,18 @@ h2{
     margin-top:50px;
 }
 
+.listado {
+	margin:0;
+	padding:0;
+}
+
+.label {
+	margin:0;
+}
 
 .itemBoton {
-  inner-border-width:0;
+  /*--inner-border-width:0;*/
   --padding-start:0;
-  border: solid #b50f68 20px .5px .5px .5px;
 }
 
 .textoBold {
