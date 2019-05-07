@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http,Headers ,RequestOptions } from '@angular/http'
+import { Http } from '@angular/http'
 
 import { Observable, of } from 'rxjs';
 
 import 'rxjs/add/observable/fromPromise';
 
 
-import { Licencia }  from '../_models/licencia';
 import { Convocatoria }  from '../_models/convocatoria';
-import { TipoConvocatoria } from '../_models/tipo-convocatoria'
-import { TipoTrabajoAdministrativo }  from '../_models/tipo-trabajo-administrativo';
 import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
 import { Platform } from '@ionic/angular'
 
@@ -37,7 +34,6 @@ export class ActividadesService {
 
   /* var headers = new Headers();
     return this.httpOtro.post(URL+`licencias`,  l );*/
-    console.log(licencia);
 
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
@@ -83,7 +79,7 @@ export class ActividadesService {
 
 
   getDistritos(): Observable<any>{
-    return this.httpOtro.get(URL+`distritos`);
+    return this.http.get(URL+`distritos`);
 
   }
   /******************************************************************************** */

@@ -153,6 +153,10 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
     this.actividadesSubscription = this.actividadesService.getTipoTrabajoAdministrativo().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
+      console.log("tipos");
+      console.log("tipos",tipos);
+      console.log("tipos",tipos._body);
+
      if (this.actividadesSubscription.closed) {
         return;
       }
@@ -196,13 +200,11 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
     this.actividadesSubscription = this.actividadesService.getDistritos().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
-    
-     var tareas=JSON.parse(tipos._body);
      if (this.actividadesSubscription.closed) {
         return;
       }
 
-      event.component.items = this.filterDistritos(tareas, text);
+      event.component.items = this.filterDistritos(tipos, text);
       event.component.endSearch();
     });
   }

@@ -4,7 +4,6 @@ import { Licencia } from './../../../_models/licencia';
 import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
-import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 

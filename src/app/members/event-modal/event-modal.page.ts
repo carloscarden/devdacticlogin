@@ -1,11 +1,11 @@
-import { Component, OnInit, Input  } from '@angular/core';
-import {  NavController,  ModalController, AlertController } from '@ionic/angular';
-import { NavParams } from '@ionic/angular';
+import { Component, OnInit  } from '@angular/core';
+import {  ModalController, AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Actividad } from 'src/app/_models/actividad';
-import { Evento } from 'src/app/_models/evento';
 import { Tarea } from 'src/app/_models/tarea';
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+
 
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
@@ -23,10 +23,10 @@ export class EventModalPage implements OnInit {
   selectedDay:any;
   loading;
   error;
-  constructor(private nav:NavController,
+  constructor(
               private modalCtrl:ModalController, 
-              navParams: NavParams,
               private agendaService: AgendaServiceService,
+              private authenticationService: AuthenticationService,
               private alertCtrl: AlertController) { }
 
               async presentAlert(msj) {
@@ -41,7 +41,6 @@ export class EventModalPage implements OnInit {
   ngOnInit() {
     //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
     let preselectedDate = moment(this.selectedDay).format();
-    console.log(preselectedDate);
     this.evento.inicio = preselectedDate;
     this.evento.fin = preselectedDate;
 
@@ -51,7 +50,6 @@ export class EventModalPage implements OnInit {
 
   
   filterPorts(tipos: Actividad[], text: string) {
-    console.log(tipos);
     return tipos.filter(t => {
       return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
@@ -73,7 +71,6 @@ export class EventModalPage implements OnInit {
     this.actividadesSubscription = this.agendaService.getTipoActividades().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
       var tareas=tipos;
-      console.log(tareas);
      if (this.actividadesSubscription.closed) {
         return;
       }
@@ -98,24 +95,28 @@ export class EventModalPage implements OnInit {
 
   async save() {
 
+    // setear el id del inspector
+    let currentUser = this.authenticationService.currentUserValue;
+    this.evento.idInspector=currentUser.id;
+
+    //setear el inicio de la actividad
     let init=new Date(this.evento.inicio);
-    this.evento.idInspector=1;
     this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
-    console.log(this.evento);
+
+
+    //setear el fin de la actividad
     let end= new Date(this.evento.fin);
     this.evento.fin=(end.getMonth()+1).toString()+"-"+end.getDate()+"-"+end.getFullYear()+" "+end.getHours()+":"+end.getMinutes();
-    console.log(this.evento.inicio);
+
     this.loading = true;
     this.agendaService.addTarea(this.evento).subscribe(
         data => {
-          console.log(data);
            this.loading=false;
            this.evento = new Tarea();
            this.error = '';
            this.presentAlert("La tarea ha sido creada exitosamente. ");
         },
         error => {
-          console.log('error en el add',error);
             this.error = error;
             this.loading = false;
         });;

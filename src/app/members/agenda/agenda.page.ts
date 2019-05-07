@@ -1,18 +1,25 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
-import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
+//Modal
 import { ModalController, AlertController  } from '@ionic/angular';
 import { EventModalPage } from '../event-modal/event-modal.page'
+
+// Services
+import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+
+
+// Plugin
 import { CalendarComponent } from "ionic2-calendar/calendar";
 
 
-import { Router, ActivatedRoute } from '@angular/router';
 
+// Setear en la zona horaria local
 import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
 
-import { Tarea } from './../../_models/tarea';
 import * as moment from 'moment';
 
 

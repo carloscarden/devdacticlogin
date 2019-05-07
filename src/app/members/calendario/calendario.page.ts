@@ -9,7 +9,7 @@ import { EventModalPage } from '../event-modal/event-modal.page'
 
 // servicios
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
-import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 import * as moment from 'moment';
 
@@ -35,7 +35,9 @@ export class CalendarioPage implements OnInit {
   constructor(
     protected agendaService: AgendaServiceService,
     private modalCtrl: ModalController,
-    private router:Router, private alertCtrl: AlertController) { 
+    private router:Router, 
+    private authenticationService: AuthenticationService,
+    private alertCtrl: AlertController) { 
    
      
     }
@@ -49,6 +51,9 @@ export class CalendarioPage implements OnInit {
 
 
    nuevoMes(mes, infiniteScroll?){
+     // setear el id del inspector
+    let currentUser = this.authenticationService.currentUserValue;
+    this.inspectorId=currentUser.id;
     this.agendaService.getEvents(mes,this.anio,this.inspectorId)
         .subscribe(res  =>{
                     let mesActual=this.nombreMeses[mes-1];
@@ -103,6 +108,12 @@ export class CalendarioPage implements OnInit {
 
 
   filtrar(){
+      console.log("infinite scroll")
+      console.log('infinite scrol',this.restInfScroll!=null)
+      if(this.restInfScroll!=null){
+        console.log('disable infinite scroll',this.restInfScroll.target.disabled)
+        this.restInfScroll.target.disabled=false;
+      }
       this.mesesCargados=[];
       this.anioBuscado= this.anio;
       if(this.mesAbuscar=="todos"){

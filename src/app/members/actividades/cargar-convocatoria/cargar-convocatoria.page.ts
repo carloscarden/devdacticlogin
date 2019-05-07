@@ -1,4 +1,4 @@
-import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 import { first } from 'rxjs/operators';
@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 import { ToastController, Platform, AlertController } from '@ionic/angular';
 
 
-import { ImagenService } from './../../../_services/imagen.service';
 
 /*  SERVICES */
 import { ActividadesService } from './../../../_services/actividades.service';
@@ -123,7 +122,6 @@ export class CargarConvocatoriaPage implements OnInit {
      this.convocatoria.inspectorId=currentUser.id;
 
 
-    console.log(this.convocatoria);
     this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
     .subscribe(
         data => {

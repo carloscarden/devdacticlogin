@@ -53,8 +53,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string){
-    console.log("username",username);
-    console.log("password",password);
+  
    
     return this.http.post<any>(`http://test2.abc.gov.ar:8080/InspectoresAppSec/auth`, { username, password })
             .pipe(map(user => {

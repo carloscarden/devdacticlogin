@@ -28,14 +28,19 @@
  <p class="areaAnio">Tareas del {{anioBuscado}}</p>
 <hr>
 <hr>
-
+<hr>
+<hr>
 {{ ordenar() }}
 <div *ngFor ="let tareasMeses of mesesCargados">
         <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
 
+    <hr>
+    <hr>
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
-   </div>
+    </div>
+    <hr>
+    <hr>
 
    <ion-list margin-top>
       <ion-item-sliding class="bkevento" *ngFor="let tarea of tareasMeses.tareas">
