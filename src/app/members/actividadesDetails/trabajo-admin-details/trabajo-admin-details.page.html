@@ -3,23 +3,28 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title class="textoTitulo">Detalles del trabajo administrativo</ion-title>
+      <ion-title class="textoTitulo">Detalles Trabajo Administrativo</ion-title>
     </ion-toolbar>
   </ion-header>
 
 <ion-content padding>
 
-    <ion-list margin-top>
+    <ion-list margin-top class="listado">
         <ion-item-sliding *ngFor="let item of trabajoAdmin">
-            <ion-item lines="inset">
-              <ion-label>
-                TIPO: {{ item.tipoTrabajoAdmin.descripcion }} <br>
-                INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p><br>
-                FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p><br>
-                OBSERVACIONES:  <p>{{ item.observaciones }}</p><br>
+            <ion-item class="itemBoton" lines="inset">
+              <ion-label class="label">
+                
+                      <p class="textoDetalle">Tipo:</p>
+                      <p>{{ item.tipoTrabajoAdmin.descripcion }}</p>
+                      <p class="textoDetalle">Inicio:</p> 
+                      <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
+                      <p class="textoDetalle">Fin:</p>
+                      <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
+                      <p class="textoDetalle">Observaciones:</p>  
+                      <p>{{ item.observaciones }}</p>
 
                 <ion-list>
-                    <h2>ARCHIVOS:</h2>
+                    <h3 class="tituloArch">ARCHIVOS</h3>
                     <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
                         
                         <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">

@@ -3,26 +3,33 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title class="textoTitulo">Detalles de la convocatoria</ion-title>
+    <ion-title class="textoTitulo">Detalles de la Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
 
-        <ion-list margin-top>
+        <ion-list margin-top class="listado">
                 <ion-item-sliding *ngFor="let item of convocatoria">
-                  <ion-item lines="inset" >
-                    <ion-label>
-                      TIPO DE CONVOCATORIA: {{ item.tipoConvocatoria.descripcion }} <br> <br>  
-                      INICIO: <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p><br>  
-                      FIN:  <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p><br>  
-                      DISTRITO:  <p>{{ item.distrito.descripcion }}</p><br>  
-                      LUGAR:  <p>{{ item.lugar }}</p><br> 
-                      
-                      
+                  <ion-item class="itemBoton" lines="inset" >
+                    <ion-label class="label">
+                     
+                          <p class="textoDetalle">Tipo</p>
+                          <p>{{ item.tipoConvocatoria.descripcion }}</p>
+                          <p class="textoDetalle">Inicio</p>
+                          <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
+                          <p class="textoDetalle">Fin</p>
+                          <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
+                          <p class="textoDetalle">Distrito</p>
+                          <p>{{ item.distrito.descripcion }}</p> 
+                          <p class="textoDetalle">Lugar</p>
+                          <p>{{ item.lugar }}</p>
+
                       <ion-list>
-                        <h2>ARCHIVOS:</h2>
+                        <hr>
+                        <h3 class="tituloArch">ARCHIVOS</h3>
+                        <hr>
                         <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
                             
                             <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">
