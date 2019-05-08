@@ -8,6 +8,7 @@
 </ion-header>
 <!--{{ diagnostic }}
 {{ error }}-->
+
 <ion-content padding>
   <ion-grid>
     <ion-row>
@@ -24,6 +25,7 @@
                     min="2017"
                     max="2100"
                     mode="ios"
+                    (ionChange)="validarFechas()"
                     cancelText="cancelar"
                     doneText="guardar"
                    ></ion-datetime>
@@ -44,11 +46,16 @@
                   max="2100"
                   cancelText="cancelar"
                   doneText="guardar"
+                  (ionChange)="validarFechas()"
                 ></ion-datetime>
                     <div *ngIf="!(fechaFin.valid || fechaFin.pristine)" class="invalid-feedback">
                            La fecha de fin es requerida
-                    </div>
+                    </div>  
             </ion-item>
+
+            <div *ngIf="fechasNoValidas" >
+              <ion-label color="danger">La fecha fin no debe de ser menor que la fecha de inicio </ion-label>
+            </div>
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Art&iacute;culo  (*)</ion-label>
@@ -83,10 +90,13 @@
             </div>
 
             <hr>
+
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!licenciaForm.form.valid">
+              <ion-fab-button color="tertiary" [disabled]="!(licenciaForm.form.valid && !fechasNoValidas)">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!licenciaForm.form.valid" color="tertiary">
+
+                  
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(licenciaForm.form.valid && !fechasNoValidas)" color="tertiary">
                </ion-button>
               </ion-fab-button>
             </ion-fab> 

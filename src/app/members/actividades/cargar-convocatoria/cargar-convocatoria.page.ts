@@ -49,6 +49,7 @@ export class CargarConvocatoriaPage implements OnInit {
   cargaCorrecta = false;
   loading = false;
   error= '';
+  horasNoValidas=false;
 
   horaInicio;
   horaFin;
@@ -207,14 +208,13 @@ export class CargarConvocatoriaPage implements OnInit {
     this.convocatoriaService.getTipoConvocatorias();
 
     this.actividadesSubscription = this.convocatoriaService.getDistritos().subscribe(tipos => {
+
       // Subscription will be closed when unsubscribed manually.
-    
-     var tareas=JSON.parse(tipos._body);
      if (this.actividadesSubscription.closed) {
         return;
       }
 
-      event.component.items = this.filterDistritos(tareas, text);
+      event.component.items = this.filterDistritos(tipos, text);
       event.component.endSearch();
     });
   }
@@ -284,6 +284,24 @@ export class CargarConvocatoriaPage implements OnInit {
     this.megasDeLosArchivos.splice(pos,1);
     
     this.presentToast('Archivo removido.');
+
+  }
+
+
+
+  // validar si la hora de inicio es menor a la hora de fin
+  validarHoras(){
+
+    if(this.horaInicio!=null){
+      if(this.horaFin!=null){
+           if(this.horaFin<this.horaInicio){
+             this.horasNoValidas=true;
+           }
+           else{
+             this.horasNoValidas=false;
+           }
+      }
+    }
 
   }
 

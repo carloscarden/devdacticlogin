@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
+import { Evento } from 'src/app/_models/evento';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class EventModalPage implements OnInit {
   selectedDay:any;
   loading;
   error;
+  quisoAgendarSinActividad=false;
   constructor(
               private modalCtrl:ModalController, 
               private agendaService: AgendaServiceService,
@@ -94,33 +96,39 @@ export class EventModalPage implements OnInit {
   }
 
   async save() {
+    if( this.evento.actividad!= null ) {
+          // setear el id del inspector
+        let currentUser = this.authenticationService.currentUserValue;
+        this.evento.idInspector=currentUser.id;
 
-    // setear el id del inspector
-    let currentUser = this.authenticationService.currentUserValue;
-    this.evento.idInspector=currentUser.id;
-
-    //setear el inicio de la actividad
-    let init=new Date(this.evento.inicio);
-    this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
+        //setear el inicio de la actividad
+        let init=new Date(this.evento.inicio);
+        this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
 
 
-    //setear el fin de la actividad
-    let end= new Date(this.evento.fin);
-    this.evento.fin=(end.getMonth()+1).toString()+"-"+end.getDate()+"-"+end.getFullYear()+" "+end.getHours()+":"+end.getMinutes();
+        //setear el fin de la actividad
+        let end= new Date(this.evento.fin);
+        this.evento.fin=(end.getMonth()+1).toString()+"-"+end.getDate()+"-"+end.getFullYear()+" "+end.getHours()+":"+end.getMinutes();
 
-    this.loading = true;
-    this.agendaService.addTarea(this.evento).subscribe(
-        data => {
-           this.loading=false;
-           this.evento = new Tarea();
-           this.error = '';
-           this.presentAlert("La tarea ha sido creada exitosamente. ");
-        },
-        error => {
-            this.error = error;
-            this.loading = false;
-        });;
-    await this.modalCtrl.dismiss(this.evento);
+        this.loading = true;
+        this.agendaService.addTarea(this.evento).subscribe(
+            data => {
+              this.loading=false;
+              this.evento = new Tarea();
+              this.error = '';
+              this.presentAlert("La tarea ha sido creada exitosamente. ");
+            },
+            error => {
+                this.error = error;
+                this.loading = false;
+            });;
+        await this.modalCtrl.dismiss(this.evento);
+    }
+    else{
+        this.quisoAgendarSinActividad=true;
+    }
+
+    
   }
 
 

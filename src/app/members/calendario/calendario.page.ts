@@ -108,8 +108,6 @@ export class CalendarioPage implements OnInit {
 
 
   filtrar(){
-      console.log("infinite scroll")
-      console.log('infinite scrol',this.restInfScroll!=null)
       if(this.restInfScroll!=null){
         console.log('disable infinite scroll',this.restInfScroll.target.disabled)
         this.restInfScroll.target.disabled=false;
@@ -164,9 +162,11 @@ export class CalendarioPage implements OnInit {
     
     modal.onDidDismiss().then((data) => {
       if (data) {
-        console.log("data");
-        console.log(data);
+        
+        console.log("data",data);
+        console.log("data.actividad", data.data.actividad);
         let eventData = data.data;
+
         console.log(this.mesesCargados);
 
         
@@ -186,7 +186,11 @@ export class CalendarioPage implements OnInit {
           fin= new Date(txtFin);
         }
 
-        this.buscar(inicio.getMonth()+1,eventData);
+        if (data.data.actividad!=null){
+          this.buscar(inicio.getMonth()+1,eventData);
+        }
+
+        
       
 
       }

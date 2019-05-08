@@ -39,7 +39,8 @@
               <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
                 mode="ios"
                 cancelText="cancelar"
-                doneText="guardar">  
+                doneText="guardar"
+                (ionChange)="validarHoras()">  
               </ion-datetime>
               <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
                 La hora de inicio es requerida
@@ -56,12 +57,16 @@
               <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
                 mode="ios"
                 cancelText="cancelar"
-                doneText="guardar">  
+                doneText="guardar"
+                (ionChange)="validarHoras()">  
                 </ion-datetime>
               <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
                     La hora de fin es requerida
               </div>
           </ion-item>
+          <div *ngIf="horasNoValidas"  style="color:red;">
+            La fecha fin no debe de ser menor que la fecha de inicio
+          </div>
           
           
            <ion-item>
@@ -156,9 +161,9 @@
           <hr>
 
           <ion-fab horizontal="end" >
-            <ion-fab-button color="tertiary" [disabled]="!visitaForm.form.valid">
+            <ion-fab-button color="tertiary" [disabled]="!(visitaForm.form.valid  && !horasNoValidas) ">
                 <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!visitaForm.form.valid" color="tertiary"> </ion-button>
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(visitaForm.form.valid  && !horasNoValidas) " color="tertiary"> </ion-button>
             </ion-fab-button>
             <hr>
           </ion-fab> 

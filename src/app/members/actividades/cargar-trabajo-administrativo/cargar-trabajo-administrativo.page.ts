@@ -43,6 +43,9 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   loading = false;
   error= '';
 
+  horasNoValidas=false;
+
+
   horaInicio;
   horaFin;
   
@@ -280,6 +283,23 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
      this.megasDeLosArchivos.splice(pos,1);
     this.presentToast('Archivo removido.');
 
+
+  }
+
+
+   // validar si la hora de inicio es menor a la hora de fin
+   validarHoras(){
+
+    if(this.horaInicio!=null){
+      if(this.horaFin!=null){
+           if(this.horaFin<this.horaInicio){
+             this.horasNoValidas=true;
+           }
+           else{
+             this.horasNoValidas=false;
+           }
+      }
+    }
 
   }
 

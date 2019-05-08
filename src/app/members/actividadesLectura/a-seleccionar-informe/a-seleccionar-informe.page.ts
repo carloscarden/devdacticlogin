@@ -22,6 +22,11 @@ export class ASeleccionarInformePage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewDidEnter(){
+    console.log("ionViewDidEnter");
+  }
+
+
 
   onChange(newValue) {
     let irUrl=""

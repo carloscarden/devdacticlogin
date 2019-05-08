@@ -44,6 +44,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
   actividadesSubscription: Subscription;
   megasDeLosArchivos=[];
   totalMegasDeLosArchivos=0;
+  horasNoValidas=false;
 
   horaInicio;
   horaFin;
@@ -253,8 +254,21 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.visita); }
+   // validar si la hora de inicio es menor a la hora de fin
+   validarHoras(){
+
+    if(this.horaInicio!=null){
+      if(this.horaFin!=null){
+           if(this.horaFin<this.horaInicio){
+             this.horasNoValidas=true;
+           }
+           else{
+             this.horasNoValidas=false;
+           }
+      }
+    }
+
+  }
 
 
   esUnaImagen(tipo){

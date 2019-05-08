@@ -42,6 +42,7 @@
                 mode="ios"
                 cancelText="cancelar"
                 doneText="guardar"
+                (ionChange)="validarHoras()"
               ></ion-datetime>
               <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
                 La hora de inicio es requerida
@@ -58,11 +59,17 @@
                 mode="ios"
                 cancelText="cancelar"
                 doneText="guardar"
+                (ionChange)="validarHoras()"
               ></ion-datetime>
               <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
                 La hora de fin es requerida
              </div>
             </ion-item>
+
+            <div *ngIf="horasNoValidas"  style="color:red;">
+              La fecha fin no debe de ser menor que la fecha de inicio
+            </div>
+  
 
 
             <ion-item>
@@ -158,9 +165,9 @@
           <hr>
 
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!trabajoAdminForm.form.valid">
+              <ion-fab-button color="tertiary" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas) ">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon> 
-                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!trabajoAdminForm.form.valid" color="tertiary">
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas)" color="tertiary">
                </ion-button>
               </ion-fab-button>
             </ion-fab> 

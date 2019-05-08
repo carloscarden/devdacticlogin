@@ -21,6 +21,7 @@ export class CargarLicenciaPage implements OnInit {
   loading = false;
   error= '';
   tipoLicencia=false;
+  fechasNoValidas=false;
   constructor(
     private licenciaService: ActividadesService,
     private authenticationService: AuthenticationService,
@@ -38,6 +39,20 @@ export class CargarLicenciaPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  validarFechas(){
+     if(this.licencia.inicio!=null){
+        if(this.licencia.fin!=null){
+             if(this.licencia.fin<this.licencia.inicio){
+               this.fechasNoValidas=true;
+             }
+             else{
+               this.fechasNoValidas=false;
+             }
+        }
+     }
+
   }
 
   onSubmit() { 

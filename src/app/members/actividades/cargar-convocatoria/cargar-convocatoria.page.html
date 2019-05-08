@@ -38,6 +38,7 @@
             <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
                   mode="ios"
                   cancelText="cancelar"
+                  (ionChange)="validarHoras()"
                   doneText="guardar"
             ></ion-datetime>
                 <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
@@ -54,12 +55,17 @@
             <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
                   mode="ios"
                   cancelText="cancelar"
+                  (ionChange)="validarHoras()"
                   doneText="guardar"
             ></ion-datetime>
                 <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
                   La hora de fin es requerida
                </div>
           </ion-item>
+
+          <div *ngIf="horasNoValidas"  style="color:red;">
+            La fecha fin no debe de ser menor que la fecha de inicio
+          </div>
 
           <!--- *********************************************************** **********************************-->
 
@@ -150,13 +156,17 @@
               <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div>-->
 
+
+
           <hr>
           <hr>
           <hr>
+
+
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!convocatoriaForm.form.valid">
+              <ion-fab-button color="tertiary" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)">
                 <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)" color="tertiary">
                 </ion-button>
               </ion-fab-button>
             </ion-fab> 

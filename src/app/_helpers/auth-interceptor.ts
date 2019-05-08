@@ -9,14 +9,11 @@ export class AuthInterceptorService implements HttpInterceptor{
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
-        console.log('requestUrl del authInterceptor',request.url);
 
         
         return next.handle(request).pipe(map((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             // do stuff with response and headers you want
-            console.log("event httpresponse");
-            console.log(event.headers.get("authorization"));
             localStorage.setItem('token', event.headers.get("authorization"));
           }
           return event; 

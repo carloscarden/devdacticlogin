@@ -28,6 +28,11 @@
         </ng-template>
       </ionic-selectable>
     </ion-item>
+
+    <div *ngIf="quisoAgendarSinActividad && evento.actividad==null"  style="color:red;">
+      La actividad es requerida
+    </div>
+
     
 
     <ion-item>
