@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActividadesService } from './../../../_services/actividades.service';
+import { VisitaServiceService } from './../../../_services/visita-service.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
 import {  ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ export class VisitaDetailsPage implements OnInit {
   visitaEscuela;
   idInspector=1;
 
-  constructor(private visitaService: ActividadesService,
+  constructor(private visitaService: VisitaServiceService,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute) { }
 

@@ -4,9 +4,9 @@ import { Router, RouterEvent } from '@angular/router';
 
 
 /*  SERVICES */
-import { ActividadesService } from './../../../_services/actividades.service';
-import { TodoService } from './../../../_services/todo.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
+import { TrabajoAdminServiceService } from './../../../_services/trabajo-admin-service.service';
+
 
 
 /*  MODELOS */
@@ -30,7 +30,7 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
 
-  constructor( private trabajosService:ActividadesService, 
+  constructor( private trabajosService:TrabajoAdminServiceService, 
                private authenticationService: AuthenticationService
               ) { 
     console.log("creacion del listar trabajos admin");

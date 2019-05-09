@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Licencia } from './../../../_models/licencia';
 
-import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
+import { LicenciaServiceService } from './../../../_services/licencia-service.service';
 
 import { AlertController } from '@ionic/angular';
 
@@ -23,7 +23,7 @@ export class CargarLicenciaPage implements OnInit {
   tipoLicencia=false;
   fechasNoValidas=false;
   constructor(
-    private licenciaService: ActividadesService,
+    private licenciaService: LicenciaServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController) { }
 

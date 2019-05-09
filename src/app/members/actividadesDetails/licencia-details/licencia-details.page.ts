@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
+import { LicenciaServiceService } from './../../../_services/licencia-service.service';
 
 import {  ActivatedRoute } from '@angular/router';
 
@@ -15,7 +15,7 @@ export class LicenciaDetailsPage implements OnInit {
   licencia;
   idInspector=1;
 
-  constructor(private licenciaService: ActividadesService,
+  constructor(private licenciaService: LicenciaServiceService,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute) { }
 

@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 
 /* SERVICES  */
 import { ImagenService } from './../../../_services/imagen.service';
-import { ActividadesService } from './../../../_services/actividades.service';
+import { VisitaServiceService } from './../../../_services/visita-service.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
 
@@ -53,7 +53,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
   constructor(
     private toastController: ToastController,
     private imgService:  ImagenService,
-    private visitaService: ActividadesService,
+    private visitaService: VisitaServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController
     ) { }

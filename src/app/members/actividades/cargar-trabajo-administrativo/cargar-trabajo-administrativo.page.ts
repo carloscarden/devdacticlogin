@@ -18,6 +18,7 @@ import { Imagen } from './../../../_models/imagen';
 
 
 /* SERVICES */
+import { TrabajoAdminServiceService } from './../../../_services/trabajo-admin-service.service';
 import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
@@ -53,7 +54,8 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     private plt: Platform,
     private toastController: ToastController,
     private imgService:  ImagenService,
-    private actividadesService: ActividadesService,
+    private actividadesService:ActividadesService,
+    private trabajoAdminService: TrabajoAdminServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController) { }
 
@@ -111,7 +113,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
 
 
     console.log(this.trabajoAdmin);
-    this.actividadesService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
+    this.trabajoAdminService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
     .subscribe(
         data => {
            this.loading=false;
@@ -154,7 +156,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
       this.actividadesSubscription.unsubscribe();
     }
 
-    this.actividadesSubscription = this.actividadesService.getTipoTrabajoAdministrativo().subscribe(tipos => {
+    this.actividadesSubscription = this.trabajoAdminService.getTipoTrabajoAdministrativo().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
       console.log("tipos");
       console.log("tipos",tipos);

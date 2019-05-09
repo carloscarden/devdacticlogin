@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
+import { TrabajoAdminServiceService } from './../../../_services/trabajo-admin-service.service';
+
 
 import {  ActivatedRoute } from '@angular/router';
 
@@ -14,7 +15,7 @@ export class TrabajoAdminDetailsPage implements OnInit {
   trabajoAdmin;
   idInspector=1;
 
-  constructor(private trabajoAdminService: ActividadesService,
+  constructor(private trabajoAdminService: TrabajoAdminServiceService,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute) { }
 

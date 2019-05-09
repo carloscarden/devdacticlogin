@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 /*  SERVICES */
-import { ActividadesService } from './../../../_services/actividades.service';
+import { ConvocatoriaServiceService } from './../../../_services/convocatoria-service.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
 
@@ -29,8 +28,7 @@ export class ListarConvocatoriaPage implements OnInit {
   size=5;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
-  constructor(private convocatoriaService: ActividadesService,
-              private router:Router,
+  constructor(private convocatoriaService: ConvocatoriaServiceService,
               private authenticationService: AuthenticationService
             ) {
                 this.url=""

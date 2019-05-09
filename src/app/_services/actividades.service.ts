@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http } from '@angular/http'
+import { HttpClient} from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import 'rxjs/add/observable/fromPromise';
 
 
-import { Convocatoria }  from '../_models/convocatoria';
-import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
 import { Platform } from '@ionic/angular'
 
 const URL = `http://test2.abc.gov.ar:8080/InspectoresAppSec/`;
@@ -21,117 +18,21 @@ export class ActividadesService {
  
 
   constructor(private http: HttpClient,
-              private httpOtro:Http, // este es el que me funciona en la base de datos
               private _platform: Platform ) {
 
         if(this._platform.is("cordova")){
           this.basepath ="test2.abc.gov.ar:8080";
         }
   }
-  /******************************************************************************** */
-             /* LICENCIAS CRUD */
-  addLicencia(licencia: any) {
-
-  /* var headers = new Headers();
-    return this.httpOtro.post(URL+`licencias`,  l );*/
-
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json; charset=utf-8');
-    headers.set('Accept-Type', 'application/json; charset=utf-8');
-    headers.set('Access-Control-Allow-Origin' , '*');
-    headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-    headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<any>(URL+`licencias`, licencia,{headers: headers});
-  }
-
-  getLicencias(size,page,idInspector): Observable<any> {
-   /* console.log("url");
-    console.log(URL+`licencias?size=${size}&page=${page}`);*/
-    return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?size=${size}&page=${page}&sort=ASC`);
-  }
-
-  getLicencia(idLicencia,idInspector): Observable<any>{
-    return this.http.get<any>(URL+`inspectores/${idInspector}/licencias/${idLicencia}`);
-
-  }
-  /******************************************************************************** */
-        /*  CONVOCATORIA CRUD */
-  addConvocatoria(convocatoria: Convocatoria) {
-    return this.http.post<any>(URL+`convocatorias`,  convocatoria );
-  }
-
-  getConvocatorias(size,page,idInspector): Observable<any> {
-    /* console.log("url");
-    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
-    return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=ASC`);
-  }
-
-  getConvocatoria(idConvocatoria,idInspector): Observable<any> {
-    /* console.log("url");
-    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
-    return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias/${idConvocatoria}`);
-  }
-
-  getTipoConvocatorias(): Observable<any>{
-    return this.http.get(URL+`tiposConvocatoria/all`);
-
-  }
-
+ 
+ 
 
   getDistritos(): Observable<any>{
     return this.http.get(URL+`distritos`);
 
   }
-  /******************************************************************************** */
-         /*  TRABAJO ADMINISTRATIVO */
-  addTrabajoAdministrativo(trabajoAdmin: TrabajoAdministrativo){
-    return this.http.post<any>(URL+`trabajosAdmin`,  trabajoAdmin );
-  }
+  
 
-  getTrabajoAdministrativo(size,page,idInspector): Observable<any>{
-   /* console.log("url");
-    console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
-    return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}`);
-  }
-
-  getTrabajo(idTrabajoAdmin,idInspector): Observable<any> {
-    /* console.log("url");
-    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
-    return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin/${idTrabajoAdmin}`);
-  }
-
-  getTipoTrabajoAdministrativo(): Observable<any>{
-    return this.http.get(URL+`tiposTrabajoAdmin/all`);
-  }
-  /******************************************************************************** */
-
-  addVisita(visita: any){
-
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json; charset=utf-8');
-    headers.set('Accept-Type', 'application/json; charset=utf-8');
-    headers.set('Access-Control-Allow-Origin' , '*');
-    headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-    headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    return this.http.post<any>(URL+`visitas`,  visita,{headers: headers});
-
-  }
-
-  getMotivosVisitas(): Observable<any>{
-    return this.http.get(URL+`motivosVisita/all`);
-  }
-
-  getVisitas(size,page,idInspector): Observable<any>{
-    /* console.log("url");
-     console.log(URL+`visitas?size=${size}&page=${page} ` )   ;*/
-     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?size=${size}&page=${page}&sort=ASC`); 
-  }
-
-
-  getVisita(idVisita,idInspector): Observable<any>{
-    return this.http.get<any>(URL+`inspectores/${idInspector}/visitas/${idVisita}`);
-
-  }
   
 
   

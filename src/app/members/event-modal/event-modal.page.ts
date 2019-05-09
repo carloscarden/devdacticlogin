@@ -25,6 +25,8 @@ export class EventModalPage implements OnInit {
   loading;
   error;
   quisoAgendarSinActividad=false;
+  fechasNoValidas=false;
+
   constructor(
               private modalCtrl:ModalController, 
               private agendaService: AgendaServiceService,
@@ -47,6 +49,22 @@ export class EventModalPage implements OnInit {
     this.evento.fin = preselectedDate;
 
   }
+
+
+  
+  validarFechas(){
+    if(this.evento.inicio!=null){
+       if(this.evento.fin!=null){
+            if(this.evento.fin<this.evento.inicio){
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
+ }
 
   
 
@@ -96,7 +114,7 @@ export class EventModalPage implements OnInit {
   }
 
   async save() {
-    if( this.evento.actividad!= null ) {
+    if( this.evento.actividad!= null && !this.fechasNoValidas) {
           // setear el id del inspector
         let currentUser = this.authenticationService.currentUserValue;
         this.evento.idInspector=currentUser.id;
@@ -125,7 +143,9 @@ export class EventModalPage implements OnInit {
         await this.modalCtrl.dismiss(this.evento);
     }
     else{
-        this.quisoAgendarSinActividad=true;
+        if(this.evento.actividad== null){
+          this.quisoAgendarSinActividad=true;
+        }       
     }
 
     

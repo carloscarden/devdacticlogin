@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { ActividadesService } from './../../../_services/actividades.service';
+import { ConvocatoriaServiceService } from './../../../_services/convocatoria-service.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -20,9 +20,9 @@ export class ConvocatoriaDetailsPage implements OnInit {
   
 
   constructor(
-    private convocatoriaService: ActividadesService,
+    private convocatoriaService: ConvocatoriaServiceService,
     private authenticationService: AuthenticationService,
-    private router:Router, private route: ActivatedRoute) {
+    private route: ActivatedRoute) {
      
 
 

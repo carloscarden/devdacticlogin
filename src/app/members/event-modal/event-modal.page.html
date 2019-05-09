@@ -46,6 +46,7 @@
       max="2100" 
       mode="ios"
       cancelText="cancelar"
+      (ionChange)="validarFechas()"
       doneText="guardar"
       ></ion-datetime>
     </ion-item>
@@ -61,9 +62,14 @@
       max="2100"
       mode="ios"
       cancelText="cancelar"
+      (ionChange)="validarFechas()"
       doneText="guardar"
           ></ion-datetime>
     </ion-item>
+
+    <div *ngIf="fechasNoValidas" >
+      <ion-label color="danger">La fecha fin no debe de ser menor que la fecha de inicio </ion-label>
+    </div>
  
  
     <ion-item>

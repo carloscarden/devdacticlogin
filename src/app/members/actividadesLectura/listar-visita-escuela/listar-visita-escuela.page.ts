@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterEvent } from '@angular/router';
 import {  AlertController  } from '@ionic/angular';
 
 
 
 /* SERVICES  */
-import { ActividadesService } from './../../../_services/actividades.service';
+import { VisitaServiceService } from './../../../_services/visita-service.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
 
@@ -27,7 +26,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
   inspectorId=1;
 
 
-  constructor(private visitaService: ActividadesService,
+  constructor(private visitaService: VisitaServiceService,
               private alertCtrl: AlertController,
               private authenticationService: AuthenticationService) {
     this.url=""

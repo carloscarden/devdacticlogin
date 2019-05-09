@@ -8,6 +8,46 @@
              <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
           </ion-item>
           <hr>
+          <ion-label position="stacked" class="textoBold" color="success">Buscar por fecha</ion-label>
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Desde</ion-label>
+                <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="inicio" name="fechaInicio" #fechaInicio="ngModel"
+                 monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+                 monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+                 dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                 dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
+                 min="2017"
+                 max="2100"
+                 mode="ios"
+                 (ionChange)="validarFechas()"
+                 cancelText="cancelar"
+                 doneText="guardar"
+                ></ion-datetime>
+                <div *ngIf="!(fechaInicio.valid || fechaInicio.pristine)" class="invalid-feedback">
+                     La fecha de inicio es requerida
+                </div>
+         </ion-item>
+
+         <ion-item>
+             <ion-label position="stacked" class="textoBold" color="success">Hasta</ion-label>
+             <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="fin" name="fechaFin" #fechaFin="ngModel" 
+               monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
+               monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+               dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+               dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
+               mode="ios"
+               min="2019"
+               max="2100"
+               cancelText="cancelar"
+               doneText="guardar"
+               (ionChange)="validarFechas()"
+             ></ion-datetime>
+         </ion-item>
+         <div *ngIf="fechasNoValidas"  style="color:red;">
+          La fecha fin no debe de ser menor que la fecha de inicio
+        </div>
+
+
           <div class="form-group">
            <ion-button (click)="filtrar()">Buscar</ion-button>
           </div>

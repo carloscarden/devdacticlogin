@@ -12,6 +12,7 @@ import { ToastController, Platform, AlertController } from '@ionic/angular';
 
 
 /*  SERVICES */
+import { ConvocatoriaServiceService } from './../../../_services/convocatoria-service.service';
 import { ActividadesService } from './../../../_services/actividades.service';
 import { AuthenticationService } from './../../../_services/authentication.service';
 
@@ -62,8 +63,10 @@ export class CargarConvocatoriaPage implements OnInit {
   constructor(
     private plt: Platform,
     private toastController: ToastController,
+
     private authenticationService: AuthenticationService,
-    private convocatoriaService: ActividadesService,
+    private actividadesService: ActividadesService,
+    private convocatoriaService: ConvocatoriaServiceService,
     private alertCtrl: AlertController
   ) { }
 
@@ -205,9 +208,8 @@ export class CargarConvocatoriaPage implements OnInit {
     if (this.actividadesSubscription) {
       this.actividadesSubscription.unsubscribe();
     }
-    this.convocatoriaService.getTipoConvocatorias();
 
-    this.actividadesSubscription = this.convocatoriaService.getDistritos().subscribe(tipos => {
+    this.actividadesSubscription = this.actividadesService.getDistritos().subscribe(tipos => {
 
       // Subscription will be closed when unsubscribed manually.
      if (this.actividadesSubscription.closed) {
