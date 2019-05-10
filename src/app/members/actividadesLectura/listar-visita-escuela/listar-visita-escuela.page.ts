@@ -16,12 +16,21 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 })
 export class ListarVisitaEscuelaPage implements OnInit {
   url;
+
+  // para el filtro
   tipo;
   filtroTipo=false;
+  inicio;
+  fin;
+  fechasNoValidas=false;
+
+  // para la recoleccion de los datos 
   page = 0;
   maximumPages = 3;
   visitasEscuelas=[];
   size=5;
+
+  // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   inspectorId=1;
 
@@ -110,6 +119,23 @@ export class ListarVisitaEscuelaPage implements OnInit {
     var a=dateStr.split(" ")
     return a[1];
   }
+
+
+  validarFechas(){
+    if(this.inicio!=null){
+       if(this.fin!=null){
+            console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
+            if(this.fin<this.inicio){
+
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
+ }
 
 
 

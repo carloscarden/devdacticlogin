@@ -21,6 +21,11 @@ export class ListarTrabajoAdminPage implements OnInit {
   url;
   tipo;
   filtroTipo=false;
+  inicio;
+  fin;
+  fechasNoValidas=false;
+
+
   page = 0;
   maximumPages = 3;
   trabajosAdmin=[];
@@ -113,6 +118,23 @@ export class ListarTrabajoAdminPage implements OnInit {
     var a=dateStr.split(" ")
     return a[1];
   }
+
+
+  validarFechas(){
+    if(this.inicio!=null){
+       if(this.fin!=null){
+            console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
+            if(this.fin<this.inicio){
+
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
+ }
 
 
  

@@ -21,6 +21,11 @@ export class ListarConvocatoriaPage implements OnInit {
   url;
   tipo;
   filtroTipo=false;
+  inicio;
+  fin;
+  fechasNoValidas=false;
+
+
   page = 0;
   maximumPages = 3;
   idInspector=1;
@@ -79,6 +84,39 @@ export class ListarConvocatoriaPage implements OnInit {
   }
 
 
+  cargarConvocatoriasDesdeHasta(page,infiniteScroll?){
+    console.log("cargar convocatorias desde hasta");
+    let diaInicio = new Date(this.inicio);
+    let formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+
+    let diaFin = new Date(this.fin);
+    let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+
+    this.convocatoriaService.getConvocatoriasByDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin)
+    .subscribe(res  =>{
+                 console.log("page"); console.log(this.page);
+                 this.convocatorias=this.convocatorias.concat(res['content']);
+                 console.log(this.convocatorias);
+                 if(this.filtroTipo){
+                   if(!(this.tipo === "")){
+                      console.log("entro");
+                      this.convocatorias = this.convocatorias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
+                      console.log(this.convocatorias);
+                   }
+                  
+                 }
+                 
+                 if (infiniteScroll) {
+                  infiniteScroll.target.complete();       
+                  }             
+              });
+
+  }
+
+
+
+
+
   loadMore(infiniteScroll) {
     this.page++;
     console.log("load more");
@@ -116,6 +154,23 @@ export class ListarConvocatoriaPage implements OnInit {
   hora(dateStr){
     var a=dateStr.split(" ")
     return a[1];
+  }
+
+
+  validarFechas(){
+    if(this.inicio!=null){
+       if(this.fin!=null){
+            console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
+            if(this.fin<this.inicio){
+
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
   }
 
 
