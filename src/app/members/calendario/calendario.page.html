@@ -22,16 +22,8 @@
   <ion-input class="fuente" type="number"  [(ngModel)]="anio" min="2019" max="2100" (ionChange)="filtrar()"></ion-input>
 </ion-item>
 
-<hr>
-<hr>
-<hr>
-<hr>
- <hr>
  <p class="areaAnio">Tareas del {{anioBuscado}}</p>
-<hr>
-<hr>
-<hr>
-<hr>
+
 {{ ordenar() }}
 
 <div *ngFor ="let tareasMeses of mesesCargados">
@@ -41,11 +33,7 @@
     <hr>
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
-        <hr>
-        <hr>
     </div>
-    <hr>
-    <hr>
    <ion-list margin-top class="listado">
       <ion-item-sliding *ngFor="let tarea of tareasMeses.tareas">
           <ion-item class="itemBoton" lines="inset" button (click)="mostrarTarea(tarea)">
