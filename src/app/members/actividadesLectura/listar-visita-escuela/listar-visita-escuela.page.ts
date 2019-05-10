@@ -16,12 +16,24 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 })
 export class ListarVisitaEscuelaPage implements OnInit {
   url;
+
+  // para el filtro
   tipo;
   filtroTipo=false;
+  inicio;
+  fin;
+  fechasNoValidas=false;
+  inicioFiltro;
+  finFiltro;
+  tipoFiltro;
+
+  // para la recoleccion de los datos 
   page = 0;
   maximumPages = 3;
   visitasEscuelas=[];
   size=5;
+
+  // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   inspectorId=1;
 
@@ -75,6 +87,58 @@ export class ListarVisitaEscuelaPage implements OnInit {
     
   }
 
+  cargarVisitasDesdeHasta(page,infiniteScroll?){
+    console.log("cargar convocatorias desde hasta");
+    let diaInicio = new Date(this.inicioFiltro);
+    let formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+
+    let diaFin = new Date(this.finFiltro);
+    let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+
+    this.visitaService.getVisitasByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
+    .subscribe(res  =>{
+                 console.log("page"); console.log(this.page);
+                 this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
+                 console.log(this.visitasEscuelas);
+                 if(this.filtroTipo){
+                   if(!(this.tipo === "")){
+                      console.log("entro");
+                      this.visitasEscuelas = this.visitasEscuelas.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
+                      console.log(this.visitasEscuelas);
+                   }
+                  
+                 }
+                 
+                 if (infiniteScroll) {
+                  infiniteScroll.target.complete();       
+                  }             
+              });
+
+  }
+
+  cargarVisitas(page,infiniteScroll?){
+    this.visitaService.getVisitas(this.size,page,this.inspectorId)
+    .subscribe(res  =>{
+                 console.log("page"); console.log(this.page);
+                 this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
+                 console.log(this.visitasEscuelas);
+                 if(this.filtroTipo){
+                   if(!(this.tipo === "")){
+                      console.log("entro");
+                      this.visitasEscuelas = this.visitasEscuelas.filter(items => items.establecimiento.cue.toLowerCase() === this.tipo.toLowerCase());
+                      console.log(this.visitasEscuelas);
+                   }
+                  
+                 }
+                 
+                 if (infiniteScroll) {
+                  infiniteScroll.target.complete();       
+                  }             
+              });
+  }
+
+
+
 
   loadMore(infiniteScroll) {
     this.page++;
@@ -91,6 +155,10 @@ export class ListarVisitaEscuelaPage implements OnInit {
     this.filtroTipo=true;
     this.visitasEscuelas = [];
     this.page=0;
+    this.inicioFiltro=this.inicio;
+    this.finFiltro=this.fin;
+    this.tipoFiltro=this.tipo;
+  
     while(this.visitasEscuelas.length<2 && !(this.page === this.maximumPages+1)){
       this.loadVisitas(this.page, infiniteScroll );
       console.log(this.visitasEscuelas);
@@ -110,6 +178,23 @@ export class ListarVisitaEscuelaPage implements OnInit {
     var a=dateStr.split(" ")
     return a[1];
   }
+
+
+  validarFechas(){
+    if(this.inicio!=null){
+       if(this.fin!=null){
+            console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
+            if(this.fin<this.inicio){
+
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
+ }
 
 
 

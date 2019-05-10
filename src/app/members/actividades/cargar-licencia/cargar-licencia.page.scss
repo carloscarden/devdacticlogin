@@ -25,10 +25,15 @@
   padding-left: 1rem;
   font-weight: bold;
   color:#454545;
+  font-size:12px;
 }         
 
         /*SOMBRA FAB*/
 .ion-fab-button{
     box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75); 
 }
+
+div.picker-col:nth-child(4) {
+  min-width: 80px !important;
+  }
 

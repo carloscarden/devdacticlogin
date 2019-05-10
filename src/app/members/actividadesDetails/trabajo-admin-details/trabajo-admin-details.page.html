@@ -15,13 +15,13 @@
               <ion-label class="label">
                 
                       <p class="textoDetalle">Tipo:</p>
-                      <p>{{ item.tipoTrabajoAdmin.descripcion }}</p>
+                      <p class="infoDetalle">{{ item.tipoTrabajoAdmin.descripcion }}</p>
                       <p class="textoDetalle">Inicio:</p> 
-                      <p>{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
+                      <p class="infoDetalle">{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
                       <p class="textoDetalle">Fin:</p>
-                      <p>{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
+                      <p class="infoDetalle">{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
                       <p class="textoDetalle">Observaciones:</p>  
-                      <p>{{ item.observaciones }}</p>
+                      <p class="infoDetalle">{{ item.observaciones }}</p>
 
                 <ion-list>
                     <h3 class="tituloArch">ARCHIVOS</h3>

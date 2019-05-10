@@ -121,7 +121,7 @@ export class CalendarioPage implements OnInit {
         
           this.maximumPages=12;
           this.page=0;
-          for(var _i =0; _i<2; _i++){
+          for(var _i =0; _i<3; _i++){
             this.nuevoMes(this.page+1);        
             this.page=this.page+1;
       

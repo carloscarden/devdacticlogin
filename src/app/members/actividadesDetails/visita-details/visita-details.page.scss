@@ -9,13 +9,17 @@
 
 .itemBoton {
   --inner-border-width:0;
-  --padding-start:0;
+  /*--padding-start:0;*/
 }
 
 .textoDetalle {
   font-weight:bold;
   font-size:14px;
   color:#9aca3c;
+}
+
+.infoDetalle {
+  padding-left:16px;
 }
 
 .tituloArch {
