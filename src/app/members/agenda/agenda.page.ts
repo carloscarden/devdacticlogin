@@ -114,17 +114,20 @@ export class AgendaPage implements OnInit {
 
 
         if(data.data.actividad!=null){
+
+          console.log("data",data.data);
           eventData.title=data.data.actividad.descripcion;
+          eventData.descripcion = data.data.detalle;
         
-        
-        eventData.startTime = new Date(inicio);
-        eventData.endTime = new Date(fin);
+            
+            eventData.startTime = new Date(inicio);
+            eventData.endTime = new Date(fin);
 
 
 
-        this.eventSource.push(eventData);
-        console.log(this.eventSource);
-        this.myCalendar.loadEvents();
+          this.eventSource.push(eventData);
+          console.log(this.eventSource);
+          this.myCalendar.loadEvents();
       }
         /*
         let events = this.eventSource;

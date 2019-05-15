@@ -9,80 +9,141 @@
 <!--{{ diagnostic }}-->
 
 <ion-content>
-  <ion-list>
-    
-    <ion-item>
-      <ion-label position="stacked" class="textoBold" color="success">Actividad</ion-label>
-      <ionic-selectable class="fuente"
-        item-content
-        [(ngModel)]="evento.actividad"
-        name="eventoTipo"
-        itemValueField="codigo"
-        itemTextField="descripcion"
-        [items]="tiposTrabajos"
-        [canSearch]="true"
-        searchPlaceholder="buscar tipo"
-        (onSearch)="searchPorts($event)">
-        <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
-        </ng-template>
-      </ionic-selectable>
-    </ion-item>
 
-    <div *ngIf="quisoAgendarSinActividad && evento.actividad==null"  style="color:red;">
-      La actividad es requerida
+    <div *ngIf="diaPermitido">
+       <ion-list>
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Actividad</ion-label>
+            <ionic-selectable class="fuente"
+              item-content
+              [(ngModel)]="evento.actividad"
+              name="eventoTipo"
+              itemValueField="codigo"
+              itemTextField="descripcion"
+              [items]="tiposTrabajos"
+              [canSearch]="true"
+              searchPlaceholder="buscar tipo"
+              (onSearch)="searchPorts($event)"
+              [searchFailText]="'No hay resultados.'"
+              (onChange)="verActividad()">
+              <ng-template ionicSelectableCloseButtonTemplate>
+                 <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+
+          <div *ngIf="quisoAgendarSinActividad && evento.actividad==null"  style="color:red;">
+              La actividad es requerida
+          </div>
+
+                
+
+          <div *ngIf="esLicencia">
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha de Inicio  </ion-label>
+                <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="inicio" name="fechaInicio" #fechaInicio="ngModel" 
+                  monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+                  min="2017"
+                  max="2100"
+                  mode="ios"
+                  (ionChange)="validarFechas()"
+                  cancelText="cancelar"
+                  doneText="guardar"
+               ></ion-datetime>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha de Fin  </ion-label>
+                <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="fin" name="fechaFin" #fechaFin="ngModel" 
+                  monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+                  min="2019"
+                  max="2100"
+                  mode="ios"
+                  cancelText="cancelar"
+                  doneText="guardar"
+                  (ionChange)="validarFechas()"
+                ></ion-datetime>
+              </ion-item>
+              
+              <div *ngIf="fechasNoValidas" >
+                  <ion-label color="danger">La fecha fin no debe de ser menor que la fecha de inicio </ion-label>
+              </div>
+
+              <div *ngIf="!diaCorrecto"  style="color:red;">
+                  <ion-label color="danger">La tarea no puede exceder el rango de 7 dias </ion-label> 
+              </div>
+          </div>
+              
+              
+              
+        <div *ngIf="noSonLicencias">
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha</ion-label>
+                <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fecha" name="inicio" #inicio="ngModel" 
+                   monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
+                   dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
+                   dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
+                   mode="ios"
+                   min="2017"
+                   max="2100"
+                   (ionChange)="validarDiaCorrectoDeLasOtrasActividades()"
+                   cancelText="cancelar"
+                   doneText="guardar"
+                 ></ion-datetime>
+               </ion-item>
+                  
+               <div *ngIf="!diaCorrecto"  style="color:red;">
+                    La tarea no puede exceder el rango de 7 dias a partir del d&iacute;
+                </div>
+                  
+                  
+               <ion-item>
+                  <ion-label position="stacked" class="textoBold" color="success">Hora Inicio </ion-label>
+                  <ion-datetime class="fuente" displayFormat="HH:mm " pickerFormat="HH:mm " [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" 
+                      mode="ios"
+                      cancelText="cancelar"
+                      doneText="guardar"
+                      (ionChange)="validarHoras()"
+                  ></ion-datetime>
+               </ion-item>
+                  
+               <ion-item>
+                  <ion-label position="stacked" class="textoBold" color="success">Hora Fin </ion-label>
+                  <ion-datetime class="fuente" displayFormat="HH:mm " pickerFormat="HH:mm " [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" 
+                      mode="ios"
+                      cancelText="cancelar"
+                      doneText="guardar"
+                      (ionChange)="validarHoras()"
+                   ></ion-datetime>
+                </ion-item>
+                  
+                <div *ngIf="horasNoValidas"  style="color:red;">
+                   La fecha fin no debe de ser menor que la fecha de inicio
+                </div>
+        </div>
+
+        <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Detalles de la tarea</ion-label>
+            <ion-input class="fuente" type="text" [(ngModel)]="evento.detalle"></ion-input>
+        </ion-item>
+
+              
+
+      </ion-list>
+               
+
+      <div class="centrarBoton">
+          <ion-button ion-button full color="primary" class="sombra" (click)="save()">AGENDAR</ion-button>
+      </div>
+
     </div>
 
-    
-
-    <ion-item>
-      <ion-label position="stacked" class="textoBold" color="success">Inicio</ion-label>
-      <ion-datetime class="fuente" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DDD MMM YYYY:HH:mm" [(ngModel)]="evento.inicio"
-      monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-      monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
-      dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-      dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-      min="2019"
-      max="2100" 
-      mode="ios"
-      cancelText="cancelar"
-      (ionChange)="validarFechas()"
-      doneText="guardar"
-      ></ion-datetime>
-    </ion-item>
- 
-    <ion-item>
-      <ion-label position="stacked" class="textoBold" color="success">Fin</ion-label>
-      <ion-datetime class="fuente" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DDD MMM YYYY:HH:mm" [(ngModel)]="evento.fin"
-      monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-      monthShortNames="en, feb, mar, abr, may, jun, jul, agos, sept, oct, nov, dic"
-      dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-      dayShortNames="dom, lun, mar, mier, jue, vier, sab, dom"
-      min="2019"
-      max="2100"
-      mode="ios"
-      cancelText="cancelar"
-      (ionChange)="validarFechas()"
-      doneText="guardar"
-          ></ion-datetime>
-    </ion-item>
-
-    <div *ngIf="fechasNoValidas" >
-      <ion-label color="danger">La fecha fin no debe de ser menor que la fecha de inicio </ion-label>
+    <div *ngIf="!diaPermitido" class="centrarBoton">
+      <hr>
+      <hr>
+      <h1> El d&iacute;a viernes es solo el permitido para cargar la agenda </h1>
     </div>
  
- 
-    <ion-item>
-        <ion-label position="stacked" class="textoBold" color="success">Detalles de la tarea</ion-label>
-        <ion-input class="fuente" type="text" [(ngModel)]="evento.detalle"></ion-input>
-    </ion-item>
 
-  </ion-list>
-
-
- 
- <div class="centrarBoton">
-  <ion-button ion-button full color="primary" class="sombra" (click)="save()">AGENDAR</ion-button>
- </div>
 
 </ion-content>

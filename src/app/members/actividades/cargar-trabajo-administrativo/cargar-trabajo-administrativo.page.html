@@ -83,6 +83,7 @@
                 [items]="tiposTrabajos"
                 [canSearch]="true"
                 searchPlaceholder="buscar tipo trabajo"
+                [searchFailText]="'No hay resultados.'"
                 (onSearch)="searchPorts($event)"
                 required>
                 <ng-template ionicSelectableCloseButtonTemplate>
@@ -104,6 +105,7 @@
                 [items]="tiposDistritos"
                 [canSearch]="true"
                 searchPlaceholder="buscar distrito"
+                [searchFailText]="'No hay resultados.'"
                 (onSearch)="searchDistritos($event)">
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>

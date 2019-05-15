@@ -24,6 +24,7 @@
                   dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
                   min="2017"
                   max="2050"
+                  mode="ios"
                   cancelText="cancelar"
                   doneText="guardar"
             ></ion-datetime>
@@ -35,6 +36,7 @@
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
+                  mode="ios"
                   cancelText="cancelar"
                   (ionChange)="validarHoras()"
                   doneText="guardar"
@@ -51,6 +53,7 @@
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Hora Fin  (*)</ion-label>
             <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
+                  mode="ios"
                   cancelText="cancelar"
                   (ionChange)="validarHoras()"
                   doneText="guardar"
@@ -78,6 +81,7 @@
                   [items]="tiposTrabajos"
                   [canSearch]="true"
                   searchPlaceholder="buscar tipo convocatoria"
+                  [searchFailText]="'No hay resultados.'"
                   (onSearch)="searchPorts($event)"
                   required>
                   <ng-template ionicSelectableCloseButtonTemplate>
@@ -98,6 +102,7 @@
                   [items]="tiposDistritos"
                   [canSearch]="true"
                   searchPlaceholder="buscar distrito"
+                  [searchFailText]="'No hay resultados.'"
                   (onSearch)="searchDistritos($event)"
                   required>
                   <ng-template ionicSelectableCloseButtonTemplate>

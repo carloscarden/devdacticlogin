@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IonicSelectableComponent } from 'ionic-selectable';
 import { Subscription } from 'rxjs';
 
 /*  SERVICES */
@@ -11,9 +10,6 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 
 
 
-/*  MODELOS */
-import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
-
 
 
 @Component({
@@ -23,8 +19,10 @@ import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
 })
 export class ListarConvocatoriaPage implements OnInit {
   url;
+
+  //para el filtro
   tipo;
-  filtroTipo=false;
+  filtroActivado=false;
   inicio;
   fin;
   fechasNoValidas=false;
@@ -33,14 +31,22 @@ export class ListarConvocatoriaPage implements OnInit {
   tipoFiltro;
 
   actividadesSubscription: Subscription;
-
-
+ 
+   // para la recoleccion de los datos 
   page = 0;
   maximumPages = -1;
   idInspector=1;
   convocatorias=[];
-  size=5;
+  size=20;
+
+
+
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
+
+
+  // para el selectable del filtro
+  tipoConvocatoria;
+  tiposConvocatoria;
 
   constructor(private convocatoriaService: ConvocatoriaServiceService,
               private authenticationService: AuthenticationService
@@ -51,13 +57,23 @@ export class ListarConvocatoriaPage implements OnInit {
                 this.idInspector= currentUser.id;
                 this.convocatoriaService.getConvocatorias(this.size,this.page, this.idInspector)
                 .subscribe(res  =>{
+                  console.log("resultados",res);
                              if(res!=null){
                               this.convocatorias=res.content;
                               this.maximumPages=res.totalPages-1;
+                              this.page++;
                              }
                             
                             }  
                            );
+
+              this.convocatoriaService.getTipoConvocatorias()
+                      .subscribe(tipos => {
+                        console.log("tipos",tipos);
+                        this.tiposConvocatoria=tipos;
+                        this.tiposConvocatoria.unshift({codigo: 0, descripcion: "Todos."})
+                        }
+                        );
 
   }
 
@@ -71,23 +87,14 @@ export class ListarConvocatoriaPage implements OnInit {
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.idInspector= currentUser.id;
-      let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
-      if(this.filtroTipo ){
-          if (fechasVacias){
-              console.log("las fechas estan vacias");
-              this.cargarConvocatorias(page, infiniteScroll);
-            }
-          else{
-              if(this.fechasNoValidas){
-                console.log("error en las fechas");
-                this.cargarConvocatorias(page, infiniteScroll);
-              }
-              else{
-                console.log("cargar licencias desde hasta");
+      if(this.filtroActivado ){
+              let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+              if(usrQuiereFiltroFecha){
                 this.cargarConvocatoriasDesdeHasta(page,infiniteScroll);
               }
-      
-          }
+              else{
+                this.cargarConvocatorias(page, infiniteScroll);    
+              }
       }
       else{
         this.cargarConvocatorias(page, infiniteScroll);
@@ -112,10 +119,13 @@ export class ListarConvocatoriaPage implements OnInit {
                  console.log("page"); console.log(this.page);
                  this.convocatorias=this.convocatorias.concat(res['content']);
                  console.log(this.convocatorias);
-                 if(this.filtroTipo){
-                   if(!(this.tipo === "")){
+                 if(this.filtroActivado){
+                   if(!(this.tipoFiltro === "")){
                       console.log("entro");
-                      this.convocatorias = this.convocatorias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
+                      if(!(this.tipoFiltro === "Todos.")){
+                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
+
+                      }
                       console.log(this.convocatorias);
                    }
                   
@@ -137,14 +147,18 @@ export class ListarConvocatoriaPage implements OnInit {
                    console.log("page"); console.log(this.page);
                    this.convocatorias=this.convocatorias.concat(res['content']);
                    console.log(this.convocatorias);
-                   if(this.filtroTipo){
-                     if(!(this.tipo === "")){
+                   if(this.filtroActivado){
+                     if(!(this.tipoFiltro === "")){
                         console.log("entro");
-                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipo.toLowerCase());
+                        if(!(this.tipoFiltro === "Todos.")){
+                          this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
+                        }
                         console.log(this.convocatorias);
                      }
                     
                    }
+
+                   this.page++;
                    
                    if (infiniteScroll) {
                     infiniteScroll.target.complete();       
@@ -172,20 +186,27 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   filtrar(infiniteScroll?){
-    this.filtroTipo=true;
-    this.convocatorias = [];
-    this.page=0;
-    this.inicioFiltro=this.inicio;
-    this.finFiltro=this.fin;
-    this.tipoFiltro=this.tipo;
+    console.log("tipoconvocatoria",this.tipoConvocatoria);
 
-    // el infinite scroll actua cuando hay por lo menos 2 convocatorias, por eso pido paginas hasta tener 2 
-    // o hasta llegar al tope de las paginas
-    while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
-      this.loadConvocatorias(this.page, infiniteScroll );
-      console.log(this.convocatorias);
-      this.page++;
+    if(!this.fechasNoValidas){
+        this.filtroActivado=true;
+        this.convocatorias = [];
+        this.page=0;
+        this.inicioFiltro=this.inicio;
+        this.finFiltro=this.fin;
+        this.tipoFiltro=this.tipoConvocatoria.descripcion;
+    
+        // el infinite scroll actua cuando hay por lo menos 2 convocatorias, por eso pido paginas hasta tener 2 
+        // o hasta llegar al tope de las paginas
+        while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
+          this.loadConvocatorias(this.page, infiniteScroll );
+          console.log(this.convocatorias);
+          this.page++;
+        }
+
+
     }
+    
       
   }
 
@@ -219,43 +240,23 @@ export class ListarConvocatoriaPage implements OnInit {
     }
 
   }
+  
 
+  
+  usuarioQuiereFiltrarPorFecha(){
+    let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
 
-
-    /****************************** TIPOS CONVOCATORIAS ************************************************************ */
-
-    filterPorts(tipos: TipoConvocatoria[], text: string) {
-      return tipos.filter(t => {
-        return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
-      });
+    if(this.filtroActivado && !fechasVacias && !this.fechasNoValidas){
+      return true;
     }
-  
-    searchPorts(event: {
-      component: IonicSelectableComponent,
-      text: string
-    }) {
-      let text = event.text.trim().toLowerCase();
-      event.component.startSearch();
-  
-      // Close any running subscription.
-      if (this.actividadesSubscription) {
-        this.actividadesSubscription.unsubscribe();
-      }
-  
-      this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
-        // Subscription will be closed when unsubscribed manually.
-       /* var tareas=JSON.parse(tipos._body);*/
-       if (this.actividadesSubscription.closed) {
-          return;
-        }
-  
-        event.component.items = this.filterPorts(tipos, text);
-        event.component.endSearch();
-      });
+    else{
+      return false;
     }
-  
-  
-    /******************************************************************************************** */
+}
+
+
+
+ 
 
 
 

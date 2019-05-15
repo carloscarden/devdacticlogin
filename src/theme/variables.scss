@@ -110,3 +110,11 @@ $picker-ios-column-padding: 0 0px !default;
   --ion-color-light-tint: #f5f6f9;
 
 }
+
+.picker-col{
+  max-width: 200px !important;
+  div.picker-opts{
+         max-width: 200px !important;
+     }
+ }
+

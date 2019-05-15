@@ -23,7 +23,7 @@ export class ListarLicenciaPage implements OnInit {
 
   // para el filtro
   tipo;
-  filtroTipo=false;
+  filtroActivado=false;
   inicio;
   fin;
   fechasNoValidas=false;
@@ -37,7 +37,7 @@ export class ListarLicenciaPage implements OnInit {
   page = 0;
   maximumPages = -1;
   licencias=[];
-  size=5;
+  size=30;
 
   // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
@@ -57,6 +57,7 @@ export class ListarLicenciaPage implements OnInit {
                     if(res!=null){
                       console.log(res);
                       this.licencias=res.content;
+                      this.page++;
                       this.maximumPages=res.totalPages-1;
                     }
                   
@@ -76,22 +77,13 @@ export class ListarLicenciaPage implements OnInit {
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.inspectorId= currentUser.id;
-      let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
-      if(this.filtroTipo ){
-            if (fechasVacias){
-              console.log("las fechas estan vacias");
-              this.cargarLicencias(page, infiniteScroll);
-            }
-            else{
-              if(this.fechasNoValidas){
-                console.log("error en las fechas");
-                this.cargarLicencias(page, infiniteScroll);
-              }
-              else{
-                console.log("cargar licencias desde hasta");
-                this.cargarLicenciasDesdeHasta(page,infiniteScroll);
-              }
-      
+      if(this.filtroActivado ){
+          let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+          if(usrQuiereFiltroFecha){
+            this.cargarLicenciasDesdeHasta(page,infiniteScroll);
+          }
+          else{
+            this.cargarLicencias(page, infiniteScroll);    
           }
       }
       else{
@@ -100,7 +92,6 @@ export class ListarLicenciaPage implements OnInit {
      
     }
   }
-
 
   cargarLicenciasDesdeHasta(page,infiniteScroll?){
     console.log("cargar licencias desde hasta");
@@ -117,7 +108,7 @@ export class ListarLicenciaPage implements OnInit {
                  if(res!=null){
                         this.licencias=this.licencias.concat(res['content']);
                         console.log("licencias cargadas", this.licencias);
-                        if(this.filtroTipo){
+                        if(this.filtroActivado){
                           if(!(this.tipo === "")){
                             console.log("tipo filtro 1",this.tipoFiltro);
                             console.log("entro 1", this.licencias);
@@ -146,7 +137,7 @@ export class ListarLicenciaPage implements OnInit {
                         console.log("page"); console.log(this.page);
                         this.licencias=this.licencias.concat(res['content']);
                         console.log("licencias",this.licencias);
-                        if(this.filtroTipo){
+                        if(this.filtroActivado){
                           if(!(this.tipo === "")){
                             console.log("tipo filtro 1",this.tipo.toLowerCase());
                             console.log("entro 1", this.licencias);
@@ -156,6 +147,7 @@ export class ListarLicenciaPage implements OnInit {
                           }
                         
                         }
+                        this.page++;
                         
                         if (infiniteScroll) {
                         infiniteScroll.target.complete();       
@@ -168,9 +160,15 @@ export class ListarLicenciaPage implements OnInit {
   }
  
   loadMore(infiniteScroll) {
+    console.log("cargar mas");
+    console.log("maximum pages", this.maximumPages);
+    console.log("pages", this.page);
     this.restInfScroll=infiniteScroll;
-    this.page++;
+    let anteriorLength=this.licencias.length;
+
+    // pido licencias hasta que por lo menos haya dos porque asi se activa el infinite scroll
     this.loadLicencias(this.page,infiniteScroll);
+    
  
     if (this.page >= this.maximumPages) {
       infiniteScroll.target.disabled = true;
@@ -178,24 +176,25 @@ export class ListarLicenciaPage implements OnInit {
   }
 
   filtrar(infiniteScroll?){
-    console.log("entro al filtrar");
-    console.log("filtro tipo",this.tipo);
-    this.inicioFiltro=this.inicio;
-    this.finFiltro=this.fin;
-    this.tipoFiltro=this.tipo;
-    console.log(this.tipoFiltro);
-    if(this.restInfScroll!=null){
-      this.restInfScroll.target.disabled=false;
+
+    if(!this.fechasNoValidas){
+          this.inicioFiltro=this.inicio;
+          this.finFiltro=this.fin;
+          this.tipoFiltro=this.tipo;
+          console.log(this.tipoFiltro);
+          if(this.restInfScroll!=null){
+            this.restInfScroll.target.disabled=false;
+          }
+          this.filtroActivado=true;
+          this.licencias = [];
+          this.page=0;
+          while(this.licencias.length<10 && !(this.page === this.maximumPages+1)){
+            console.log("entra a licencias");
+            this.loadLicencias(this.page, infiniteScroll );
+            this.page++;
+          }
+          console.log("licencias cargadas", this.licencias);
     }
-    this.filtroTipo=true;
-    this.licencias = [];
-    this.page=0;
-    while(this.licencias.length<2 && !(this.page === this.maximumPages+1)){
-      console.log("entra a licencias");
-      this.loadLicencias(this.page, infiniteScroll );
-      this.page++;
-    }
-    console.log("licencias cargadas", this.licencias);
       
   }
 
@@ -222,7 +221,21 @@ export class ListarLicenciaPage implements OnInit {
        }
     }
 
- }
+    }
+
+
+
+  usuarioQuiereFiltrarPorFecha(){
+      let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
+
+      if(this.filtroActivado && !fechasVacias && !this.fechasNoValidas){
+        return true;
+      }
+      else{
+        return false;
+      }
+  }
+
 
 
 

@@ -3,10 +3,24 @@
       <ion-row>
         <ion-col>-->
 
-          <ion-item class="listado">
-             <ion-label position="stacked" class="textoBold" color="success">Buscar por Tipo</ion-label>
-             <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
-          </ion-item>
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
+            <ionic-selectable class="fuente"
+              item-content
+              [(ngModel)]="trabajoAdmin"
+              name="trabajoAdminTipo"
+              itemValueField="codigo"
+              itemTextField="descripcion"
+              [items]="tiposTrabajos"
+              [canSearch]="true"
+              searchPlaceholder="buscar tipo trabajo"
+              [searchFailText]="'No hay resultados.'"
+              required>
+              <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item> 
         
           <hr>
           <ion-label position="stacked" class="textoBold" color="success">Buscar por fecha</ion-label>

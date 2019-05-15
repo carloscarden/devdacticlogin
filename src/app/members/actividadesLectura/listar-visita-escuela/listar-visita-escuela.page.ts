@@ -19,7 +19,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   // para el filtro
   tipo;
-  filtroTipo=false;
+  filtroActivado=false;
   inicio;
   fin;
   fechasNoValidas=false;
@@ -31,7 +31,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
   page = 0;
   maximumPages = 3;
   visitasEscuelas=[];
-  size=5;
+  size=30;
 
   // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
@@ -63,26 +63,19 @@ export class ListarVisitaEscuelaPage implements OnInit {
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.inspectorId= currentUser.id;
-      this.visitaService.getVisitas(this.size,page,this.inspectorId)
-      .subscribe(res  =>{
-                   console.log("page"); console.log(this.page);
-                   this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
-                   console.log(this.visitasEscuelas);
-                   if(this.filtroTipo){
-                     if(!(this.tipo === "")){
-                        console.log("entro");
-                        this.visitasEscuelas = this.visitasEscuelas.filter(items => items.establecimiento.cue.toLowerCase() === this.tipo.toLowerCase());
-                        console.log(this.visitasEscuelas);
-                     }
-                    
-                   }
-                   
-                   if (infiniteScroll) {
-                    infiniteScroll.target.complete();       
-                    }             
-                });
-
-
+      if(this.filtroActivado ){
+          let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+          if(usrQuiereFiltroFecha){
+            this.cargarVisitasDesdeHasta(page,infiniteScroll);
+          }
+          else{
+            this.cargarVisitas(page, infiniteScroll);    
+          }
+      }
+      else{
+        this.cargarVisitas(page, infiniteScroll);
+      }
+     
     }
     
   }
@@ -100,7 +93,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
                  console.log("page"); console.log(this.page);
                  this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
                  console.log(this.visitasEscuelas);
-                 if(this.filtroTipo){
+                 if(this.filtroActivado){
                    if(!(this.tipo === "")){
                       console.log("entro");
                       this.visitasEscuelas = this.visitasEscuelas.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
@@ -122,7 +115,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
                  console.log("page"); console.log(this.page);
                  this.visitasEscuelas=this.visitasEscuelas.concat(res['content']);
                  console.log(this.visitasEscuelas);
-                 if(this.filtroTipo){
+                 if(this.filtroActivado){
                    if(!(this.tipo === "")){
                       console.log("entro");
                       this.visitasEscuelas = this.visitasEscuelas.filter(items => items.establecimiento.cue.toLowerCase() === this.tipo.toLowerCase());
@@ -152,18 +145,23 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   filtrar(infiniteScroll?){
     console.log("filtrar");
-    this.filtroTipo=true;
-    this.visitasEscuelas = [];
-    this.page=0;
-    this.inicioFiltro=this.inicio;
-    this.finFiltro=this.fin;
-    this.tipoFiltro=this.tipo;
-  
-    while(this.visitasEscuelas.length<2 && !(this.page === this.maximumPages+1)){
-      this.loadVisitas(this.page, infiniteScroll );
-      console.log(this.visitasEscuelas);
-      this.page++;
+
+    if(!this.fechasNoValidas){
+        this.filtroActivado=true;
+        this.visitasEscuelas = [];
+        this.page=0;
+        this.inicioFiltro=this.inicio;
+        this.finFiltro=this.fin;
+        this.tipoFiltro=this.tipo;
+      
+        while(this.visitasEscuelas.length<10 && !(this.page === this.maximumPages+1)){
+          this.loadVisitas(this.page, infiniteScroll );
+          console.log(this.visitasEscuelas);
+          this.page++;
+        }
+
     }
+   
       
   }
 
@@ -195,6 +193,20 @@ export class ListarVisitaEscuelaPage implements OnInit {
     }
 
  }
+
+
+ usuarioQuiereFiltrarPorFecha(){
+  let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
+
+  if(this.filtroActivado && !fechasVacias && !this.fechasNoValidas){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+
 
 
 

@@ -19,7 +19,7 @@ import { TrabajoAdminServiceService } from './../../../_services/trabajo-admin-s
 export class ListarTrabajoAdminPage implements OnInit {
   url;
   tipo;
-  filtroTipo=false;
+  filtroActivado=false;
   inicio;
   fin;
   fechasNoValidas=false;
@@ -27,11 +27,14 @@ export class ListarTrabajoAdminPage implements OnInit {
   finFiltro;
   tipoFiltro;
 
+  trabajoAdmin;
+  tiposTrabajos;
+
 
   page = 0;
   maximumPages = 3;
   trabajosAdmin=[];
-  size=5;
+  size=30;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   inspectorId=1;
 
@@ -45,10 +48,21 @@ export class ListarTrabajoAdminPage implements OnInit {
     this.inspectorId= currentUser.id;
     this.trabajosService.getTrabajoAdministrativo(this.size,this.page,this.inspectorId)
     .subscribe(res  =>{
+                 console.log("resultados",res);
                  this.trabajosAdmin=res.content;
                  this.maximumPages=res.totalPages-1;
+                 this.page++;
                 }  
                );
+
+    this.trabajosService.getTipoTrabajoAdministrativo().subscribe(
+      tipos=>{
+          console.log("tipos",tipos);
+          this.tiposTrabajos=tipos;
+          this.tiposTrabajos.unshift({codigo: 0, descripcion: "Todos."})
+      }
+    );
+
   }
 
   ngOnInit() {
@@ -60,31 +74,21 @@ export class ListarTrabajoAdminPage implements OnInit {
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.inspectorId= currentUser.id;
-      let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
-      if(this.filtroTipo ){
-          if (fechasVacias){
-              console.log("las fechas estan vacias");
-              this.cargarTrabajos(page, infiniteScroll);
-            }
-          else{
-              if(this.fechasNoValidas){
-                console.log("error en las fechas");
-                this.cargarTrabajos(page, infiniteScroll);
-              }
-              else{
-                console.log("cargar licencias desde hasta");
+      if(this.filtroActivado ){
+              let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+              if(usrQuiereFiltroFecha){
                 this.cargarTrabajosDesdeHasta(page,infiniteScroll);
               }
-      
-          }
+              else{
+                this.cargarTrabajos(page, infiniteScroll);    
+              }
       }
       else{
-          this.cargarTrabajos(page, infiniteScroll);
+        this.cargarTrabajos(page, infiniteScroll);
       }
 
 
     }
-    
   }
 
   cargarTrabajosDesdeHasta(page,infiniteScroll?){
@@ -99,11 +103,14 @@ export class ListarTrabajoAdminPage implements OnInit {
     .subscribe(res  =>{
                  console.log("page"); console.log(this.page);
                  this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
-                 console.log(this.trabajosAdmin);
-                 if(this.filtroTipo){
-                   if(!(this.tipo === "")){
+                 console.log("trabajos administrativos",this.trabajosAdmin);
+                 if(this.filtroActivado){
+                   if(!(this.tipoFiltro === "")){
                       console.log("entro");
-                      this.trabajosAdmin = this.trabajosAdmin.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
+                      if(!(this.tipoFiltro === "Todos.")){
+                        this.trabajosAdmin = this.trabajosAdmin.filter(items => items.tipoTrabajoAdmin.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
+
+                      }
                       console.log(this.trabajosAdmin);
                    }
                   
@@ -124,16 +131,20 @@ export class ListarTrabajoAdminPage implements OnInit {
       .subscribe(res  =>{
                    console.log("page"); console.log(this.page);
                    this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
-                   console.log(this.trabajosAdmin);
-                   if(this.filtroTipo){
-                     if(!(this.tipo === "")){
+                   console.log("trabajos administrativos",this.trabajosAdmin);
+                   console.log(this.tipoFiltro);
+
+                   if(this.filtroActivado){
+                     if(!(this.tipoFiltro === "")){
                         console.log("entro");
-                        this.trabajosAdmin = this.trabajosAdmin.filter(items => items.tipoTrabajoAdmin.descripcion.toLowerCase() === this.tipo.toLowerCase());
+                        if(!(this.tipoFiltro === "Todos.")){
+                        this.trabajosAdmin = this.trabajosAdmin.filter(items => items.tipoTrabajoAdmin.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
+                        }
                         console.log(this.trabajosAdmin);
                      }
                     
                    }
-                   
+                   this.page++;
                    if (infiniteScroll) {
                     infiniteScroll.target.complete();       
                     }             
@@ -152,18 +163,22 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
   filtrar(infiniteScroll?){
-    console.log("filtrar");
-    this.filtroTipo=true;
-    this.trabajosAdmin = [];
-    this.page=0;
-    this.inicioFiltro=this.inicio;
-    this.finFiltro=this.fin;
-    this.tipoFiltro=this.tipo;
+    console.log("tipoTrabajoAdmin a filtrar", this.trabajoAdmin);
+    if(!this.fechasNoValidas){
+        console.log("filtrar");
+        this.filtroActivado=true;
+        this.trabajosAdmin = [];
+        this.page=0;
+        this.inicioFiltro=this.inicio;
+        this.finFiltro=this.fin;
 
-    while(this.trabajosAdmin.length<2 && !(this.page === this.maximumPages+1)){
-      this.loadTrabajosAdmin(this.page, infiniteScroll );
-      console.log(this.trabajosAdmin);
-      this.page++;
+        this.tipoFiltro=this.trabajoAdmin.descripcion;
+
+        while(this.trabajosAdmin.length<10 && !(this.page === this.maximumPages+1)){
+          this.loadTrabajosAdmin(this.page, infiniteScroll );
+          console.log(this.trabajosAdmin);
+          this.page++;
+        }
     }
       
   }
@@ -197,6 +212,18 @@ export class ListarTrabajoAdminPage implements OnInit {
     }
 
  }
+
+
+ usuarioQuiereFiltrarPorFecha(){
+  let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
+
+  if(this.filtroActivado && !fechasVacias && !this.fechasNoValidas){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 
 
  

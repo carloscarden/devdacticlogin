@@ -89,6 +89,7 @@
                 [items]="motivos"
                 [canSearch]="true"
                 searchPlaceholder="buscar motivo visita"
+                [searchFailText]="'No hay resultados.'"
                 (onSearch)="searchMotivos($event)"
                 required>
 
