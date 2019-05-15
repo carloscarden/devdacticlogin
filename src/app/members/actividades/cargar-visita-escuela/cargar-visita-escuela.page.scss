@@ -6,13 +6,13 @@
         /*TEXTO LABEL*/
 .textoBold {
 	font-weight:bold;
-  font-size:17px;
+  /*font-size:17px;*/
   color:#454545;
 }
 
         /*TEXTO INPUT*/
 .fuente {
-  font-size:19px;
+  /*font-size:19px;*/
 }
 
 .centrarBoton {
@@ -27,10 +27,9 @@
         /*PADDING TITULO CHECKBOX*/
 .paddinglabel {
   padding-left:1rem;
-  padding-bottom: 2rem;
   font-weight:bold;
-  font-size:17px;
   color:#454545;
+  font-size:12px;
 }        
 
         /*PADDING SELECCION IMG*/
@@ -46,6 +45,13 @@
 .itemBoton {
   --inner-border-width:0;
 }
+
+.fileUpload {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 .tipoBoton {
   font-size: 14px;

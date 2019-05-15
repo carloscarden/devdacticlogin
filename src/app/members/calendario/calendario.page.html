@@ -28,12 +28,11 @@
 
 <div *ngFor ="let tareasMeses of mesesCargados">
         <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
-    
-    <hr>
-    <hr>
+
     <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
         <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
     </div>
+
    <ion-list margin-top class="listado">
       <ion-item-sliding *ngFor="let tarea of tareasMeses.tareas">
           <ion-item class="itemBoton" lines="inset" button (click)="mostrarTarea(tarea)">

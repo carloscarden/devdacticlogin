@@ -1,11 +1,6 @@
 
-   <!-- <ion-grid>
-      <ion-col>
-        <ion-col> -->
-
-        
-          <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria </ion-label>
+          <ion-item class="listado">
+            <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria (*)</ion-label>
             <ionic-selectable class="fuente"
               item-content
               [(ngModel)]="tipoConvocatoria"
@@ -21,13 +16,10 @@
                   <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
               </ng-template>
             </ionic-selectable>
-
            </ion-item>
 
-          <hr>
-          <ion-label position="stacked" class="textoBold" color="success">Buscar por fecha</ion-label>
-          <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Desde</ion-label>
+          <ion-item class="listado">
+            <ion-label position="stacked" class="textoBold" color="success">Fecha Desde</ion-label>
                 <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="inicio" name="fechaInicio" #fechaInicio="ngModel"
                  monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                  monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
@@ -45,8 +37,8 @@
                 </div>
          </ion-item>
 
-         <ion-item>
-             <ion-label position="stacked" class="textoBold" color="success">Hasta</ion-label>
+         <ion-item class="listado">
+             <ion-label position="stacked" class="textoBold" color="success">Fecha Hasta</ion-label>
              <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="fin" name="fechaFin" #fechaFin="ngModel" 
                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
@@ -101,8 +93,5 @@
                <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
             
-         <!-- </ion-col>
-        </ion-col>
-      </ion-grid> -->
-
+      
   

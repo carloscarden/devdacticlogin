@@ -2,17 +2,23 @@
          .textoTitulo {
             font-family:"DIN";
         }
+
+        .listado {
+            margin:0;
+            padding:0;
+            --padding-start:0;
+        } 
         
                 /*TEXTO LABEL*/
         .textoBold {
             font-weight:bold;
-            font-size:17px;
+            /*font-size:17px;*/
             color:#454545;
         }
        
                /*TEXTO INPUT*/
         .fuente {
-          font-size:19px;
+          /*font-size:19px;*/
         }
         
         .ion-title {
@@ -46,11 +52,6 @@
             text-align:center;
             margin-top:50px;
         }        
-   
-        .listado {
-            margin:0;
-            padding:0;
-        } 
 
         .label {
            margin:0;
@@ -66,6 +67,4 @@
             color:#9aca3c;
         }
 
-        .listado {
-            --padding-start:0;
-          }
+       

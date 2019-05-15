@@ -1,7 +1,4 @@
 
-    <!--<ion-grid>
-      <ion-row>
-        <ion-col>-->
 
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Tipo</ion-label>
@@ -22,10 +19,9 @@
             </ionic-selectable>
           </ion-item> 
         
-          <hr>
-          <ion-label position="stacked" class="textoBold" color="success">Buscar por fecha</ion-label>
-          <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Desde</ion-label>
+          
+          <ion-item class="listado">
+            <ion-label position="stacked" class="textoBold" color="success">Fecha Desde</ion-label>
                 <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="inicio" name="fechaInicio" #fechaInicio="ngModel"
                  monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                  monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
@@ -43,8 +39,8 @@
                 </div>
          </ion-item>
 
-         <ion-item>
-             <ion-label position="stacked" class="textoBold" color="success">Hasta</ion-label>
+         <ion-item class="listado">
+             <ion-label position="stacked" class="textoBold" color="success">Fecha Hasta</ion-label>
              <ion-datetime class="fuente" displayFormat=" DD MMM, YYYY " [(ngModel)]="fin" name="fechaFin" #fechaFin="ngModel" 
                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
                monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
@@ -97,7 +93,4 @@
             <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
               <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
-            
-       <!-- </ion-col>
-      </ion-row>
-    </ion-grid> -->
+      

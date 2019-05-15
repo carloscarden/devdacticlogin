@@ -6,21 +6,19 @@
          /*TEXTO LABEL*/
 .textoBold {
 	font-weight:bold;
-  font-size:17px;
+  /*font-size:17px;*/
   color:#454545;
 }
 
         /*TEXTO INPUT*/
 .fuente {
-  font-size:19px;
+  /*font-size:19px;*/
 }
 
         /*PADDING SELECCION*/
 .posicion {
   padding-left:1rem;
 }
-
-
 
 .ppicker-opts {
   background-color:red;
@@ -38,6 +36,12 @@
 .form-group {
 display:flex;
   text-align:center;
+}
+
+.fileUpload {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .tipoBoton {

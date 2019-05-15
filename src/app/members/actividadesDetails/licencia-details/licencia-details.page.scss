@@ -9,7 +9,7 @@
 
 .itemBoton {
   /*--inner-border-width:0;*/
-  --padding-start:0;
+  /*--padding-start:0;*/
   margin-bottom:30px;
 }
 
@@ -17,6 +17,10 @@
   font-weight:bold;
   font-size:14px;
   color:#9aca3c;
+}
+
+.infoDetalle {
+  padding-left:16px;
 }
 
 .tituloArch {
