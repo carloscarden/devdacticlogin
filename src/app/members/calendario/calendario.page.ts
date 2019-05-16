@@ -73,12 +73,13 @@ export class CalendarioPage implements OnInit {
   }
 
   loadMore(infiniteScroll) {
+    console.log("entra en el load more");
+    console.log("infiniteScroll",infiniteScroll);
     this.restInfScroll=infiniteScroll;
     if(this.page < this.maximumPages){
       
       this.nuevoMes(this.page+1,infiniteScroll);
       this.page++;
-      console.log(this.page >= this.maximumPages);
       if (this.page >= this.maximumPages) {
         infiniteScroll.target.disabled = true;
       }
@@ -108,9 +109,10 @@ export class CalendarioPage implements OnInit {
 
 
   filtrar(){
+    console.log("disable",this.restInfScroll.target.disabled);
       if(this.restInfScroll!=null){
-        console.log('disable infinite scroll',this.restInfScroll.target.disabled)
         this.restInfScroll.target.disabled=false;
+        console.log("despues del disable",this.restInfScroll.target.disabled);
       }
       this.mesesCargados=[];
       this.anioBuscado= this.anio;
@@ -163,11 +165,9 @@ export class CalendarioPage implements OnInit {
     modal.onDidDismiss().then((data) => {
       if (data) {
         
-        console.log("data",data);
-        console.log("data.actividad", data.data.actividad);
+
         let eventData = data.data;
 
-        console.log(this.mesesCargados);
 
         
 
@@ -202,8 +202,6 @@ export class CalendarioPage implements OnInit {
 
 
   async mostrarTarea(event) {
-    console.log("evento")
-    console.log(event);
 
     let start = moment(event.startTime).format('lll');
     let end = moment(event.endTime).format('lll');

@@ -35,21 +35,24 @@ export class AgendaServiceService {
     headers.set('Access-Control-Allow-Origin' , '*');
     headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
-    console.log(URL+`tareas`);
-    console.log("tarea");
-    console.log(tarea);
-    console.log(tarea.inicio);
-    console.log(tarea.fin);
+    console.log("url de tareas",URL+`tareas`);
+    
+    
     let t={"inicio": tarea.inicio,
     "fin": tarea.fin,
     "detalle": tarea.detalle,
     "inspectorId": tarea.idInspector,
-    "actividad":tarea.actividad
+    "actividad":tarea.actividad,
     };
-    console.log("t");
+
+    let detalleNulo="";
+    if(!(tarea.detalle)){
+        t.detalle=detalleNulo;
+    }
+    console.log("tarea mandada", t);
     console.log(t);
 
-    return this.http.post<Tarea>(URL+`tareas`,  t,{headers: headers});
+    return this.http.post<any>(URL+`tareas`,  t,{headers: headers});
 
   }
 

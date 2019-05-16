@@ -40,11 +40,24 @@ export class TrabajoAdminServiceService {
       console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}`);
    }
+
+   
       
    getTrabajoAdministrativoByDate(size,page,idInspector, inicio, fin): Observable<any>{
       /* console.log("url");
       console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?from=${inicio}&to=${fin}&size=${size}&page=${page}`);
+   }
+
+   getTrabajoAdministrativoByTipo(size,page,idInspector,tipo){
+      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}&size=${size}&page=${page}`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}&size=${size}&page=${page}`);
+
+   }
+
+   getTrabajoAdministrativoByDateAndTipo(size,page,idInspector,inicio,fin,tipo){
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}from=${inicio}&to=${fin}&size=${size}&page=${page}`);
+ 
    }
       
    getTrabajo(idTrabajoAdmin,idInspector): Observable<any> {

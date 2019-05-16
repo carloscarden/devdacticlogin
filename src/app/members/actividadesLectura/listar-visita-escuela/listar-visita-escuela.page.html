@@ -1,8 +1,23 @@
 
           <ion-item class="listado">
-             <ion-label position="stacked" class="textoBold" color="success">Buscar por CUE</ion-label>
-             <ion-input class="fuente" type="text" [(ngModel)]="tipo"></ion-input>
-          </ion-item>
+             <ion-label position="stacked" class="textoBold" color="success">Motivo</ion-label>
+             <ionic-selectable class="fuente"
+                item-content
+                [(ngModel)]="visitaMotivo"
+                name="motivoVisita"
+                itemValueField="codigo"
+                itemTextField="descripcion"
+                [items]="tiposMotivos"
+                [canSearch]="true"
+                searchPlaceholder="buscar motivo visita"
+                [searchFailText]="'No hay resultados.'"
+                required>
+
+                <ng-template ionicSelectableCloseButtonTemplate>
+                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+          </ion-item> 
           
           <ion-item class="listado">
             <ion-label position="stacked" class="textoBold" color="success">Fecha Desde</ion-label>
@@ -74,7 +89,7 @@
             </ion-list>
 
 
-            <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users...">
+            <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users..." distance="2%" threshold="10px">
               <ion-infinite-scroll-content></ion-infinite-scroll-content>
            </ion-infinite-scroll>
            

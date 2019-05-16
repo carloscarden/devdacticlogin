@@ -43,11 +43,42 @@ export class LicenciaServiceService {
      headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Range, Content-Disposition, Content-Description');
      return this.http.post<any>(URL+`licencias`, licencia,{headers: headers});
   }
+
+  getLicencias1(size,page,idInspector,inicio, fin, articulo){
+     let urlAenviar = URL+`inspectores/${idInspector}/licencias`;
+
+
+     if(articulo!=null){
+         urlAenviar = urlAenviar+`?articulo=${articulo}`;
+         if(inicio!=null && fin!=null ){
+          urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
+        }
+        urlAenviar = urlAenviar+`&size=${size}&page=${page}&sort=ASC`;
+     }
+     else{
+          if(inicio!=null && fin!=null ){
+            urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`;
+          }
+          else{
+            urlAenviar=urlAenviar+`?size=${size}&page=${page}&sort=ASC`;
+          }
+     }
+     
+     console.log(urlAenviar);
+     return this.http.get<any>(urlAenviar);
+    
+
+
+  }
             
   getLicencias(size,page,idInspector): Observable<any> {
       /* console.log("url");
       console.log(URL+`licencias?size=${size}&page=${page}`);*/
       return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?size=${size}&page=${page}&sort=ASC`);
+  }
+  getLicenciasByArticulo(size,page,idInspector,articulo){
+    return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&size=${size}&page=${page}&sort=ASC`);
+
   }
             
   getLicenciasByDate(size,page,idInspector,inicio,fin): Observable<any> {
@@ -55,6 +86,14 @@ export class LicenciaServiceService {
       console.log(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
       return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
   }
+
+  getLicenciasByArticuloAndDate(size,page,idInspector,inicio,fin,articulo): Observable<any> {
+      
+    console.log(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+    return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+  }
+
+ 
             
   getLicencia(idLicencia,idInspector): Observable<any>{
      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias/${idLicencia}`);

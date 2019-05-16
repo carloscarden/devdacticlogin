@@ -57,7 +57,7 @@
   </ion-list>
 </div>
 
-<ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Cargando Tareas..."  >
+<ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Cargando Tareas..."  distance="2%" threshold="10px" >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
  </ion-infinite-scroll>
 </ion-content>

@@ -19,6 +19,7 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 })
 export class ListarConvocatoriaPage implements OnInit {
   url;
+  restInfScroll;
 
   //para el filtro
   tipo;
@@ -37,7 +38,7 @@ export class ListarConvocatoriaPage implements OnInit {
   maximumPages = -1;
   idInspector=1;
   convocatorias=[];
-  size=20;
+  size=40;
 
 
 
@@ -55,13 +56,16 @@ export class ListarConvocatoriaPage implements OnInit {
 
                 let currentUser = this.authenticationService.currentUserValue;
                 this.idInspector= currentUser.id;
+                this.tipoFiltro="Todos.";
                 this.convocatoriaService.getConvocatorias(this.size,this.page, this.idInspector)
                 .subscribe(res  =>{
-                  console.log("resultados",res);
                              if(res!=null){
                               this.convocatorias=res.content;
                               this.maximumPages=res.totalPages-1;
                               this.page++;
+                             }
+                             else{
+                               this.maximumPages=-1;
                              }
                             
                             }  
@@ -84,6 +88,8 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   loadConvocatorias(page, infiniteScroll? ) {
+
+    console.log("llego page <= maximumPages",page <= this.maximumPages );
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.idInspector= currentUser.id;
@@ -93,6 +99,7 @@ export class ListarConvocatoriaPage implements OnInit {
                 this.cargarConvocatoriasDesdeHasta(page,infiniteScroll);
               }
               else{
+
                 this.cargarConvocatorias(page, infiniteScroll);    
               }
       }
@@ -114,56 +121,104 @@ export class ListarConvocatoriaPage implements OnInit {
     let diaFin = new Date(this.finFiltro);
     let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
 
-    this.convocatoriaService.getConvocatoriasByDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin)
-    .subscribe(res  =>{
-                 console.log("page"); console.log(this.page);
-                 this.convocatorias=this.convocatorias.concat(res['content']);
-                 console.log(this.convocatorias);
-                 if(this.filtroActivado){
-                   if(!(this.tipoFiltro === "")){
-                      console.log("entro");
-                      if(!(this.tipoFiltro === "Todos.")){
-                        this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
+    if(this.tipoFiltro=="Todos."){
+          this.convocatoriaService.getConvocatoriasByDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin)
+          .subscribe(res  =>{
+                      if(res!=null){
+                        this.convocatorias=this.convocatorias.concat(res['content']);
+                        this.page++;
+                        this.maximumPages= res.totalPages-1;
+        
+                        if (infiniteScroll) {
+                          infiniteScroll.target.complete();       
+                          }   
 
                       }
-                      console.log(this.convocatorias);
-                   }
-                  
-                 }
-                 
-                 if (infiniteScroll) {
-                  infiniteScroll.target.complete();       
-                  }             
-              });
+                      else{
+                        this.maximumPages=-1;
+                      }
+                                
+                    });
+    }
+    else{
+          this.convocatoriaService.getConvocatoriasByArticuloAndDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
+          .subscribe(res  =>{
 
+                      if(res!=null){
+                        this.convocatorias=this.convocatorias.concat(res['content']);
+                        this.page++;
+                        this.maximumPages= res.totalPages-1;
+        
+                        if (infiniteScroll) {
+                          infiniteScroll.target.complete();       
+                          }  
+
+
+                      }
+                      else{
+                        this.maximumPages=-1;
+                      }
+                                
+                    });
+
+    }
+
+    
   }
 
 
 
   cargarConvocatorias(page,infiniteScroll?){
 
-    this.convocatoriaService.getConvocatorias(this.size,page, this.idInspector)
-      .subscribe(res  =>{
-                   console.log("page"); console.log(this.page);
-                   this.convocatorias=this.convocatorias.concat(res['content']);
-                   console.log(this.convocatorias);
-                   if(this.filtroActivado){
-                     if(!(this.tipoFiltro === "")){
-                        console.log("entro");
-                        if(!(this.tipoFiltro === "Todos.")){
-                          this.convocatorias = this.convocatorias.filter(items => items.tipoConvocatoria.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
-                        }
-                        console.log(this.convocatorias);
-                     }
-                    
-                   }
 
-                   this.page++;
-                   
-                   if (infiniteScroll) {
-                    infiniteScroll.target.complete();       
-                    }             
-      });
+    if(this.tipoFiltro=="Todos."){
+
+             console.log("cargar convocatorias todas", this.tipoFiltro)
+
+            this.convocatoriaService.getConvocatorias(this.size,page, this.idInspector)
+            .subscribe(res  =>{
+                        if(res!=null){
+                            console.log("resultados de cargar todas las convocatorias");
+                            this.convocatorias=this.convocatorias.concat(res['content']);
+                            this.page++;
+                            this.maximumPages= res.totalPages-1;
+                            
+                            if (infiniteScroll) {
+                              infiniteScroll.target.complete();       
+                              }  
+                        }
+                        else{
+                            this.maximumPages=-1;
+                        }
+                                  
+            });
+
+    }
+    else{
+           console.log("cargar convocatorias por tipo", this.tipoFiltro)
+            this.convocatoriaService.getConvocatoriasByArticulo(this.size,page, this.idInspector, this.tipoFiltro)
+            .subscribe(res  =>{
+                        if(res!=null){
+                          console.log("resultados de cargar por tipo", res);
+                          this.convocatorias=this.convocatorias.concat(res['content']);
+                          this.page++;
+                          this.maximumPages= res.totalPages-1;
+                          
+                          if (infiniteScroll) {
+                            infiniteScroll.target.complete();       
+                            }  
+
+                        }
+                        else{
+                          this.maximumPages=-1;
+                        }
+                                   
+            });
+
+
+    }
+
+    
 
   }
 
@@ -176,8 +231,7 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   loadMore(infiniteScroll) {
-    this.page++;
-    console.log("load more");
+    this.restInfScroll=infiniteScroll;
     this.loadConvocatorias(this.page,infiniteScroll);
     if (this.page >= this.maximumPages ) {
       infiniteScroll.target.disabled = true;
@@ -186,23 +240,60 @@ export class ListarConvocatoriaPage implements OnInit {
 
 
   filtrar(infiniteScroll?){
-    console.log("tipoconvocatoria",this.tipoConvocatoria);
+    console.log("filtrar");
+      // reiniciar el infinit scroll
+      if(this.restInfScroll!=null){
+        this.restInfScroll.target.disabled=false;
+      }
+      
 
     if(!this.fechasNoValidas){
+
         this.filtroActivado=true;
         this.convocatorias = [];
         this.page=0;
         this.inicioFiltro=this.inicio;
         this.finFiltro=this.fin;
-        this.tipoFiltro=this.tipoConvocatoria.descripcion;
-    
-        // el infinite scroll actua cuando hay por lo menos 2 convocatorias, por eso pido paginas hasta tener 2 
-        // o hasta llegar al tope de las paginas
-        while(this.convocatorias.length<2 && !(this.page === this.maximumPages+1)){
-          this.loadConvocatorias(this.page, infiniteScroll );
-          console.log(this.convocatorias);
-          this.page++;
+
+         // reiniciar el infinit scroll
+         if(this.restInfScroll!=null){
+          this.restInfScroll.target.disabled=false;
         }
+        
+        if(this.tipoConvocatoria){
+          this.tipoFiltro=this.tipoConvocatoria.codigo;
+          if(this.tipoFiltro==0){
+            this.tipoFiltro="Todos."
+          }
+        }
+        else{
+          this.tipoFiltro="Todos.";
+        }
+
+        console.log("filtro tipo");
+
+
+
+
+       
+        
+    
+        let currentUser = this.authenticationService.currentUserValue;
+        this.idInspector= currentUser.id;
+        if(this.filtroActivado ){
+                let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+                if(usrQuiereFiltroFecha){
+                  this.cargarConvocatoriasDesdeHasta(this.page,infiniteScroll);
+                }
+                else{
+
+                  this.cargarConvocatorias(this.page, infiniteScroll);    
+                }
+        }
+        else{
+          this.cargarConvocatorias(this.page, infiniteScroll);
+        }
+
 
 
     }

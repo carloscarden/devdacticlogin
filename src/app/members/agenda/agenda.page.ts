@@ -59,7 +59,6 @@ export class AgendaPage implements OnInit {
 
   ionViewWillEnter(){
     //your code;
-    console.log("id");
     this.calendar.mode=this.route.snapshot.paramMap.get('id');
 
     this.cargarEvents(this.currentMonth+1, this.currentYear);
@@ -67,12 +66,10 @@ export class AgendaPage implements OnInit {
 
   onViewTitleChanged(title) {
         this.viewTitle = title.replace("Week", "Semana");
-        console.log(title);
   }
 
   async onEventSelected(event) {
-      console.log(event);
-      console.log(event.descripcion);
+
 
       let start = moment(event.startTime).format('lll');
       let end = moment(event.endTime).format('lll');
@@ -93,8 +90,7 @@ export class AgendaPage implements OnInit {
     
     modal.onDidDismiss().then((data) => {
       if (data) {
-        console.log("data");
-        console.log(data);
+
         let eventData = data.data;
 
         let inicio;
@@ -115,7 +111,6 @@ export class AgendaPage implements OnInit {
 
         if(data.data.actividad!=null){
 
-          console.log("data",data.data);
           eventData.title=data.data.actividad.descripcion;
           eventData.descripcion = data.data.detalle;
         
@@ -180,7 +175,6 @@ export class AgendaPage implements OnInit {
         // Subscription will be closed when unsubscribed manually.
       (data: any)=>{
           this.data=data;
-          console.log(data);
           if(this.data!= null){
             for (let entry of this.data) {
                 
@@ -232,7 +226,6 @@ export class AgendaPage implements OnInit {
 
 
   onRangeChanged(ev) {
-    console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
   }
 
   markDisabled = (date:Date) => {

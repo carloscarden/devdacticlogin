@@ -37,7 +37,7 @@ export class ListarLicenciaPage implements OnInit {
   page = 0;
   maximumPages = -1;
   licencias=[];
-  size=30;
+  size=40;
 
   // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
@@ -52,13 +52,15 @@ export class ListarLicenciaPage implements OnInit {
       this.url="";
       let currentUser = this.authenticationService.currentUserValue;
       this.inspectorId= currentUser.id;
-      this.licenciaService.getLicencias(this.size,this.page,this.inspectorId)
+      this.licenciaService.getLicencias1(this.size,this.page,this.inspectorId, null, null, null)
       .subscribe(res  =>{
                     if(res!=null){
-                      console.log(res);
                       this.licencias=res.content;
                       this.page++;
                       this.maximumPages=res.totalPages-1;
+                    }
+                    else{
+                      this.maximumPages=-1;
                     }
                   
                   }  
@@ -77,18 +79,16 @@ export class ListarLicenciaPage implements OnInit {
     if(page <= this.maximumPages){
       let currentUser = this.authenticationService.currentUserValue;
       this.inspectorId= currentUser.id;
-      if(this.filtroActivado ){
-          let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
-          if(usrQuiereFiltroFecha){
-            this.cargarLicenciasDesdeHasta(page,infiniteScroll);
-          }
-          else{
-            this.cargarLicencias(page, infiniteScroll);    
-          }
+      
+      let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+      if(usrQuiereFiltroFecha){
+          this.cargarLicenciasDesdeHasta(page,infiniteScroll);
       }
       else{
-        this.cargarLicencias(page, infiniteScroll);
+         this.cargarLicencias(page, infiniteScroll);    
       }
+      
+
      
     }
   }
@@ -101,62 +101,111 @@ export class ListarLicenciaPage implements OnInit {
     let diaFin = new Date(this.finFiltro);
     let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
 
-    this.licenciaService.getLicenciasByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
-    .subscribe(res  =>{
-                 console.log("page"); console.log(this.page);
-                 console.log("res",res);
-                 if(res!=null){
-                        this.licencias=this.licencias.concat(res['content']);
-                        console.log("licencias cargadas", this.licencias);
-                        if(this.filtroActivado){
-                          if(!(this.tipo === "")){
-                            console.log("tipo filtro 1",this.tipoFiltro);
-                            console.log("entro 1", this.licencias);
-                            this.licencias = this.licencias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
-                            console.log("licencias despues del filtro 1",this.licencias);
-                          }
-                        
-                        }
-                        
-                        if (infiniteScroll) {
-                        infiniteScroll.target.complete();       
-                        }     
 
-                 }
-                        
-              });
+    if(!(this.tipoFiltro === "")){
+
+      this.licenciaService.getLicencias1(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro)
+      .subscribe(res  =>{
+                   if(res!=null){
+                          this.licencias=this.licencias.concat(res['content']);
+                          this.page++;
+                          this.maximumPages= res.totalPages-1;
+
+                          console.log(this.licencias);
+
+                          if (infiniteScroll) {
+                          infiniteScroll.target.complete();       
+                          }     
+  
+                   }
+                   else{
+                    this.maximumPages=-1;
+                   }
+                          
+                });
+
+    }
+
+    else{
+      this.licenciaService.getLicencias1(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, null)
+      .subscribe(res  =>{
+                   if(res!=null){
+                          this.licencias=this.licencias.concat(res['content']);
+                          this.page++;
+                          this.maximumPages= res.totalPages-1;
+
+                          if (infiniteScroll) {
+                          infiniteScroll.target.complete();       
+                          }     
+  
+                   }
+                   else{
+                    this.maximumPages=-1;
+                  }
+                          
+                });     
+
+
+    }
+
+    
 
   }
 
   cargarLicencias(page,infiniteScroll?){
-    this.licenciaService.getLicencias(this.size,page,this.inspectorId)
+
+    if(!(this.tipoFiltro === "")){
+     
+      this.licenciaService.getLicencias1(this.size,page,this.inspectorId,null,null,this.tipoFiltro)
       .subscribe(res  =>{
                     
                     console.log("res",res!=null);
                     if(res!=null){
-                        console.log("page"); console.log(this.page);
                         this.licencias=this.licencias.concat(res['content']);
-                        console.log("licencias",this.licencias);
-                        if(this.filtroActivado){
-                          if(!(this.tipo === "")){
-                            console.log("tipo filtro 1",this.tipo.toLowerCase());
-                            console.log("entro 1", this.licencias);
-                            console.log(this.licencias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase()));
-                            this.licencias = this.licencias.filter(items => items.articulo.toLowerCase() === this.tipo.toLowerCase());
-                            console.log("licencias despues del filtro 1", this.licencias);
-                          }
-                        
-                        }
                         this.page++;
+                        this.maximumPages= res.totalPages-1;
                         
                         if (infiniteScroll) {
                         infiniteScroll.target.complete();       
                         }  
 
                     }
+                    else{
+                      this.maximumPages=-1;
+                    }
                              
                 });
 
+
+
+    }
+
+    else{
+      console.log("filtro vacio",this.tipoFiltro);
+      this.licenciaService.getLicencias1(this.size,page,this.inspectorId,null,null,null)
+      .subscribe(res  =>{
+                    
+                    console.log("res",res!=null);
+                    if(res!=null){
+                        this.licencias=this.licencias.concat(res['content']);
+                        this.page++;
+                        this.maximumPages= res.totalPages-1;
+
+                        console.log("licencias despues del filtro",this.licencias);
+                        
+                        if (infiniteScroll) {
+                        infiniteScroll.target.complete();       
+                        }  
+
+                    }
+                    else{
+                      this.maximumPages=-1;
+                    }
+                             
+                });
+
+    }
+  
   }
  
   loadMore(infiniteScroll) {
@@ -164,7 +213,6 @@ export class ListarLicenciaPage implements OnInit {
     console.log("maximum pages", this.maximumPages);
     console.log("pages", this.page);
     this.restInfScroll=infiniteScroll;
-    let anteriorLength=this.licencias.length;
 
     // pido licencias hasta que por lo menos haya dos porque asi se activa el infinite scroll
     this.loadLicencias(this.page,infiniteScroll);
@@ -176,23 +224,44 @@ export class ListarLicenciaPage implements OnInit {
   }
 
   filtrar(infiniteScroll?){
+    console.log("hay infinite scroll",this.restInfScroll);
+    if(this.restInfScroll!=null){
+      console.log("disable",this.restInfScroll.target.disabled );
+      this.restInfScroll.target.disabled=false;
+
+      console.log("reseteo de la variable de scroll",this.restInfScroll.target.disabed);
+    }
 
     if(!this.fechasNoValidas){
           this.inicioFiltro=this.inicio;
           this.finFiltro=this.fin;
           this.tipoFiltro=this.tipo;
           console.log(this.tipoFiltro);
+          console.log(this.restInfScroll);
           if(this.restInfScroll!=null){
             this.restInfScroll.target.disabled=false;
+
+            console.log("reseteo de la variable de scroll",this.restInfScroll.target.disabed);
           }
           this.filtroActivado=true;
           this.licencias = [];
           this.page=0;
-          while(this.licencias.length<10 && !(this.page === this.maximumPages+1)){
-            console.log("entra a licencias");
-            this.loadLicencias(this.page, infiniteScroll );
-            this.page++;
+
+
+
+
+          let currentUser = this.authenticationService.currentUserValue;
+          this.inspectorId= currentUser.id;
+          
+          let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+          if(usrQuiereFiltroFecha){
+              this.cargarLicenciasDesdeHasta(this.page,infiniteScroll);
           }
+          else{
+            this.cargarLicencias(this.page, infiniteScroll);    
+          }
+      
+
           console.log("licencias cargadas", this.licencias);
     }
       

@@ -18,6 +18,9 @@ import { TrabajoAdminServiceService } from './../../../_services/trabajo-admin-s
 })
 export class ListarTrabajoAdminPage implements OnInit {
   url;
+  restInfScroll;
+
+
   tipo;
   filtroActivado=false;
   inicio;
@@ -34,7 +37,7 @@ export class ListarTrabajoAdminPage implements OnInit {
   page = 0;
   maximumPages = 3;
   trabajosAdmin=[];
-  size=30;
+  size=3;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   inspectorId=1;
 
@@ -50,7 +53,7 @@ export class ListarTrabajoAdminPage implements OnInit {
     .subscribe(res  =>{
                  console.log("resultados",res);
                  this.trabajosAdmin=res.content;
-                 this.maximumPages=res.totalPages-1;
+                 this.maximumPages=res.totalPages;
                  this.page++;
                 }  
                );
@@ -98,28 +101,45 @@ export class ListarTrabajoAdminPage implements OnInit {
 
     let diaFin = new Date(this.finFiltro);
     let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+    if(this.tipoFiltro=="Todos."){
+          this.trabajosService.getTrabajoAdministrativoByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
+          .subscribe(res  =>{
+                          if(res!=null){
+                            this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
+                                    this.page++;
+                                    this.maximumPages=res.totalPages;
+                                    
+                                    if (infiniteScroll) {
+                                      infiniteScroll.target.complete();       
+                                      }     
+                          }
+                          else{
+                            this.maximumPages=-1;
+                          }
+                              
+                    });
 
-    this.trabajosService.getTrabajoAdministrativoByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
-    .subscribe(res  =>{
-                 console.log("page"); console.log(this.page);
-                 this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
-                 console.log("trabajos administrativos",this.trabajosAdmin);
-                 if(this.filtroActivado){
-                   if(!(this.tipoFiltro === "")){
-                      console.log("entro");
-                      if(!(this.tipoFiltro === "Todos.")){
-                        this.trabajosAdmin = this.trabajosAdmin.filter(items => items.tipoTrabajoAdmin.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
-
+    }
+    else{
+        this.trabajosService.getTrabajoAdministrativoByDateAndTipo(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
+        .subscribe(res  =>{
+                      if(res!=null){
+                        this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
+                        this.page++;
+                        this.maximumPages=res.totalPages;
+                        
+                        if (infiniteScroll) {
+                          infiniteScroll.target.complete();       
+                          }   
                       }
-                      console.log(this.trabajosAdmin);
-                   }
-                  
-                 }
-                 
-                 if (infiniteScroll) {
-                  infiniteScroll.target.complete();       
-                  }             
-              });
+                      else{
+                        this.maximumPages=-1;
+                      }
+                              
+                  });
+
+    }
+    
     
   }
 
@@ -127,35 +147,55 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
   cargarTrabajos(page,infiniteScroll?){
-    this.trabajosService.getTrabajoAdministrativo(this.size,page,this.inspectorId)
-      .subscribe(res  =>{
-                   console.log("page"); console.log(this.page);
-                   this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
-                   console.log("trabajos administrativos",this.trabajosAdmin);
-                   console.log(this.tipoFiltro);
 
-                   if(this.filtroActivado){
-                     if(!(this.tipoFiltro === "")){
-                        console.log("entro");
-                        if(!(this.tipoFiltro === "Todos.")){
-                        this.trabajosAdmin = this.trabajosAdmin.filter(items => items.tipoTrabajoAdmin.descripcion.toLowerCase() === this.tipoFiltro.toLowerCase());
-                        }
-                        console.log(this.trabajosAdmin);
-                     }
-                    
-                   }
-                   this.page++;
-                   if (infiniteScroll) {
-                    infiniteScroll.target.complete();       
-                    }             
-                });
+    if(this.tipoFiltro=="Todos."){
+      console.log("cargar todos los trabajos");
+          this.trabajosService.getTrabajoAdministrativo(this.size,page,this.inspectorId)
+          .subscribe(res  =>{
+                          if(res!=null){
+                            this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
+                            this.page++;
+                            this.maximumPages=res.totalPages-1;
+
+                            if (infiniteScroll) {
+                              infiniteScroll.target.complete();       
+                              }      
+                          }
+                          else{
+                            this.maximumPages=-1;
+                          }
+                            
+                    });
+    }
+    else{
+          console.log("cargar un tipo de trabajo", this.tipoFiltro);
+          this.trabajosService.getTrabajoAdministrativoByTipo(this.size,page,this.inspectorId, this.tipoFiltro)
+              .subscribe(res  =>{
+                          if(res!=null){
+                            this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
+                            this.page++;
+                            this.maximumPages=res.totalPages-1;
+  
+                            if (infiniteScroll) {
+                              infiniteScroll.target.complete();       
+                              }      
+                          }
+                          else{
+                            this.maximumPages=-1;
+                          }
+                                 
+                        });
+
+
+    }
+   
   }
 
 
   loadMore(infiniteScroll) {
-    this.page++;
-    console.log("load more");
     this.loadTrabajosAdmin(this.page,infiniteScroll);
+    this.restInfScroll=infiniteScroll;
+    
     if (this.page >= this.maximumPages ) {
       infiniteScroll.target.disabled = true;
     }
@@ -172,13 +212,32 @@ export class ListarTrabajoAdminPage implements OnInit {
         this.inicioFiltro=this.inicio;
         this.finFiltro=this.fin;
 
-        this.tipoFiltro=this.trabajoAdmin.descripcion;
 
-        while(this.trabajosAdmin.length<10 && !(this.page === this.maximumPages+1)){
-          this.loadTrabajosAdmin(this.page, infiniteScroll );
-          console.log(this.trabajosAdmin);
-          this.page++;
+        if(this.trabajoAdmin){
+          this.tipoFiltro=this.trabajoAdmin.codigo;
+          if(this.tipoFiltro==0){
+            this.tipoFiltro="Todos."
+          }
         }
+        else{
+          this.tipoFiltro="Todos.";
+        }
+
+        // resetear el infinite scroll
+        if(this.restInfScroll!=null){
+          this.restInfScroll.target.disabled=false;
+
+          console.log("reseteo de la variable de scroll",this.restInfScroll.target.disabed);
+        }
+
+        let usrQuiereFiltroFecha = this.usuarioQuiereFiltrarPorFecha();
+        if(usrQuiereFiltroFecha){
+              this.cargarTrabajosDesdeHasta(this.page,infiniteScroll);
+        }
+        else{
+            this.cargarTrabajos(this.page, infiniteScroll);    
+        }
+
     }
       
   }

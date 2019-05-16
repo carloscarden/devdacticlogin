@@ -56,7 +56,6 @@ export class LoginPage implements OnInit {
      // get return url from route parameters or default to '/'
      
      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-     console.log(this.returnUrl);
 
   }
   get f() { return this.loginForm.controls; }

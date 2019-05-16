@@ -73,7 +73,7 @@ export class EventModalPage implements OnInit {
     var dias=["dom", "lun", "mar", "mie", "jue", "vie", "sab"];
     var diaDeLaSemana=dias[d.getUTCDay()];
 
-    if(diaDeLaSemana==="vie"){
+    if(diaDeLaSemana==="jue"){
       this.diaPermitido=true;
     }
 
@@ -140,7 +140,7 @@ export class EventModalPage implements OnInit {
         // setear el id del inspector
         let currentUser = this.authenticationService.currentUserValue;
         this.evento.idInspector=currentUser.id;
-        console.log(this.evento);
+        console.log("tarea nueva",this.evento);
         this.agendaService.addTarea(this.evento).subscribe(
           data => {
             this.evento = new Tarea();

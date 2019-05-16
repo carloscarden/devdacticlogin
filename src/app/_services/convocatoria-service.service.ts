@@ -41,6 +41,7 @@ export class ConvocatoriaServiceService {
   getConvocatorias(size,page,idInspector): Observable<any> {
      /* console.log("url");
      console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
+     console.log(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=ASC`);
      return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=ASC`);
   }
       
@@ -49,6 +50,21 @@ export class ConvocatoriaServiceService {
      console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
      return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
   }
+
+  getConvocatoriasByArticulo(size,page,idInspector, articulo): Observable<any> {
+   /* console.log("url");
+   console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
+
+   console.log(URL+`inspectores/${idInspector}/convocatorias?articulo=${articulo}&size=${size}&page=${page}&sort=ASC`);
+   return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&size=${size}&page=${page}&sort=ASC`);
+}
+
+
+  getConvocatoriasByArticuloAndDate(size,page,idInspector, inicio, fin, articulo): Observable<any> {
+   /* console.log("url");
+   console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
+   return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+}
       
   getConvocatoria(idConvocatoria,idInspector): Observable<any> {
      /* console.log("url");
