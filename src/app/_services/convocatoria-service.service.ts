@@ -32,6 +32,30 @@ export class ConvocatoriaServiceService {
         }
   }
 
+  getAllConvocatorias(idInspector, inicio, fin, codigo){
+
+   let urlAenviar = URL+`inspectores/${idInspector}/convocatorias`;
+
+
+   if(codigo!=null){
+       urlAenviar = urlAenviar+`?codigo=${codigo}`;
+       if(inicio!=null && fin!=null ){
+         urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
+       }
+       urlAenviar = urlAenviar+`&sort=ASC`;
+   }
+   else{
+       if(inicio!=null && fin!=null ){
+          urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
+       }
+       else{
+           urlAenviar=urlAenviar+`?sort=ASC`;
+       }
+   }
+   return this.http.get<any>(urlAenviar);
+
+  }
+
 
   /*  CONVOCATORIA CRUD */
   addConvocatoria(convocatoria: Convocatoria) {

@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // para manejar la camara y la subida de archivos
 import { File } from '@ionic-native/file/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { FormsModule }   from '@angular/forms';
 import { NgCalendarModule  } from 'ionic2-calendar';
@@ -54,7 +55,10 @@ registerLocaleData(localeEs);
     IonicSelectableModule,
     EventModalPageModule,
     NativeHttpModule,
-    HttpModule
+    HttpModule, 
+
+    
+
     
   ],
   providers: [
@@ -71,7 +75,8 @@ registerLocaleData(localeEs);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     
     File,
-    FilePath
+    FilePath,
+    FileOpener
   ],
   bootstrap: [AppComponent]
 })

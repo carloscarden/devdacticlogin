@@ -70,6 +70,30 @@ export class LicenciaServiceService {
 
 
   }
+
+  getAllLicencias(idInspector,inicio, fin, articulo){
+
+    let urlAenviar = URL+`inspectores/${idInspector}/licencias`;
+
+
+    if(articulo!=null){
+        urlAenviar = urlAenviar+`?articulo=${articulo}`;
+        if(inicio!=null && fin!=null ){
+          urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
+        }
+        urlAenviar = urlAenviar+`&sort=ASC`;
+    }
+    else{
+        if(inicio!=null && fin!=null ){
+           urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
+        }
+        else{
+            urlAenviar=urlAenviar+`?sort=ASC`;
+        }
+    }
+    return this.http.get<any>(urlAenviar);
+
+  }
             
   getLicencias(size,page,idInspector): Observable<any> {
       /* console.log("url");

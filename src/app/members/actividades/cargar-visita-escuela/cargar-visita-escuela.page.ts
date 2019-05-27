@@ -105,7 +105,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
     let hf= new Date(this.horaFin);
     let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     this.visita.fin=formatoCorrectoFin;
-    /********************************************************************* */
+    /* ******************************************************************** */
     
     if(this.conflicto){
       this.visita.urgente="T"
@@ -118,7 +118,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
     let currentUser = this.authenticationService.currentUserValue;
     this.visita.inspectorId=currentUser.id;
-    console.log(this.visita);
+    console.log("visita escuela a mandar",this.visita);
 
 
     this.visitaService.addVisita(this.visita).subscribe(
@@ -134,9 +134,22 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.presentAlert("Enviado con éxito.  ");
         },
         error => {
+           console.log("error",error);
+           if(error=="Entidad Improcesable"){
+            this.presentAlert("El cue es incorrecto. ");
+           } else{
             this.presentAlert("Hubo un error, intente nuevamente. ");
-            this.error = error;
-            this.loading = false;
+           }
+           console.log("error",error);
+
+           this.loading=false;
+           this.visita = new VisitaEscuela();
+           this.conflicto=false;
+           this.visita.establecimiento = new Establecimiento();
+           this.error = '';
+           this.horaInicio=null;
+           this.horaFin=null;
+           this.error = error;
         });;
   
   }

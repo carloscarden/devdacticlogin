@@ -29,7 +29,7 @@ export class CargarLicenciaPage implements OnInit {
 
   ngOnInit() {
     this.licencia.medica="F";
-
+    this.licencia.codigo="";
   }
 
   async presentAlert(msj) {
@@ -44,7 +44,13 @@ export class CargarLicenciaPage implements OnInit {
   validarFechas(){
      if(this.licencia.inicio!=null){
         if(this.licencia.fin!=null){
-             if(this.licencia.fin<this.licencia.inicio){
+
+            var a = new Date(this.licencia.inicio);
+            var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+
+            var b = new Date(this.licencia.fin);
+            var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+             if(finSinHoras<inicioSinHoras){
                this.fechasNoValidas=true;
              }
              else{
@@ -88,14 +94,20 @@ export class CargarLicenciaPage implements OnInit {
 
     this.licenciaService.addLicencia(this.licencia).subscribe(
         data => {
-          console.log(data);
           this.loading=false;
           this.licencia = new Licencia();
           this.error = '';
+          this.licencia.medica="F";
+          this.licencia.codigo="";
           this.presentAlert("Enviado con éxito.  ");
+
         },
         error => {
           console.log(error);
+          this.licencia = new Licencia();
+          this.error = '';
+          this.licencia.medica="F";
+          this.licencia.codigo="";
           this.presentAlert("Hubo un error, intente nuevamente. ");
           this.error = error;
           this.loading = false;

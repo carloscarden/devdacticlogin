@@ -31,6 +31,7 @@ export class VisitaServiceService {
 
 
    /******************************************************************************** */
+   
 
    addVisita(visita: any){
 
@@ -48,6 +49,31 @@ export class VisitaServiceService {
     return this.http.get(URL+`motivosVisita/all`);
   }
 
+
+  getAllVisitas(size,idInspector, inicio, fin, motivo){
+
+    let urlAenviar = URL+`inspectores/${idInspector}/visitas`;
+
+
+   if(motivo!=null){
+       urlAenviar = urlAenviar+`?motivo=${motivo}`;
+       if(inicio!=null && fin!=null ){
+         urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
+       }
+       urlAenviar = urlAenviar+`&size=${size}&sort=ASC`;
+   }
+   else{
+       if(inicio!=null && fin!=null ){
+          urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&size=${size}&sort=ASC`;
+       }
+       else{
+           urlAenviar=urlAenviar+`?size=${size}&sort=ASC`;
+       }
+   }
+   return this.http.get<any>(urlAenviar);
+
+  }
+
   getVisitas(size,page,idInspector): Observable<any>{
     /* console.log("url");
      console.log(URL+`visitas?size=${size}&page=${page} ` )   ;*/
@@ -58,13 +84,14 @@ export class VisitaServiceService {
   getVisitasByDate(size,page,idInspector, inicio, fin): Observable<any>{
     /* console.log("url");
      console.log(URL+`visitas?size=${size}&page=${page} ` )   ;*/
-     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?from=${inicio}&to=${fin}size=${size}&page=${page}&sort=ASC`); 
+     console.log(URL+`inspectores/${idInspector}/visitas?from=${inicio}&to=${fin}size=${size}&page=${page}&sort=ASC`);
+     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`); 
   }
 
   getVisitasByMotivo(size,page,idInspector,motivo){
-    console.log(URL+`inspectores/${idInspector}/visitas?codigo=${motivo}&size=${size}&page=${page}&sort=ASC`);
+    console.log(URL+`inspectores/${idInspector}/visitas?motivo=${motivo}&size=${size}&page=${page}&sort=ASC`);
 
-    return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?codigo=${motivo}&size=${size}&page=${page}&sort=ASC`); 
+    return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?motivo=${motivo}&size=${size}&page=${page}&sort=ASC`); 
 
 
   }
@@ -72,8 +99,8 @@ export class VisitaServiceService {
   getVisitasByDateAndMotivo(size,page,idInspector, inicio, fin,motivo): Observable<any>{
     /* console.log("url");
      console.log(URL+`visitas?size=${size}&page=${page} ` )   ;*/
-     console.log(URL+`inspectores/${idInspector}/visitas?codigo=${motivo}&from=${inicio}&to=${fin}size=${size}&page=${page}&sort=ASC`);
-     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?codigo=${motivo}&from=${inicio}&to=${fin}size=${size}&page=${page}&sort=ASC`); 
+     console.log(URL+`inspectores/${idInspector}/visitas?motivo=${motivo}&from=${inicio}&to=${fin}size=${size}&page=${page}&sort=ASC`);
+     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?motivo=${motivo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`); 
   }
 
 

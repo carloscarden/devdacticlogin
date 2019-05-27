@@ -29,6 +29,33 @@ export class TrabajoAdminServiceService {
         }
   }
 
+  getAllTrabajos(idInspector, inicio, fin, codigo){
+
+   let urlAenviar = URL+`inspectores/${idInspector}/trabajosAdmin`;
+
+
+   if(codigo!=null){
+       urlAenviar = urlAenviar+`?codigo=${codigo}`;
+       if(inicio!=null && fin!=null ){
+         urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
+       }
+       urlAenviar = urlAenviar+`&sort=ASC`;
+   }
+   else{
+       if(inicio!=null && fin!=null ){
+          urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
+       }
+       else{
+           urlAenviar=urlAenviar+`?sort=ASC`;
+       }
+   }
+   return this.http.get<any>(urlAenviar);
+
+  }
+
+
+
+
    /******************************************************************************** */
    /*  TRABAJO ADMINISTRATIVO */
    addTrabajoAdministrativo(trabajoAdmin: TrabajoAdministrativo){
@@ -51,12 +78,13 @@ export class TrabajoAdminServiceService {
 
    getTrabajoAdministrativoByTipo(size,page,idInspector,tipo){
       console.log(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}&size=${size}&page=${page}`);
-      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}&size=${size}&page=${page}`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&size=${size}&page=${page}`);
 
    }
 
    getTrabajoAdministrativoByDateAndTipo(size,page,idInspector,inicio,fin,tipo){
-      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}from=${inicio}&to=${fin}&size=${size}&page=${page}`);
+      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&from=${inicio}&to=${fin}&size=${size}&page=${page}`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&from=${inicio}&to=${fin}&size=${size}&page=${page}`);
  
    }
       

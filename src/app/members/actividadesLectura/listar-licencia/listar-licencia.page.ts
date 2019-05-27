@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
+import { ToastController, Platform, AlertController } from '@ionic/angular';
+
 
 
 
@@ -11,6 +13,16 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 
 /* MODELS */
 import { Pagina } from './../../../_models/pagina';
+import { Licencia } from './../../../_models/licencia';
+
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 
 @Component({
   selector: 'app-listar-licencia',
@@ -45,9 +57,13 @@ export class ListarLicenciaPage implements OnInit {
 
   inspectorId=1;
 
-  constructor( private router:Router,
+  constructor(
+    private router:Router,
     private authenticationService: AuthenticationService,
     private licenciaService:LicenciaServiceService,
+    private file:File,
+    private fileOpener: FileOpener,
+    private plt: Platform
     ) { 
       this.url="";
       let currentUser = this.authenticationService.currentUserValue;
@@ -267,6 +283,108 @@ export class ListarLicenciaPage implements OnInit {
       
   }
 
+
+
+  /*********************************************************** */
+
+
+  
+  crearPDF(){
+    let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
+    let contenidoArmadoParaElPDF=this.armarPDF(contenidoDelPDF);
+    this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+
+  }
+
+  diseniarPDFcomoLoQuiereElUsuario(){
+    // funcion que va a recolectar todos los datos del cliente
+     let formatoCorrectoFin, formatoCorrectoInicio;
+     if(this.inicioFiltro && this.finFiltro){
+          let diaInicio = new Date(this.inicioFiltro);
+          formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+      
+          let diaFin = new Date(this.finFiltro);
+          formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+     }
+
+
+    let licenciasAllenar=[];
+  
+    this.licenciaService.getAllLicencias(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro)
+    .subscribe(res  =>{
+                 if(res!=null){
+                        licenciasAllenar=licenciasAllenar.concat(res['content']);
+
+                 }
+              });
+
+    return licenciasAllenar;
+
+  }
+
+
+
+
+
+  armarPDF(licenciasAllenar:Array<Licencia>){
+
+    let contenidoArmadoDelPDF=[];
+
+    licenciasAllenar.forEach(licencia => {
+      console.log(licencia);
+      let contenidoDeLaLicencia=[];
+      contenidoDeLaLicencia.push(licencia.inicio, licencia.fin, licencia.articulo);
+      contenidoArmadoDelPDF.push(contenidoDeLaLicencia);
+    });
+
+    contenidoArmadoDelPDF.unshift(["Inicio","Fin", "Articulo"]);
+
+    var docDefinition  = {
+      pageOrientation: 'landscape',
+    
+     content: [
+        {
+          layout: 'lightHorizontalLines', // optional
+          table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            headerRows: 1,
+            widths: [ '*', 'auto', 300, '*' ],
+            
+            body: contenidoArmadoDelPDF
+          }
+        }
+      ]
+    }
+
+
+    return docDefinition ;
+    
+  }
+
+
+  abrirYdescargarPDF(contenidoArmadoDelPDF){
+    let pdfObj = pdfMake.createPdf(contenidoArmadoDelPDF);
+
+    if (this.plt.is('cordova')) {
+        pdfObj.getBuffer((buffer) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        // Save the PDF to the data Directory of our App
+        this.file.writeFile(this.file.dataDirectory, 'licencias.pdf', blob, { replace: true }).then(fileEntry => {
+          // Open the PDf with the correct OS tools
+          this.fileOpener.open(this.file.dataDirectory + 'licencias.pdf', 'application/pdf');
+        })
+      });
+    } else {
+      // On a browser simply use download!
+      pdfObj.download();
+    }
+
+  }
+
+  /*************************************************************** */
+
    // Conversiones para que se vea con un formato mejor
   stringAsDate(dateStr) {
     let reemplazar=dateStr.replace(/-/g,"/");
@@ -280,7 +398,12 @@ export class ListarLicenciaPage implements OnInit {
     if(this.inicio!=null){
        if(this.fin!=null){
             console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
-            if(this.fin<this.inicio){
+            var a = new Date(this.inicio);
+            var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+
+            var b = new Date(this.fin);
+            var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+            if(finSinHoras<inicioSinHoras){
 
               this.fechasNoValidas=true;
             }

@@ -262,7 +262,6 @@ export class CargarConvocatoriaPage implements OnInit {
           imagenNueva.nombre= archivoWeb.name;
           imagenNueva.tipo = archivoWeb.type;
           imagenNueva.archivo = event.target.result;
-          console.log(imagenNueva.archivo);
           that.imagesWeb.push(imagenNueva) ;
           // en este arreglo tengo todos los valores de los megas que puso el usuario
           that.megasDeLosArchivos.push(megaPosibleArchivo);

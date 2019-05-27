@@ -73,7 +73,7 @@ export class EventModalPage implements OnInit {
     var dias=["dom", "lun", "mar", "mie", "jue", "vie", "sab"];
     var diaDeLaSemana=dias[d.getUTCDay()];
 
-    if(diaDeLaSemana==="jue"){
+    if(diaDeLaSemana==="vie"){
       this.diaPermitido=true;
     }
 
@@ -259,7 +259,13 @@ export class EventModalPage implements OnInit {
        this.validarDiaCorrectoDeLasLicencias();
 
        if(this.fin!=null){
-            if(this.fin<this.inicio){
+
+        var a = new Date(this.inicio);
+        var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+
+        var b = new Date(this.fin);
+        var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+            if(finSinHoras<inicioSinHoras){
               this.fechasNoValidas=true;
             }
             else{
