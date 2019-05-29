@@ -13,59 +13,41 @@
       <ion-col>
   
        <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
+
+        
+          <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
+              <ion-input [(ngModel)]="visita.inicio" [liIonic4Datepicker]="datePickerObj" name="inicio" #inicio="ngModel" required> </ion-input>
+              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+                  La fecha de inicio es requerida
+              </div>
+          </ion-item>
+
+
+
+          <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
+              <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar" class="sinborde " name="hInicio"  #hInicio="ngModel" (change)="validarHoras()" required>
+              <ngx-material-timepicker #picker></ngx-material-timepicker>
+              <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
+                  La hora de inicio es requerida
+              </div>
+          </ion-item>
     
       
-         <ion-item>
-          <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="visita.inicio" name="inicio" #inicio="ngModel" required
-                monthNames="enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre"
-                monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"
-                dayNames="domingo, lunes, martes, miercoles, jueves, viernes, sabado"
-                dayShortNames="dom, lun, mar, mie, jue, vie, sab, dom"
-                min="2017"
-                max="2100"
-                mode="ios"
-                cancelText="cancelar"
-                doneText="guardar"
-              ></ion-datetime>
-            <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
-               La fecha de inicio es requerida
-            </div>
-         </ion-item>  
-
-         
-         <ion-item>
-          <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="horaInicio" name="hInicio" #hInicio="ngModel" required
-                mode="ios"
-                cancelText="cancelar"
-                doneText="guardar"
-                (ionChange)="validarHoras()">  
-              </ion-datetime>
-              <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
-                La hora de inicio es requerida
-              </div>
-          </ion-item>
-
-
-
-
-          
-          
           <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">Hora Fin  (*)</ion-label>
-              <ion-datetime class="fuente" displayFormat="HH:mm" pickerFormat="HH:mm A" [(ngModel)]="horaFin" name="hFin" #hFin="ngModel" required
-                mode="ios"
-                cancelText="cancelar"
-                doneText="guardar"
-                (ionChange)="validarHoras()">  
-                </ion-datetime>
+              <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
+              <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="sinborde " name="hFin"  #hFin="ngModel" (change)="validarHoras()" required>
+              <ngx-material-timepicker #picker2></ngx-material-timepicker>
               <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
-                    La hora de fin es requerida
+                  La hora de fin es requerida
               </div>
           </ion-item>
+
+        
+
           <div *ngIf="horasNoValidas"  style="color:red;">
-            La fecha fin no debe de ser menor que la fecha de inicio
+            La hora fin no debe de ser menor que la hora de inicio
           </div>
           
           

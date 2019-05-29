@@ -53,6 +53,34 @@ export class ListarConvocatoriaPage implements OnInit {
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
 
 
+  datePickerObj: any = {
+    showTodayButton: false, // default true
+    fromDate: new Date('2016-12-08'), // default null
+    toDate: new Date('2100-12-28'),
+    closeOnSelect: true, // default false
+    setLabel: 'Aceptar',  // default 'Set'
+    todayLabel: 'Hoy', // default 'Today'
+    closeLabel: 'Cancelar', // default 'Close'
+    titleLabel: 'Seleccione una fecha', // default null
+    monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    weeksList: ["D", "L", "M", "M", "J", "V", "S"],
+    momentLocale: 'es-AR', // Default 'en-US'
+    btnProperties: {
+      expand: 'block', // Default 'block'
+      fill: '', // Default 'solid'
+      size: '10px', // Default 'default'
+      disabled: '', // Default false
+      strong: '', // Default false
+      color: '' // Default ''
+    },
+    arrowNextPrev: {
+      nextArrowSrc: 'assets/images/arrow_right.svg',
+      prevArrowSrc: 'assets/images/arrow_left.svg'
+    } // This object supports only SVG files.
+  };
+
+
+
   // para el selectable del filtro
   tipoConvocatoria;
   tiposConvocatoria;

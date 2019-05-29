@@ -19,7 +19,7 @@ export class AgendaServiceService {
   constructor( private httpOtro:Http, private http: HttpClient) { }
 
   public getEvents(month, year,idInspector): Observable<any> {
-    console.log(URL+`inspectores/1/tareas?month=${month}&year=${year}`);
+    console.log(URL+`inspectores/${idInspector}/tareas?month=${month}&year=${year}`);
     return this.http.get<any>(URL+`inspectores/${idInspector}/tareas?month=${month}&year=${year}`);
   }
 
