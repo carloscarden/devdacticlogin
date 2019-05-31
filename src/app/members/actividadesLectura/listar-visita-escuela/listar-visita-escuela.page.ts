@@ -50,6 +50,34 @@ export class ListarVisitaEscuelaPage implements OnInit {
   inspectorId=1;
 
 
+  datePickerObj: any = {
+    showTodayButton: false, // default true
+    fromDate: new Date('2016-12-08'), // default null
+    toDate: new Date('2100-12-28'),
+    closeOnSelect: true, // default false
+    setLabel: 'Aceptar',  // default 'Set'
+    todayLabel: 'Hoy', // default 'Today'
+    closeLabel: 'Cancelar', // default 'Close'
+    dateFormat: 'DD-MM-YYYY',
+    titleLabel: 'Seleccione una fecha', // default null
+    monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    weeksList: ["D", "L", "M", "M", "J", "V", "S"],
+    momentLocale: 'es-AR', // Default 'en-US'
+    btnProperties: {
+      expand: 'block', // Default 'block'
+      fill: '', // Default 'solid'
+      size: '10px', // Default 'default'
+      disabled: '', // Default false
+      strong: '', // Default false
+      color: '' // Default ''
+    },
+    arrowNextPrev: {
+      nextArrowSrc: 'assets/images/arrow_right.svg',
+      prevArrowSrc: 'assets/images/arrow_left.svg'
+    } // This object supports only SVG files.
+  };
+
+
   constructor(private visitaService: VisitaServiceService,
               private authenticationService: AuthenticationService,
               private file:File,
@@ -115,11 +143,11 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   cargarVisitasDesdeHasta(page,infiniteScroll?){
     console.log("cargar convocatorias desde hasta");
-    let diaInicio = new Date(this.inicioFiltro);
-    let formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+    let diaInicio = this.inicioFiltro.split("-");
+    let formatoCorrectoInicio = diaInicio[0]+"/"+diaInicio[1]+"/"+diaInicio[2];
 
-    let diaFin = new Date(this.finFiltro);
-    let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+    let diaFin = this.finFiltro.split("-");
+    let formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
 
 
     if(this.tipoFiltro=="Todos."){
@@ -300,11 +328,11 @@ export class ListarVisitaEscuelaPage implements OnInit {
       // funcion que va a recolectar todos los datos del cliente
       let formatoCorrectoFin, formatoCorrectoInicio;
       if(this.inicioFiltro && this.finFiltro){
-           let diaInicio = new Date(this.inicioFiltro);
-           formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+           let diaInicio = this.inicioFiltro.split("-");
+           formatoCorrectoInicio = diaInicio[0]+"/"+diaInicio[1]+"/"+diaInicio[2];
        
            let diaFin = new Date(this.finFiltro);
-           formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+           formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
       }
 
       let visitasAllenar=[];
@@ -330,7 +358,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
     visitasAllenar.forEach(visita => {
       console.log(visita);
       let contenidoDeLaVisita=[];
-      contenidoDeLaVisita.push(visita.inicio, visita.fin, visita.establecimiento.cue, visita.motivo, visita.acompaniante, visita.observaciones, visita.urgente );
+      contenidoDeLaVisita.push(visita.inicio, visita.fin, visita.establecimiento.cue, visita.motivos, visita.acompaniante, visita.observaciones, visita.urgente );
       contenidoArmadoDelPDF.push(contenidoDeLaVisita);
     });
 

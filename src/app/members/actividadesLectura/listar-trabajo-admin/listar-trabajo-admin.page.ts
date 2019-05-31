@@ -63,6 +63,7 @@ export class ListarTrabajoAdminPage implements OnInit {
     setLabel: 'Aceptar',  // default 'Set'
     todayLabel: 'Hoy', // default 'Today'
     closeLabel: 'Cancelar', // default 'Close'
+    dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
     monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
     weeksList: ["D", "L", "M", "M", "J", "V", "S"],
@@ -147,11 +148,11 @@ export class ListarTrabajoAdminPage implements OnInit {
 
   cargarTrabajosDesdeHasta(page,infiniteScroll?){
     console.log("cargar convocatorias desde hasta");
-    let diaInicio = new Date(this.inicioFiltro);
-    let formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+    let diaInicio = this.inicioFiltro.split("-");
+    let formatoCorrectoInicio = diaInicio[0]+"/"+diaInicio[1]+"/"+diaInicio[2];
 
-    let diaFin = new Date(this.finFiltro);
-    let formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+    let diaFin = this.finFiltro.split("-");
+    let formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
     if(this.tipoFiltro=="Todos."){
           this.trabajosService.getTrabajoAdministrativoByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
           .subscribe(res  =>{
@@ -313,11 +314,11 @@ export class ListarTrabajoAdminPage implements OnInit {
     // funcion que va a recolectar todos los datos del cliente
     let formatoCorrectoFin, formatoCorrectoInicio;
     if(this.inicioFiltro && this.finFiltro){
-         let diaInicio = new Date(this.inicioFiltro);
-         formatoCorrectoInicio = diaInicio.getDate()+"/"+(diaInicio.getMonth()+1)+"/"+diaInicio.getFullYear();
+        let diaInicio = this.inicioFiltro.split("-");
+        formatoCorrectoInicio = diaInicio[0]+"/"+diaInicio[1]+"/"+diaInicio[2];
      
-         let diaFin = new Date(this.finFiltro);
-         formatoCorrectoFin = diaFin.getDate()+"/"+(diaFin.getMonth()+1)+"/"+diaFin.getFullYear();
+        let diaFin = new Date(this.finFiltro);
+        formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
     }
 
     
@@ -417,11 +418,15 @@ export class ListarTrabajoAdminPage implements OnInit {
   validarFechas(){
     if(this.inicio!=null){
        if(this.fin!=null){
-            var a = new Date(this.inicio);
-            var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+            console.log("validar las fechas");
+            var a = this.inicio.split("-");
+            console.log(a);
+            var inicioSinHoras= new Date(parseInt(a[2]) ,parseInt(a[1])-1, parseInt(a[0]));
+            console.log("inicio", inicioSinHoras);
 
-            var b = new Date(this.fin);
-            var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+            var b =  this.fin.split("-");
+            var finSinHoras= new Date(parseInt(b[2]) ,parseInt(b[1])-1, parseInt(b[0]));
+            console.log("fin", finSinHoras);
             console.log("fecha fin menor a fecha inicio",this.fin < this.inicio);
             if(finSinHoras<inicioSinHoras){
 
@@ -437,7 +442,8 @@ export class ListarTrabajoAdminPage implements OnInit {
 
 
  usuarioQuiereFiltrarPorFecha(){
-  let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null);
+
+   let fechasVacias= (this.inicioFiltro ==null || this.finFiltro == null)  || (this.inicioFiltro=="" || this.finFiltro == "") ;
 
   if(this.filtroActivado && !fechasVacias && !this.fechasNoValidas){
     return true;

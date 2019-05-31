@@ -9,7 +9,7 @@ export class VisitaEscuela {
     establecimiento: Establecimiento;
     urgente:string;
     inspectorId:number;
-    motivo: TipoVisita;
+    motivos: TipoVisita;
     observaciones: string;
     acompaniante: string;
     adjuntos: Array<any>;

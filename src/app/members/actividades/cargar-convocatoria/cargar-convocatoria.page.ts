@@ -65,6 +65,7 @@ export class CargarConvocatoriaPage implements OnInit {
     closeOnSelect: true, // default false
     setLabel: 'Aceptar',  // default 'Set'
     todayLabel: 'Hoy', // default 'Today'
+    dateFormat: 'DD-MM-YYYY',
     closeLabel: 'Cancelar', // default 'Close'
     titleLabel: 'Seleccione una fecha', // default null
     monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
@@ -132,48 +133,76 @@ export class CargarConvocatoriaPage implements OnInit {
     this.convocatoria.adjuntos=imgsConvertidas;
 
     
-    
+
+    /****************************************************************************** */
 
     /* formato correcto del dia mes y año */
-    let inicio= new Date(this.convocatoria.inicio);
-    let fechaFormat=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear(); 
-    
+    let inicio=this.convocatoria.inicio.split("-");
+    let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
+
     /* convertir la fecha de inicio al formato que acepta el backend*/
-    let hi= new Date(this.horaInicio);
-    let formatoCorrectoInicio=fechaFormat+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});;
+    let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
+    let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
     this.convocatoria.inicio=formatoCorrectoInicio;
 
-    /* convertir la fecha de fin al formato correcto el backend*/
 
-    let hf= new Date(this.horaFin);
-    let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    /* convertir la fecha de fin al formato correcto el backend*/
+    let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
+    let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
     this.convocatoria.fin=formatoCorrectoFin;
 
 
-     /********************************************************************* */
+     /*  Asignarle el inspector id del usuario logueado */
      let currentUser = this.authenticationService.currentUserValue;
      this.convocatoria.inspectorId=currentUser.id;
 
 
-    this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
-    .subscribe(
-        data => {
-           
-           this.loading=false;
-           this.convocatoria = new Convocatoria();
-           this.horaInicio=null;
-           this.horaFin=null;
-           this.error = '';
-           this.presentAlert("Enviado con éxito. ");
-        },
-        error => {
-            console.log('error en el data', error);
-            this.presentAlert("Hubo un error, intente nuevamente. ");
-            this.error = error;
-            this.loading = false;
-        });;
+     
+    
+     
+     
+     console.log("hora inicio",this.horaInicio);
+      
+     console.log("hora fin",this.horaFin);
+     console.log("formato correcto a enviar hora inicio",formatoCorrectoHoraInicio);
+     console.log("formato correcto a enviar hora fin",formatoCorrectoHoraFin);
+     console.log("formato correcto fin", formatoCorrectoFin)
+     console.log("convocatoria", this.convocatoria);
 
-   }
+
+
+     /* ----------------------------------------------------------------------- */
+
+     if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
+
+          this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
+          .subscribe(
+              data => {
+                
+                this.loading=false;
+                this.convocatoria = new Convocatoria();
+                this.horaInicio;
+                this.horaFin;
+                this.error = '';
+                this.presentAlert("Enviado con éxito. ");
+              },
+              error => {
+                  console.log('error en el data', error);
+                  this.presentAlert("Hubo un error, intente nuevamente. ");
+                  this.error = error;
+                  this.loading = false;
+              });;
+     }
+     else{
+        this.presentToast("la hora inicio es mas grande que hora fin");
+        this.convocatoria.inicio=null;
+     }
+
+   
+        /************************************************* */
+
+  }
 
    // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.convocatoria); }
@@ -320,20 +349,23 @@ export class CargarConvocatoriaPage implements OnInit {
 
 
   // validar si la hora de inicio es menor a la hora de fin
-  validarHoras(){
-    console.log(this.horaInicio);
-    console.log(this.horaFin);
+  validarHoras(horaInicial, horaFinal ){
 
-    if(this.horaInicio!=null){
-      if(this.horaFin!=null){
-           if(this.horaFin<this.horaInicio){
-             this.horasNoValidas=true;
-           }
-           else{
-             this.horasNoValidas=false;
-           }
-      }
+    // Append any date. Use your birthday.
+    const timeInitToDate = new Date('1990-05-06T' + horaInicial + 'Z');
+    const timeEndToDate = new Date('1990-05-06T' + horaFinal + 'Z');
+
+    console.log("hora inicio", this.horaInicio);
+    console.log("hora fin", this.horaFin);
+
+    if(timeEndToDate<timeInitToDate){
+      return false;
     }
+    else{
+      return true;
+    }
+
+
 
   }
 
@@ -341,6 +373,29 @@ export class CargarConvocatoriaPage implements OnInit {
   esUnaImagen(tipo){
     let tipoLower=tipo.toLowerCase();
     return tipoLower.includes("image");
+  }
+
+  parsearLaHora(unaHoraSinFormatoCorrecto){
+      
+     let hi=unaHoraSinFormatoCorrecto.split(":");
+     let hora=hi[0];
+     let minutosYmeridiano= hi[1];
+     let minutos=minutosYmeridiano.split(" ");
+     let meridiano= minutos[1];
+     minutos=minutos[0];
+     let hff=hora;
+     if(meridiano=="pm"){
+        let horaFinal=parseInt(hora)+12;
+        if (horaFinal==24){
+          horaFinal=0;
+        }
+        hff=horaFinal.toString();
+     }
+
+     let horaParseada= hff+":"+minutos;
+     return horaParseada;
+    
+
   }
 
 

@@ -27,7 +27,7 @@
 
           <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
-              <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar" class="sinborde " name="hInicio"  #hInicio="ngModel" (change)="validarHoras()" required>
+              <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hInicio"  #hInicio="ngModel" (change)="validarHoras()" required>
               <ngx-material-timepicker #picker></ngx-material-timepicker>
               <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
                   La hora de inicio es requerida
@@ -37,7 +37,7 @@
       
           <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
-              <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="sinborde " name="hFin"  #hFin="ngModel" (change)="validarHoras()" required>
+              <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hFin"  #hFin="ngModel" (change)="validarHoras()" required>
               <ngx-material-timepicker #picker2></ngx-material-timepicker>
               <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
                   La hora de fin es requerida
@@ -64,7 +64,8 @@
              <ion-label position="stacked" class="textoBold" color="success">Motivo(*)</ion-label>
              <ionic-selectable class="fuente"
                 item-content
-                [(ngModel)]="visita.motivo"
+                [(ngModel)]="visita.motivos"
+                [isMultiple]="true"
                 name="motivoVisita"
                 itemValueField="codigo"
                 itemTextField="descripcion"

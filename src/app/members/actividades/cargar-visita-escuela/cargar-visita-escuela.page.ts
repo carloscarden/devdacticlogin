@@ -58,6 +58,7 @@ export class CargarVisitaEscuelaPage implements OnInit {
     setLabel: 'Aceptar',  // default 'Set'
     todayLabel: 'Hoy', // default 'Today'
     closeLabel: 'Cancelar', // default 'Close'
+    dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
     monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
     weeksList: ["D", "L", "M", "M", "J", "V", "S"],
@@ -120,18 +121,18 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
 
    /* formato correcto del dia mes y año */
-    let inicio= new Date(this.visita.inicio);
-    let fechaFormat=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear(); 
+    let inicio= this.visita.inicio.split("-");
+    let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
 
-    /* convertir la fecha de inicio al formato que acepta el backend*/
-    let hi= new Date(this.horaInicio);
-    let formatoCorrectoInicio=fechaFormat+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+     /* convertir la fecha de inicio al formato que acepta el backend*/
+     let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
+    let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
     this.visita.inicio=formatoCorrectoInicio;
 
 
-    /* convertir la fecha de fin al formato correcto el backend*/
-    let hf= new Date(this.horaFin);
-    let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+   /* convertir la fecha de fin al formato correcto el backend*/
+   let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
+    let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
     this.visita.fin=formatoCorrectoFin;
     /* ******************************************************************** */
     
@@ -148,8 +149,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
     this.visita.inspectorId=currentUser.id;
     console.log("visita escuela a mandar",this.visita);
 
-
-    this.visitaService.addVisita(this.visita).subscribe(
+    if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
+      this.visitaService.addVisita(this.visita).subscribe(
         data => {
           console.log(data);
            this.loading=false;
@@ -157,8 +158,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
-           this.horaInicio=null;
-           this.horaFin=null;
+           this.horaInicio;
+           this.horaFin;
            this.presentAlert("Enviado con éxito.  ");
         },
         error => {
@@ -175,10 +176,17 @@ export class CargarVisitaEscuelaPage implements OnInit {
            this.conflicto=false;
            this.visita.establecimiento = new Establecimiento();
            this.error = '';
-           this.horaInicio=null;
-           this.horaFin=null;
+           this.horaInicio;
+           this.horaFin;
            this.error = error;
         });;
+
+    }
+    else{
+      this.presentToast("la hora inicio es mas grande que hora fin");
+      this.visita.inicio=null;
+    }
+  
   
   }
 
@@ -295,19 +303,24 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
 
-   // validar si la hora de inicio es menor a la hora de fin
-   validarHoras(){
+  // validar si la hora de inicio es menor a la hora de fin
+  validarHoras(horaInicial, horaFinal ){
 
-    if(this.horaInicio!=null){
-      if(this.horaFin!=null){
-           if(this.horaFin<this.horaInicio){
-             this.horasNoValidas=true;
-           }
-           else{
-             this.horasNoValidas=false;
-           }
-      }
+    // Append any date. Use your birthday.
+    const timeInitToDate = new Date('1990-05-06T' + horaInicial + 'Z');
+    const timeEndToDate = new Date('1990-05-06T' + horaFinal + 'Z');
+
+    console.log("hora inicio", this.horaInicio);
+    console.log("hora fin", this.horaFin);
+
+    if(timeEndToDate<timeInitToDate){
+      return false;
     }
+    else{
+      return true;
+    }
+
+
 
   }
 
@@ -316,6 +329,29 @@ export class CargarVisitaEscuelaPage implements OnInit {
     let tipoLower=tipo.toLowerCase();
     return tipoLower.includes("image");
   }
+
+  parsearLaHora(unaHoraSinFormatoCorrecto){
+      
+    let hi=unaHoraSinFormatoCorrecto.split(":");
+    let hora=hi[0];
+    let minutosYmeridiano= hi[1];
+    let minutos=minutosYmeridiano.split(" ");
+    let meridiano= minutos[1];
+    minutos=minutos[0];
+    let hff=hora;
+    if(meridiano=="pm"){
+       let horaFinal=parseInt(hora)+12;
+       if (horaFinal==24){
+         horaFinal=0;
+       }
+       hff=horaFinal.toString();
+    }
+
+    let horaParseada= hff+":"+minutos;
+    return horaParseada;
+   
+
+ }
 
  
 

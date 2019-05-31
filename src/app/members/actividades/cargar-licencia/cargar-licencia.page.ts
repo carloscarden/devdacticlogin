@@ -33,6 +33,7 @@ export class CargarLicenciaPage implements OnInit {
     setLabel: 'Aceptar',  // default 'Set'
     todayLabel: 'Hoy', // default 'Today'
     closeLabel: 'Cancelar', // default 'Close'
+    dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
     monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
     weeksList: ["D", "L", "M", "M", "J", "V", "S"],
@@ -70,14 +71,15 @@ export class CargarLicenciaPage implements OnInit {
   }
 
   validarFechas(){
+
      if(this.licencia.inicio!=null){
         if(this.licencia.fin!=null){
 
-            var a = new Date(this.licencia.inicio);
-            var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+            var a = this.licencia.inicio.split("-");
+            var inicioSinHoras= new Date( parseInt(a[2]) ,parseInt(a[1]), parseInt(a[0]) );
 
-            var b = new Date(this.licencia.fin);
-            var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+            var b = this.licencia.fin.split("-");
+            var finSinHoras= new Date( parseInt(b[2]), parseInt(b[1]), parseInt(b[0]));
              if(finSinHoras<inicioSinHoras){
                this.fechasNoValidas=true;
              }
@@ -94,17 +96,14 @@ export class CargarLicenciaPage implements OnInit {
     this.loading = true;
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
-    let inicio= new Date(this.licencia.inicio);
-    inicio.setSeconds(3*60*60);
-    let month= inicio.getMonth()+1;
-    let formatoCorrectoInicio=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear();
+    let inicio= this.licencia.inicio.split("-");
+    let formatoCorrectoInicio=inicio[1]+"-"+inicio[0]+"-"+inicio[3];
     this.licencia.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
-    let fin= new Date(this.licencia.fin);
-    fin.setSeconds(3*60*60);
-    let formatoCorrectoFin=(fin.getMonth()+1).toString()+"-"+fin.getDate()+"-"+fin.getFullYear();
+    let fin= this.licencia.fin.split("-");
+    let formatoCorrectoFin=fin[1]+"-"+fin[0]+"-"+fin[3];
     this.licencia.fin=formatoCorrectoFin;
 
     let currentUser = this.authenticationService.currentUserValue;

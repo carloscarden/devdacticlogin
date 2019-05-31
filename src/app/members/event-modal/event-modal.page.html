@@ -11,15 +11,8 @@
 <ion-content>
 
   
-
-    <ion-item>
-        <ion-label position="stacked" class="textoBold" color="success">Nuevo componente Hora</ion-label>
-        <input [ngxTimepicker]="picker" cancelBtnTmpl="cancelar" class="sinborde " name="nuevaHora">
-        <ngx-material-timepicker #picker></ngx-material-timepicker>
-    </ion-item>
-
     <div *ngIf="diaPermitido">
-       <ion-list>
+  
           <ion-item>
             <ion-label position="stacked" class="textoBold" color="success">Actividad</ion-label>
             <ionic-selectable class="fuente"
@@ -93,14 +86,15 @@
                   
                <ion-item>
                     <ion-label position="stacked" class="textoBold" color="success">Hora Inicio </ion-label>
-                    <input [ngxTimepicker]="picker"  [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar" class="sinborde " name="hInicio">
+                    <input [ngxTimepicker]="picker"  [(ngModel)]="horaInicio"  cancelBtnTmpl="cancelar"   class="native-input sc-ion-input-md" name="hInicio">
                     <ngx-material-timepicker #picker></ngx-material-timepicker>
+                   
                </ion-item>
                   
                <ion-item>
                     <ion-label position="stacked" class="textoBold" color="success">Hora Fin </ion-label>
-                    <input [ngxTimepicker]="picker"  [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="sinborde " name="hInicio">
-                    <ngx-material-timepicker #picker></ngx-material-timepicker>
+                    <input [ngxTimepicker]="picker2"  [(ngModel)]="horaFin"   cancelBtnTmpl="cancelar"   class="native-input sc-ion-input-md" name="hInicio">
+                    <ngx-material-timepicker #picker2></ngx-material-timepicker>
                 </ion-item>
                   
                 <div *ngIf="horasNoValidas"  style="color:red;">
@@ -115,7 +109,7 @@
 
               
 
-      </ion-list>
+    
                
 
       <div class="centrarBoton">

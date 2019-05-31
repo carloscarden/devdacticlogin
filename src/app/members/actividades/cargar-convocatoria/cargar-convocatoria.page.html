@@ -6,7 +6,10 @@
     <ion-title class="textoTitulo">Convocatoria</ion-title>
   </ion-toolbar>
 </ion-header>
-{{horaInicio}}
+hora inicio {{horaInicio}}
+hora fin {{horaFin}}
+
+convocatoria {{convocatoria}}
 
 <ion-content padding>
   <ion-grid>
@@ -24,8 +27,8 @@
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
-                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar" class="sinborde " name="nuevaHoraInicio"  #nuevaHoraInicio="ngModel" (change)="validarHoras()" required>
-                <ngx-material-timepicker #picker></ngx-material-timepicker>
+                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" class="native-input sc-ion-input-md" name="nuevaHoraInicio"  #nuevaHoraInicio="ngModel"  (ionchange)="validarHoras()" required>
+                <ngx-material-timepicker #picker [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"  (change)="validarHoras()"></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraInicio.valid || nuevaHoraInicio.pristine)" class="invalid-feedback">
                     La hora de inicio es requerida
                 </div>
@@ -34,8 +37,8 @@
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
-                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="sinborde " name="nuevaHoraFin"  #nuevaHoraFin="ngModel" (change)="validarHoras()" required>
-                <ngx-material-timepicker #picker2></ngx-material-timepicker>
+                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin"  class="native-input sc-ion-input-md" name="nuevaHoraFin"  #nuevaHoraFin="ngModel" (onchange)="validarHoras()" required>
+                <ngx-material-timepicker #picker2  [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraFin.valid || nuevaHoraFin.pristine)" class="invalid-feedback">
                     La hora de fin es requerida
                 </div>

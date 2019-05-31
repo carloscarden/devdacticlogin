@@ -1,5 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
-import {  ModalController, AlertController } from '@ionic/angular';
+import { ToastController,ModalController, AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 import { Actividad } from 'src/app/_models/actividad';
 import { Tarea } from 'src/app/_models/tarea';
@@ -56,6 +56,7 @@ export class EventModalPage implements OnInit {
      setLabel: 'Aceptar',  // default 'Set'
      todayLabel: 'Hoy', // default 'Today'
      closeLabel: 'Cancelar', // default 'Close'
+     dateFormat: 'DD-MM-YYYY',
      titleLabel: 'Seleccione una fecha', // default null
      monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
      weeksList: ["D", "L", "M", "M", "J", "V", "S"],
@@ -79,6 +80,7 @@ export class EventModalPage implements OnInit {
               private modalCtrl:ModalController, 
               private agendaService: AgendaServiceService,
               private authenticationService: AuthenticationService,
+              private toastController: ToastController,
               private alertCtrl: AlertController) { }
 
               async presentAlert(msj) {
@@ -91,13 +93,7 @@ export class EventModalPage implements OnInit {
               }
 
   ngOnInit() {
-    //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)});
-    let preselectedDate = moment(this.selectedDay).format();
-    this.inicio = preselectedDate;
-    this.fin = preselectedDate;
-    this.fecha= preselectedDate;
-    this.horaInicio= preselectedDate;
-    this.horaFin = preselectedDate;
+    //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)}); 
 
     var d= new Date();
     var dias=["dom", "lun", "mar", "mie", "jue", "vie", "sab"];
@@ -211,14 +207,18 @@ export class EventModalPage implements OnInit {
   comprobarFechaParaLicencia(){
     let errores=true;
     if(!this.fechasNoValidas && this.diaCorrecto){
+
+          var d= new Date();
+          d.setMinutes(d.getMinutes()+10);
+          var hora=d.toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'});
           //setear el inicio de la actividad
-          let init=new Date(this.inicio);
-          this.evento.inicio=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear()+" "+init.getHours()+":"+init.getMinutes();
+          let init=this.inicio.split("-");
+          this.evento.inicio=init[1]+"-"+init[0]+"-"+init[2]+" "+hora;
   
   
           //setear el fin de la actividad
-          let end= new Date(this.fin);
-          this.evento.fin=(end.getMonth()+1).toString()+"-"+end.getDate()+"-"+end.getFullYear()+" "+end.getHours()+":"+end.getMinutes();
+          let end= this.fin.split("-");
+          this.evento.fin=end[1]+"-"+end[0]+"-"+end[2]+" "+hora;
 
 
           errores=false;
@@ -230,25 +230,32 @@ export class EventModalPage implements OnInit {
   comprobarFechaParaOtraActividad(){
 
     let errores = true;
-    if(!this.horasNoValidas && this.diaCorrecto){
-
-        /* formato correcto del dia mes y año */
-        let init= new Date(this.fecha);
-        let fechaFormat=(init.getMonth()+1).toString()+"-"+init.getDate()+"-"+init.getFullYear(); 
-        
-        /* convertir la fecha de inicio al formato que acepta el backend*/
-        let hi= new Date(this.horaInicio);
-        let formatoCorrectoInicio=fechaFormat+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});;
-        this.evento.inicio=formatoCorrectoInicio;
-
-
-        /* convertir la fecha de fin al formato correcto el backend*/
-        let hf= new Date(this.horaFin);
-        let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        this.evento.fin=formatoCorrectoFin;
+    let hi= this.parsearLaHora(this.horaInicio);
+    let hf= this.parsearLaHora(this.horaFin);
+    let horasValidas=this.validarHoras(hi,hf);
+    if(horasValidas){
+        if(this.diaCorrecto){
+                /* formato correcto del dia mes y año */
+              let init=this.fecha.split("-"); 
+              let fechaFormat=init[1]+"-"+init[0]+"-"+init[2]; 
+              
+              /* convertir la fecha de inicio al formato que acepta el backend*/
+              
+              let formatoCorrectoInicio=fechaFormat+" "+hi;
+              this.evento.inicio=formatoCorrectoInicio;
 
 
-        errores=false;
+              /* convertir la fecha de fin al formato correcto el backend*/
+              let formatoCorrectoFin=fechaFormat+" "+hf;
+              this.evento.fin=formatoCorrectoFin;
+
+
+              errores=false;
+        }
+
+    }
+    else{
+      this.presentToast("la hora inicio es mas grande que hora fin")
     }
     return errores;
   }
@@ -267,21 +274,34 @@ export class EventModalPage implements OnInit {
     }
   }
 
-   // validar si la hora de inicio es menor a la hora de fin
-   validarHoras(){
+  // validar si la hora de inicio es menor a la hora de fin
+  validarHoras(horaInicial, horaFinal ){
 
-    if(this.horaInicio!=null){
-      if(this.horaFin!=null){
-           if(this.horaFin<this.horaInicio){
-             this.horasNoValidas=true;
-           }
-           else{
-             this.horasNoValidas=false;
-           }
+    // Append any date. Use your birthday.
+    const timeInitToDate = new Date('1990-05-06T' + horaInicial + 'Z');
+    const timeEndToDate = new Date('1990-05-06T' + horaFinal + 'Z');
+
+    console.log("hora inicio", this.horaInicio);
+    console.log("hora fin", this.horaFin);
+    if(this.horaInicio && this.horaFin){
+      if(timeEndToDate<timeInitToDate){
+        return false;
       }
+      else{
+        return true;
+      }
+
     }
+     return false;
+    
+
+   
+
+
 
   }
+
+
 
   // validar si la fecha de inicio es menor a la fecha de fin
   validarFechas(){
@@ -290,11 +310,11 @@ export class EventModalPage implements OnInit {
 
        if(this.fin!=null){
 
-        var a = new Date(this.inicio);
-        var inicioSinHoras= new Date(a.getFullYear(),a.getMonth(),a.getDate());
+        var a = this.inicio.split("-");
+        var inicioSinHoras= new Date( parseInt(a[2]) ,parseInt(a[1]), parseInt(a[0])  );
 
-        var b = new Date(this.fin);
-        var finSinHoras= new Date( b.getFullYear(), b.getMonth(), b.getDate());
+        var b = this.fin.split("-");
+        var finSinHoras= new Date(  parseInt(b[2]) ,parseInt(b[1]), parseInt(b[0]) );
             if(finSinHoras<inicioSinHoras){
               this.fechasNoValidas=true;
             }
@@ -312,8 +332,10 @@ export class EventModalPage implements OnInit {
    let diaDeHoy=new Date(d1.getFullYear(),d1.getMonth(),d1.getDate());
 
 
-   let d2= new Date(this.inicio);
-   let diaPosible= new Date(d2.getFullYear(),d2.getMonth(),d2.getDate());
+   let d2= this.inicio.split("-");
+   console.log("inicio ", d2);
+   let diaPosible= new Date(  parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])  );
+   console.log(diaPosible);
 
    let diasPermitidos= new Date();
    diasPermitidos.setDate(diasPermitidos.getDate()+7);
@@ -334,12 +356,17 @@ export class EventModalPage implements OnInit {
       let d1= new Date();
       let diaDeHoy=new Date(d1.getFullYear(),d1.getMonth(),d1.getDate());
 
-      let d2= new Date(this.fecha);
-      let diaPosible= new Date(d2.getFullYear(),d2.getMonth(),d2.getDate());
+      let d2= this.fecha.split("-");;
+      let diaPosible= new Date(   parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])   );
 
-
+      
+ 
       let diasPermitidos= new Date();
       diasPermitidos.setDate(diasPermitidos.getDate()+7);
+
+      console.log("diaDeHoy",diaDeHoy);
+      console.log("diaPosible",diaPosible);
+      console.log("diasPermitidos",diasPermitidos);
 
       if(diaPosible>=diaDeHoy && diaPosible<=diasPermitidos){
         this.diaCorrecto=true;
@@ -349,6 +376,40 @@ export class EventModalPage implements OnInit {
       }
 
  }
+
+
+ async presentToast(text) {
+  const toast = await this.toastController.create({
+      message: text,
+      position: 'bottom',
+      duration: 3000
+  });
+  toast.present();
+}
+
+
+parsearLaHora(unaHoraSinFormatoCorrecto){
+      
+  let hi=unaHoraSinFormatoCorrecto.split(":");
+  let hora=hi[0];
+  let minutosYmeridiano= hi[1];
+  let minutos=minutosYmeridiano.split(" ");
+  let meridiano= minutos[1];
+  minutos=minutos[0];
+  let hff=hora;
+  if(meridiano=="pm"){
+     let horaFinal=parseInt(hora)+12;
+     if (horaFinal==24){
+       horaFinal=0;
+     }
+     hff=horaFinal.toString();
+  }
+
+  let horaParseada= hff+":"+minutos;
+  return horaParseada;
+ 
+
+}
 
 
 

@@ -59,6 +59,7 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     setLabel: 'Aceptar',  // default 'Set'
     todayLabel: 'Hoy', // default 'Today'
     closeLabel: 'Cancelar', // default 'Close'
+    dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
     monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
     weeksList: ["D", "L", "M", "M", "J", "V", "S"],
@@ -117,46 +118,56 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
     
 
     /* formato correcto del dia mes y año */
-    let inicio= new Date(this.trabajoAdmin.inicio);
-    let fechaFormat=(inicio.getMonth()+1).toString()+"-"+inicio.getDate()+"-"+inicio.getFullYear(); 
+    let inicio=this.trabajoAdmin.inicio.split("-");
+    let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
 
 
 
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
-    let hi= new Date(this.horaInicio);
-    let formatoCorrectoInicio=fechaFormat+" "+hi.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
+    let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
     this.trabajoAdmin.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
-    let hf= new Date(this.horaFin);
-    let formatoCorrectoFin=fechaFormat+" "+hf.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
+    let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
     this.trabajoAdmin.fin=formatoCorrectoFin;
 
-    let currentUser = this.authenticationService.currentUserValue;
-    this.trabajoAdmin.inspectorId=currentUser.id;
+    
 
    /********************************************************************* */
-
+   
+   /*  Asignarle el inspector id del usuario logueado */
+   let currentUser = this.authenticationService.currentUserValue;
+    this.trabajoAdmin.inspectorId=currentUser.id;
 
     console.log(this.trabajoAdmin);
-    this.trabajoAdminService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
-    .subscribe(
-        data => {
-           this.loading=false;
-           this.trabajoAdmin = new TrabajoAdministrativo();
-           this.horaInicio=null;
-           this.horaFin=null;
-           this.error = '';
-           this.presentAlert("Enviado con éxito. ");
-        },
-        error => {
-          console.log(error);
-            this.presentAlert("Hubo un error, intente nuevamente. ");
-            this.error = error;
-            this.loading = false;
-        });;
+
+    if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
+          this.trabajoAdminService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
+          .subscribe(
+              data => {
+                this.loading=false;
+                this.trabajoAdmin = new TrabajoAdministrativo();
+                this.horaInicio;
+                this.horaFin;
+                this.error = '';
+                this.presentAlert("Enviado con éxito. ");
+              },
+              error => {
+                console.log(error);
+                  this.presentAlert("Hubo un error, intente nuevamente. ");
+                  this.error = error;
+                  this.loading = false;
+              });;
+    }
+    else{
+      this.presentToast("la hora inicio es mas grande que hora fin");
+      this.trabajoAdmin.inicio=null;
+   }
+    
   
   }
 
@@ -317,21 +328,49 @@ export class CargarTrabajoAdministrativoPage implements OnInit {
   }
 
 
-   // validar si la hora de inicio es menor a la hora de fin
-   validarHoras(){
+  // validar si la hora de inicio es menor a la hora de fin
+  validarHoras(horaInicial, horaFinal ){
 
-    if(this.horaInicio!=null){
-      if(this.horaFin!=null){
-           if(this.horaFin<this.horaInicio){
-             this.horasNoValidas=true;
-           }
-           else{
-             this.horasNoValidas=false;
-           }
-      }
+    // Append any date. Use your birthday.
+    const timeInitToDate = new Date('1990-05-06T' + horaInicial + 'Z');
+    const timeEndToDate = new Date('1990-05-06T' + horaFinal + 'Z');
+
+    console.log("hora inicio", this.horaInicio);
+    console.log("hora fin", this.horaFin);
+
+    if(timeEndToDate<timeInitToDate){
+      return false;
+    }
+    else{
+      return true;
     }
 
+
+
   }
+
+  parsearLaHora(unaHoraSinFormatoCorrecto){
+      
+    let hi=unaHoraSinFormatoCorrecto.split(":");
+    let hora=hi[0];
+    let minutosYmeridiano= hi[1];
+    let minutos=minutosYmeridiano.split(" ");
+    let meridiano= minutos[1];
+    minutos=minutos[0];
+    let hff=hora;
+    if(meridiano=="pm"){
+       let horaFinal=parseInt(hora)+12;
+       if (horaFinal==24){
+         horaFinal=0;
+       }
+       hff=horaFinal.toString();
+    }
+
+    let horaParseada= hff+":"+minutos;
+    return horaParseada;
+   
+
+ }
 
   esUnaImagen(tipo){
     let tipoLower=tipo.toLowerCase();
