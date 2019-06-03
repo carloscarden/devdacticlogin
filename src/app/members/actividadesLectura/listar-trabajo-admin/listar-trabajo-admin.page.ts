@@ -304,9 +304,22 @@ export class ListarTrabajoAdminPage implements OnInit {
   /********************************************** ***********************************************/
 
   crearPDF(){
+    let trabajoAdminAllenar=[]
     let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
-    let contenidoArmadoParaElPDF=this.armarPDF(contenidoDelPDF);
-    this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+    contenidoDelPDF.subscribe(res  =>{
+      if(res!=null){
+        trabajoAdminAllenar=trabajoAdminAllenar.concat(res['content']);
+        let contenidoArmadoParaElPDF=this.armarPDF(trabajoAdminAllenar);
+        this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+
+      }
+      else{
+        let contenidoArmadoParaElPDF=this.armarPDF(trabajoAdminAllenar);
+        this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+      }
+   });
+
+    
 
   }
 
@@ -330,16 +343,8 @@ export class ListarTrabajoAdminPage implements OnInit {
       tipoAEntregar=this.tipoFiltro;
     }
   
-    this.trabajosService.getAllTrabajos(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, tipoAEntregar)
-    .subscribe(res  =>{
-                 if(res!=null){
-                  trabajoAdminAllenar=trabajoAdminAllenar.concat(res['content']);
-
-                 }
-              });
-
-    return trabajoAdminAllenar;
-
+    return this.trabajosService.getTrabajosBySize(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, tipoAEntregar,1000,0);
+  
   }
 
   armarPDF(convocatoriasAllenar: Array<TrabajoAdministrativo>){
@@ -364,7 +369,7 @@ export class ListarTrabajoAdminPage implements OnInit {
               // headers are automatically repeated if the table spans over multiple pages
               // you can declare how many rows should be treated as headers
               headerRows: 1,
-              widths: [ '*', 'auto', 300, '*', '*' ],
+              widths: [ '*', '*', '*', '*', '*' ],
               
               body: contenidoArmadoDelPDF
             }

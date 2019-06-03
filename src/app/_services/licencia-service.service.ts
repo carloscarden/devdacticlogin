@@ -71,27 +71,30 @@ export class LicenciaServiceService {
 
   }
 
-  getAllLicencias(idInspector,inicio, fin, articulo){
+  getAllLicencias(idInspector,inicio, fin, articulo, size, page){
 
-    let urlAenviar = URL+`inspectores/${idInspector}/licencias`;
+    if(articulo==null && inicio==null && fin==null){
+      // buscar todas las licencias
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?size=${size}&page=${page}&sort=ASC`);
 
-
-    if(articulo!=null){
-        urlAenviar = urlAenviar+`?articulo=${articulo}`;
-        if(inicio!=null && fin!=null ){
-          urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
-        }
-        urlAenviar = urlAenviar+`&sort=ASC`;
     }
-    else{
-        if(inicio!=null && fin!=null ){
-           urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
-        }
-        else{
-            urlAenviar=urlAenviar+`?sort=ASC`;
-        }
+    else if(articulo!=null && inicio==null && fin==null){
+      // buscar las licencias por articulo
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&size=${size}&page=${page}&sort=ASC`);
+
     }
-    return this.http.get<any>(urlAenviar);
+    else if(articulo==null && inicio!=null && fin!=null){
+      // buscar las licencias por inicio y fin
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+
+    }
+    else if(articulo!=null && inicio!=null && fin!=null){
+      // buscar las licencias por articulo inicio y fin
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+
+    }
+
+
 
   }
             
@@ -123,6 +126,20 @@ export class LicenciaServiceService {
      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias/${idLicencia}`);
   }
   /******************************************************************************** */
+
+  getEncuadres(size,page,articulo){
+    if(!articulo){
+      return this.http.get<any>(URL+`encuadres?size=${size}&page=${page}`);
+    }
+    else{
+      console.log(URL+`encuadres?size=${size}&page=${page}&articulo=${articulo}`);
+      return this.http.get<any>(URL+`encuadres?size=${size}&page=${page}&articulo=${articulo}`);
+    }
+    
+  }
+
+ 
+ 
 
 
 }

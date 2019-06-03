@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { Subscription } from 'rxjs';
+
+
+/*  MODELO  */
+import { Encuadre } from 'src/app/_models/encuadre';
 import { Licencia } from './../../../_models/licencia';
 
+/* SERVICES */
 import { AuthenticationService } from './../../../_services/authentication.service';
 import { LicenciaServiceService } from './../../../_services/licencia-service.service';
-
-import { AlertController } from '@ionic/angular';
 
 
 
@@ -51,14 +58,32 @@ export class CargarLicenciaPage implements OnInit {
       prevArrowSrc: 'assets/images/arrow_left.svg'
     } // This object supports only SVG files.
   };
+
+
+  encuadres: Encuadre[];
+  pageEncuadres=0;
+  maximumPages;
+  articuloAfiltrar="";
+  size=15;
+  encuadresSubscription: Subscription;
+
   constructor(
     private licenciaService: LicenciaServiceService,
     private authenticationService: AuthenticationService,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController) {
+         this.licenciaService.getEncuadres(this.size,this.pageEncuadres,this.articuloAfiltrar).subscribe(
+               resEncuadres => {
+                  this.encuadres= this.encuadres.concat(resEncuadres['content']);
+                  this.pageEncuadres++;
+                  this.maximumPages= resEncuadres.totalPages-1;
+               }
+         )
+     }
 
   ngOnInit() {
     this.licencia.medica="F";
     this.licencia.codigo="";
+    this.licencia.encuadre= new Encuadre();
   }
 
   async presentAlert(msj) {
@@ -70,40 +95,82 @@ export class CargarLicenciaPage implements OnInit {
     await alert.present();
   }
 
-  validarFechas(){
+  searchPorts(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    this.articuloAfiltrar = event.text;
+    event.component.startSearch();
+    console.log("texto a filtrar", this.articuloAfiltrar);
+    
 
-     if(this.licencia.inicio!=null){
-        if(this.licencia.fin!=null){
+     // Close any running subscription.
+     if (this.encuadresSubscription) {
+      this.encuadresSubscription.unsubscribe();
+    }
 
-            var a = this.licencia.inicio.split("-");
-            var inicioSinHoras= new Date( parseInt(a[2]) ,parseInt(a[1]), parseInt(a[0]) );
+    this.pageEncuadres=0;
+    this.licenciaService.getEncuadres(this.size, this.pageEncuadres, this.articuloAfiltrar).subscribe(
+      resEncuadres => {
+        if(resEncuadres!=null){
+          console.log("resEncuadres a filtrar",resEncuadres);
+          event.component.items = resEncuadres['content'];
+          this.maximumPages= resEncuadres.totalPages-1;
+          this.pageEncuadres++;
+          event.component.endSearch();
+          event.component.enableInfiniteScroll();
 
-            var b = this.licencia.fin.split("-");
-            var finSinHoras= new Date( parseInt(b[2]), parseInt(b[1]), parseInt(b[0]));
-             if(finSinHoras<inicioSinHoras){
-               this.fechasNoValidas=true;
-             }
-             else{
-               this.fechasNoValidas=false;
-             }
         }
-     }
+        else{
+          console.log("no hay encuadres");
+          event.component.items = [];
+          this.maximumPages= -1;
+          this.pageEncuadres++;
+          event.component.endSearch();
+          event.component.endInfiniteScroll();
+        }
+         
+    });
 
   }
 
+  getMorePorts(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+    // There're no more ports - disable infinite scroll.
+    if (this.pageEncuadres > this.maximumPages) {
+      event.component.disableInfiniteScroll();
+      return;
+    }
+
+    this.licenciaService.getEncuadres(this.size, this.pageEncuadres, this.articuloAfiltrar).subscribe(
+      resEncuadres => {
+        console.log("resEncuadres",resEncuadres);
+          resEncuadres = event.component.items.concat(resEncuadres['content']);
+          
+
+ 
+          event.component.items = resEncuadres;
+          event.component.endInfiniteScroll();
+          this.pageEncuadres++;
+    });
+  }
+
+  
   onSubmit() { 
     console.log("cargar");
     this.loading = true;
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let inicio= this.licencia.inicio.split("-");
-    let formatoCorrectoInicio=inicio[1]+"-"+inicio[0]+"-"+inicio[3];
+    let formatoCorrectoInicio=inicio[1]+"-"+inicio[0]+"-"+inicio[2];
     this.licencia.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
     let fin= this.licencia.fin.split("-");
-    let formatoCorrectoFin=fin[1]+"-"+fin[0]+"-"+fin[3];
+    let formatoCorrectoFin=fin[1]+"-"+fin[0]+"-"+fin[2];
     this.licencia.fin=formatoCorrectoFin;
 
     let currentUser = this.authenticationService.currentUserValue;
@@ -126,6 +193,7 @@ export class CargarLicenciaPage implements OnInit {
           this.error = '';
           this.licencia.medica="F";
           this.licencia.codigo="";
+          this.licencia.encuadre= new Encuadre();
           this.presentAlert("Enviado con éxito.  ");
 
         },
@@ -144,5 +212,28 @@ export class CargarLicenciaPage implements OnInit {
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.licencia); }
+
+
+  validarFechas(){
+
+    if(this.licencia.inicio!=null){
+       if(this.licencia.fin!=null){
+
+           var a = this.licencia.inicio.split("-");
+           var inicioSinHoras= new Date( parseInt(a[2]) ,parseInt(a[1]), parseInt(a[0]) );
+
+           var b = this.licencia.fin.split("-");
+           var finSinHoras= new Date( parseInt(b[2]), parseInt(b[1]), parseInt(b[0]));
+            if(finSinHoras<inicioSinHoras){
+              this.fechasNoValidas=true;
+            }
+            else{
+              this.fechasNoValidas=false;
+            }
+       }
+    }
+
+ }
+
 
 }

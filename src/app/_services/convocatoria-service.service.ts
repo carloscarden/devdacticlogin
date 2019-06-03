@@ -34,25 +34,47 @@ export class ConvocatoriaServiceService {
 
   getAllConvocatorias(idInspector, inicio, fin, codigo){
 
-   let urlAenviar = URL+`inspectores/${idInspector}/convocatorias`;
+      let urlAenviar = URL+`inspectores/${idInspector}/convocatorias`;
 
+      if(codigo==null && inicio==null && fin==null){
+         return this.http.get<any>(urlAenviar);
+      }
+      else if(codigo==null && inicio!=null && fin!=null){
 
-   if(codigo!=null){
-       urlAenviar = urlAenviar+`?codigo=${codigo}`;
-       if(inicio!=null && fin!=null ){
-         urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
-       }
-       urlAenviar = urlAenviar+`&sort=ASC`;
-   }
-   else{
-       if(inicio!=null && fin!=null ){
-          urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
-       }
-       else{
-           urlAenviar=urlAenviar+`?sort=ASC`;
-       }
-   }
-   return this.http.get<any>(urlAenviar);
+         urlAenviar= urlAenviar+`?codigo=${codigo}`;
+         return this.http.get<any>(urlAenviar);
+      }
+      else if(codigo==null && inicio!=null && fin!=null){
+
+         urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&sort=ASC`;
+         return this.http.get<any>(urlAenviar);
+      
+      }
+      else if(codigo!=null && inicio!=null && fin!=null) {
+
+         urlAenviar= urlAenviar+`?codigo=${codigo}&from=${inicio}&to=${fin}`;
+         return this.http.get<any>(urlAenviar);
+      }
+
+  }
+
+  getConvocatoriasBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
+
+         if(articulo==null && inicio==null && fin==null){
+            console.log(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=inicio,ASC`);
+            return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=inicio,ASC`);
+         }
+         else if(articulo==null && inicio!=null && fin!=null){
+            console.log(URL+`inspectores/${idInspector}/convocatorias?articulo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+             return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+         }
+         else if(articulo==null && inicio!=null && fin!=null){
+            return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
+         
+         }
+         else if(articulo!=null && inicio!=null && fin!=null) {
+            return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
+         }
 
   }
 

@@ -346,9 +346,23 @@ export class ListarConvocatoriaPage implements OnInit {
   /************************************************ */
 
   crearPDF(){
+    let convocatoriasAllenar=[];
     let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
-    let contenidoArmadoParaElPDF=this.armarPDF(contenidoDelPDF);
-    this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+    contenidoDelPDF.subscribe(res  =>{
+      if(res!=null){
+       convocatoriasAllenar=convocatoriasAllenar.concat(res['content']);
+       let contenidoArmadoParaElPDF=this.armarPDF(convocatoriasAllenar);
+       this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+
+      }
+      else{
+        let contenidoArmadoParaElPDF=this.armarPDF(convocatoriasAllenar);
+        this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+       
+
+      }
+   });
+    
 
   }
 
@@ -365,17 +379,16 @@ export class ListarConvocatoriaPage implements OnInit {
     }
 
 
-    let convocatoriasAllenar=[];
+   
+
+    let filtrado;
+    if(this.tipoFiltro!="Todos."){
+      filtrado=this.tipoFiltro;
+    }
   
-    this.convocatoriaService.getAllConvocatorias(this.idInspector, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro)
-    .subscribe(res  =>{
-                 if(res!=null){
-                  convocatoriasAllenar=convocatoriasAllenar.concat(res['content']);
+    return this.convocatoriaService.getConvocatoriasBySize(this.idInspector, formatoCorrectoInicio, formatoCorrectoFin, filtrado, 100,0)
+   
 
-                 }
-              });
-
-    return convocatoriasAllenar;
 
     
   }
@@ -403,7 +416,7 @@ export class ListarConvocatoriaPage implements OnInit {
               // headers are automatically repeated if the table spans over multiple pages
               // you can declare how many rows should be treated as headers
               headerRows: 1,
-              widths: [ '*', 'auto', 300, '*', '*', '*' ],
+              widths: [ '*', '*', '*', '*', '*', '*' ],
               
               body: contenidoArmadoDelPDF
             }
@@ -411,6 +424,7 @@ export class ListarConvocatoriaPage implements OnInit {
         ]
     }
 
+    console.log('docDefinition',docDefinition);
 
     return docDefinition ;
 

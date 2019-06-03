@@ -319,9 +319,22 @@ export class ListarLicenciaPage implements OnInit {
 
   
   crearPDF(){
-    let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
-    let contenidoArmadoParaElPDF=this.armarPDF(contenidoDelPDF);
-    this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+      let licenciasAllenar=[];
+      let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
+      contenidoDelPDF.subscribe(res  =>{
+        if(res!=null){
+          licenciasAllenar=licenciasAllenar.concat(res['content']);
+          let contenidoArmadoParaElPDF=this.armarPDF(licenciasAllenar);
+          this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+
+        }
+        else{
+          let contenidoArmadoParaElPDF=this.armarPDF(licenciasAllenar);
+          this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+        
+        }
+      });
+    
 
   }
 
@@ -336,18 +349,10 @@ export class ListarLicenciaPage implements OnInit {
           formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
      }
 
-
-    let licenciasAllenar=[];
   
-    this.licenciaService.getAllLicencias(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro)
-    .subscribe(res  =>{
-                 if(res!=null){
-                        licenciasAllenar=licenciasAllenar.concat(res['content']);
+    return this.licenciaService.getAllLicencias(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro,1000,0)
+   
 
-                 }
-              });
-
-    return licenciasAllenar;
 
   }
 
@@ -362,7 +367,7 @@ export class ListarLicenciaPage implements OnInit {
     licenciasAllenar.forEach(licencia => {
       console.log(licencia);
       let contenidoDeLaLicencia=[];
-      contenidoDeLaLicencia.push(licencia.inicio, licencia.fin, licencia.articulo);
+      contenidoDeLaLicencia.push(licencia.inicio, licencia.fin, licencia.encuadre.articulo);
       contenidoArmadoDelPDF.push(contenidoDeLaLicencia);
     });
 
@@ -378,7 +383,7 @@ export class ListarLicenciaPage implements OnInit {
             // headers are automatically repeated if the table spans over multiple pages
             // you can declare how many rows should be treated as headers
             headerRows: 1,
-            widths: [ '*', 'auto', 300, '*' ],
+            widths: [ '*', '*', '*' ],
             
             body: contenidoArmadoDelPDF
           }
@@ -407,7 +412,7 @@ export class ListarLicenciaPage implements OnInit {
       });
     } else {
       // On a browser simply use download!
-      pdfObj.download();
+      pdfObj.download("licencias.pdf");
     }
 
   }

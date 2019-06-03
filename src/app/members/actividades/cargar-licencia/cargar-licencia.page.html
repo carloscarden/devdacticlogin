@@ -14,9 +14,6 @@
     <ion-row>
       <ion-col>
 
-        inicio de la licencia {{licencia.inicio}}
-        fin de la licencia {{licencia.fin}}
-
         <form #licenciaForm="ngForm" (ngSubmit)="onSubmit()" >
 
           
@@ -53,16 +50,31 @@
 
             <ion-item>
               <ion-label  position="stacked" class="textoBold" color="success">Art&iacute;culo  (*)</ion-label>
-                <ion-input class="fuente" type="text" [(ngModel)]="licencia.articulo" name="articulo" #articulo="ngModel" required ></ion-input>
-                <div *ngIf="!(articulo.valid || articulo.pristine)" class="invalid-feedback">
-                        El nro de la SOLICITUD es requerido
-                </div>
+              <ionic-selectable class="fuente"
+                item-content
+                [(ngModel)]="licencia.encuadre"
+                name="encuadreTipo"
+                itemTextField="articulo"
+                [items]="encuadres"
+                [canSearch]="true"
+                searchPlaceholder="buscar tipo convocatoria"
+                [searchFailText]="'No hay resultados.'"
+                [hasInfiniteScroll]="true"
+                (onSearch)="searchPorts($event)"
+                (onInfiniteScroll)="getMorePorts($event)"
+                required>
+                <ng-template ionicSelectableCloseButtonTemplate>
+                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+              <ion-note position="stacked" class="textoBold" color="success">{{licencia.encuadre.descripcion}}</ion-note>
+              <hr>
             </ion-item>
-
-            <ion-label color="danger" [hidden]="articulo.valid || articulo.pristine">El nro de la SOLICITUD es requerido</ion-label>
+            
 
         <!-- ************************************************************************************************** -->
         
+        <hr>
             <ion-item class="paddingcheck">
               <ion-label class="paddinglabel" color="success">Licencia m&eacute;dica</ion-label>
               <ion-checkbox checked="true" [(ngModel)]="tipoLicencia" name="lic"></ion-checkbox>

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CargarLicenciaPage } from './cargar-licencia.page';
 import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
+import { IonicSelectableModule } from 'ionic-selectable';
  
 
 
@@ -23,7 +24,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    Ionic4DatepickerModule
+    Ionic4DatepickerModule,
+    IonicSelectableModule
   ],
   declarations: [CargarLicenciaPage]
 })

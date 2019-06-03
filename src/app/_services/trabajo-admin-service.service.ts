@@ -53,6 +53,26 @@ export class TrabajoAdminServiceService {
 
   }
 
+  getTrabajosBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
+
+   if(articulo==null && inicio==null && fin==null){
+      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}&sort=inicio,ASC`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}&sort=inicio,ASC`);
+   }
+   else if(articulo==null && inicio!=null && fin!=null){
+      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?articulo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+   }
+   else if(articulo==null && inicio!=null && fin!=null){
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
+   
+   }
+   else if(articulo!=null && inicio!=null && fin!=null) {
+      return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
+   }
+
+}
+
 
 
 
