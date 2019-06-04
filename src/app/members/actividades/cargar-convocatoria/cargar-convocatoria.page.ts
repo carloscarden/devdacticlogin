@@ -21,6 +21,7 @@ import { AuthenticationService } from './../../../_services/authentication.servi
 import { Convocatoria } from './../../../_models/convocatoria';
 import { TipoConvocatoria } from './../../../_models/tipo-convocatoria';
 import { Imagen } from './../../../_models/imagen';
+import { Distrito } from 'src/app/_models/distrito';
 
 
 
@@ -87,7 +88,12 @@ export class CargarConvocatoriaPage implements OnInit {
 
 
   
- 
+  distritos: Distrito[];
+  pageDistrito=0;
+  maximumPages;
+  distritoAfiltrar="";
+  size=15;
+  distritoSubscription: Subscription;
   
  
   constructor(
@@ -98,7 +104,15 @@ export class CargarConvocatoriaPage implements OnInit {
     private actividadesService: ActividadesService,
     private convocatoriaService: ConvocatoriaServiceService,
     private alertCtrl: AlertController
-  ) { }
+  ) { 
+    this.actividadesService.getDistritos(this.distritoAfiltrar,this.size,this.pageDistrito).subscribe(
+      resEncuadres => {
+         this.distritos= this.distritos.concat(resEncuadres['content']);
+         this.pageDistrito++;
+         this.maximumPages= resEncuadres.totalPages-1;
+      }
+)
+  }
 
   ngOnInit() {
     /* id del inspector */
@@ -246,36 +260,67 @@ export class CargarConvocatoriaPage implements OnInit {
   /******************************************************************************************** */
 
 
-  filterDistritos(tipos: TipoConvocatoria[], text: string) {
-    return tipos.filter(t => {
-      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
-    });
-  }
-
-
+  
 
 
   searchDistritos(event: {
     component: IonicSelectableComponent,
     text: string
   }) {
-    let text = event.text.trim().toLowerCase();
+    this.distritoAfiltrar = event.text.trim();
     event.component.startSearch();
 
     // Close any running subscription.
-    if (this.actividadesSubscription) {
-      this.actividadesSubscription.unsubscribe();
+    if (this.distritoSubscription) {
+      this.distritoSubscription.unsubscribe();
     }
 
-    this.actividadesSubscription = this.actividadesService.getDistritos().subscribe(tipos => {
+    this.pageDistrito=0;
+    this.actividadesService.getDistritos(this.distritoAfiltrar,this.size,this.pageDistrito).subscribe(
+      resEncuadres => {
+        if(resEncuadres!=null){
+          console.log("resEncuadres a filtrar",resEncuadres);
+          event.component.items = resEncuadres['content'];
+          this.maximumPages= resEncuadres.totalPages-1;
+          this.pageDistrito++;
+          event.component.endSearch();
+          event.component.enableInfiniteScroll();
 
-      // Subscription will be closed when unsubscribed manually.
-     if (this.actividadesSubscription.closed) {
-        return;
-      }
+        }
+        else{
+          console.log("no hay encuadres");
+          event.component.items = [];
+          this.maximumPages= -1;
+          this.pageDistrito++;
+          event.component.endSearch();
+          event.component.endInfiniteScroll();
+        }
+         
+    });
 
-      event.component.items = this.filterDistritos(tipos, text);
-      event.component.endSearch();
+  }
+
+
+  getMoreDistritos(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }) {
+     // There're no more ports - disable infinite scroll.
+     if (this.pageDistrito > this.maximumPages) {
+      event.component.disableInfiniteScroll();
+      return;
+    }
+
+    this.actividadesService.getDistritos(this.distritoAfiltrar,this.size,this.pageDistrito).subscribe(
+      resEncuadres => {
+        console.log("resEncuadres",resEncuadres);
+          resEncuadres = event.component.items.concat(resEncuadres['content']);
+          
+
+ 
+          event.component.items = resEncuadres;
+          event.component.endInfiniteScroll();
+          this.pageDistrito++;
     });
   }
 

@@ -83,11 +83,12 @@
                 name="trabajoAdminDistrito"
                 itemValueField="numero"
                 itemTextField="descripcion"
-                [items]="tiposDistritos"
+                [items]="distritos"
                 [canSearch]="true"
                 searchPlaceholder="buscar distrito"
                 [searchFailText]="'No hay resultados.'"
-                (onSearch)="searchDistritos($event)">
+                (onSearch)="searchDistritos($event)"
+                (onInfiniteScroll)="getMoreDistritos($event)">
                 <ng-template ionicSelectableCloseButtonTemplate>
                     <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>

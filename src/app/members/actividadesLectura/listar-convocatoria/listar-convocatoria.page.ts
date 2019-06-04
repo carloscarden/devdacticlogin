@@ -396,11 +396,17 @@ export class ListarConvocatoriaPage implements OnInit {
   armarPDF(convocatoriasAllenar: Array<Convocatoria>){
 
     let contenidoArmadoDelPDF=[];
+    let currentUser = this.authenticationService.currentUserValue;
+    let inspector= currentUser.nombre+" "+currentUser.apellido;
+    var diaDeHoy = new Date();
+    var diaDeHoyFormatoPDF = diaDeHoy.getDate()+"/"+(diaDeHoy.getMonth()+1)+"/"+diaDeHoy.getFullYear();
 
     convocatoriasAllenar.forEach(convocatoria => {
       console.log(convocatoria);
       let contenidoDeLaLicencia=[];
-      contenidoDeLaLicencia.push(convocatoria.inicio, convocatoria.fin, convocatoria.tipoConvocatoria.descripcion, convocatoria.distrito.descripcion, convocatoria.lugar);
+      var formatoInicio=this.formatoHoraPDF(convocatoria.inicio);
+      var formatoFin=this.formatoHoraPDF(convocatoria.fin);
+      contenidoDeLaLicencia.push(formatoInicio, formatoFin, convocatoria.tipoConvocatoria.descripcion, convocatoria.distrito.descripcion, convocatoria.lugar);
       contenidoArmadoDelPDF.push(contenidoDeLaLicencia);
     });
 
@@ -408,8 +414,35 @@ export class ListarConvocatoriaPage implements OnInit {
 
     var docDefinition  = {
       pageOrientation: 'landscape',
+      footer: function(currentPage, pageCount) {
+        return {
+            margin:10,
+            columns: [
+            {
+                fontSize: 9,
+                text:[
+                {
+                text: '--------------------------------------------------------------------------' +
+                '\n',
+                margin: [0, 20]
+                },
+                {
+                text: 'Plataforma supervisiva ' + currentPage.toString() + ' de ' + pageCount,
+                }
+                ],
+                alignment: 'center'
+            }
+            ]
+        };
+  
+      },
     
       content: [
+          { text: diaDeHoyFormatoPDF, style: 'anotherStyle' },
+          { text: 'Informes convocatoria', style: 'titulo' },   
+          { text: 'Inspector: '+inspector, style: 'header' },
+  
+          { text: '  ', style: [ 'header', 'anotherStyle' ] },
           {
             layout: 'lightHorizontalLines', // optional
             table: {
@@ -421,10 +454,24 @@ export class ListarConvocatoriaPage implements OnInit {
               body: contenidoArmadoDelPDF
             }
           }
-        ]
+        ],
+
+      styles: {
+         header: {
+           fontSize: 19,
+         },
+         anotherStyle: {
+           italics: true,
+           alignment: 'right'
+         },
+         titulo: {
+           fontSize: 24,
+           bold: true,
+           alignment: 'center'
+         }
+      }
     }
 
-    console.log('docDefinition',docDefinition);
 
     return docDefinition ;
 
@@ -506,6 +553,15 @@ export class ListarConvocatoriaPage implements OnInit {
       return false;
     }
 }
+
+
+    formatoHoraPDF(diaYhora){
+      var s=diaYhora.split(" ");
+      var dia=s[0].split("-");
+      var hora=s[1];
+      var fecha=dia[1]+"/"+dia[0]+"/"+dia[2]+" "+hora;
+      return fecha;
+    }
 
 
 

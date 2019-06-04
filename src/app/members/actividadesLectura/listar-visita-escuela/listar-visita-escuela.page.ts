@@ -318,9 +318,24 @@ export class ListarVisitaEscuelaPage implements OnInit {
   /******************************************** */
 
   crearPDF(){
+    console.log("voy a crear el pdf");
+    let visitasAllenar=[];
     let contenidoDelPDF=this.diseniarPDFcomoLoQuiereElUsuario();
-    let contenidoArmadoParaElPDF=this.armarPDF(contenidoDelPDF);
-    this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+    contenidoDelPDF.subscribe(res  =>{
+      if(res!=null){
+        console.log("de la base de datos vienen :", res['content']);
+        visitasAllenar=visitasAllenar.concat(res['content']);
+        let contenidoArmadoParaElPDF=this.armarPDF(visitasAllenar);
+        this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+
+      }
+      else{
+        let contenidoArmadoParaElPDF=this.armarPDF(visitasAllenar);
+        this.abrirYdescargarPDF(contenidoArmadoParaElPDF);
+      }
+    });
+
+
 
   }
 
@@ -335,17 +350,17 @@ export class ListarVisitaEscuelaPage implements OnInit {
            formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
       }
 
-      let visitasAllenar=[];
+      let filtrado;
+      if(this.tipoFiltro!="Todos."){
+         filtrado=this.tipoFiltro;
+      }
 
-      this.visitaService.getAllVisitas(this.size,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, this.tipoFiltro)
-      .subscribe(res  =>{
-                   if(res!=null){
-                    visitasAllenar=visitasAllenar.concat(res['content']);
+      
+
+      return this.visitaService.getAllVisitas(this.size,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, filtrado)
+      
   
-                   }
-                });
-  
-      return visitasAllenar;
+       
   
 
  
@@ -353,12 +368,27 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   armarPDF(visitasAllenar: Array<VisitaEscuela>){
     let contenidoArmadoDelPDF=[];
+    let currentUser = this.authenticationService.currentUserValue;
+    let inspector= currentUser.nombre+" "+currentUser.apellido;
+    var diaDeHoy = new Date();
+    var diaDeHoyFormatoPDF = diaDeHoy.getDate()+"/"+(diaDeHoy.getMonth()+1)+"/"+diaDeHoy.getFullYear();
 
 
     visitasAllenar.forEach(visita => {
-      console.log(visita);
+      console.log("lleno la visita", visita);
+     
+      let contenidoDeLosMotivos=[];
+      visita.motivos.forEach(motivo => {
+
+        contenidoDeLosMotivos.push(motivo.descripcion)
+      });
+
+   
+
       let contenidoDeLaVisita=[];
-      contenidoDeLaVisita.push(visita.inicio, visita.fin, visita.establecimiento.cue, visita.motivos, visita.acompaniante, visita.observaciones, visita.urgente );
+      var formatoInicio=this.formatoHoraPDF(visita.inicio);
+      var formatoFin=this.formatoHoraPDF(visita.fin);
+      contenidoDeLaVisita.push(formatoInicio, formatoFin, visita.establecimiento.cue, {ul:contenidoDeLosMotivos}, visita.acompaniante, visita.observaciones, visita.urgente );
       contenidoArmadoDelPDF.push(contenidoDeLaVisita);
     });
 
@@ -366,22 +396,65 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
     var docDefinition  = {
       pageOrientation: 'landscape',
+      footer: function(currentPage, pageCount) {
+        return {
+            margin:10,
+            columns: [
+            {
+                fontSize: 9,
+                text:[
+                {
+                text: '--------------------------------------------------------------------------' +
+                '\n',
+                margin: [0, 20]
+                },
+                {
+                text: 'Plataforma supervisiva ' + currentPage.toString() + ' de ' + pageCount,
+                }
+                ],
+                alignment: 'center'
+            }
+            ]
+        };
+  
+      },
     
-     content: [
-        {
-          layout: 'lightHorizontalLines', // optional
-          table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            headerRows: 1,
-            widths: [ '*', 'auto', 300, '*', '*', '*', '*', '*' ],
-            
-            body: contenidoArmadoDelPDF
-          }
+      content: [
+          { text: diaDeHoyFormatoPDF, style: 'anotherStyle' },
+          { text: 'Informes visita escuela', style: 'titulo' },   
+          { text: 'Inspector: '+inspector, style: 'header' },
+  
+          { text: '  ', style: [ 'header', 'anotherStyle' ] },
+          {
+             layout: 'lightHorizontalLines', // optional
+             table: {
+                // headers are automatically repeated if the table spans over multiple pages
+                // you can declare how many rows should be treated as headers
+                headerRows: 1,
+                widths: [ '*', '*', '*', '*', '*', '*', '*', '*' ],
+                
+                body: contenidoArmadoDelPDF
+             }
+         }
+      ],
+
+      styles: {
+        header: {
+          fontSize: 19,
+        },
+        anotherStyle: {
+          italics: true,
+          alignment: 'right'
+        },
+        titulo: {
+          fontSize: 24,
+          bold: true,
+          alignment: 'center'
         }
-      ]
+      }
     }
 
+    console.log("docDefinition",docDefinition);
 
     return docDefinition ;
   }
@@ -389,6 +462,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
 
   abrirYdescargarPDF(contenidoArmadoParaElPDF){
     let pdfObj = pdfMake.createPdf(contenidoArmadoParaElPDF);
+    console.log("pdfObj",pdfObj);
 
     if (this.plt.is('cordova')) {
         pdfObj.getBuffer((buffer) => {
@@ -401,6 +475,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
         })
       });
     } else {
+      console.log("pdf download");
       // On a browser simply use download!
       pdfObj.download('visitas.pdf');
     }
@@ -456,6 +531,15 @@ export class ListarVisitaEscuelaPage implements OnInit {
   else{
     return false;
   }
+}
+
+
+formatoHoraPDF(diaYhora){
+  var s=diaYhora.split(" ");
+  var dia=s[0].split("-");
+  var hora=s[1];
+  var fecha=dia[1]+"/"+dia[0]+"/"+dia[2]+" "+hora;
+  return fecha;
 }
 
 

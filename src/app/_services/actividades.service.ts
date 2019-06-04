@@ -27,8 +27,14 @@ export class ActividadesService {
  
  
 
-  getDistritos(): Observable<any>{
-    return this.http.get(URL+`distritos`);
+  getDistritos(nombre,size,page): Observable<any>{
+    
+    if(!nombre){
+      console.log("distritos",URL+`distritos/?size=${size}&page=${page}`);
+      return this.http.get<any>(URL+`distritos/?size=${size}&page=${page}`);
+    }
+    console.log("distritos",URL+`distritos?nombre=${nombre}&size=${size}&page=${page}`);
+    return this.http.get<any>(URL+`distritos?nombre=${nombre}&size=${size}&page=${page}`);
 
   }
   

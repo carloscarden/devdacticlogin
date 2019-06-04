@@ -51,20 +51,20 @@
             <ion-item>
               <ion-label  position="stacked" class="textoBold" color="success">Art&iacute;culo  (*)</ion-label>
               <ionic-selectable class="fuente"
-                item-content
-                [(ngModel)]="licencia.encuadre"
-                name="encuadreTipo"
-                itemTextField="articulo"
-                [items]="encuadres"
-                [canSearch]="true"
-                searchPlaceholder="buscar tipo convocatoria"
-                [searchFailText]="'No hay resultados.'"
-                [hasInfiniteScroll]="true"
-                (onSearch)="searchPorts($event)"
-                (onInfiniteScroll)="getMorePorts($event)"
-                required>
-                <ng-template ionicSelectableCloseButtonTemplate>
-                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                  item-content
+                  [(ngModel)]="licencia.encuadre"
+                  name="encuadreTipo"
+                  itemTextField="articulo"
+                  [items]="encuadres"
+                  [canSearch]="true"
+                  searchPlaceholder="buscar tipo convocatoria"
+                  [searchFailText]="'No hay resultados.'"
+                  [hasInfiniteScroll]="true"
+                  (onSearch)="searchPorts($event)"
+                  (onInfiniteScroll)="getMorePorts($event)"
+                  required>
+                  <ng-template ionicSelectableCloseButtonTemplate>
+                      <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
                 </ng-template>
               </ionic-selectable>
               <ion-note position="stacked" class="textoBold" color="success">{{licencia.encuadre.descripcion}}</ion-note>

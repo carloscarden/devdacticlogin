@@ -36,19 +36,29 @@ import { Imagen } from './../../../_models/imagen';
 export class CargarVisitaEscuelaPage implements OnInit {
   loading = false;
   visita = new VisitaEscuela();
-  motivosVisita: MotivoVisita[];
+  
   error:string;
   images = [];
   imagesWeb = [];
   conflicto=false;
+
   actividadesSubscription: Subscription;
+  motivosVisita: MotivoVisita[];
+
   megasDeLosArchivos=[];
   totalMegasDeLosArchivos=0;
-  horasNoValidas=false;
 
+  horasNoValidas=false;
   horaInicio;
   horaFin;
 
+  establecimientos: Establecimiento[];
+  estabSubscription: Subscription;
+  estabAfiltrar;
+  size=15;
+  maximumPages;
+  pageEstab;
+  
 
   datePickerObj: any = {
     showTodayButton: false, // default true
@@ -85,7 +95,16 @@ export class CargarVisitaEscuelaPage implements OnInit {
     private visitaService: VisitaServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController
-    ) { }
+    ) { 
+      this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
+        resEstab => {
+           this.establecimientos= this.establecimientos.concat(resEstab['content']);
+           this.pageEstab++;
+           this.maximumPages= resEstab.totalPages-1;
+        }
+      )
+
+    }
 
   ngOnInit() {
 
@@ -226,6 +245,72 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
   /****************************************************************************************** */
+
+
+  searchEstabs(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }){
+    this.estabAfiltrar = event.text;
+    event.component.startSearch();
+    console.log("texto a filtrar", this.estabAfiltrar);
+    
+
+     // Close any running subscription.
+     if (this.estabSubscription) {
+      this.estabSubscription.unsubscribe();
+    }
+
+    this.pageEstab=0;
+    this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
+      resEstab => {
+        if(resEstab!=null){
+          console.log("resEncuadres a filtrar",resEstab);
+          event.component.items = resEstab['content'];
+          this.maximumPages= resEstab.totalPages-1;
+          this.pageEstab++;
+          event.component.endSearch();
+          event.component.enableInfiniteScroll();
+
+        }
+        else{
+          console.log("no hay encuadres");
+          event.component.items = [];
+          this.maximumPages= -1;
+          this.pageEstab++;
+          event.component.endSearch();
+          event.component.endInfiniteScroll();
+        }
+         
+    });
+
+
+  }
+
+  getMoreEstabs(event: {
+    component: IonicSelectableComponent,
+    text: string
+  }){
+    
+     // There're no more ports - disable infinite scroll.
+     if (this.pageEstab > this.maximumPages) {
+      event.component.disableInfiniteScroll();
+      return;
+    }
+
+    this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
+      resEstabs => {
+        console.log("resEncuadres",resEstabs);
+        resEstabs = event.component.items.concat(resEstabs['content']);
+          
+
+ 
+          event.component.items = resEstabs;
+          event.component.endInfiniteScroll();
+          this.pageEstab++;
+    });
+
+  }
 
 
 

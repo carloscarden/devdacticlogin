@@ -52,11 +52,27 @@
           
           
            <ion-item>
-            <ion-label position="stacked" class="textoBold" color="success">CUE  (*)</ion-label>
-            <ion-input class="fuente" type="text" [(ngModel)]="visita.establecimiento.cue" name="cue" #cue="ngModel" required></ion-input>
-            <div *ngIf="!(cue.valid || cue.pristine)" class="invalid-feedback">
-                La escuela es requerida
-            </div>
+            <ion-label position="stacked" class="textoBold" color="success">CUE  (*)</ion-label>           
+            
+            <ionic-selectable class="fuente"
+                item-content
+                [(ngModel)]="visita.establecimiento"
+                name="estab"
+                itemTextField="cue"
+                [items]="establecimientos"
+                [canSearch]="true"
+                searchPlaceholder="buscar tipo establecimiento"
+                [searchFailText]="'No hay resultados.'"
+                [hasInfiniteScroll]="true"
+                (onSearch)="searchEstabs($event)"
+                (onInfiniteScroll)="getMoreEstabs($event)"
+                required>
+                <ng-template ionicSelectableCloseButtonTemplate>
+                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+            </ionic-selectable>
+            <ion-note position="stacked" class="textoBold" color="success">{{visita.establecimiento.nombre}}</ion-note>
+            <hr>
           </ion-item>
           
           

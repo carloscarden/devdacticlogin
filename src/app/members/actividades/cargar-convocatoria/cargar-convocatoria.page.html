@@ -55,20 +55,20 @@ convocatoria {{convocatoria}}
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria (*)</ion-label>
                 <ionic-selectable class="fuente"
-                  item-content
-                  [(ngModel)]="convocatoria.tipoConvocatoria"
-                  name="convocatoriaTipo"
-                  itemValueField="codigo"
-                  itemTextField="descripcion"
-                  [items]="tiposTrabajos"
-                  [canSearch]="true"
-                  searchPlaceholder="buscar tipo convocatoria"
-                  [searchFailText]="'No hay resultados.'"
-                  (onSearch)="searchPorts($event)"
-                  required>
-                  <ng-template ionicSelectableCloseButtonTemplate>
-                      <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
-                  </ng-template>
+                    item-content
+                    [(ngModel)]="convocatoria.tipoConvocatoria"
+                    name="convocatoriaTipo"
+                    itemValueField="codigo"
+                    itemTextField="descripcion"
+                    [items]="tiposTrabajos"
+                    [canSearch]="true"
+                    searchPlaceholder="buscar tipo convocatoria"
+                    [searchFailText]="'No hay resultados.'"
+                    (onSearch)="searchPorts($event)"
+                    required>
+                    <ng-template ionicSelectableCloseButtonTemplate>
+                        <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                    </ng-template>
                 </ionic-selectable>
  
           </ion-item>
@@ -76,20 +76,22 @@ convocatoria {{convocatoria}}
           <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Distrito (*)</ion-label>
                 <ionic-selectable class="fuente"
-                  item-content
-                  [(ngModel)]="convocatoria.distrito"
-                  name="convocatoriaDistrito"
-                  itemValueField="numero"
-                  itemTextField="descripcion"
-                  [items]="tiposDistritos"
-                  [canSearch]="true"
-                  searchPlaceholder="buscar distrito"
-                  [searchFailText]="'No hay resultados.'"
-                  (onSearch)="searchDistritos($event)"
-                  required>
-                  <ng-template ionicSelectableCloseButtonTemplate>
-                      <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
-                  </ng-template>
+                    item-content
+                    [(ngModel)]="convocatoria.distrito"
+                    name="convocatoriaDistrito"
+                    itemValueField="numero"
+                    itemTextField="descripcion"
+                    [items]="distritos"
+                    [canSearch]="true"
+                    searchPlaceholder="buscar distrito"
+                    [searchFailText]="'No hay resultados.'"
+                    [hasInfiniteScroll]="true"
+                    (onSearch)="searchDistritos($event)"
+                    (onInfiniteScroll)="getMoreDistritos($event)"
+                    required>
+                    <ng-template ionicSelectableCloseButtonTemplate>
+                        <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                    </ng-template>
                 </ionic-selectable>
 
           </ion-item>

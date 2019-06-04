@@ -14,20 +14,20 @@
           <ion-item class="itemBoton" lines="inset" >
             <ion-label class="label">
               
-                          <p class="textoDetalle">Art&iacute;culo:</p> 
-                          <p class="infoDetalle">{{ item.encuadre.articulo }}</p> 
-                          <p class="textoDetalle">Inicio:</p>  
-                          <p class="infoDetalle">{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
-                          <p class="textoDetalle">Fin:</p>
-                          <p class="infoDetalle">{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
-                          <p class="textoDetalle">Tipo:</p>   
+                    <p class="textoDetalle">Art&iacute;culo:</p> 
+                    <p class="infoDetalle">{{ item.encuadre.articulo }}</p> 
+                    <p class="textoDetalle">Inicio:</p>  
+                    <p class="infoDetalle">{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
+                    <p class="textoDetalle">Fin:</p>
+                    <p class="infoDetalle">{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
+                    <p class="textoDetalle">Tipo:</p>   
                           
                           
-                          <div  *ngIf="item.medica=='T'" >
-                              <p>medica </p>
-                              <p class="textoDetalle">C&oacute;digo</p>
-                              <p>{{ item.codigo}}</p>
-                          </div>
+                    <div  *ngIf="item.medica=='T'" >
+                        <p>medica </p>
+                        <p class="textoDetalle">C&oacute;digo</p>
+                        <p>{{ item.codigo}}</p>
+                    </div>
                       
             </ion-label>
           </ion-item>

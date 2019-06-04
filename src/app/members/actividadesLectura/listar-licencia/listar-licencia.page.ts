@@ -363,11 +363,17 @@ export class ListarLicenciaPage implements OnInit {
   armarPDF(licenciasAllenar:Array<Licencia>){
 
     let contenidoArmadoDelPDF=[];
+    let currentUser = this.authenticationService.currentUserValue;
+    let inspector= currentUser.nombre+" "+currentUser.apellido;
+    var diaDeHoy = new Date();
+    var diaDeHoyFormatoPDF = diaDeHoy.getDate()+"/"+(diaDeHoy.getMonth()+1)+"/"+diaDeHoy.getFullYear();
 
     licenciasAllenar.forEach(licencia => {
       console.log(licencia);
       let contenidoDeLaLicencia=[];
-      contenidoDeLaLicencia.push(licencia.inicio, licencia.fin, licencia.encuadre.articulo);
+      var formatoInicio=this.formatoHoraPDF(licencia.inicio);
+      var formatoFin=this.formatoHoraPDF(licencia.fin);
+      contenidoDeLaLicencia.push(formatoInicio, formatoFin, licencia.encuadre.articulo);
       contenidoArmadoDelPDF.push(contenidoDeLaLicencia);
     });
 
@@ -375,20 +381,63 @@ export class ListarLicenciaPage implements OnInit {
 
     var docDefinition  = {
       pageOrientation: 'landscape',
+      footer: function(currentPage, pageCount) {
+        return {
+            margin:10,
+            columns: [
+            {
+                fontSize: 9,
+                text:[
+                {
+                text: '--------------------------------------------------------------------------' +
+                '\n',
+                margin: [0, 20]
+                },
+                {
+                text: 'Plataforma supervisiva ' + currentPage.toString() + ' de ' + pageCount,
+                }
+                ],
+                alignment: 'center'
+            }
+            ]
+        };
+  
+      },
     
-     content: [
-        {
-          layout: 'lightHorizontalLines', // optional
-          table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            headerRows: 1,
-            widths: [ '*', '*', '*' ],
-            
-            body: contenidoArmadoDelPDF
+      content: [
+          { text: diaDeHoyFormatoPDF, style: 'anotherStyle' },
+          { text: 'Informes licencia', style: 'titulo' },   
+          { text: 'Inspector: '+inspector, style: 'header' },
+    
+          { text: '  ', style: [ 'header', 'anotherStyle' ] },
+          {
+            layout: 'lightHorizontalLines', // optional
+            table: {
+              // headers are automatically repeated if the table spans over multiple pages
+              // you can declare how many rows should be treated as headers
+              headerRows: 1,
+              widths: [ '*', '*', '*' ],
+              
+              body: contenidoArmadoDelPDF
+            }
           }
+      ],
+
+      styles: {
+        header: {
+          fontSize: 19,
+        },
+        anotherStyle: {
+          italics: true,
+          alignment: 'right'
+        },
+        titulo: {
+          fontSize: 24,
+          bold: true,
+          alignment: 'center'
         }
-      ]
+      
+      }
     }
 
 
@@ -460,6 +509,14 @@ export class ListarLicenciaPage implements OnInit {
       else{
         return false;
       }
+  }
+
+  formatoHoraPDF(diaYhora){
+    var s=diaYhora.split(" ");
+    var dia=s[0].split("-");
+    var hora=s[1];
+    var fecha=dia[1]+"/"+dia[0]+"/"+dia[2]+" "+hora;
+    return fecha;
   }
 
 

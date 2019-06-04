@@ -108,6 +108,16 @@ export class VisitaServiceService {
     return this.http.get<any>(URL+`inspectores/${idInspector}/visitas/${idVisita}`);
 
   }
+
+
+  getEstablecimientos(cue, size, page){
+    if(!cue){
+      return this.http.get<any>(URL+`establecimientos/?size=${size}&page=${page}`);
+    }
+    else{
+      return this.http.get<any>(URL+`establecimientos/?cue=${cue}&size=${size}&page=${page}`);
+    }
+  }
   
 
 

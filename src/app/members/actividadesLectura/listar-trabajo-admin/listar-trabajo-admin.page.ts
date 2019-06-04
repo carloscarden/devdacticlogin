@@ -349,10 +349,18 @@ export class ListarTrabajoAdminPage implements OnInit {
 
   armarPDF(convocatoriasAllenar: Array<TrabajoAdministrativo>){
     let contenidoArmadoDelPDF=[];
+    let currentUser = this.authenticationService.currentUserValue;
+    let inspector= currentUser.nombre+" "+currentUser.apellido;
+
+    var diaDeHoy = new Date();
+    var diaDeHoyFormatoPDF = diaDeHoy.getDate()+"/"+(diaDeHoy.getMonth()+1)+"/"+diaDeHoy.getFullYear();
+
     convocatoriasAllenar.forEach(trabajoAdmin => {
       console.log(trabajoAdmin);
       let contenidoDelTrabajoAdmin=[];
-      contenidoDelTrabajoAdmin.push(trabajoAdmin.inicio, trabajoAdmin.fin, trabajoAdmin.tipoTrabajoAdmin.descripcion, trabajoAdmin.distrito.descripcion, trabajoAdmin.observaciones);
+      var formatoInicio=this.formatoHoraPDF(trabajoAdmin.inicio);
+      var formatoFin=this.formatoHoraPDF(trabajoAdmin.fin);
+      contenidoDelTrabajoAdmin.push(formatoInicio, formatoFin, trabajoAdmin.tipoTrabajoAdmin.descripcion, trabajoAdmin.distrito.descripcion, trabajoAdmin.observaciones);
       contenidoArmadoDelPDF.push(contenidoDelTrabajoAdmin);
     });
 
@@ -361,20 +369,62 @@ export class ListarTrabajoAdminPage implements OnInit {
 
     var docDefinition  = {
       pageOrientation: 'landscape',
+      footer: function(currentPage, pageCount) {
+        return {
+            margin:10,
+            columns: [
+            {
+                fontSize: 9,
+                text:[
+                {
+                text: '--------------------------------------------------------------------------' +
+                '\n',
+                margin: [0, 20]
+                },
+                {
+                text: 'Plataforma supervisiva ' + currentPage.toString() + ' de ' + pageCount,
+                }
+                ],
+                alignment: 'center'
+            }
+            ]
+        };
+  
+      },
     
       content: [
+          { text: diaDeHoyFormatoPDF, style: 'anotherStyle' },
+          { text: 'Informes trabajo administrativo', style: 'titulo' },   
+          { text: 'Inspector: '+inspector, style: 'header' },
+  
+          { text: '  ', style: [ 'header', 'anotherStyle' ] },
           {
             layout: 'lightHorizontalLines', // optional
             table: {
               // headers are automatically repeated if the table spans over multiple pages
               // you can declare how many rows should be treated as headers
               headerRows: 1,
-              widths: [ '*', '*', '*', '*', '*' ],
+              widths: [ '*', '*', 'auto', '*', '*' ],
               
               body: contenidoArmadoDelPDF
             }
           }
-        ]
+        ],
+      
+      styles: {
+          header: {
+            fontSize: 19,
+          },
+          anotherStyle: {
+            italics: true,
+            alignment: 'right'
+          },
+          titulo: {
+            fontSize: 24,
+            bold: true,
+            alignment: 'center'
+          }
+       }
     }
 
 
@@ -456,6 +506,15 @@ export class ListarTrabajoAdminPage implements OnInit {
   else{
     return false;
   }
+}
+
+
+formatoHoraPDF(diaYhora){
+  var s=diaYhora.split(" ");
+  var dia=s[0].split("-");
+  var hora=s[1];
+  var fecha=dia[1]+"/"+dia[0]+"/"+dia[2]+" "+hora;
+  return fecha;
 }
 
 
