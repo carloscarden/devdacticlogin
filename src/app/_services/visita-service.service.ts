@@ -50,27 +50,28 @@ export class VisitaServiceService {
   }
 
 
-  getAllVisitas(size,idInspector, inicio, fin, motivo){
+  getAllVisitas(idInspector, inicio, fin, motivo, size, page){
+    if(motivo==null && inicio==null && fin==null){
+      // buscar todas las visitas
+      return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?size=${size}&page=${page}&sort=inicio,ASC`);
 
-    let urlAenviar = URL+`inspectores/${idInspector}/visitas`;
+    }
+    else if(motivo!=null && inicio==null && fin==null){
+      // buscar las visitas por articulo
+      return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?articulo=${motivo}&size=${size}&page=${page}&sort=inicio,ASC`);
 
+    }
+    else if(motivo==null && inicio!=null && fin!=null){
+      // buscar las visitas por inicio y fin
+      return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
 
-   if(motivo!=null){
-       urlAenviar = urlAenviar+`?motivo=${motivo}`;
-       if(inicio!=null && fin!=null ){
-         urlAenviar= urlAenviar+`&from=${inicio}&to=${fin}`;
-       }
-       urlAenviar = urlAenviar+`&size=${size}&sort=ASC`;
-   }
-   else{
-       if(inicio!=null && fin!=null ){
-          urlAenviar= urlAenviar+`?from=${inicio}&to=${fin}&size=${size}&sort=ASC`;
-       }
-       else{
-           urlAenviar=urlAenviar+`?size=${size}&sort=ASC`;
-       }
-   }
-   return this.http.get<any>(urlAenviar);
+    }
+    else if(motivo!=null && inicio!=null && fin!=null){
+      // buscar las visitas por articulo inicio y fin
+      return this.http.get<any>(URL+`inspectores/${idInspector}/visitas?articulo=${motivo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
+
+    }
+  
 
   }
 

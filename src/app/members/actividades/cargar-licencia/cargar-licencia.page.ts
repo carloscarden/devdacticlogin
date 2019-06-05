@@ -203,6 +203,7 @@ export class CargarLicenciaPage implements OnInit {
           this.error = '';
           this.licencia.medica="F";
           this.licencia.codigo="";
+          this.licencia.encuadre= new Encuadre();
           this.presentAlert("Hubo un error, intente nuevamente. ");
           this.error = error;
           this.loading = false;

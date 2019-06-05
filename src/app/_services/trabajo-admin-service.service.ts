@@ -56,18 +56,20 @@ export class TrabajoAdminServiceService {
   getTrabajosBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
 
    if(articulo==null && inicio==null && fin==null){
-      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}&sort=inicio,ASC`);
+      // buscar trabajo admin sin articulo ni fecha
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}&sort=inicio,ASC`);
    }
-   else if(articulo==null && inicio!=null && fin!=null){
-      console.log(URL+`inspectores/${idInspector}/trabajosAdmin?articulo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+   else if(articulo!=null && inicio==null && fin==null){
+      // buscar trabajo admin con articulo sin fecha
        return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
    }
    else if(articulo==null && inicio!=null && fin!=null){
+     // buscar trabajo admin sin articulo con fecha
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
    
    }
    else if(articulo!=null && inicio!=null && fin!=null) {
+      // buscar trabajo admin con articulo con fecha
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
    }
 

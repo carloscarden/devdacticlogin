@@ -59,20 +59,27 @@ export class ConvocatoriaServiceService {
   }
 
   getConvocatoriasBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
+            console.log("pasa por aca");
+            console.log("id inspector",idInspector,"incio", inicio,"fin", fin, "articulo",articulo,"size",size,"page",page);
 
          if(articulo==null && inicio==null && fin==null){
+            console.log("filtrar sin articulo ni fecha");
             console.log(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=inicio,ASC`);
             return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=inicio,ASC`);
          }
-         else if(articulo==null && inicio!=null && fin!=null){
-            console.log(URL+`inspectores/${idInspector}/convocatorias?articulo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
+         else if(articulo!=null && inicio==null && fin==null){
+            console.log("filtrar con articulo sin fecha");
+            console.log(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
              return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
          }
          else if(articulo==null && inicio!=null && fin!=null){
+            console.log("filtrar sin articulo con fecha");
+            console.log(URL+`inspectores/${idInspector}/convocatorias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
             return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
          
          }
          else if(articulo!=null && inicio!=null && fin!=null) {
+            console.log(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
             return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
          }
 

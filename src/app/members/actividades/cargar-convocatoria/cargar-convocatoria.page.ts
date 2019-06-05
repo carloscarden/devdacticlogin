@@ -209,7 +209,7 @@ export class CargarConvocatoriaPage implements OnInit {
               });;
      }
      else{
-        this.presentToast("la hora inicio es mas grande que hora fin");
+        this.presentToast("la hora fin debe de ser mayor a la hora de inicio");
         this.convocatoria.inicio=null;
      }
 
@@ -403,7 +403,7 @@ export class CargarConvocatoriaPage implements OnInit {
     console.log("hora inicio", this.horaInicio);
     console.log("hora fin", this.horaFin);
 
-    if(timeEndToDate<timeInitToDate){
+    if(timeEndToDate<=timeInitToDate){
       return false;
     }
     else{

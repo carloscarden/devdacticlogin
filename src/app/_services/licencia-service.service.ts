@@ -75,22 +75,22 @@ export class LicenciaServiceService {
 
     if(articulo==null && inicio==null && fin==null){
       // buscar todas las licencias
-      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?size=${size}&page=${page}&sort=ASC`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?size=${size}&page=${page}&sort=inicio,ASC`);
 
     }
     else if(articulo!=null && inicio==null && fin==null){
       // buscar las licencias por articulo
-      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&size=${size}&page=${page}&sort=ASC`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&size=${size}&page=${page}&sort=inicio,ASC`);
 
     }
     else if(articulo==null && inicio!=null && fin!=null){
       // buscar las licencias por inicio y fin
-      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
 
     }
     else if(articulo!=null && inicio!=null && fin!=null){
       // buscar las licencias por articulo inicio y fin
-      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
+      return this.http.get<any>(URL+`inspectores/${idInspector}/licencias?articulo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=inicio,ASC`);
 
     }
 
