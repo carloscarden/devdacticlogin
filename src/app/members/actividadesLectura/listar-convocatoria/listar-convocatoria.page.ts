@@ -46,7 +46,7 @@ export class ListarConvocatoriaPage implements OnInit {
   maximumPages = -1;
   idInspector=1;
   convocatorias=[];
-  size=40;
+  size=15;
 
 
 

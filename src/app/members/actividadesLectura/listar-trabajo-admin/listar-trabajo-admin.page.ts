@@ -50,7 +50,7 @@ export class ListarTrabajoAdminPage implements OnInit {
   page = 0;
   maximumPages = 3;
   trabajosAdmin=[];
-  size=20;
+  size=15;
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];
   inspectorId=1;
 
@@ -193,11 +193,9 @@ export class ListarTrabajoAdminPage implements OnInit {
                   });
 
     }
-    
-    
   }
 
-
+ 
 
 
   cargarTrabajos(page,infiniteScroll?){

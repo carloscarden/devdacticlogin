@@ -44,6 +44,7 @@ registerLocaleData(localeEs);
 // componente del horario
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
 
 
@@ -84,7 +85,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     
     File,
     FilePath,
-    FileOpener
+    FileOpener,
+    MobileAccessibility
   ],
   bootstrap: [AppComponent]
 })

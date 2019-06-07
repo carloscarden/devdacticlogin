@@ -42,7 +42,7 @@ export class ListarVisitaEscuelaPage implements OnInit {
   page = 0;
   maximumPages = 3;
   visitasEscuelas=[];
-  size=30;
+  size=15;
   tiposMotivos;
 
   // para seleccionar el tipo de actividad

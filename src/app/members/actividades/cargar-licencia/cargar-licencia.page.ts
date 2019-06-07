@@ -186,7 +186,7 @@ export class CargarLicenciaPage implements OnInit {
     console.log(this.licencia);
 
 
-    this.licenciaService.addLicencia(this.licencia).subscribe(
+    this.licenciaService.addLicencia(this.licencia).subscribe( 
         data => {
           this.loading=false;
           this.licencia = new Licencia();

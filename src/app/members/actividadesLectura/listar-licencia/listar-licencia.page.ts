@@ -49,7 +49,7 @@ export class ListarLicenciaPage implements OnInit {
   page = 0;
   maximumPages = -1;
   licencias=[];
-  size=40;
+  size=15;
 
   // para seleccionar el tipo de actividad
   opciones=["Convocatoria","Trabajo Administrativo","Visita Escuela","Licencia"];

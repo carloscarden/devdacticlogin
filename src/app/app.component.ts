@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './_services/authentication.service';
 
+import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -17,7 +19,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private mobileAccesibility: MobileAccessibility
   ) {
     this.initializeApp();
   }
@@ -34,6 +37,9 @@ the login.
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      if(this.platform.is('android')){
+        this.mobileAccesibility.usePreferredTextZoom(false);
+      }
 
       this.authenticationService.authenticationState.subscribe(state => {
         if (state) {
