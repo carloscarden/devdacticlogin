@@ -21,8 +21,8 @@
                 </div>
             </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
+            <ion-item class="paddingcheck">
+                <ion-label position="stacked" class="espacioright" color="success">Hora Inicio  (*)</ion-label>
                 <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" class="native-input sc-ion-input-md" name="nuevaHoraInicio"  #nuevaHoraInicio="ngModel"  (ionchange)="validarHoras()" required>
                 <ngx-material-timepicker #picker [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"  (change)="validarHoras()"></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraInicio.valid || nuevaHoraInicio.pristine)" class="invalid-feedback">
@@ -31,8 +31,8 @@
             </ion-item>
 
 
-            <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
+            <ion-item class="paddingcheck">
+                <ion-label position="stacked" class="espacioright" color="success">Hora fin  (*)</ion-label>
                 <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin"  class="native-input sc-ion-input-md" name="nuevaHoraFin"  #nuevaHoraFin="ngModel" (onchange)="validarHoras()" required>
                 <ngx-material-timepicker #picker2  [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraFin.valid || nuevaHoraFin.pristine)" class="invalid-feedback">
@@ -48,8 +48,8 @@
           <!--- *********************************************************** **********************************-->
 
 
-          <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria (*)</ion-label>
+          <ion-item class="paddingcheck">
+                <ion-label position="stacked" class="espacioright" color="success">Tipo de convocatoria (*)</ion-label>
                 <ionic-selectable class="fuente"
                     item-content
                     [(ngModel)]="convocatoria.tipoConvocatoria"

@@ -3,6 +3,17 @@
 	font-family:"DIN";
 }
 
+
+        /*HORA INICIO, HORA FIN Y TIPO espacioright reemplaza a textoBold*/
+.paddingcheck {
+  --padding-start:0;
+}   
+.espacioright {
+  padding-left:20px;
+  font-weight:bold;
+  color:#454545;
+}
+
         /*TEXTO LABEL*/
 .textoBold {
 	font-weight:bold;
