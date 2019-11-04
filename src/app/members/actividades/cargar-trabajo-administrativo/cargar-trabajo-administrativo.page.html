@@ -19,16 +19,20 @@
                 <ion-input [(ngModel)]="trabajoAdmin.inicio" 
                            [liIonic4Datepicker]="datePickerObj" 
                            name="inicio" 
-                           #inicio="ngModel" required> </ion-input>
+                           #inicio="ngModel" 
+                           (ionChange)="validarFechaInicio()" required> </ion-input>
                 <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
+                </div>
+                <div *ngIf="diaIncorrecto" class="invalid-feedback">
+                  La fecha debe pertenecer a esta semana y no ser posterior al d&iacute;a de hoy 
                 </div>
             </ion-item>
 
 
-            <ion-item class="paddingcheck">
-                <ion-label position="stacked" color="success" class="espacioright">Hora Inicio  (*)</ion-label>
-                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hInicio"  #hInicio="ngModel" (change)="validarHoras()" required>
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
+                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hInicio"  #hInicio="ngModel" required>
                 <ngx-material-timepicker #picker></ngx-material-timepicker>
                 <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
                     La hora de inicio es requerida
@@ -36,9 +40,9 @@
             </ion-item>
 
 
-            <ion-item class="paddingcheck">
-                <ion-label  position="stacked" class="espacioright" color="success">Hora fin  (*)</ion-label>
-                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="native-input sc-ion-input-md" name="hFin"  #hFin="ngModel" (change)="validarHoras()" required>
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
+                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar" class="native-input sc-ion-input-md" name="hFin"  #hFin="ngModel"  required>
                 <ngx-material-timepicker #picker2></ngx-material-timepicker>
                 <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
                     La hora de fin es requerida
@@ -53,8 +57,8 @@
   
 
 
-            <ion-item class="paddingcheck">
-              <ion-label position="stacked" class="espacioright" color="success">Tipo (*)</ion-label>
+            <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Tipo (*)</ion-label>
               <ionic-selectable class="fuente"
                 item-content
                 [(ngModel)]="trabajoAdmin.tipoTrabajoAdmin"
@@ -149,12 +153,12 @@
           <hr>
 
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas) ">
+              <ion-fab-button color="tertiary" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas && !diaIncorrecto) ">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon> 
-                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas)" color="tertiary">
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas && !diaIncorrecto)" color="tertiary">
                </ion-button>
               </ion-fab-button>
-            </ion-fab> 
+            </ion-fab>
             <hr> 
            
             <!--<ion-fab vertical="bottom" horizontal="end" >

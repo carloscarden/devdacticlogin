@@ -1,9 +1,9 @@
-import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-//Modal
-import { ModalController, AlertController  } from '@ionic/angular';
-import { EventModalPage } from '../event-modal/event-modal.page'
+// Modal
+import { ModalController, AlertController } from '@ionic/angular';
+import { EventModalPage } from '../event-modal/event-modal.page';
 
 // Services
 import { AgendaServiceService } from 'src/app/_services/agenda-service.service';
@@ -11,7 +11,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 
 
 // Plugin
-import { CalendarComponent } from "ionic2-calendar/calendar";
+import { CalendarComponent } from 'ionic2-calendar/calendar';
 
 
 
@@ -29,8 +29,9 @@ import * as moment from 'moment';
   styleUrls: ['./agenda.page.scss'],
 })
 export class AgendaPage implements OnInit {
-  @ViewChild(CalendarComponent) myCalendar:CalendarComponent;
-  
+  @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
+
+  template;
   eventSource = [];
   data;
   viewTitle;
@@ -38,92 +39,92 @@ export class AgendaPage implements OnInit {
   selectedDay = new Date();
   currentMonth = this.selectedDay.getMonth();
   currentYear = this.selectedDay.getFullYear();
-  inspectorId=1;
+  inspectorId = 1;
 
   calendar = {
-     mode: 'month',
-     currentDate: new Date()
+    mode: 'month',
+    currentDate: new Date()
   }; // these are the variable used by the calendar.
 
   constructor(
     protected agendaService: AgendaServiceService,
-    private modalCtrl: ModalController, 
+    private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private router:Router,
+    private router: Router,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService ) { 
+    private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
+    console.log('entra aca');
   }
 
-  ionViewWillEnter(){
-    //your code;
-    this.calendar.mode=this.route.snapshot.paramMap.get('id');
-
-    this.cargarEvents(this.currentMonth+1, this.currentYear);
+  ionViewWillEnter() {
+    // your code;
+    console.log('ion view will enter');
+    this.calendar.mode = this.route.snapshot.paramMap.get('id');
+    console.log('calendar mode', this.calendar.mode);
+    this.cargarEvents(this.currentMonth + 1, this.currentYear);
   }
 
   onViewTitleChanged(title) {
-        this.viewTitle = title.replace("Week", "Semana");
+    this.viewTitle = title.replace('Week', 'Semana');
   }
 
   async onEventSelected(event) {
 
 
-      let start = moment(event.startTime).format('lll');
-      let end = moment(event.endTime).format('lll');
-      let alert = await this.alertCtrl.create({
-           header: '' + event.title,
-           subHeader:  event.descripcion,
-           message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
-           buttons: ['OK']
-      });
-      await  alert.present();
+    const start = moment(event.startTime).format('lll');
+    const end = moment(event.endTime).format('lll');
+    const alert = await this.alertCtrl.create({
+      header: '' + event.title,
+      subHeader: event.descripcion,
+      message: 'Desde:<br> ' + start + '<br><br>Hasta: <br>' + end,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
-  async addEvent(){
-    let modal = await this.modalCtrl.create({
+  async addEvent() {
+    const modal = await this.modalCtrl.create({
       component: EventModalPage,
       componentProps: { selectedDay: this.selectedDay }
-      });
-    
+    });
+
     modal.onDidDismiss().then((data) => {
       if (data) {
 
-        let eventData = data.data;
+        const eventData = data.data;
 
         let inicio;
-        let fin
-        if(navigator.userAgent.indexOf("Chrome") != -1 )
-        {
-                  inicio= new Date(data.data.inicio);
-                  fin= new Date(data.data.fin);
+        let fin;
+        if (navigator.userAgent.indexOf('Chrome') !== -1) {
+          inicio = new Date(data.data.inicio);
+          fin = new Date(data.data.fin);
         }
-        if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-        {
-          let txtInicio= data.data.inicio.replace(/-/g,"/");
-          let txtFin= data.data.fin.replace(/-/g,"/");
-          inicio= new Date(txtInicio);
-          fin= new Date(txtFin);
+        if (navigator.userAgent.indexOf('Firefox') !== -1) {
+          const txtInicio = data.data.inicio.replace(/-/g, '/');
+          const txtFin = data.data.fin.replace(/-/g, '/');
+          inicio = new Date(txtInicio);
+          fin = new Date(txtFin);
         }
 
 
-        if(data.data.actividad!=null){
+        if (data.data.actividad != null) {
 
-          eventData.title=data.data.actividad.descripcion;
+          eventData.title = data.data.actividad.descripcion;
           eventData.descripcion = data.data.detalle;
-        
-            
-            eventData.startTime = new Date(inicio);
-            eventData.endTime = new Date(fin);
+
+
+          eventData.startTime = new Date(inicio);
+          eventData.endTime = new Date(fin);
 
 
 
           this.eventSource.push(eventData);
           console.log(this.eventSource);
           this.myCalendar.loadEvents();
-      }
+        }
         /*
         let events = this.eventSource;
         events.push(eventData);
@@ -137,7 +138,7 @@ export class AgendaPage implements OnInit {
 
     });
     return await modal.present();
-    
+
   }
 
   changeMode(mode) {
@@ -148,99 +149,97 @@ export class AgendaPage implements OnInit {
     this.myCalendar.currentDate = new Date();
   }
 
- 
 
-  onCurrentDateChanged(event:Date) {
-    if(event.getMonth()!=this.currentMonth || event.getFullYear() != this.currentYear)
-    {
-       this.currentMonth=event.getMonth();
-       this.currentYear = event.getFullYear();
-       this.cargarEvents(this.currentMonth+1,this.currentYear);
-      
-       
-       
+
+  onCurrentDateChanged(event: Date) {
+    if (event.getMonth() !== this.currentMonth || event.getFullYear() !== this.currentYear) {
+      this.currentMonth = event.getMonth();
+      this.currentYear = event.getFullYear();
+      this.cargarEvents(this.currentMonth + 1, this.currentYear);
+
+
+
 
     }
-    var today = new Date();
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === event.getTime();
   }
 
-  cargarEvents(month, year){
-      this.eventSource = [];
-      let currentUser = this.authenticationService.currentUserValue;
-      this.inspectorId= currentUser.id;
-      this.agendaService.getEvents(month,year,this.inspectorId).subscribe(
-        // Subscription will be closed when unsubscribed manually.
-      (data: any)=>{
-          this.data=data;
-          if(this.data!= null){
-            for (let entry of this.data) {
-                
+  cargarEvents(month, year) {
+    console.log('entra aca');
+    this.eventSource = [];
+    const currentUser = this.authenticationService.currentUserValue;
+    this.inspectorId = currentUser.id;
+    this.agendaService.getEvents(month, year, this.inspectorId).subscribe(
+      // Subscription will be closed when unsubscribed manually.
+      (data: any) => {
+        this.data = data;
+        if (this.data != null) {
+          for (const entry of this.data) {
 
-                
 
-                 // conversion de iso a gmt sumandole 3 horas
-                //inicio.setSeconds(3*60*60);
-                //fin.setSeconds(3*60*60);
-                let inicio;
-                let fin
-                if(navigator.userAgent.indexOf("Chrome") != -1 )
-                {
-                  inicio= new Date(entry.inicio);
-                  fin= new Date(entry.fin);
-                }
-                if(navigator.userAgent.indexOf("Firefox") != -1 ) 
-                {
-                  let txtInicio= entry.inicio.replace(/-/g,"/");
-                  let txtFin= entry.fin.replace(/-/g,"/");
-                  inicio= new Date(txtInicio);
-                  fin= new Date(txtFin);
-                }
-                
-                this.eventSource.push({
-                      title: entry.actividad.descripcion,
-                      descripcion: entry.detalle,
-                      startTime: inicio,
-                      endTime: fin,
-                      allDay: false
-                    });
-                this.myCalendar.loadEvents();
-          
-                    
-             }
+
+
+            // conversion de iso a gmt sumandole 3 horas
+            // inicio.setSeconds(3*60*60);
+            // fin.setSeconds(3*60*60);
+            let inicio;
+            let fin;
+            if (navigator.userAgent.indexOf('Chrome') !== -1) {
+              inicio = new Date(entry.inicio);
+              fin = new Date(entry.fin);
+            }
+            if (navigator.userAgent.indexOf('Firefox') !== -1) {
+              const txtInicio = entry.inicio.replace(/-/g, '/');
+              const txtFin = entry.fin.replace(/-/g, '/');
+              inicio = new Date(txtInicio);
+              fin = new Date(txtFin);
+            }
+
+            this.eventSource.push({
+              title: entry.actividad.descripcion,
+              descripcion: entry.detalle,
+              startTime: inicio,
+              endTime: fin,
+              allDay: false
+            });
+            this.myCalendar.loadEvents();
+
+
           }
-  
-          
-          
         }
-        
-      );
 
-     
-      this.myCalendar.loadEvents();
 
-  
-    }
+
+      }
+
+    );
+
+
+    this.myCalendar.loadEvents();
+
+
+  }
 
 
   onRangeChanged(ev) {
   }
 
-  markDisabled = (date:Date) => {
-    var current = new Date();
+  markDisabled = (date: Date) => {
+    const current = new Date();
     current.setHours(0, 0, 0);
     return date < current;
   }
 
 
-  cargarCalendario(){
+  cargarCalendario() {
 
-    this.router.navigate(["/members/menu/calendario"]);
+    this.router.navigate(['/members/menu/calendario']);
   }
 
-  
+
 
 
 }

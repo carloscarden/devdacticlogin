@@ -2,7 +2,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy, Platform  } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -15,8 +15,8 @@ import { IonicStorageModule } from '@ionic/storage';
 // used to create fake backend
 import { FakeBackend } from './_helpers/fake-backend';
 import { JwtInterceptor } from './_helpers/jwt-interceptor';
-import {  ErrorInterceptor } from './_helpers/error-interceptor';
-import {  AuthInterceptorService } from './_helpers/auth-interceptor';
+import { ErrorInterceptor } from './_helpers/error-interceptor';
+import { AuthInterceptorService } from './_helpers/auth-interceptor';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -25,8 +25,8 @@ import { File } from '@ionic-native/file/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
-import { FormsModule }   from '@angular/forms';
-import { NgCalendarModule  } from 'ionic2-calendar';
+import { FormsModule } from '@angular/forms';
+import { NgCalendarModule } from 'ionic2-calendar';
 import { EventModalPageModule } from './members/event-modal/event-modal.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 
@@ -42,7 +42,7 @@ registerLocaleData(localeEs);
 
 
 // componente del horario
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
 
@@ -52,8 +52,8 @@ import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     HttpClientModule,
@@ -62,27 +62,26 @@ import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
     IonicSelectableModule,
     EventModalPageModule,
     NativeHttpModule,
-    HttpModule,
     NgxMaterialTimepickerModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule
 
-    
 
-    
+
+
   ],
   providers: [
-    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackend, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: LOCALE_ID, useValue: 'es' },
-   
-  
+
+
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    
+
     File,
     FilePath,
     FileOpener,
@@ -90,4 +89,4 @@ import { MobileAccessibility } from '@ionic-native/mobile-accessibility/ngx';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

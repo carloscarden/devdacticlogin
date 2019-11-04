@@ -22,13 +22,13 @@ import { LicenciaServiceService } from './../../../_services/licencia-service.se
   styleUrls: ['./cargar-licencia.page.scss'],
 })
 export class CargarLicenciaPage implements OnInit {
- 
+
   licencia = new Licencia();
   cargaCorrecta = false;
   loading = false;
-  error= '';
-  tipoLicencia=false;
-  fechasNoValidas=false;
+  error = '';
+  tipoLicencia = false;
+  fechasNoValidas = false;
 
 
 
@@ -42,8 +42,8 @@ export class CargarLicenciaPage implements OnInit {
     closeLabel: 'Cancelar', // default 'Close'
     dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
-    monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    weeksList: ["D", "L", "M", "M", "J", "V", "S"],
+    monthsList: ['En', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    weeksList: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     momentLocale: 'es-AR', // Default 'en-US'
     btnProperties: {
       expand: 'block', // Default 'block'
@@ -60,30 +60,31 @@ export class CargarLicenciaPage implements OnInit {
   };
 
 
-  encuadres: Encuadre[];
-  pageEncuadres=0;
+  encuadres: Encuadre[] = [];
+  pageEncuadres = 0;
   maximumPages;
-  articuloAfiltrar="";
-  size=15;
+  articuloAfiltrar = '';
+  size = 15;
   encuadresSubscription: Subscription;
 
   constructor(
     private licenciaService: LicenciaServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController) {
-         this.licenciaService.getEncuadres(this.size,this.pageEncuadres,this.articuloAfiltrar).subscribe(
-               resEncuadres => {
-                  this.encuadres= this.encuadres.concat(resEncuadres['content']);
-                  this.pageEncuadres++;
-                  this.maximumPages= resEncuadres.totalPages-1;
-               }
-         )
-     }
+    this.licenciaService.getEncuadres(this.size, this.pageEncuadres, this.articuloAfiltrar).subscribe(
+      resEncuadres => {
+        console.log('resEncuadres content', resEncuadres['content']);
+        this.encuadres = this.encuadres.concat(resEncuadres['content']);
+        this.pageEncuadres++;
+        this.maximumPages = resEncuadres.totalPages - 1;
+      }
+    );
+  }
 
   ngOnInit() {
-    this.licencia.medica="F";
-    this.licencia.codigo="";
-    this.licencia.encuadre= new Encuadre();
+    this.licencia.medica = 'F';
+    this.licencia.codigo = '';
+    this.licencia.encuadre = new Encuadre();
   }
 
   async presentAlert(msj) {
@@ -101,36 +102,35 @@ export class CargarLicenciaPage implements OnInit {
   }) {
     this.articuloAfiltrar = event.text;
     event.component.startSearch();
-    console.log("texto a filtrar", this.articuloAfiltrar);
-    
+    console.log('texto a filtrar', this.articuloAfiltrar);
 
-     // Close any running subscription.
-     if (this.encuadresSubscription) {
+
+    // Close any running subscription.
+    if (this.encuadresSubscription) {
       this.encuadresSubscription.unsubscribe();
     }
 
-    this.pageEncuadres=0;
+    this.pageEncuadres = 0;
     this.licenciaService.getEncuadres(this.size, this.pageEncuadres, this.articuloAfiltrar).subscribe(
       resEncuadres => {
-        if(resEncuadres!=null){
-          console.log("resEncuadres a filtrar",resEncuadres);
+        if (resEncuadres != null) {
+          console.log('resEncuadres a filtrar', resEncuadres);
           event.component.items = resEncuadres['content'];
-          this.maximumPages= resEncuadres.totalPages-1;
+          this.maximumPages = resEncuadres.totalPages - 1;
           this.pageEncuadres++;
           event.component.endSearch();
           event.component.enableInfiniteScroll();
 
-        }
-        else{
-          console.log("no hay encuadres");
+        } else {
+          console.log('no hay encuadres');
           event.component.items = [];
-          this.maximumPages= -1;
+          this.maximumPages = -1;
           this.pageEncuadres++;
           event.component.endSearch();
           event.component.endInfiniteScroll();
         }
-         
-    });
+
+      });
 
   }
 
@@ -146,95 +146,93 @@ export class CargarLicenciaPage implements OnInit {
 
     this.licenciaService.getEncuadres(this.size, this.pageEncuadres, this.articuloAfiltrar).subscribe(
       resEncuadres => {
-        console.log("resEncuadres",resEncuadres);
-          resEncuadres = event.component.items.concat(resEncuadres['content']);
-          
+        console.log('resEncuadres', resEncuadres);
+        resEncuadres = event.component.items.concat(resEncuadres['content']);
 
- 
-          event.component.items = resEncuadres;
-          event.component.endInfiniteScroll();
-          this.pageEncuadres++;
-    });
+
+
+        event.component.items = resEncuadres;
+        event.component.endInfiniteScroll();
+        this.pageEncuadres++;
+      });
   }
 
-  
-  onSubmit() { 
-    console.log("cargar");
+
+  onSubmit() {
+    console.log('cargar');
     this.loading = true;
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
-    let inicio= this.licencia.inicio.split("-");
-    let formatoCorrectoInicio=inicio[1]+"-"+inicio[0]+"-"+inicio[2];
-    this.licencia.inicio=formatoCorrectoInicio;
+    const inicio = this.licencia.inicio.split('-');
+    const formatoCorrectoInicio = inicio[1] + '-' + inicio[0] + '-' + inicio[2];
+    this.licencia.inicio = formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
-    let fin= this.licencia.fin.split("-");
-    let formatoCorrectoFin=fin[1]+"-"+fin[0]+"-"+fin[2];
-    this.licencia.fin=formatoCorrectoFin;
+    const fin = this.licencia.fin.split('-');
+    const formatoCorrectoFin = fin[1] + '-' + fin[0] + '-' + fin[2];
+    this.licencia.fin = formatoCorrectoFin;
 
-    let currentUser = this.authenticationService.currentUserValue;
-    this.licencia.inspectorId=currentUser.id;
+    const currentUser = this.authenticationService.currentUserValue;
+    this.licencia.inspectorId = currentUser.id;
 
-    if(this.tipoLicencia){
-      this.licencia.medica="T"
-    }
-    else{
-      this.licencia.medica="F"
+    if (this.tipoLicencia) {
+      this.licencia.medica = 'T';
+    } else {
+      this.licencia.medica = 'F';
     }
 
     console.log(this.licencia);
 
 
-    this.licenciaService.addLicencia(this.licencia).subscribe( 
-        data => {
-          this.loading=false;
-          this.licencia = new Licencia();
-          this.error = '';
-          this.licencia.medica="F";
-          this.licencia.codigo="";
-          this.licencia.encuadre= new Encuadre();
-          this.presentAlert("Enviado con éxito.  ");
+    this.licenciaService.addLicencia(this.licencia).subscribe(
+      data => {
+        this.loading = false;
+        this.licencia = new Licencia();
+        this.error = '';
+        this.licencia.medica = 'F';
+        this.licencia.codigo = '';
+        this.licencia.encuadre = new Encuadre();
+        this.presentAlert('Enviado con éxito.  ');
 
-        },
-        error => {
-          console.log(error);
-          this.licencia = new Licencia();
-          this.error = '';
-          this.licencia.medica="F";
-          this.licencia.codigo="";
-          this.licencia.encuadre= new Encuadre();
-          this.presentAlert("Hubo un error, intente nuevamente. ");
-          this.error = error;
-          this.loading = false;
-        });;
-  
+      },
+      error => {
+        console.log(error);
+        this.licencia = new Licencia();
+        this.error = '';
+        this.licencia.medica = 'F';
+        this.licencia.codigo = '';
+        this.licencia.encuadre = new Encuadre();
+        this.presentAlert('Hubo un error, intente nuevamente. ');
+        this.error = error;
+        this.loading = false;
+      });
+
   }
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.licencia); }
 
 
-  validarFechas(){
+  validarFechas() {
 
-    if(this.licencia.inicio!=null){
-       if(this.licencia.fin!=null){
+    if (this.licencia.inicio != null) {
+      if (this.licencia.fin != null) {
 
-           var a = this.licencia.inicio.split("-");
-           var inicioSinHoras= new Date( parseInt(a[2]) ,parseInt(a[1]), parseInt(a[0]) );
+        const a = this.licencia.inicio.split('-');
+        const inicioSinHoras = new Date(parseInt(a[2], 10), parseInt(a[1], 10), parseInt(a[0], 10));
 
-           var b = this.licencia.fin.split("-");
-           var finSinHoras= new Date( parseInt(b[2]), parseInt(b[1]), parseInt(b[0]));
-            if(finSinHoras<inicioSinHoras){
-              this.fechasNoValidas=true;
-            }
-            else{
-              this.fechasNoValidas=false;
-            }
-       }
+        const b = this.licencia.fin.split('-');
+        const finSinHoras = new Date(parseInt(b[2], 10), parseInt(b[1], 10), parseInt(b[0], 10));
+        if (finSinHoras < inicioSinHoras) {
+          this.fechasNoValidas = true;
+        } else {
+          this.fechasNoValidas = false;
+        }
+      }
     }
 
- }
+  }
 
 
 }

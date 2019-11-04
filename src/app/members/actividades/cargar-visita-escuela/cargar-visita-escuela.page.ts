@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 /* CAMERA  */
-import {  ToastController, AlertController} from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 /* SELECTABLE */
 import { IonicSelectableComponent } from 'ionic-selectable';
@@ -36,29 +36,32 @@ import { Imagen } from './../../../_models/imagen';
 export class CargarVisitaEscuelaPage implements OnInit {
   loading = false;
   visita = new VisitaEscuela();
-  
-  error:string;
+
+  // para prod
+  motivos;
+
+  error: string;
   images = [];
   imagesWeb = [];
-  conflicto=false;
+  conflicto = false;
 
   actividadesSubscription: Subscription;
   motivosVisita: MotivoVisita[];
 
-  megasDeLosArchivos=[];
-  totalMegasDeLosArchivos=0;
+  megasDeLosArchivos = [];
+  totalMegasDeLosArchivos = 0;
 
-  horasNoValidas=false;
+  horasNoValidas = false;
   horaInicio;
   horaFin;
-
-  establecimientos: Establecimiento[];
+  diaIncorrecto = false;
+  establecimientos: Establecimiento[] = [];
   estabSubscription: Subscription;
   estabAfiltrar;
-  size=15;
+  size = 15;
   maximumPages;
   pageEstab;
-  
+
 
   datePickerObj: any = {
     showTodayButton: false, // default true
@@ -70,8 +73,8 @@ export class CargarVisitaEscuelaPage implements OnInit {
     closeLabel: 'Cancelar', // default 'Close'
     dateFormat: 'DD-MM-YYYY',
     titleLabel: 'Seleccione una fecha', // default null
-    monthsList: ["En", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    weeksList: ["D", "L", "M", "M", "J", "V", "S"],
+    monthsList: ['En', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+    weeksList: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
     momentLocale: 'es-AR', // Default 'en-US'
     btnProperties: {
       expand: 'block', // Default 'block'
@@ -88,27 +91,27 @@ export class CargarVisitaEscuelaPage implements OnInit {
   };
 
 
-  inspeccion = {}
+  inspeccion = {};
   constructor(
     private toastController: ToastController,
-    private imgService:  ImagenService,
+    private imgService: ImagenService,
     private visitaService: VisitaServiceService,
     private authenticationService: AuthenticationService,
     private alertCtrl: AlertController
-    ) { 
-      this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
-        resEstab => {
-           this.establecimientos= this.establecimientos.concat(resEstab['content']);
-           this.pageEstab++;
-           this.maximumPages= resEstab.totalPages-1;
-        }
-      )
+  ) {
+    this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
+      resEstab => {
+        this.establecimientos = this.establecimientos.concat(resEstab['content']);
+        this.pageEstab++;
+        this.maximumPages = resEstab.totalPages - 1;
+      }
+    );
 
-    }
+  }
 
   ngOnInit() {
 
-    this.visita.urgente="T";
+    this.visita.urgente = 'T';
     this.visita.establecimiento = new Establecimiento();
     /*this.plt.ready().then(() => {
       this.imgService.loadStoredImages(this.images);
@@ -125,101 +128,99 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
 
-  onSubmit() { 
-    console.log("cargar");
+  onSubmit() {
+    console.log('cargar');
     this.loading = true;
-    let imgsConvertidas =[];
+    let imgsConvertidas = [];
     /* convertir todas las imagenes al formato que acepta el backend */
-    for(let img of this.imagesWeb){
-      let conversion= img.archivo.split(',');
+    for (let img of this.imagesWeb) {
+      let conversion = img.archivo.split(',');
       img.archivo = conversion[1];
       imgsConvertidas.push(img);
     }
-    this.imagesWeb=[];
-    this.visita.adjuntos=imgsConvertidas;
+    this.imagesWeb = [];
+    this.visita.adjuntos = imgsConvertidas;
 
 
-   /* formato correcto del dia mes y año */
-    let inicio= this.visita.inicio.split("-");
-    let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
+    /* formato correcto del dia mes y año */
+    let inicio = this.visita.inicio.split('-');
+    let fechaFormat = inicio[1] + '-' + inicio[0] + '-' + inicio[2];
 
-     /* convertir la fecha de inicio al formato que acepta el backend*/
-     let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
-    let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
-    this.visita.inicio=formatoCorrectoInicio;
+    /* convertir la fecha de inicio al formato que acepta el backend*/
+    let formatoCorrectoHoraInicio = this.parsearLaHora(this.horaInicio);
+    let formatoCorrectoInicio = fechaFormat + ' ' + formatoCorrectoHoraInicio;
+    this.visita.inicio = formatoCorrectoInicio;
 
 
-   /* convertir la fecha de fin al formato correcto el backend*/
-   let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
-    let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
-    this.visita.fin=formatoCorrectoFin;
+    /* convertir la fecha de fin al formato correcto el backend*/
+    let formatoCorrectoHoraFin = this.parsearLaHora(this.horaFin);
+    let formatoCorrectoFin = fechaFormat + ' ' + formatoCorrectoHoraFin;
+    this.visita.fin = formatoCorrectoFin;
     /* ******************************************************************** */
-    
-    if(this.conflicto){
-      this.visita.urgente="T"
-    }
-    else{
-      this.visita.urgente="F"
+
+    if (this.conflicto) {
+      this.visita.urgente = 'T';
+    } else {
+      this.visita.urgente = 'F';
     }
 
-    
+
 
     let currentUser = this.authenticationService.currentUserValue;
-    this.visita.inspectorId=currentUser.id;
-    console.log("visita escuela a mandar",this.visita);
+    this.visita.inspectorId = currentUser.id;
+    console.log('visita escuela a mandar', this.visita);
 
-    if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
+    if (this.validarHoras(formatoCorrectoHoraInicio, formatoCorrectoHoraFin)) {
       this.visitaService.addVisita(this.visita).subscribe(
         data => {
           console.log(data);
-           this.loading=false;
-           this.visita = new VisitaEscuela();
-           this.conflicto=false;
-           this.visita.establecimiento = new Establecimiento();
-           this.error = '';
-           this.horaInicio;
-           this.horaFin;
-           this.presentAlert("Enviado con éxito.  ");
+          this.loading = false;
+          this.visita = new VisitaEscuela();
+          this.conflicto = false;
+          this.visita.establecimiento = new Establecimiento();
+          this.error = '';
+          this.horaInicio;
+          this.horaFin;
+          this.presentAlert('Enviado con éxito.  ');
         },
         error => {
-           console.log("error",error);
-           if(error=="Entidad Improcesable"){
-            this.presentAlert("El cue es incorrecto. ");
-           } else{
-            this.presentAlert("Hubo un error, intente nuevamente. ");
-           }
-           console.log("error",error);
+          console.log('error', error);
+          if (error === 'Entidad Improcesable') {
+            this.presentAlert('El cue es incorrecto. ');
+          } else {
+            this.presentAlert('Hubo un error, intente nuevamente. ');
+          }
+          console.log('error', error);
 
-           this.loading=false;
-           this.visita = new VisitaEscuela();
-           this.conflicto=false;
-           this.visita.establecimiento = new Establecimiento();
-           this.error = '';
-           this.horaInicio;
-           this.horaFin;
-           this.error = error;
-        });;
+          this.loading = false;
+          this.visita = new VisitaEscuela();
+          this.conflicto = false;
+          this.visita.establecimiento = new Establecimiento();
+          this.error = '';
+          this.horaInicio;
+          this.horaFin;
+          this.error = error;
+        });
 
+    } else {
+      this.presentToast('la hora fin debe de ser mayor a la hora de inicio');
+      this.visita.inicio = null;
     }
-    else{
-      this.presentToast("la hora fin debe de ser mayor a la hora de inicio");
-      this.visita.inicio=null;
-    }
-  
-  
+
+
   }
 
 
 
   /*****************  MOTIVOS SELECTABLE   ********************************** */
-  
+
   filterPorts(tipos: MotivoVisita[], text: string) {
     return tipos.filter(t => {
-      return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
+      return t.descripcion.toLowerCase().indexOf(text) !== -1;
     });
   }
 
-  searchMotivos (event: {
+  searchMotivos(event: {
     component: IonicSelectableComponent,
     text: string
   }) {
@@ -233,10 +234,10 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
     this.actividadesSubscription = this.visitaService.getMotivosVisitas().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
-     if (this.actividadesSubscription.closed) {
+      if (this.actividadesSubscription.closed) {
         return;
       }
-      console.log("tipos");
+      console.log('tipos');
       console.log(tipos);
 
       event.component.items = this.filterPorts(tipos, text);
@@ -250,39 +251,38 @@ export class CargarVisitaEscuelaPage implements OnInit {
   searchEstabs(event: {
     component: IonicSelectableComponent,
     text: string
-  }){
+  }) {
     this.estabAfiltrar = event.text;
     event.component.startSearch();
-    console.log("texto a filtrar", this.estabAfiltrar);
-    
+    console.log('texto a filtrar', this.estabAfiltrar);
 
-     // Close any running subscription.
-     if (this.estabSubscription) {
+
+    // Close any running subscription.
+    if (this.estabSubscription) {
       this.estabSubscription.unsubscribe();
     }
 
-    this.pageEstab=0;
+    this.pageEstab = 0;
     this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
       resEstab => {
-        if(resEstab!=null){
-          console.log("resEncuadres a filtrar",resEstab);
+        if (resEstab != null) {
+          console.log('resEncuadres a filtrar', resEstab);
           event.component.items = resEstab['content'];
-          this.maximumPages= resEstab.totalPages-1;
+          this.maximumPages = resEstab.totalPages - 1;
           this.pageEstab++;
           event.component.endSearch();
           event.component.enableInfiniteScroll();
 
-        }
-        else{
-          console.log("no hay encuadres");
+        } else {
+          console.log('no hay encuadres');
           event.component.items = [];
-          this.maximumPages= -1;
+          this.maximumPages = -1;
           this.pageEstab++;
           event.component.endSearch();
           event.component.endInfiniteScroll();
         }
-         
-    });
+
+      });
 
 
   }
@@ -290,25 +290,25 @@ export class CargarVisitaEscuelaPage implements OnInit {
   getMoreEstabs(event: {
     component: IonicSelectableComponent,
     text: string
-  }){
-    
-     // There're no more ports - disable infinite scroll.
-     if (this.pageEstab > this.maximumPages) {
+  }) {
+
+    // There're no more ports - disable infinite scroll.
+    if (this.pageEstab > this.maximumPages) {
       event.component.disableInfiniteScroll();
       return;
     }
 
     this.visitaService.getEstablecimientos(this.estabAfiltrar, this.size, this.pageEstab).subscribe(
       resEstabs => {
-        console.log("resEncuadres",resEstabs);
+        console.log('resEncuadres', resEstabs);
         resEstabs = event.component.items.concat(resEstabs['content']);
-          
 
- 
-          event.component.items = resEstabs;
-          event.component.endInfiniteScroll();
-          this.pageEstab++;
-    });
+
+
+        event.component.items = resEstabs;
+        event.component.endInfiniteScroll();
+        this.pageEstab++;
+      });
 
   }
 
@@ -318,9 +318,9 @@ export class CargarVisitaEscuelaPage implements OnInit {
   /***********************  IMAGENES DE MOVIL ********************************************** */
   async presentToast(text) {
     const toast = await this.toastController.create({
-        message: text,
-        position: 'bottom',
-        duration: 3000
+      message: text,
+      position: 'bottom',
+      duration: 3000
     });
     toast.present();
   }
@@ -329,59 +329,58 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
   deleteImage(imgEntry, position) {
     this.imgService.deleteImage(imgEntry, position, this.images);
-  
+
   }
 
 
 
 
   /***********************  IMAGENES DE WEB ********************************************** */
-  changeListener(fileLoader) : void {
+  changeListener(fileLoader): void {
     fileLoader.click();
     var that = this;
     fileLoader.onchange = function () {
       var archivoWeb = fileLoader.files[0];
-      
-       //calcular la cantidad de megas del archivo
-      let megaPosibleArchivo=(archivoWeb.size/1024)/1024;
 
-       //sumarselo a la cantidad total que tengo de megas
-     let posibleArchivoaAgregar=that.totalMegasDeLosArchivos+megaPosibleArchivo;
+      //calcular la cantidad de megas del archivo
+      let megaPosibleArchivo = (archivoWeb.size / 1024) / 1024;
 
-     if(posibleArchivoaAgregar>4){
+      //sumarselo a la cantidad total que tengo de megas
+      let posibleArchivoaAgregar = that.totalMegasDeLosArchivos + megaPosibleArchivo;
+
+      if (posibleArchivoaAgregar > 4) {
         that.presentToast('El archivo supera la cantidad permitida.');
-      }
-      else{
-        that.totalMegasDeLosArchivos=posibleArchivoaAgregar;
+      } else {
+        that.totalMegasDeLosArchivos = posibleArchivoaAgregar;
         var reader = new FileReader();
         reader.readAsDataURL(archivoWeb);
         reader.onload = (event: any) => {
-          let imagenNueva= new Imagen();
-          imagenNueva.nombre= archivoWeb.name;
+          let imagenNueva = new Imagen();
+          imagenNueva.nombre = archivoWeb.name;
           imagenNueva.tipo = archivoWeb.type;
           imagenNueva.archivo = event.target.result;
-          that.imagesWeb.push(imagenNueva) ;
+          that.imagesWeb.push(imagenNueva);
           // en este arreglo tengo todos los valores de los megas que puso el usuario
           that.megasDeLosArchivos.push(megaPosibleArchivo);
-        }
+        };
 
 
       }
 
-    }      
-            
+    };
+
   }
 
-  deleteImageWeb(pos){
+  deleteImageWeb(pos) {
 
     // Cuando borro una imagen debo sacarle tambien del total de megas que tengo 
-    this.totalMegasDeLosArchivos=--this.megasDeLosArchivos[pos];
+    this.totalMegasDeLosArchivos = --this.megasDeLosArchivos[pos];
 
     // Borro la imagen
     this.imagesWeb.splice(pos, 1);
 
     // Saco la cantidad de megas que tiene el archivo
-    this.megasDeLosArchivos.splice(pos,1);
+    this.megasDeLosArchivos.splice(pos, 1);
     this.presentToast('Archivo removido.');
 
 
@@ -389,19 +388,18 @@ export class CargarVisitaEscuelaPage implements OnInit {
 
 
   // validar si la hora de inicio es menor a la hora de fin
-  validarHoras(horaInicial, horaFinal ){
+  validarHoras(horaInicial, horaFinal) {
 
     // Append any date. Use your birthday.
     const timeInitToDate = new Date('1990-05-06T' + horaInicial + 'Z');
     const timeEndToDate = new Date('1990-05-06T' + horaFinal + 'Z');
 
-    console.log("hora inicio", this.horaInicio);
-    console.log("hora fin", this.horaFin);
+    console.log('hora inicio', this.horaInicio);
+    console.log('hora fin', this.horaFin);
 
-    if(timeEndToDate<=timeInitToDate){
+    if (timeEndToDate <= timeInitToDate) {
       return false;
-    }
-    else{
+    } else {
       return true;
     }
 
@@ -410,34 +408,84 @@ export class CargarVisitaEscuelaPage implements OnInit {
   }
 
 
-  esUnaImagen(tipo){
-    let tipoLower=tipo.toLowerCase();
-    return tipoLower.includes("image");
+  esUnaImagen(tipo) {
+    let tipoLower = tipo.toLowerCase();
+    return tipoLower.includes('image');
   }
 
-  parsearLaHora(unaHoraSinFormatoCorrecto){
-      
-    let hi=unaHoraSinFormatoCorrecto.split(":");
-    let hora=hi[0];
-    let minutosYmeridiano= hi[1];
-    let minutos=minutosYmeridiano.split(" ");
-    let meridiano= minutos[1];
-    minutos=minutos[0];
-    let hff=hora;
-    if(meridiano=="pm"){
-       let horaFinal=parseInt(hora)+12;
-       if (horaFinal==24){
-         horaFinal=0;
-       }
-       hff=horaFinal.toString();
+  parsearLaHora(unaHoraSinFormatoCorrecto) {
+
+    let hi = unaHoraSinFormatoCorrecto.split(':');
+    let hora = hi[0];
+    let minutosYmeridiano = hi[1];
+    let minutos = minutosYmeridiano.split(' ');
+    let meridiano = minutos[1];
+    minutos = minutos[0];
+    let hff = hora;
+    if (meridiano == 'pm') {
+      let horaFinal = parseInt(hora) + 12;
+      if (horaFinal == 24) {
+        horaFinal = 0;
+      }
+      hff = horaFinal.toString();
     }
 
-    let horaParseada= hff+":"+minutos;
+    let horaParseada = hff + ':' + minutos;
     return horaParseada;
-   
 
- }
 
- 
+  }
+
+
+
+
+  validarFechaInicio() {
+    /* formato correcto del dia mes y año */
+    console.log('validar fecha de inicio');
+
+
+    var diaDeHoy = new Date();
+    var dias = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
+    var diaDeLaSemana = dias[diaDeHoy.getUTCDay()];
+    var inicioDeLaSemana;
+    var diaPosible;
+
+    diaPosible = this.visita.inicio.split('-');
+    diaPosible = new Date(diaPosible[2], diaPosible[1] - 1, diaPosible[0]);
+
+
+    // quedarme con el lunes de la semana actual
+    if (diaDeLaSemana !== 'lun') {
+      inicioDeLaSemana = this.getMonday(diaDeHoy);
+      inicioDeLaSemana = new Date(inicioDeLaSemana.getFullYear(), inicioDeLaSemana.getMonth(), inicioDeLaSemana.getDate());
+
+    } else {
+      inicioDeLaSemana = diaDeHoy;
+    }
+
+    console.log('diaPosible', diaPosible);
+    console.log('inicioDeLaSemana', inicioDeLaSemana);
+    console.log('diaDeHoy', diaDeHoy);
+
+    if (diaPosible >= inicioDeLaSemana && diaPosible <= diaDeHoy) {
+      this.diaIncorrecto = false;
+
+    } else {
+      this.diaIncorrecto = true;
+    }
+  }
+
+  getMonday(d) {
+    d = new Date(d);
+    const day = d.getDay(),
+      diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
+
+
+
+
+
 
 }

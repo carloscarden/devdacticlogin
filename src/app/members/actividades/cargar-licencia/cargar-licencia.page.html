@@ -86,9 +86,9 @@
             <div *ngIf="tipoLicencia">
               <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">C&oacute;digo</ion-label>
-                <ion-input class="fuente" type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel" maxlength="6"></ion-input>
+                <ion-input class="fuente" type="text" [(ngModel)]="licencia.codigo" name="codigo" #codigo="ngModel" minlength="4"></ion-input>
                 <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)" class="invalid-feedback">
-                      <div *ngIf="codigo.errors.minlength">
+                      <div *ngIf="!!codigo.errors.minlength">
                         El codigo tiene que tener 6 caracteres
                       </div>
                 </div>     

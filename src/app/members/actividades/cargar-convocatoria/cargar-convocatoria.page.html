@@ -15,26 +15,30 @@
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
-                <ion-input [(ngModel)]="convocatoria.inicio" [liIonic4Datepicker]="datePickerObj" name="nuevaFecha" #nuevaFecha="ngModel" required> </ion-input>
+                <ion-input [(ngModel)]="convocatoria.inicio" [liIonic4Datepicker]="datePickerObj" name="nuevaFecha" #nuevaFecha="ngModel" (ionChange)="validarFechaInicio()" required> </ion-input>
                 <div *ngIf="!(nuevaFecha.valid || nuevaFecha.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                 </div>
+
+                <div *ngIf="diaIncorrecto" class="invalid-feedback">
+                    La fecha debe pertenecer a esta semana y no ser posterior al d&iacute;a de hoy 
+                </div>
             </ion-item>
 
-            <ion-item class="paddingcheck">
-                <ion-label position="stacked" class="espacioright" color="success">Hora Inicio  (*)</ion-label>
-                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" class="native-input sc-ion-input-md" name="nuevaHoraInicio"  #nuevaHoraInicio="ngModel"  (ionchange)="validarHoras()" required>
-                <ngx-material-timepicker #picker [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"  (change)="validarHoras()"></ngx-material-timepicker>
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Hora Inicio  (*)</ion-label>
+                <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" class="native-input sc-ion-input-md" name="nuevaHoraInicio"  #nuevaHoraInicio="ngModel"   required>
+                <ngx-material-timepicker #picker  ></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraInicio.valid || nuevaHoraInicio.pristine)" class="invalid-feedback">
                     La hora de inicio es requerida
                 </div>
             </ion-item>
 
 
-            <ion-item class="paddingcheck">
-                <ion-label position="stacked" class="espacioright" color="success">Hora fin  (*)</ion-label>
-                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin"  class="native-input sc-ion-input-md" name="nuevaHoraFin"  #nuevaHoraFin="ngModel" (onchange)="validarHoras()" required>
-                <ngx-material-timepicker #picker2  [cancelBtnTmpl]="cancelar"  [confirmBtnTmpl]="aceptar"></ngx-material-timepicker>
+            <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Hora fin  (*)</ion-label>
+                <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin"  class="native-input sc-ion-input-md" name="nuevaHoraFin"  #nuevaHoraFin="ngModel"  required>
+                <ngx-material-timepicker #picker2  ></ngx-material-timepicker>
                 <div *ngIf="!(nuevaHoraFin.valid || nuevaHoraFin.pristine)" class="invalid-feedback">
                     La hora de fin es requerida
                 </div>
@@ -48,8 +52,8 @@
           <!--- *********************************************************** **********************************-->
 
 
-          <ion-item class="paddingcheck">
-                <ion-label position="stacked" class="espacioright" color="success">Tipo de convocatoria (*)</ion-label>
+          <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Tipo de convocatoria (*)</ion-label>
                 <ionic-selectable class="fuente"
                     item-content
                     [(ngModel)]="convocatoria.tipoConvocatoria"
@@ -146,12 +150,12 @@
 
 
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)">
-                <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)" color="tertiary">
-                </ion-button>
-              </ion-fab-button>
-            </ion-fab> 
+                <ion-fab-button color="tertiary" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas && !diaIncorrecto)">
+                  <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas && !diaIncorrecto)" color="tertiary">
+                  </ion-button>
+                </ion-fab-button>
+            </ion-fab>
             <hr>
             
           

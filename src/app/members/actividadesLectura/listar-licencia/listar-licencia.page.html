@@ -4,77 +4,77 @@
         <ion-col>-->
 
           <ion-item class="listado">
-             <ion-label position="stacked" class="textoBold" color="success">Buscar por Art&iacute;culo</ion-label>
-             <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
-          </ion-item>
-
-          <ion-item class="listado">
-              <ion-label position="stacked" class="textoBold" color="success">Fecha Desde</ion-label>
-              <ion-input [(ngModel)]="inicio"
-                    [liIonic4Datepicker]="datePickerObj"
-                    name="fechaInicio" 
-                    #fechaInicio="ngModel"
-                    (ionChange)="validarFechas()"
-              > 
-              </ion-input>
+            <ion-label position="stacked" class="textoBold" color="success">Buscar por Art&iacute;culo</ion-label>
+            <ion-input class="fuente" type="text"  [(ngModel)]="tipo"></ion-input>
          </ion-item>
 
          <ion-item class="listado">
-              <ion-label position="stacked" class="textoBold" color="success">Fecha Hasta</ion-label>
-              <ion-input [(ngModel)]="fin" 
-              [liIonic4Datepicker]="datePickerObj"
-              name="fechaFin" 
-              #fechaFin="ngModel" 
-              (ionChange)="validarFechas()"
-              > 
-              </ion-input>
-         </ion-item>
+             <ion-label position="stacked" class="textoBold" color="success">Fecha Desde</ion-label>
+             <ion-input [(ngModel)]="inicio"
+                   [liIonic4Datepicker]="datePickerObj"
+                   name="fechaInicio" 
+                   #fechaInicio="ngModel"
+                   (ionChange)="validarFechas()"
+             > 
+             </ion-input>
+        </ion-item>
+
+        <ion-item class="listado">
+             <ion-label position="stacked" class="textoBold" color="success">Fecha Hasta</ion-label>
+             <ion-input [(ngModel)]="fin" 
+             [liIonic4Datepicker]="datePickerObj"
+             name="fechaFin" 
+             #fechaFin="ngModel" 
+             (ionChange)="validarFechas()"
+             > 
+             </ion-input>
+        </ion-item>
+        
+        <div *ngIf="fechasNoValidas"  style="color:red;">
+         La fecha fin no debe de ser menor que la fecha de inicio
+       </div>
+
+       <hr>
+
+         <div class="form-group">
+          <ion-button (click)="filtrar()">Buscar</ion-button>
+         </div>
+
+         <div class="form-group">
+           <ion-button (click)="crearPDF()" class="btnBuscar">Crear PDF</ion-button>
+          </div>
+         <hr>
+         <div  *ngIf="licencias.length==0" class="centrarResultado">
+          <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
+         </div>
+   
+         <ion-list margin-top class="listado">
+           <ion-item-sliding *ngFor="let item of licencias">
+             <ion-item class="itemBoton" lines="inset" button [routerLink]="['/members/menu/actividadesDetalles/licenciaDetalles', item.id]">
+               <ion-label class="label">
+                 <ion-grid>
+                   <ion-row>
+                     <ion-col size="3">
+                       <p class="textoDetalle">Art.:</p>
+                       <p class="textoDetalle">Inicio:</p>
+                       <p class="textoDetalle">Fin:</p>
+                     </ion-col>
+                     <ion-col size="9"> 
+                       <p>{{ item.encuadre.articulo }} </p>
+                       <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
+                       <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
+                     </ion-col>
+                    </ion-row>
+                   </ion-grid>   
+               </ion-label>
+             </ion-item>
+           </ion-item-sliding>
+         </ion-list>
+     
+         <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users..." distance="2%" threshold="10px">
+           <ion-infinite-scroll-content></ion-infinite-scroll-content>
+         </ion-infinite-scroll>
          
-         <div *ngIf="fechasNoValidas"  style="color:red;">
-          La fecha fin no debe de ser menor que la fecha de inicio
-        </div>
-
-        <hr>
-
-          <div class="form-group">
-           <ion-button (click)="filtrar()">Buscar</ion-button>
-          </div>
-
-          <div class="form-group">
-            <ion-button (click)="crearPDF()" class="btnBuscar">Crear PDF</ion-button>
-           </div>
-          <hr>
-          <div  *ngIf="licencias.length==0" class="centrarResultado">
-           <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
-          </div>
-    
-          <ion-list margin-top class="listado">
-            <ion-item-sliding *ngFor="let item of licencias">
-              <ion-item class="itemBoton" lines="inset" button [routerLink]="['/members/menu/actividadesDetalles/licenciaDetalles', item.id]">
-                <ion-label class="label">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col size="3">
-                        <p class="textoDetalle">Art.:</p>
-                        <p class="textoDetalle">Inicio:</p>
-                        <p class="textoDetalle">Fin:</p>
-                      </ion-col>
-                      <ion-col size="9"> 
-                        <p>{{ item.encuadre.articulo }} </p>
-                        <p>{{ stringAsDate(item.inicio) | date:'fullDate' }}</p>
-                        <p>{{ stringAsDate(item.fin) | date:'fullDate' }}</p>
-                      </ion-col>
-                     </ion-row>
-                    </ion-grid>   
-                </ion-label>
-              </ion-item>
-            </ion-item-sliding>
-          </ion-list>
-      
-          <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Loading Users..." distance="2%" threshold="10px">
-            <ion-infinite-scroll-content></ion-infinite-scroll-content>
-          </ion-infinite-scroll>
-          
-     <!-- </ion-col>
-      </ion-row>
-    </ion-grid>--> 
+    <!-- </ion-col>
+     </ion-row>
+   </ion-grid>--> 

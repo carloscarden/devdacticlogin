@@ -9,7 +9,7 @@ import 'rxjs/add/observable/fromPromise';
 
 import { Platform } from '@ionic/angular'
 
-const URL = `http://test2.abc.gov.ar:8080/InspectoresAppSec/`;
+const URL = `https://server35.abc.gob.ar/InspectoresApp/`;
 @Injectable({
   providedIn: 'root'
 })

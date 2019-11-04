@@ -93,16 +93,21 @@ export class EventModalPage implements OnInit {
               }
 
   ngOnInit() {
-    //this.agendaService.getTipoActividades().subscribe(tipoActividades => {this.actividades = tipoActividades; console.log(tipoActividades)}); 
-
     var d= new Date();
     var dias=["dom", "lun", "mar", "mie", "jue", "vie", "sab"];
     var diaDeLaSemana=dias[d.getUTCDay()];
+    var horaDelViernesPermitida=true;
 
     if(diaDeLaSemana==="vie"){
-      this.diaPermitido=true;
+      var h=d.getHours();
+      if(h>17){
+        horaDelViernesPermitida=false;
+      }
     }
 
+    if ((diaDeLaSemana!="sab")&&  (diaDeLaSemana!="dom") && horaDelViernesPermitida){
+      this.diaPermitido=true;
+    }
 
 
   }
@@ -173,6 +178,11 @@ export class EventModalPage implements OnInit {
             this.presentAlert("La tarea ha sido creada exitosamente. ");
           },
           error => {
+            let mensajeERROR="Han ocurrido errores";
+            if(mensajeERROR=="Fallo la validacion"){
+              mensajeERROR=mensajeERROR+" "+"Ya hay tareas en ese horario"
+            }
+            this.presentAlert(mensajeERROR);
               console.log(error);
           });;
           await this.modalCtrl.dismiss(this.evento);
@@ -326,56 +336,56 @@ export class EventModalPage implements OnInit {
 
  }
 
+	
+
  validarDiaCorrectoDeLasLicencias(){
-   console.log("entra a validar");
-   let d1= new Date();
-   let diaDeHoy=new Date(d1.getFullYear(),d1.getMonth(),d1.getDate());
-
-
-   let d2= this.inicio.split("-");
-   console.log("inicio ", d2);
-   let diaPosible= new Date(  parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])  );
-   console.log(diaPosible);
-
-   let diasPermitidos= new Date();
-   diasPermitidos.setDate(diasPermitidos.getDate()+7);
-
-   if(diaPosible>=diaDeHoy && diaPosible<=diasPermitidos){
-      this.diaCorrecto=true;
+   let diaLunes=this.nextDate();
+   diaLunes= new Date( diaLunes.getFullYear(), diaLunes.getMonth(), diaLunes.getDate()  )
+ 
+ 
+   let d2= this.fecha.split("-");;
+   let diaPosible= new Date(   parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])   );
+ 
+ 
+   
+ 
+   let diaLunesSiguiente= this.nextDate();
+   diaLunesSiguiente.setDate(diaLunesSiguiente.getDate()+7);
+   diaLunesSiguiente= new Date( diaLunesSiguiente.getFullYear(), diaLunesSiguiente.getMonth(), diaLunesSiguiente.getDate()  )
+ 
+       if(diaPosible>=diaLunes && diaPosible<=diaLunesSiguiente){
+         this.diaCorrecto=true;
+       }
+       else{
+         this.diaCorrecto=false;
+       }
+ 
+  }
+ 
+ 
+  validarDiaCorrectoDeLasOtrasActividades(){
+   let diaLunes=this.nextDate();
+   diaLunes= new Date( diaLunes.getFullYear(), diaLunes.getMonth(), diaLunes.getDate()  )
+ 
+ 
+   let d2= this.fecha.split("-");;
+   let diaPosible= new Date(   parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])   );
+ 
+ 
+   
+ 
+   let diaLunesSiguiente= this.nextDate();
+   diaLunesSiguiente.setDate(diaLunesSiguiente.getDate()+7);
+   diaLunesSiguiente= new Date( diaLunesSiguiente.getFullYear(), diaLunesSiguiente.getMonth(), diaLunesSiguiente.getDate()  )
+ 
+   if(diaPosible>=diaLunes && diaPosible<=diaLunesSiguiente){
+         this.diaCorrecto=true;
    }
    else{
-     this.diaCorrecto=false;
+       this.diaCorrecto=false;
    }
-
-   console.log("diaCorrecto", this.diaCorrecto);
- }
-
-
- validarDiaCorrectoDeLasOtrasActividades(){
-      console.log("entra a validar");
-      let d1= new Date();
-      let diaDeHoy=new Date(d1.getFullYear(),d1.getMonth(),d1.getDate());
-
-      let d2= this.fecha.split("-");;
-      let diaPosible= new Date(   parseInt(d2[2]) ,parseInt(d2[1])-1, parseInt(d2[0])   );
-
-      
  
-      let diasPermitidos= new Date();
-      diasPermitidos.setDate(diasPermitidos.getDate()+7);
-
-      console.log("diaDeHoy",diaDeHoy);
-      console.log("diaPosible",diaPosible);
-      console.log("diasPermitidos",diasPermitidos);
-
-      if(diaPosible>=diaDeHoy && diaPosible<=diasPermitidos){
-        this.diaCorrecto=true;
-      }
-      else{
-        this.diaCorrecto=false;
-      }
-
- }
+  }
 
 
  async presentToast(text) {
@@ -410,6 +420,20 @@ parsearLaHora(unaHoraSinFormatoCorrecto){
  
 
 }
+
+
+nextMonday() {
+  var today = new Date();
+  today.setDate(today.getDate() + (1 - 1 - today.getDay() + 7) % 7 + 1);
+  return today; 
+} 
+
+nextDate() { 
+  var today = new Date();
+  today.setDate(today.getDate() + (1 - 1 - today.getDay() + 7) % 7 + 1);
+  return today;
+}
+
 
 
 

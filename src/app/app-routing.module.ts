@@ -4,7 +4,7 @@ import { AuthGuardService } from './_services/auth-guard.service';
 /*
             APP ROUTING LOGICApp Routing Logic
 
- The top routing allows to navigate to the register and login page without any checks, 
+ The top routing allows to navigate to the register and login page without any checks,
  but behind the members path every pages will go through the canActivate check so they can
  only be access once a user is authenticated!
 
@@ -15,8 +15,8 @@ import { AuthGuardService } from './_services/auth-guard.service';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
-  { 
-    path: 'members', 
+  {
+    path: 'members',
     canActivate: [AuthGuardService],
     loadChildren: './members/member-routing.module#MemberRoutingModule'
   }
