@@ -59,7 +59,7 @@
     "ionic-native-http-connection-backend": "^5.0.3",
     "ionic-selectable": "^4.4.0",
     "ionic2-calendar": "^0.5.2",
-    "luxon": "^1.15.0",
+    "luxon": "^1.28.1",
     "moment": "^2.24.0",
     "ng-fullcalendar": "^1.7.1",
     "ngx-material-timepicker": "^3.1.0",
